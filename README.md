@@ -1,50 +1,140 @@
+# BaapUI - A Modern React Native UI Library
 
-# TypeScript
+BaapUI is a beautiful, accessible, and performant UI library for React Native and React Native Web applications. Built with TypeScript and designed with modern applications in mind.
 
-[![CI](https://github.com/microsoft/TypeScript/actions/workflows/ci.yml/badge.svg)](https://github.com/microsoft/TypeScript/actions/workflows/ci.yml)
-[![npm version](https://badge.fury.io/js/typescript.svg)](https://www.npmjs.com/package/typescript)
-[![Downloads](https://img.shields.io/npm/dm/typescript.svg)](https://www.npmjs.com/package/typescript)
-[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/microsoft/TypeScript/badge)](https://securityscorecards.dev/viewer/?uri=github.com/microsoft/TypeScript)
+## Features
 
+- 🎨 Beautiful, modern design system
+- 📱 Cross-platform support (iOS, Android, Web)
+- 🔧 Highly customizable through theming
+- 🎯 Written in TypeScript for type safety
+- ♿️ Accessibility support
+- 🌗 Light and dark mode support (coming soon)
 
-[TypeScript](https://www.typescriptlang.org/) is a language for application-scale JavaScript. TypeScript adds optional types to JavaScript that support tools for large-scale JavaScript applications for any browser, for any host, on any OS. TypeScript compiles to readable, standards-based JavaScript. Try it out at the [playground](https://www.typescriptlang.org/play/), and stay up to date via [our blog](https://blogs.msdn.microsoft.com/typescript) and [Twitter account](https://twitter.com/typescript).
-
-Find others who are using TypeScript at [our community page](https://www.typescriptlang.org/community/).
-
-## Installing
-
-For the latest stable version:
+## Installation
 
 ```bash
-npm install -D typescript
+npm install baapui
+# or
+yarn add baapui
 ```
 
-For our nightly builds:
+## Quick Start
+
+1. Wrap your app with the ThemeProvider:
+
+```tsx
+import { ThemeProvider } from 'baapui';
+
+export default function App() {
+  return (
+    <ThemeProvider>
+      {/* Your app content */}
+    </ThemeProvider>
+  );
+}
+```
+
+2. Start using components:
+
+```tsx
+import { Button } from 'baapui';
+
+function MyComponent() {
+  return (
+    <Button 
+      title="Click Me"
+      variant="primary"
+      onPress={() => console.log('Button pressed!')}
+    />
+  );
+}
+```
+
+## Components
+
+### Button
+
+A versatile button component that supports multiple variants, sizes, and states.
+
+```tsx
+import { Button } from 'baapui';
+
+// Basic usage
+<Button 
+  title="Click Me"
+  onPress={() => {}}
+/>
+
+// Different variants
+<Button variant="primary" title="Primary" />
+<Button variant="secondary" title="Secondary" />
+<Button variant="outline" title="Outline" />
+<Button variant="ghost" title="Ghost" />
+
+// Different sizes
+<Button size="small" title="Small" />
+<Button size="medium" title="Medium" />
+<Button size="large" title="Large" />
+
+// With icons
+<Button 
+  title="With Icons"
+  leftIcon={<Icon name="star" />}
+  rightIcon={<Icon name="arrow-right" />}
+/>
+
+// States
+<Button loading={true} title="Loading" />
+<Button disabled={true} title="Disabled" />
+<Button fullWidth={true} title="Full Width" />
+```
+
+## Theming
+
+BaapUI comes with a default theme but is highly customizable. You can override the default theme:
+
+```tsx
+import { ThemeProvider, defaultTheme } from 'baapui';
+
+const customTheme = {
+  ...defaultTheme,
+  colors: {
+    ...defaultTheme.colors,
+    primary: '#007AFF',
+    secondary: '#5856D6',
+  },
+};
+
+function App() {
+  return (
+    <ThemeProvider theme={customTheme}>
+      {/* Your app content */}
+    </ThemeProvider>
+  );
+}
+```
+
+## Development
+
+To start developing the library:
 
 ```bash
-npm install -D typescript@next
+# Clone the repository
+git clone https://github.com/yourusername/baapui.git
+
+# Install dependencies
+cd baapui
+npm install
+
+# Start the development server
+npm start
 ```
 
-## Contribute
+## Contributing
 
-There are many ways to [contribute](https://github.com/microsoft/TypeScript/blob/main/CONTRIBUTING.md) to TypeScript.
-* [Submit bugs](https://github.com/microsoft/TypeScript/issues) and help us verify fixes as they are checked in.
-* Review the [source code changes](https://github.com/microsoft/TypeScript/pulls).
-* Engage with other TypeScript users and developers on [StackOverflow](https://stackoverflow.com/questions/tagged/typescript).
-* Help each other in the [TypeScript Community Discord](https://discord.gg/typescript).
-* Join the [#typescript](https://twitter.com/search?q=%23TypeScript) discussion on Twitter.
-* [Contribute bug fixes](https://github.com/microsoft/TypeScript/blob/main/CONTRIBUTING.md).
+We welcome contributions! Please see our contributing guide for details.
 
-This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see
-the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com)
-with any additional questions or comments.
+## License
 
-## Documentation
-
-*  [TypeScript in 5 minutes](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html)
-*  [Programming handbook](https://www.typescriptlang.org/docs/handbook/intro.html)
-*  [Homepage](https://www.typescriptlang.org/)
-
-## Roadmap
-
-For details on our planned features and future direction, please refer to our [roadmap](https://github.com/microsoft/TypeScript/wiki/Roadmap).
+MIT © [Your Name]

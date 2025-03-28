@@ -1,0 +1,36 @@
+# Source
+src/
+
+# Development
+node_modules/
+.expo/
+.vscode/
+.idea/
+.git/
+.gitignore
+.prettierrc
+.eslintrc
+tsconfig.json
+jest.config.js
+jest.setup.js
+jest.transformer.js
+
+# Tests
+__tests__/
+*.test.ts
+*.test.tsx
+
+# Examples and docs
+examples/
+docs/
+
+# Misc
+.DS_Store
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build artifacts
+coverage/
+.watchmanconfig 
