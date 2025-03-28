@@ -39,5 +39,10 @@ module.exports = [
         version: 'detect',
       },
     },
+    linterOptions: {
+      reportUnusedDisableDirectives: false,
+      noInlineConfig: true,
+      quiet: true,
+    },
   },
 ]; 
