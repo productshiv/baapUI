@@ -3,6 +3,7 @@ const globals = require('globals');
 
 module.exports = [
   {
+    ignores: ['lib/**/*', '**/*.d.ts'],
     files: ['**/*.js', '**/*.ts', '**/*.tsx'],
     languageOptions: {
       ecmaVersion: 'latest',
