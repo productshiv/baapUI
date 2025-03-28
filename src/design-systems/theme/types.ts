@@ -1,3 +1,6 @@
+import { ViewStyle, TextStyle } from 'react-native';
+import { ButtonStyles } from '../../components/buttons/types';
+
 export interface ThemeColors {
   primary: string;
   secondary: string;
@@ -10,6 +13,7 @@ export interface ThemeColors {
   text: string;
   textSecondary: string;
   border: string;
+  disabled: string;
 }
 
 export interface ThemeSpacing {
@@ -37,7 +41,34 @@ export interface ThemeRadii {
   full: number;
 }
 
+export type DesignLanguage = 'flat' | 'neumorphism' | 'material' | 'glassmorphism';
+
+export interface NeumorphismStyles {
+  shadowLight: string;
+  shadowDark: string;
+  intensity: number;
+  blur: number;
+  distance: number;
+  pressed: {
+    intensity: number;
+    blur: number;
+    distance: number;
+  };
+}
+
+export interface GlassmorphismStyles {
+  blur: number;
+  opacity: number;
+  borderOpacity: number;
+}
+
+export interface MaterialStyles {
+  elevation: number;
+  stateLayerOpacity: number;
+}
+
 export interface ThemeButtonStyles {
+  designLanguage: DesignLanguage;
   variants: {
     primary: object;
     secondary: object;
@@ -73,6 +104,9 @@ export interface ThemeButtonStyles {
     outline: string;
     ghost: string;
   };
+  neumorphism?: NeumorphismStyles;
+  glassmorphism?: GlassmorphismStyles;
+  material?: MaterialStyles;
 }
 
 export interface ThemeComponents {

@@ -4,12 +4,13 @@ BaapUI is a beautiful, accessible, and performant UI library for React Native an
 
 ## Features
 
-- 🎨 Beautiful, modern design system
+- 🎨 Beautiful, modern design system with multiple design languages
 - 📱 Cross-platform support (iOS, Android, Web)
 - 🔧 Highly customizable through theming
 - 🎯 Written in TypeScript for type safety
 - ♿️ Accessibility support
 - 🌗 Light and dark mode support (coming soon)
+- 🎭 Multiple design languages (Flat, Neumorphism, Glassmorphism, Material)
 
 ## Installation
 
@@ -55,7 +56,7 @@ function MyComponent() {
 
 ### Button
 
-A versatile button component that supports multiple variants, sizes, and states.
+A versatile button component that supports multiple variants, sizes, states, and design languages.
 
 ```tsx
 import { Button } from 'baapui';
@@ -90,19 +91,91 @@ import { Button } from 'baapui';
 <Button fullWidth={true} title="Full Width" />
 ```
 
+## Design Languages
+
+BaapUI supports multiple design languages that can be configured through the theme:
+
+### Flat (Default)
+Clean and minimal design with solid colors and simple hover/press states.
+
+### Neumorphism
+Soft UI design with light and dark shadows, creating a subtle 3D effect.
+
+```tsx
+const theme = {
+  components: {
+    button: {
+      designLanguage: 'neumorphism',
+      neumorphism: {
+        shadowLight: '#FFFFFF',
+        shadowDark: '#D1D9E6',
+        intensity: 0.15,
+        blur: 15,
+        distance: 5,
+        pressed: {
+          intensity: 0.25,
+          blur: 10,
+          distance: 2,
+        },
+      },
+    },
+  },
+};
+```
+
+### Glassmorphism
+Modern frosted glass effect with transparency and blur.
+
+```tsx
+const theme = {
+  components: {
+    button: {
+      designLanguage: 'glassmorphism',
+      glassmorphism: {
+        blur: 10,
+        opacity: 0.3,
+        borderOpacity: 0.1,
+      },
+    },
+  },
+};
+```
+
+### Material
+Following Material Design principles with elevation and state layers.
+
+```tsx
+const theme = {
+  components: {
+    button: {
+      designLanguage: 'material',
+      material: {
+        elevation: 2,
+        stateLayerOpacity: 0.12,
+      },
+    },
+  },
+};
+```
+
 ## Theming
 
 BaapUI comes with a default theme but is highly customizable. You can override the default theme:
 
 ```tsx
-import { ThemeProvider, defaultTheme } from 'baapui';
+import { ThemeProvider } from 'baapui';
 
 const customTheme = {
-  ...defaultTheme,
   colors: {
-    ...defaultTheme.colors,
     primary: '#007AFF',
     secondary: '#5856D6',
+    // ... other colors
+  },
+  components: {
+    button: {
+      designLanguage: 'neumorphism', // or 'flat', 'glassmorphism', 'material'
+      // ... other button styles
+    },
   },
 };
 

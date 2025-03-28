@@ -5,15 +5,14 @@ const defaultTheme: Theme = {
   colors: {
     primary: '#007AFF',
     secondary: '#5856D6',
+    surface: '#FFFFFF',
+    background: '#F2F2F7',
+    text: '#000000',
+    error: '#FF3B30',
     success: '#34C759',
     warning: '#FF9500',
-    error: '#FF3B30',
     info: '#5856D6',
-    background: '#FFFFFF',
-    surface: '#F2F2F7',
-    text: '#000000',
-    textSecondary: '#8E8E93',
-    border: '#C6C6C8',
+    disabled: '#C7C7CC',
   },
   spacing: {
     xs: 4,
@@ -34,11 +33,12 @@ const defaultTheme: Theme = {
     sm: 8,
     md: 12,
     lg: 16,
-    xl: 20,
+    xl: 24,
     full: 9999,
   },
   components: {
     button: {
+      designLanguage: 'flat',
       variants: {
         primary: {
           backgroundColor: '#007AFF',
@@ -66,7 +66,7 @@ const defaultTheme: Theme = {
         },
         large: {
           paddingVertical: 16,
-          paddingHorizontal: 20,
+          paddingHorizontal: 24,
         },
       },
       states: {
@@ -113,6 +113,27 @@ const defaultTheme: Theme = {
         outline: '#007AFF',
         ghost: '#007AFF',
       },
+      neumorphism: {
+        shadowLight: '#FFFFFF',
+        shadowDark: '#D1D9E6',
+        intensity: 0.15,
+        blur: 15,
+        distance: 5,
+        pressed: {
+          intensity: 0.25,
+          blur: 10,
+          distance: 2,
+        },
+      },
+      glassmorphism: {
+        blur: 10,
+        opacity: 0.3,
+        borderOpacity: 0.1,
+      },
+      material: {
+        elevation: 2,
+        stateLayerOpacity: 0.12,
+      },
     },
   },
 };
@@ -126,25 +147,13 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
   const mergedTheme = {
     ...defaultTheme,
     ...theme,
-    colors: {
-      ...defaultTheme.colors,
-      ...theme.colors,
-    },
-    spacing: {
-      ...defaultTheme.spacing,
-      ...theme.spacing,
-    },
-    fontSizes: {
-      ...defaultTheme.fontSizes,
-      ...theme.fontSizes,
-    },
-    radii: {
-      ...defaultTheme.radii,
-      ...theme.radii,
-    },
     components: {
       ...defaultTheme.components,
       ...theme.components,
+      button: {
+        ...defaultTheme.components.button,
+        ...theme.components?.button,
+      },
     },
   };
 

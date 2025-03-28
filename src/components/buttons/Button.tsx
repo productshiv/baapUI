@@ -1,5 +1,5 @@
 import React from 'react';
-import { Pressable, Text, StyleSheet, ActivityIndicator } from 'react-native';
+import { Pressable, Text, StyleSheet, ActivityIndicator, Platform, ViewStyle } from 'react-native';
 import { ButtonProps } from './types';
 import { useTheme } from '../../design-systems/theme/ThemeProvider';
 
@@ -19,7 +19,70 @@ export const Button: React.FC<ButtonProps> = ({
   const theme = useTheme();
   const buttonStyles = theme.components?.button;
 
-  const getButtonStyle = () => {
+  const getNeumorphicStyle = (isPressed: boolean): ViewStyle => {
+    if (buttonStyles?.designLanguage !== 'neumorphism' || !buttonStyles.neumorphism) {
+      return {} as ViewStyle;
+    }
+
+    const { shadowLight, shadowDark, intensity, blur, distance } = buttonStyles.neumorphism;
+    const { intensity: pressedIntensity, blur: pressedBlur, distance: pressedDistance } = buttonStyles.neumorphism.pressed;
+
+    const currentIntensity = isPressed ? pressedIntensity : intensity;
+    const currentBlur = isPressed ? pressedBlur : blur;
+    const currentDistance = isPressed ? pressedDistance : distance;
+
+    if (Platform.OS === 'web') {
+      return {
+        boxShadow: `${currentDistance}px ${currentDistance}px ${currentBlur}px ${shadowDark},
+                    -${currentDistance}px -${currentDistance}px ${currentBlur}px ${shadowLight}`,
+        backgroundColor: theme.colors.surface,
+      } as ViewStyle;
+    }
+
+    return {
+      shadowColor: shadowDark,
+      shadowOffset: {
+        width: currentDistance,
+        height: currentDistance,
+      },
+      shadowOpacity: currentIntensity,
+      shadowRadius: currentBlur,
+      backgroundColor: theme.colors.surface,
+      elevation: currentDistance,
+    };
+  };
+
+  const getGlassmorphicStyle = (): ViewStyle => {
+    if (buttonStyles?.designLanguage !== 'glassmorphism' || !buttonStyles.glassmorphism) {
+      return {} as ViewStyle;
+    }
+
+    const { blur, opacity, borderOpacity } = buttonStyles.glassmorphism;
+
+    return {
+      backgroundColor: `rgba(255, 255, 255, ${opacity})`,
+      borderColor: `rgba(255, 255, 255, ${borderOpacity})`,
+      borderWidth: 1,
+      backdropFilter: `blur(${blur}px)`,
+    } as ViewStyle;
+  };
+
+  const getMaterialStyle = (isPressed: boolean): ViewStyle => {
+    if (buttonStyles?.designLanguage !== 'material' || !buttonStyles.material) {
+      return {} as ViewStyle;
+    }
+
+    const { elevation, stateLayerOpacity } = buttonStyles.material;
+
+    return {
+      elevation: isPressed ? elevation - 1 : elevation,
+      backgroundColor: isPressed
+        ? `rgba(0, 0, 0, ${stateLayerOpacity})`
+        : buttonStyles.variants?.[variant]?.backgroundColor,
+    };
+  };
+
+  const getButtonStyle = (isPressed: boolean) => {
     const baseStyle = [
       styles.base,
       buttonStyles?.variants?.[variant],
@@ -29,7 +92,14 @@ export const Button: React.FC<ButtonProps> = ({
       style,
     ].filter(Boolean);
 
-    return baseStyle;
+    const designStyles: ViewStyle = {
+      flat: {} as ViewStyle,
+      neumorphism: getNeumorphicStyle(isPressed),
+      glassmorphism: getGlassmorphicStyle(),
+      material: getMaterialStyle(isPressed),
+    }[buttonStyles?.designLanguage || 'flat'];
+
+    return [...baseStyle, designStyles];
   };
 
   const getTextStyle = () => {
@@ -63,10 +133,7 @@ export const Button: React.FC<ButtonProps> = ({
 
   return (
     <Pressable
-      style={({ pressed }) => [
-        getButtonStyle(),
-        pressed && !disabled && buttonStyles?.states?.pressed,
-      ].filter(Boolean)}
+      style={({ pressed }) => getButtonStyle(pressed)}
       onPress={onPress}
       disabled={disabled || loading}
       {...props}
