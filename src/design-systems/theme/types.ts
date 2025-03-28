@@ -37,7 +37,7 @@ export interface ThemeRadii {
   full: number;
 }
 
-export interface ButtonStyles {
+export interface ThemeButtonStyles {
   variants: {
     primary: object;
     secondary: object;
@@ -76,7 +76,7 @@ export interface ButtonStyles {
 }
 
 export interface ThemeComponents {
-  button: ButtonStyles;
+  button: ThemeButtonStyles;
 }
 
 export interface Theme {

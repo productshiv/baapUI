@@ -1,7 +1,7 @@
 import React, { createContext, useContext } from 'react';
 import { Theme, ThemeProviderProps } from './types';
 
-export const defaultTheme: Theme = {
+const defaultTheme: Theme = {
   colors: {
     primary: '#007AFF',
     secondary: '#5856D6',
@@ -13,7 +13,7 @@ export const defaultTheme: Theme = {
     surface: '#F2F2F7',
     text: '#000000',
     textSecondary: '#8E8E93',
-    border: '#C7C7CC',
+    border: '#C6C6C8',
   },
   spacing: {
     xs: 4,
@@ -34,7 +34,7 @@ export const defaultTheme: Theme = {
     sm: 8,
     md: 12,
     lg: 16,
-    xl: 24,
+    xl: 20,
     full: 9999,
   },
   components: {
@@ -57,16 +57,16 @@ export const defaultTheme: Theme = {
       },
       sizes: {
         small: {
+          paddingVertical: 8,
           paddingHorizontal: 12,
-          paddingVertical: 6,
         },
         medium: {
+          paddingVertical: 12,
           paddingHorizontal: 16,
-          paddingVertical: 8,
         },
         large: {
+          paddingVertical: 16,
           paddingHorizontal: 20,
-          paddingVertical: 12,
         },
       },
       states: {
@@ -117,46 +117,34 @@ export const defaultTheme: Theme = {
   },
 };
 
-export const ThemeContext = createContext<Theme>(defaultTheme);
-
-export const useTheme = () => {
-  const theme = useContext(ThemeContext);
-  if (!theme) {
-    throw new Error('useTheme must be used within a ThemeProvider');
-  }
-  return theme;
-};
+const ThemeContext = createContext<Theme>(defaultTheme);
 
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({
   theme = {},
   children,
 }) => {
-  const mergedTheme: Theme = {
+  const mergedTheme = {
     ...defaultTheme,
     ...theme,
     colors: {
       ...defaultTheme.colors,
-      ...(theme.colors || {}),
+      ...theme.colors,
     },
     spacing: {
       ...defaultTheme.spacing,
-      ...(theme.spacing || {}),
+      ...theme.spacing,
     },
     fontSizes: {
       ...defaultTheme.fontSizes,
-      ...(theme.fontSizes || {}),
+      ...theme.fontSizes,
     },
     radii: {
       ...defaultTheme.radii,
-      ...(theme.radii || {}),
+      ...theme.radii,
     },
     components: {
       ...defaultTheme.components,
-      ...(theme.components || {}),
-      button: {
-        ...defaultTheme.components.button,
-        ...(theme.components?.button || {}),
-      },
+      ...theme.components,
     },
   };
 
@@ -165,4 +153,12 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
       {children}
     </ThemeContext.Provider>
   );
+};
+
+export const useTheme = () => {
+  const theme = useContext(ThemeContext);
+  if (!theme) {
+    throw new Error('useTheme must be used within a ThemeProvider');
+  }
+  return theme;
 }; 
