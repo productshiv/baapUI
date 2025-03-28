@@ -1,23 +1,16 @@
 import React from 'react';
-import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
-import ButtonShowcaseScreen from './src/screens/ButtonShowcase';
-import { StatusBar } from 'expo-status-bar';
-import { View, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
+import { ButtonShowcase } from './src/screens/ButtonShowcase';
 
 export default function App() {
-  return (
-    <SafeAreaProvider>
-      <SafeAreaView style={styles.container}>
-        <StatusBar style="auto" />
-        <ButtonShowcaseScreen />
-      </SafeAreaView>
-    </SafeAreaProvider>
-  );
+  return <ButtonShowcase />;
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 }); 
