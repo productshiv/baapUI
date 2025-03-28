@@ -30,7 +30,6 @@
     "build": "tsc",
     "prepare": "npm run build",
     "prepublishOnly": "npm run build",
-    "preversion": "npm run lint",
     "version": "git add -A src",
     "postversion": "git push && git push --tags"
   },
