@@ -1,213 +1,70 @@
-# BaapUI - A Modern React Native UI Library
+# baapUI
 
-BaapUI is a beautiful, accessible, and performant UI library for React Native and React Native Web applications. Built with TypeScript and designed with modern applications in mind.
+## Overview
 
-## Features
+baapUI is a multi-design UI framework built with Expo, designed to support multiple design paradigms, including Neumorphism, Skeuomorphism, Flat Design, Material UI, and Simplistic Design. It aims to provide a versatile, scalable, and performant UI solution for Android, iOS, and Web applications.
 
-- 🎨 Beautiful, modern design system with multiple design languages
-- 📱 Cross-platform support (iOS, Android, Web)
-- 🔧 Highly customizable through theming
-- 🎯 Written in TypeScript for type safety
-- ♿️ Accessibility support
-- 🌗 Light and dark mode support (coming soon)
-- 🎭 Multiple design languages (Flat, Neumorphism, Glassmorphism, Material)
+## Getting Started
 
-## Installation
+To run the project, use the following commands:
 
-```bash
-npm install baapui
-# or
-yarn add baapui
-```
-
-## Quick Start
-
-1. Wrap your app with the ThemeProvider:
-
-```tsx
-import { ThemeProvider } from 'baapui';
-
-export default function App() {
-  return (
-    <ThemeProvider>
-      {/* Your app content */}
-    </ThemeProvider>
-  );
-}
-```
-
-2. Start using components:
-
-```tsx
-import { Button } from 'baapui';
-
-function MyComponent() {
-  return (
-    <Button 
-      title="Click Me"
-      variant="primary"
-      onPress={() => console.log('Button pressed!')}
-    />
-  );
-}
-```
+- **iOS:** `npm run ios`
+- **Android:** `npm run android`
+- **Web:** `npm run web`
 
 ## Components
 
 ### Button
 
-A versatile button component that supports multiple variants, sizes, states, and design languages.
+The `Button` component is a customizable UI element that can be styled using the `ButtonStyle` type. It supports the following properties:
+
+- `label`: The text displayed on the button.
+- `onPress`: The function to call when the button is pressed.
+- `style`: An optional style object to customize the button's appearance, including:
+  - `backgroundColor`: The background color of the button.
+  - `width`: The width of the button.
+  - `height`: The height of the button.
+  - `borderRadius`: The border radius of the button.
+
+#### Example Usage
 
 ```tsx
-import { Button } from 'baapui';
+import React from 'react';
+import { View, StyleSheet } from 'react-native';
+import Button from './components/Button';
 
-// Basic usage
-<Button 
-  title="Click Me"
-  onPress={() => {}}
-/>
-
-// Different variants
-<Button variant="primary" title="Primary" />
-<Button variant="secondary" title="Secondary" />
-<Button variant="outline" title="Outline" />
-<Button variant="ghost" title="Ghost" />
-
-// Different sizes
-<Button size="small" title="Small" />
-<Button size="medium" title="Medium" />
-<Button size="large" title="Large" />
-
-// With icons
-<Button 
-  title="With Icons"
-  leftIcon={<Icon name="star" />}
-  rightIcon={<Icon name="arrow-right" />}
-/>
-
-// States
-<Button loading={true} title="Loading" />
-<Button disabled={true} title="Disabled" />
-<Button fullWidth={true} title="Full Width" />
-```
-
-## Design Languages
-
-BaapUI supports multiple design languages that can be configured through the theme:
-
-### Flat (Default)
-Clean and minimal design with solid colors and simple hover/press states.
-
-### Neumorphism
-Soft UI design with light and dark shadows, creating a subtle 3D effect.
-
-```tsx
-const theme = {
-  components: {
-    button: {
-      designLanguage: 'neumorphism',
-      neumorphism: {
-        shadowLight: '#FFFFFF',
-        shadowDark: '#D1D9E6',
-        intensity: 0.15,
-        blur: 15,
-        distance: 5,
-        pressed: {
-          intensity: 0.25,
-          blur: 10,
-          distance: 2,
-        },
-      },
-    },
-  },
-};
-```
-
-### Glassmorphism
-Modern frosted glass effect with transparency and blur.
-
-```tsx
-const theme = {
-  components: {
-    button: {
-      designLanguage: 'glassmorphism',
-      glassmorphism: {
-        blur: 10,
-        opacity: 0.3,
-        borderOpacity: 0.1,
-      },
-    },
-  },
-};
-```
-
-### Material
-Following Material Design principles with elevation and state layers.
-
-```tsx
-const theme = {
-  components: {
-    button: {
-      designLanguage: 'material',
-      material: {
-        elevation: 2,
-        stateLayerOpacity: 0.12,
-      },
-    },
-  },
-};
-```
-
-## Theming
-
-BaapUI comes with a default theme but is highly customizable. You can override the default theme:
-
-```tsx
-import { ThemeProvider } from 'baapui';
-
-const customTheme = {
-  colors: {
-    primary: '#007AFF',
-    secondary: '#5856D6',
-    // ... other colors
-  },
-  components: {
-    button: {
-      designLanguage: 'neumorphism', // or 'flat', 'glassmorphism', 'material'
-      // ... other button styles
-    },
-  },
-};
-
-function App() {
+const CustomButtonExample: React.FC = () => {
   return (
-    <ThemeProvider theme={customTheme}>
-      {/* Your app content */}
-    </ThemeProvider>
+    <View style={styles.container}>
+      <Button
+        label="Custom Button"
+        onPress={() => console.log('Custom Button Pressed')}
+        style={{
+          backgroundColor: '#ff6347',
+          width: 200,
+          height: 50,
+          borderRadius: 10,
+        }}
+      />
+    </View>
   );
-}
-```
+};
 
-## Development
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
 
-To start developing the library:
-
-```bash
-# Clone the repository
-git clone https://github.com/yourusername/baapui.git
-
-# Install dependencies
-cd baapui
-npm install
-
-# Start the development server
-npm start
+export default CustomButtonExample;
 ```
 
 ## Contributing
 
-We welcome contributions! Please see our contributing guide for details.
+Contributions are welcome! Please follow the guidelines outlined in the `devguides.mdc` for best practices.
 
 ## License
 
-MIT © [Your Name]
+This project is licensed under the MIT License.

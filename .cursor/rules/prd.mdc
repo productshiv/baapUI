@@ -1,0 +1,92 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+
+# Product Requirements Document (PRD) for baapUI
+
+## 1. Overview
+baapUI is a multi-design UI framework built with Expo, designed to support multiple design paradigms, including:
+- Neumorphism
+- Skeuomorphism
+- Flat Design
+- Material UI
+- Simplistic Design
+
+It aims to provide a versatile, scalable, and performant UI solution for Android, iOS, and Web applications.
+
+## 2. Goals & Objectives
+- Enable developers to seamlessly switch between different UI design styles.
+- Provide reusable, accessible, and customizable UI components.
+- Ensure cross-platform compatibility with Android, iOS, and Web using Expo.
+- Maintain high performance and smooth animations across all supported platforms.
+- Offer a theming system that supports dynamic and user-defined themes.
+
+## 3. Target Audience
+- React Native and Expo developers building cross-platform applications.
+- Designers who want flexibility in choosing UI styles.
+- Teams developing applications that need a highly customizable UI framework.
+
+## 4. Key Features
+### 4.1 Multi-Design Support
+- Theming system to switch between design paradigms dynamically.
+- Pre-built UI components styled according to the selected design theme.
+
+### 4.2 Core UI Components
+- Buttons, Inputs, Checkboxes, Radio Buttons
+- Cards, Modals, Toasts
+- Navigation Components (Tabs, Drawers, Bottom Sheets)
+- Typography and Icons
+
+### 4.3 Customization & Theming
+- Theme provider supporting light/dark mode.
+- Ability to override design tokens for granular styling.
+- Global style variables for spacing, colors, shadows, and typography.
+
+### 4.4 Performance & Optimization
+- Optimized animations using Reanimated and Gesture Handler.
+- Lazy-loading and dynamic imports for reducing bundle size.
+- Efficient state management with context and hooks.
+
+### 4.5 Accessibility & UX
+- WCAG-compliant contrast and readability settings.
+- Keyboard and screen reader support.
+- Focus management for improved navigation.
+
+## 5. Technology Stack
+- **Frontend:** React Native (Expo), TypeScript
+- **State Management:** React Context API / Zustand / Jotai
+- **Animations:** React Native Reanimated & Gesture Handler
+- **Styling:** Tailwind, Styled Components, or NativeWind
+- **Icons:** Lucide Icons / Custom Icon Pack
+
+## 6. Milestones & Roadmap
+### Phase 1: MVP (Iteration 1-2)
+- Implement core UI components with flat design.
+- Add basic theming support.
+- Ensure compatibility across Android, iOS, and Web.
+
+### Phase 2: Multi-Design Support (Iteration 3-4)
+- Introduce Neumorphism, Skeuomorphism, Material UI, and Simplistic designs.
+- Implement dynamic theming with a switchable UI system.
+- Enhance performance and animations.
+
+### Phase 3: Advanced Features (Iteration 5-6)
+- Add customizable UI kit with component variations.
+- Improve accessibility and developer documentation.
+- Optimize performance for production use.
+
+## 7. Risks & Challenges
+- Ensuring seamless design transitions between themes.
+- Maintaining high performance with complex UI designs.
+- Handling platform-specific UI inconsistencies.
+
+## 8. Success Metrics
+- Adoption rate among React Native and Expo developers.
+- Performance benchmarks (FPS, memory usage, render times).
+- Community feedback and contributions.
+
+## 9. Conclusion
+baapUI aims to revolutionize UI development for React Native by providing a flexible, multi-design framework that caters to diverse design needs while maintaining performance and accessibility. The framework will empower developers and designers with an intuitive and customizable UI system for building high-quality mobile and web applications.
+

@@ -1,0 +1,176 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# baapUI Developer Guidelines
+
+## 1. Overview
+These guidelines outline the best practices for developing baapUI, ensuring consistency, maintainability, and scalability across the project. baapUI is written in **TypeScript** and follows modern coding standards for React Native and Expo.
+
+---
+
+## 2. Project Structure
+The project follows a modular and scalable folder structure:
+```
+baapUI/
+│── src/
+│   ├── components/      # Reusable UI components
+│   ├── themes/          # Theme definitions for different UI styles
+│   ├── hooks/           # Custom hooks
+│   ├── utils/           # Helper functions and utilities
+│   ├── screens/         # Example screens for testing
+│   ├── navigation/      # Navigation setup (if required)
+│   ├── context/         # Global state management
+│   ├── assets/          # Static assets (icons, images, etc.)
+│   ├── types/           # TypeScript types and interfaces
+│   ├── app/             # Sample app displaying components per platform
+│── .eslintrc.js         # ESLint configuration
+│── .prettierrc          # Prettier configuration
+│── tsconfig.json        # TypeScript configuration
+│── package.json         # Project dependencies
+│── README.md            # Documentation
+```
+
+---
+
+## 3. App Page for Component Showcase
+An **App Page** will be included in the `app/` directory to display all sample components, ensuring platform-specific customization:
+
+- When running on **iOS**, components customized for iOS (e.g., Cupertino-style buttons) will be displayed.
+- When running on **Android**, components styled specifically for Android (e.g., Material buttons) will be shown.
+- When running on **Web**, web-optimized components will be rendered.
+
+Example Implementation:
+```tsx
+import React from 'react';
+import { Platform, View, Text } from 'react-native';
+import IOSButton from '../components/buttons/IOSButton';
+import AndroidButton from '../components/buttons/AndroidButton';
+import WebButton from '../components/buttons/WebButton';
+
+const AppPage = () => {
+  return (
+    <View style={{ padding: 20 }}>
+      <Text style={{ fontSize: 20, fontWeight: 'bold' }}>baapUI Component Showcase</Text>
+      {Platform.OS === 'ios' && <IOSButton label="iOS Button" />}
+      {Platform.OS === 'android' && <AndroidButton label="Android Button" />}
+      {Platform.OS === 'web' && <WebButton label="Web Button" />}
+    </View>
+  );
+};
+
+export default AppPage;
+```
+
+This allows developers to test and preview components in their respective environments seamlessly.
+
+---
+
+## 4. Code Standards
+### 4.1 TypeScript Best Practices
+- Use **strict mode** (`strict: true` in `tsconfig.json`).
+- Avoid `any` type; use **explicit types and interfaces**.
+- Use **type aliases (`type`) for simple types** and **interfaces (`interface`) for complex structures**.
+- Prefer **union types over enums** for better tree shaking.
+
+### 4.2 Component Structure
+- Use functional components with React hooks.
+- Separate **logic (hooks) from UI (components)** for better reusability.
+- Keep components **small, focused, and reusable**.
+- Use **descriptive prop names** and default values when applicable.
+
+```tsx
+// Example of a well-structured component
+import React from "react";
+import { Text, View, StyleSheet } from "react-native";
+
+interface ButtonProps {
+  label: string;
+  onPress: () => void;
+}
+
+const Button: React.FC<ButtonProps> = ({ label, onPress }) => {
+  return (
+    <View style={styles.container} onTouchEnd={onPress}>
+      <Text style={styles.text}>{label}</Text>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: { padding: 10, backgroundColor: "#007bff", borderRadius: 5 },
+  text: { color: "white", textAlign: "center" },
+});
+
+export default Button;
+```
+
+### 4.3 Styling Guidelines
+- Use **TailwindCSS or Styled Components** for consistent and maintainable styling.
+- Avoid inline styles when possible.
+- Use a **centralized theme file** for managing colors, spacing, and typography.
+- Follow **design tokens** for consistent spacing, shadows, and font sizes.
+
+### 4.4 State Management
+- Use **React Context API** for global state.
+- Prefer **Zustand or Jotai** for better performance over Redux when necessary.
+- Keep state **colocated** with components when possible.
+
+### 4.5 Performance Optimization
+- Use `useMemo` and `useCallback` to avoid unnecessary re-renders.
+- Implement **lazy loading** and **dynamic imports**.
+- Optimize **animations** using `React Native Reanimated`.
+- Avoid **heavy calculations in render functions**.
+
+### 4.6 Accessibility & Internationalization
+- Ensure components **support screen readers and keyboard navigation**.
+- Use **aria attributes and accessible components**.
+- Consider **multi-language support** with `react-intl` or `i18next`.
+
+---
+
+## 5. Git & Contribution Workflow
+### 5.1 Branching Strategy
+- `main` → Stable production-ready branch.
+- `develop` → Active development branch.
+- `feature/xyz` → Feature-specific branches.
+- `hotfix/xyz` → Bug fixes for urgent issues.
+
+### 5.2 Commit Messages (Conventional Commits)
+Use the following commit message format:
+```
+feat: Add new Button component
+fix: Resolve padding issue in Card component
+chore: Update dependencies
+```
+
+### 5.3 Code Reviews
+- All pull requests must pass **ESLint and Prettier checks**.
+- Ensure **unit tests are written** for components and functions.
+- Reviewers should provide constructive feedback and suggestions.
+
+---
+
+## 6. Testing Strategy
+- Use **Jest** with **React Native Testing Library** for unit tests.
+- Aim for **80%+ test coverage**.
+- Implement **snapshot testing** for UI components.
+- Use **end-to-end testing (E2E)** with Detox if needed.
+
+---
+
+## 7. Documentation & Storybook
+- Maintain **clear documentation** in `README.md`.
+- Use **Storybook** for UI component previews.
+- Each component must have **prop descriptions and usage examples**.
+
+---
+
+## 8. Summary
+These guidelines ensure baapUI remains modular, scalable, and easy to contribute to. Developers should follow best practices in TypeScript, component structure, state management, and performance optimization to build a high-quality UI framework.
+
+---
+
+For any questions, refer to the documentation or reach out to the maintainers.
+
