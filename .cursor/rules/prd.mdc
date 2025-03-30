@@ -64,6 +64,49 @@ It aims to provide a versatile, scalable, and performant UI solution for Android
 ## 6. Milestones & Roadmap
 ### Phase 1: MVP (Iteration 1-2)
 - Implement core UI components with flat design.
+    - Core UI Components (Flat Design)
+        - Button – Clickable UI element for actions. - Done
+		- Input Box – Single-line text input field. - Done
+		- Label – Text element for form fields. - Done
+		- Checkbox – Select multiple options. - Done
+		- Radiobutton – Select one option from a group. - Done
+		- Card – Container for grouping related content. - Done
+
+	- Form Components
+		- TextArea – For multiline text input. - Done
+		- Toggle Switch – Alternative to checkboxes for on/off states. - Done
+		- Dropdown / Select Box – For selecting options from a list. - Done
+		- Slider – For range selection (e.g., volume, brightness). - Done
+		- Stepper – For incrementing/decrementing values. - Done
+
+	- Navigation Components
+		- Tabs – For switching between views. - Done
+		- Accordion – Expandable/collapsible sections. - Done
+		- Breadcrumbs – Indicate navigation hierarchy. - Done
+		- Pagination – For navigating large sets of data. - Done
+		- Drawer / Sidebar – Slide-out menu for navigation.	- Done
+
+	- Feedback Components
+		- Modal / Dialog – Popup window for alerts, confirmations. - Done
+		- Toast / Snackbar – Temporary notifications. - Done
+		- Tooltip – Small popups for additional information. - Done
+		- Badge – Small count indicators (e.g., notification count). - Done
+		- Progress Bar / Circular Progress – Show progress for tasks.- Done
+		- Skeleton Loader – Placeholder UI for loading states.	- Done
+
+	- Data Display Components
+		- Avatar – User profile image representation. - Done
+		- Chip / Tag – Small UI elements for categorization. - Done
+		- List / List Item – Structured list with items. - Done
+		- Table – Display structured data. - Done
+		- Carousel – Horizontal scrolling of images/cards. - Done
+		- Divider – For separating sections. - Done
+
+	- Utility Components
+		- Spinner / Activity Indicator – Show loading state.
+		- Typography System – Heading, subheading, paragraph styles.
+		- Grid & Layout System – Flexbox/grid-based container utilities.
+
 - Add basic theming support.
 - Ensure compatibility across Android, iOS, and Web.
 
