@@ -412,6 +412,412 @@ Component documentation and examples are available in Storybook. Run it with:
 npm run storybook
 ```
 
+## Getting the Most out of baapUI
+
+## Quick Start Guide
+
+1. **Installation**
+```bash
+# Install the package
+npm install @productshiv/baapuibeta
+
+# Install peer dependencies if not already installed
+npm install react-native-web @expo/webpack-config
+```
+
+2. **Import Components**
+```tsx
+// Import only what you need to optimize bundle size
+import { Button, Card, Typography } from '@productshiv/baapuibeta';
+```
+
+## Design System Integration
+
+### 1. Theme Configuration
+```tsx
+// In your App.tsx or theme configuration file
+import { ThemeProvider } from '@productshiv/baapuibeta';
+
+const App = () => {
+  return (
+    <ThemeProvider
+      theme={{
+        // Your custom theme overrides
+        colors: {
+          primary: '#007AFF',
+          secondary: '#5856D6',
+          // ... other colors
+        },
+        spacing: {
+          xs: 4,
+          sm: 8,
+          md: 16,
+          // ... other spacing values
+        }
+      }}
+    >
+      <YourApp />
+    </ThemeProvider>
+  );
+};
+```
+
+### 2. Design Paradigm Selection
+```tsx
+// Switch between different design paradigms
+<ThemeProvider designSystem="flat"> // or "neumorphic", "material", "skeuomorphic"
+  <YourApp />
+</ThemeProvider>
+```
+
+## Best Practices
+
+### 1. Component Composition
+```tsx
+// DO: Compose components for reusability
+const CustomCard = ({ title, children, onAction }) => (
+  <Card
+    header={
+      <Typography variant="h2">{title}</Typography>
+    }
+    footer={
+      <Button variant="primary" onPress={onAction}>
+        Take Action
+      </Button>
+    }
+  >
+    {children}
+  </Card>
+);
+
+// DON'T: Repeat complex layouts
+const RepeatedLayout = () => (
+  <>
+    <Card>
+      <Typography variant="h2">Title 1</Typography>
+      <Content1 />
+      <Button>Action</Button>
+    </Card>
+    <Card>
+      <Typography variant="h2">Title 2</Typography>
+      <Content2 />
+      <Button>Action</Button>
+    </Card>
+  </>
+);
+```
+
+### 2. Form Handling
+```tsx
+// DO: Use form components together
+const SmartForm = () => {
+  const [form, setForm] = useState({});
+  
+  return (
+    <Card>
+      <Input
+        label="Email"
+        error={validateEmail(form.email)}
+        onChangeText={(text) => setForm({ ...form, email: text })}
+      />
+      <ToggleSwitch
+        label="Notifications"
+        value={form.notifications}
+        onValueChange={(value) => setForm({ ...form, notifications: value })}
+      />
+      {form.notifications && (
+        <Dropdown
+          label="Frequency"
+          options={['Daily', 'Weekly', 'Monthly']}
+          onSelect={(value) => setForm({ ...form, frequency: value })}
+        />
+      )}
+    </Card>
+  );
+};
+```
+
+### 3. Responsive Design
+```tsx
+// DO: Use Grid for responsive layouts
+const ResponsiveLayout = () => (
+  <Grid
+    columns={{
+      xs: 1,    // 1 column on mobile
+      sm: 2,    // 2 columns on tablet
+      md: 3,    // 3 columns on desktop
+      lg: 4     // 4 columns on large screens
+    }}
+    spacing={16}
+  >
+    {items.map(item => (
+      <Card key={item.id}>
+        <ItemContent {...item} />
+      </Card>
+    ))}
+  </Grid>
+);
+```
+
+### 4. Performance Optimization
+```tsx
+// DO: Lazy load components when needed
+const HeavyComponent = React.lazy(() => import('./HeavyComponent'));
+
+// DO: Use list virtualization for long lists
+const OptimizedList = () => (
+  <List
+    data={longDataArray}
+    renderItem={({ item }) => <ListItem {...item} />}
+    virtualized
+    windowSize={5}
+  />
+);
+```
+
+## Common Use Cases
+
+### 1. Authentication Flow
+```tsx
+const LoginScreen = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  
+  return (
+    <Card style={styles.container}>
+      <Typography variant="h1">Welcome Back</Typography>
+      
+      <Input
+        label="Email"
+        placeholder="Enter your email"
+        autoCapitalize="none"
+      />
+      
+      <Input
+        label="Password"
+        placeholder="Enter your password"
+        secureTextEntry
+      />
+      
+      <Button
+        variant="primary"
+        loading={isLoading}
+        onPress={handleLogin}
+      >
+        Login
+      </Button>
+      
+      <Typography variant="caption">
+        Don't have an account? Sign up
+      </Typography>
+    </Card>
+  );
+};
+```
+
+### 2. Data Dashboard
+```tsx
+const Dashboard = () => (
+  <Grid columns={{ xs: 1, md: 2 }} spacing={16}>
+    <Card>
+      <Typography variant="h2">Statistics</Typography>
+      <Table
+        columns={statsColumns}
+        data={statsData}
+        sortable
+        pagination
+      />
+    </Card>
+    
+    <Card>
+      <Typography variant="h2">Quick Actions</Typography>
+      <Button variant="primary">Generate Report</Button>
+      <Button variant="secondary">Export Data</Button>
+    </Card>
+    
+    <Card gridColumn="1 / -1">
+      <Typography variant="h2">Recent Activity</Typography>
+      <List
+        data={activityData}
+        renderItem={({ item }) => (
+          <ActivityItem {...item} />
+        )}
+      />
+    </Card>
+  </Grid>
+);
+```
+
+### 3. Settings Panel
+```tsx
+const Settings = () => (
+  <Card>
+    <Tabs
+      tabs={[
+        { key: 'general', title: 'General' },
+        { key: 'notifications', title: 'Notifications' },
+        { key: 'privacy', title: 'Privacy' }
+      ]}
+    >
+      <TabPanel key="general">
+        <ToggleSwitch
+          label="Dark Mode"
+          value={isDarkMode}
+          onValueChange={toggleDarkMode}
+        />
+        <Dropdown
+          label="Language"
+          options={languages}
+          onSelect={setLanguage}
+        />
+      </TabPanel>
+      
+      <TabPanel key="notifications">
+        <ToggleSwitch
+          label="Push Notifications"
+          value={pushEnabled}
+          onValueChange={togglePush}
+        />
+        <ToggleSwitch
+          label="Email Notifications"
+          value={emailEnabled}
+          onValueChange={toggleEmail}
+        />
+      </TabPanel>
+    </Tabs>
+  </Card>
+);
+```
+
+## Debugging Tips
+
+1. **Component Inspector**
+   - Use Storybook's inspector to examine component props and state
+   - Enable React DevTools for component debugging
+
+2. **Performance Monitoring**
+   ```tsx
+   import { Performance } from '@productshiv/baapuibeta';
+   
+   // Wrap performance-critical sections
+   <Performance.Monitor>
+     <YourComponent />
+   </Performance.Monitor>
+   ```
+
+3. **Error Boundaries**
+   ```tsx
+   import { ErrorBoundary } from '@productshiv/baapuibeta';
+   
+   <ErrorBoundary
+     fallback={<Typography>Something went wrong</Typography>}
+   >
+     <YourComponent />
+   </ErrorBoundary>
+   ```
+
+## Platform-Specific Customization
+
+```tsx
+import { Platform } from 'react-native';
+
+// Customize components per platform
+<Button
+  style={{
+    ...Platform.select({
+      ios: iosStyles,
+      android: materialStyles,
+      web: webStyles,
+    })
+  }}
+>
+  Platform Adaptive Button
+</Button>
+```
+
+## Integration with Other Libraries
+
+### 1. Navigation (React Navigation)
+```tsx
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { Header } from '@productshiv/baapuibeta';
+
+const Stack = createStackNavigator();
+
+const App = () => (
+  <NavigationContainer>
+    <Stack.Navigator
+      screenOptions={{
+        header: (props) => <Header {...props} />
+      }}
+    >
+      <Stack.Screen name="Home" component={HomeScreen} />
+    </Stack.Navigator>
+  </NavigationContainer>
+);
+```
+
+### 2. Forms (Formik)
+```tsx
+import { Formik } from 'formik';
+import { Input, Button } from '@productshiv/baapuibeta';
+
+const FormikForm = () => (
+  <Formik
+    initialValues={{ email: '' }}
+    onSubmit={handleSubmit}
+  >
+    {({ handleChange, values }) => (
+      <Input
+        label="Email"
+        value={values.email}
+        onChangeText={handleChange('email')}
+      />
+    )}
+  </Formik>
+);
+```
+
+## Advanced Customization
+
+### 1. Custom Component Variants
+```tsx
+const CustomButton = styled(Button)`
+  border-radius: 20px;
+  background-gradient: linear-gradient(...);
+`;
+```
+
+### 2. Custom Animations
+```tsx
+import { Animated } from 'react-native';
+import { Card } from '@productshiv/baapuibeta';
+
+const AnimatedCard = Animated.createAnimatedComponent(Card);
+```
+
+## Support and Resources
+
+1. Run Storybook locally for interactive documentation:
+```bash
+npm run storybook
+```
+
+2. Check component stories for implementation examples:
+```
+src/components/ComponentName/ComponentName.stories.tsx
+```
+
+3. Use the GitHub issue tracker for:
+   - Bug reports
+   - Feature requests
+   - Documentation improvements
+
+4. Join our community:
+   - Discord channel
+   - GitHub discussions
+   - Stack Overflow tag: `baapui`
+
 ## Contributing
 Please read our contributing guidelines before submitting pull requests.
 
