@@ -17,7 +17,7 @@
     "test": "jest --config jest.config.js",
     "storybook": "npx storybook dev -p 6006",
     "build-storybook": "npx storybook build -o storybook-static",
-    "serve-storybook": "npx http-server storybook-static -p 6006",
+    "serve-storybook": "npx http-server storybook-static -p 6006 --host 0.0.0.0",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "typecheck": "tsc --noEmit",
