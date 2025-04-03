@@ -1,9 +1,8 @@
 import React from 'react';
-import { View } from 'react-native';
 import type { Meta, StoryObj } from '@storybook/react';
 import Button from './Button';
 
-const meta: Meta<typeof Button> = {
+const meta = {
   title: 'Core UI/Button',
   component: Button,
   parameters: {
@@ -21,47 +20,76 @@ const meta: Meta<typeof Button> = {
     disabled: {
       control: 'boolean',
     },
+    loading: {
+      control: 'boolean',
+    },
   },
-};
+} satisfies Meta<typeof Button>;
 
 export default meta;
 type Story = StoryObj<typeof Button>;
 
-export const Default: Story = {
+export const Primary: Story = {
   args: {
-    children: 'Button',
+    children: 'Primary Button',
     variant: 'primary',
     size: 'medium',
+    onPress: () => console.log('Button pressed'),
   },
 };
 
-export const Variants: Story = {
-  render: () => (
-    <View style={{ gap: 16, padding: 20 }}>
-      <Button variant="primary">Primary Button</Button>
-      <Button variant="secondary">Secondary Button</Button>
-      <Button variant="outline">Outline Button</Button>
-      <Button variant="text">Text Button</Button>
-    </View>
-  ),
+export const Secondary: Story = {
+  args: {
+    children: 'Secondary Button',
+    variant: 'secondary',
+    size: 'medium',
+    onPress: () => console.log('Button pressed'),
+  },
 };
 
-export const Sizes: Story = {
-  render: () => (
-    <View style={{ gap: 16, padding: 20 }}>
-      <Button size="small">Small Button</Button>
-      <Button size="medium">Medium Button</Button>
-      <Button size="large">Large Button</Button>
-    </View>
-  ),
+export const Outline: Story = {
+  args: {
+    children: 'Outline Button',
+    variant: 'outline',
+    size: 'medium',
+    onPress: () => console.log('Button pressed'),
+  },
 };
 
-export const States: Story = {
-  render: () => (
-    <View style={{ gap: 16, padding: 20 }}>
-      <Button>Enabled Button</Button>
-      <Button disabled>Disabled Button</Button>
-      <Button loading>Loading Button</Button>
-    </View>
-  ),
+export const Small: Story = {
+  args: {
+    children: 'Small Button',
+    variant: 'primary',
+    size: 'small',
+    onPress: () => console.log('Button pressed'),
+  },
+};
+
+export const Large: Story = {
+  args: {
+    children: 'Large Button',
+    variant: 'primary',
+    size: 'large',
+    onPress: () => console.log('Button pressed'),
+  },
+};
+
+export const Disabled: Story = {
+  args: {
+    children: 'Disabled Button',
+    variant: 'primary',
+    size: 'medium',
+    disabled: true,
+    onPress: () => console.log('Button pressed'),
+  },
+};
+
+export const Loading: Story = {
+  args: {
+    children: 'Loading Button',
+    variant: 'primary',
+    size: 'medium',
+    loading: true,
+    onPress: () => console.log('Button pressed'),
+  },
 }; 

@@ -1,19 +1,15 @@
-import React from 'react';
-import { View } from 'react-native';
-import type { Preview } from '@storybook/react';
-
-const preview: Preview = {
+const preview = {
   parameters: {
-    actions: { argTypesRegex: "^on[A-Z].*" },
     controls: {
       matchers: {
         color: /(background|color)$/i,
-        date: /Date$/,
+        date: /Date$/i,
       },
     },
     options: {
       storySort: {
         order: [
+          'Introduction',
           'Core UI',
           'Form',
           'Navigation',
@@ -24,13 +20,6 @@ const preview: Preview = {
       },
     },
   },
-  decorators: [
-    (Story) => (
-      <View style={{ padding: 16, flex: 1 }}>
-        <Story />
-      </View>
-    ),
-  ],
 };
 
 export default preview; 

@@ -1,6 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 import type { Meta, StoryObj } from '@storybook/react';
+import { fn } from '@storybook/test';
 import Card from './Card';
 import Typography from '../Typography/Typography';
 
@@ -11,7 +12,18 @@ const meta: Meta<typeof Card> = {
     layout: 'centered',
   },
   argTypes: {
-    elevation: { control: { type: 'range', min: 0, max: 5 } },
+    elevation: { 
+      control: { type: 'range', min: 0, max: 5 },
+      description: 'Shadow elevation of the card',
+    },
+    style: {
+      control: 'object',
+      description: 'Additional styles for the card',
+    },
+    onPress: {
+      action: 'pressed',
+      description: 'Called when the card is pressed',
+    },
   },
 };
 
@@ -19,8 +31,12 @@ export default meta;
 type Story = StoryObj<typeof Card>;
 
 export const Default: Story = {
-  render: () => (
-    <Card style={{ padding: 16, width: 300 }}>
+  args: {
+    style: { padding: 16, width: 300 },
+    onPress: fn(),
+  },
+  render: (args) => (
+    <Card {...args}>
       <Typography variant="h6">Card Title</Typography>
       <Typography variant="body2">
         This is a basic card component with some content inside it.
@@ -30,8 +46,12 @@ export const Default: Story = {
 };
 
 export const WithHeader: Story = {
-  render: () => (
-    <Card style={{ width: 300 }}>
+  args: {
+    style: { width: 300 },
+    onPress: fn(),
+  },
+  render: (args) => (
+    <Card {...args}>
       <View style={{ padding: 16, borderBottomWidth: 1, borderBottomColor: '#eee' }}>
         <Typography variant="h6">Card Header</Typography>
       </View>
