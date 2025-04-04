@@ -5,13 +5,13 @@ module.exports = {
   addons: [
     '@storybook/addon-links',
     '@storybook/addon-essentials',
-    '@storybook/addon-interactions'
+    '@storybook/addon-interactions',
   ],
   framework: {
     name: '@storybook/react-webpack5',
-    options: {}
+    options: {},
   },
-  webpackFinal: async (config) => {
+  webpackFinal: async config => {
     // Handle React Native Web
     config.resolve.alias = {
       ...config.resolve.alias,
@@ -20,11 +20,16 @@ module.exports = {
       './Platform': 'react-native-web/dist/exports/Platform',
       '../Utilities/Platform': 'react-native-web/dist/exports/Platform',
       // Add other necessary React Native module aliases
-      'react-native/Libraries/Image/AssetSourceResolver': 'react-native-web/dist/exports/Image/AssetSourceResolver',
-      'react-native/Libraries/vendor/emitter/EventEmitter': 'react-native-web/dist/vendor/react-native/emitter/EventEmitter',
-      'react-native/Libraries/EventEmitter/RCTDeviceEventEmitter': 'react-native-web/dist/vendor/react-native/NativeEventEmitter/RCTDeviceEventEmitter',
-      'react-native/Libraries/Core/Devtools/parseErrorStack': 'react-native-web/dist/modules/parseErrorStack',
-      'react-native/Libraries/Core/Devtools/getDevServer': 'react-native-web/dist/modules/getDevServer',
+      'react-native/Libraries/Image/AssetSourceResolver':
+        'react-native-web/dist/exports/Image/AssetSourceResolver',
+      'react-native/Libraries/vendor/emitter/EventEmitter':
+        'react-native-web/dist/vendor/react-native/emitter/EventEmitter',
+      'react-native/Libraries/EventEmitter/RCTDeviceEventEmitter':
+        'react-native-web/dist/vendor/react-native/NativeEventEmitter/RCTDeviceEventEmitter',
+      'react-native/Libraries/Core/Devtools/parseErrorStack':
+        'react-native-web/dist/modules/parseErrorStack',
+      'react-native/Libraries/Core/Devtools/getDevServer':
+        'react-native-web/dist/modules/getDevServer',
     };
 
     config.resolve.extensions = [
@@ -43,14 +48,14 @@ module.exports = {
         loader: 'babel-loader',
         options: {
           presets: ['@babel/preset-env', '@babel/preset-react', '@babel/preset-typescript'],
-          plugins: ['react-native-web']
-        }
-      }
+          plugins: ['react-native-web'],
+        },
+      },
     });
 
     return config;
   },
   docs: {
-    autodocs: true
-  }
-}; 
+    autodocs: true,
+  },
+};

@@ -40,7 +40,9 @@ npm test
 ## Component Usage Guide
 
 ### Basic Import
+
 Import components individually from the package:
+
 ```tsx
 import { Button, Card, Typography } from '@productshiv/baapuibeta';
 ```
@@ -48,6 +50,7 @@ import { Button, Card, Typography } from '@productshiv/baapuibeta';
 ### Core UI Components
 
 #### Button
+
 ```tsx
 // Basic Button
 <Button onPress={() => console.log('Pressed!')}>Click Me</Button>
@@ -70,19 +73,20 @@ import { Button, Card, Typography } from '@productshiv/baapuibeta';
 ```
 
 #### Input
+
 ```tsx
 // Basic Input
 <Input placeholder="Enter text" />
 
 // Input with label
-<Input 
+<Input
   label="Username"
   placeholder="Enter username"
   onChangeText={(text) => console.log(text)}
 />
 
 // Input with validation
-<Input 
+<Input
   label="Email"
   error="Invalid email format"
   onChangeText={(text) => validateEmail(text)}
@@ -90,15 +94,16 @@ import { Button, Card, Typography } from '@productshiv/baapuibeta';
 ```
 
 #### Checkbox
+
 ```tsx
 // Basic Checkbox
-<Checkbox 
+<Checkbox
   checked={isChecked}
   onChange={(checked) => setIsChecked(checked)}
 />
 
 // Checkbox with label
-<Checkbox 
+<Checkbox
   label="Accept terms"
   checked={isChecked}
   onChange={(checked) => setIsChecked(checked)}
@@ -108,6 +113,7 @@ import { Button, Card, Typography } from '@productshiv/baapuibeta';
 ### Form Components
 
 #### Dropdown
+
 ```tsx
 // Basic Dropdown
 <Dropdown
@@ -124,6 +130,7 @@ import { Button, Card, Typography } from '@productshiv/baapuibeta';
 ```
 
 #### ToggleSwitch
+
 ```tsx
 // Basic Toggle
 <ToggleSwitch
@@ -142,6 +149,7 @@ import { Button, Card, Typography } from '@productshiv/baapuibeta';
 ### Feedback Components
 
 #### Modal
+
 ```tsx
 // Basic Modal
 <Modal visible={isVisible} onClose={() => setIsVisible(false)}>
@@ -149,8 +157,8 @@ import { Button, Card, Typography } from '@productshiv/baapuibeta';
 </Modal>
 
 // Modal with custom content
-<Modal 
-  visible={isVisible} 
+<Modal
+  visible={isVisible}
   onClose={() => setIsVisible(false)}
   title="Confirmation"
 >
@@ -162,12 +170,13 @@ import { Button, Card, Typography } from '@productshiv/baapuibeta';
 ```
 
 #### Toast
+
 ```tsx
 // Basic Toast
 <Toast message="Operation successful!" />
 
 // Toast with type
-<Toast 
+<Toast
   message="Error occurred"
   type="error"
   duration={3000}
@@ -177,6 +186,7 @@ import { Button, Card, Typography } from '@productshiv/baapuibeta';
 ### Data Display Components
 
 #### Table
+
 ```tsx
 // Basic Table
 const columns = [
@@ -192,8 +202,8 @@ const data = [
 <Table columns={columns} data={data} />
 
 // Table with selection
-<Table 
-  columns={columns} 
+<Table
+  columns={columns}
   data={data}
   selectable
   onSelect={(selectedRows) => console.log(selectedRows)}
@@ -201,6 +211,7 @@ const data = [
 ```
 
 #### Card
+
 ```tsx
 // Basic Card
 <Card>
@@ -219,6 +230,7 @@ const data = [
 ### Navigation Components
 
 #### Tabs
+
 ```tsx
 // Basic Tabs
 const tabs = [
@@ -226,20 +238,14 @@ const tabs = [
   { key: 'tab2', title: 'Tab 2', content: <Text>Content 2</Text> },
 ];
 
-<Tabs
-  tabs={tabs}
-  activeTab={activeTab}
-  onChange={(tab) => setActiveTab(tab)}
-/>
+<Tabs tabs={tabs} activeTab={activeTab} onChange={tab => setActiveTab(tab)} />;
 ```
 
 #### Drawer
+
 ```tsx
 // Basic Drawer
-<Drawer
-  visible={isVisible}
-  onClose={() => setIsVisible(false)}
->
+<Drawer visible={isVisible} onClose={() => setIsVisible(false)}>
   <DrawerItem label="Home" onPress={() => navigate('Home')} />
   <DrawerItem label="Profile" onPress={() => navigate('Profile')} />
 </Drawer>
@@ -248,6 +254,7 @@ const tabs = [
 ### Utility Components
 
 #### Typography
+
 ```tsx
 // Different variants
 <Typography variant="h1">Heading 1</Typography>
@@ -256,7 +263,7 @@ const tabs = [
 <Typography variant="caption">Caption text</Typography>
 
 // With custom styles
-<Typography 
+<Typography
   variant="h1"
   style={{ color: 'blue', textAlign: 'center' }}
 >
@@ -265,6 +272,7 @@ const tabs = [
 ```
 
 #### Grid
+
 ```tsx
 // Basic Grid
 <Grid columns={2}>
@@ -273,7 +281,7 @@ const tabs = [
 </Grid>
 
 // Responsive Grid
-<Grid 
+<Grid
   columns={{ xs: 1, sm: 2, md: 3, lg: 4 }}
   spacing={16}
 >
@@ -286,12 +294,13 @@ const tabs = [
 ## Common Patterns
 
 ### Form Example
+
 ```tsx
 const FormExample = () => {
   const [formData, setFormData] = useState({
     username: '',
     email: '',
-    acceptTerms: false
+    acceptTerms: false,
   });
 
   return (
@@ -299,17 +308,17 @@ const FormExample = () => {
       <Input
         label="Username"
         value={formData.username}
-        onChangeText={(text) => setFormData({ ...formData, username: text })}
+        onChangeText={text => setFormData({ ...formData, username: text })}
       />
       <Input
         label="Email"
         value={formData.email}
-        onChangeText={(text) => setFormData({ ...formData, email: text })}
+        onChangeText={text => setFormData({ ...formData, email: text })}
       />
       <Checkbox
         label="Accept Terms"
         checked={formData.acceptTerms}
-        onChange={(checked) => setFormData({ ...formData, acceptTerms: checked })}
+        onChange={checked => setFormData({ ...formData, acceptTerms: checked })}
       />
       <Button onPress={() => handleSubmit(formData)}>Submit</Button>
     </Card>
@@ -318,15 +327,13 @@ const FormExample = () => {
 ```
 
 ### Data Display Example
+
 ```tsx
 const DataDisplayExample = () => {
   return (
     <Card>
       <Typography variant="h1">User Profile</Typography>
-      <Avatar
-        source={{ uri: 'https://example.com/avatar.jpg' }}
-        size="large"
-      />
+      <Avatar source={{ uri: 'https://example.com/avatar.jpg' }} size="large" />
       <Table
         columns={[
           { key: 'field', title: 'Field' },
@@ -343,6 +350,7 @@ const DataDisplayExample = () => {
 ```
 
 ### Navigation Example
+
 ```tsx
 const NavigationExample = () => {
   const [activeTab, setActiveTab] = useState('home');
@@ -371,11 +379,13 @@ const NavigationExample = () => {
 ## Component Props Reference
 
 For detailed information about component props and customization options, run Storybook locally:
+
 ```bash
 npm run storybook
 ```
 
 This will open the Storybook interface where you can:
+
 - View all available components
 - See live examples
 - Test different prop combinations
@@ -385,6 +395,7 @@ This will open the Storybook interface where you can:
 ## Development
 
 ### Project Structure
+
 ```
 baapUI/
 │── src/
@@ -401,13 +412,17 @@ baapUI/
 ```
 
 ### Testing
+
 Tests are written using Jest and React Native Testing Library. Run tests with:
+
 ```bash
 npm test
 ```
 
 ### Storybook
+
 Component documentation and examples are available in Storybook. Run it with:
+
 ```bash
 npm run storybook
 ```
@@ -417,6 +432,7 @@ npm run storybook
 ## Quick Start Guide
 
 1. **Installation**
+
 ```bash
 # Install the package
 npm install @productshiv/baapuibeta
@@ -426,6 +442,7 @@ npm install react-native-web @expo/webpack-config
 ```
 
 2. **Import Components**
+
 ```tsx
 // Import only what you need to optimize bundle size
 import { Button, Card, Typography } from '@productshiv/baapuibeta';
@@ -434,6 +451,7 @@ import { Button, Card, Typography } from '@productshiv/baapuibeta';
 ## Design System Integration
 
 ### 1. Theme Configuration
+
 ```tsx
 // In your App.tsx or theme configuration file
 import { ThemeProvider } from '@productshiv/baapuibeta';
@@ -453,7 +471,7 @@ const App = () => {
           sm: 8,
           md: 16,
           // ... other spacing values
-        }
+        },
       }}
     >
       <YourApp />
@@ -463,9 +481,12 @@ const App = () => {
 ```
 
 ### 2. Design Paradigm Selection
+
 ```tsx
 // Switch between different design paradigms
-<ThemeProvider designSystem="flat"> // or "neumorphic", "material", "skeuomorphic"
+<ThemeProvider designSystem="flat">
+  {' '}
+  // or "neumorphic", "material", "skeuomorphic"
   <YourApp />
 </ThemeProvider>
 ```
@@ -473,13 +494,12 @@ const App = () => {
 ## Best Practices
 
 ### 1. Component Composition
+
 ```tsx
 // DO: Compose components for reusability
 const CustomCard = ({ title, children, onAction }) => (
   <Card
-    header={
-      <Typography variant="h2">{title}</Typography>
-    }
+    header={<Typography variant="h2">{title}</Typography>}
     footer={
       <Button variant="primary" onPress={onAction}>
         Take Action
@@ -508,28 +528,29 @@ const RepeatedLayout = () => (
 ```
 
 ### 2. Form Handling
+
 ```tsx
 // DO: Use form components together
 const SmartForm = () => {
   const [form, setForm] = useState({});
-  
+
   return (
     <Card>
       <Input
         label="Email"
         error={validateEmail(form.email)}
-        onChangeText={(text) => setForm({ ...form, email: text })}
+        onChangeText={text => setForm({ ...form, email: text })}
       />
       <ToggleSwitch
         label="Notifications"
         value={form.notifications}
-        onValueChange={(value) => setForm({ ...form, notifications: value })}
+        onValueChange={value => setForm({ ...form, notifications: value })}
       />
       {form.notifications && (
         <Dropdown
           label="Frequency"
           options={['Daily', 'Weekly', 'Monthly']}
-          onSelect={(value) => setForm({ ...form, frequency: value })}
+          onSelect={value => setForm({ ...form, frequency: value })}
         />
       )}
     </Card>
@@ -538,15 +559,16 @@ const SmartForm = () => {
 ```
 
 ### 3. Responsive Design
+
 ```tsx
 // DO: Use Grid for responsive layouts
 const ResponsiveLayout = () => (
   <Grid
     columns={{
-      xs: 1,    // 1 column on mobile
-      sm: 2,    // 2 columns on tablet
-      md: 3,    // 3 columns on desktop
-      lg: 4     // 4 columns on large screens
+      xs: 1, // 1 column on mobile
+      sm: 2, // 2 columns on tablet
+      md: 3, // 3 columns on desktop
+      lg: 4, // 4 columns on large screens
     }}
     spacing={16}
   >
@@ -560,6 +582,7 @@ const ResponsiveLayout = () => (
 ```
 
 ### 4. Performance Optimization
+
 ```tsx
 // DO: Lazy load components when needed
 const HeavyComponent = React.lazy(() => import('./HeavyComponent'));
@@ -578,76 +601,55 @@ const OptimizedList = () => (
 ## Common Use Cases
 
 ### 1. Authentication Flow
+
 ```tsx
 const LoginScreen = () => {
   const [isLoading, setIsLoading] = useState(false);
-  
+
   return (
     <Card style={styles.container}>
       <Typography variant="h1">Welcome Back</Typography>
-      
-      <Input
-        label="Email"
-        placeholder="Enter your email"
-        autoCapitalize="none"
-      />
-      
-      <Input
-        label="Password"
-        placeholder="Enter your password"
-        secureTextEntry
-      />
-      
-      <Button
-        variant="primary"
-        loading={isLoading}
-        onPress={handleLogin}
-      >
+
+      <Input label="Email" placeholder="Enter your email" autoCapitalize="none" />
+
+      <Input label="Password" placeholder="Enter your password" secureTextEntry />
+
+      <Button variant="primary" loading={isLoading} onPress={handleLogin}>
         Login
       </Button>
-      
-      <Typography variant="caption">
-        Don't have an account? Sign up
-      </Typography>
+
+      <Typography variant="caption">Don't have an account? Sign up</Typography>
     </Card>
   );
 };
 ```
 
 ### 2. Data Dashboard
+
 ```tsx
 const Dashboard = () => (
   <Grid columns={{ xs: 1, md: 2 }} spacing={16}>
     <Card>
       <Typography variant="h2">Statistics</Typography>
-      <Table
-        columns={statsColumns}
-        data={statsData}
-        sortable
-        pagination
-      />
+      <Table columns={statsColumns} data={statsData} sortable pagination />
     </Card>
-    
+
     <Card>
       <Typography variant="h2">Quick Actions</Typography>
       <Button variant="primary">Generate Report</Button>
       <Button variant="secondary">Export Data</Button>
     </Card>
-    
+
     <Card gridColumn="1 / -1">
       <Typography variant="h2">Recent Activity</Typography>
-      <List
-        data={activityData}
-        renderItem={({ item }) => (
-          <ActivityItem {...item} />
-        )}
-      />
+      <List data={activityData} renderItem={({ item }) => <ActivityItem {...item} />} />
     </Card>
   </Grid>
 );
 ```
 
 ### 3. Settings Panel
+
 ```tsx
 const Settings = () => (
   <Card>
@@ -655,28 +657,16 @@ const Settings = () => (
       tabs={[
         { key: 'general', title: 'General' },
         { key: 'notifications', title: 'Notifications' },
-        { key: 'privacy', title: 'Privacy' }
+        { key: 'privacy', title: 'Privacy' },
       ]}
     >
       <TabPanel key="general">
-        <ToggleSwitch
-          label="Dark Mode"
-          value={isDarkMode}
-          onValueChange={toggleDarkMode}
-        />
-        <Dropdown
-          label="Language"
-          options={languages}
-          onSelect={setLanguage}
-        />
+        <ToggleSwitch label="Dark Mode" value={isDarkMode} onValueChange={toggleDarkMode} />
+        <Dropdown label="Language" options={languages} onSelect={setLanguage} />
       </TabPanel>
-      
+
       <TabPanel key="notifications">
-        <ToggleSwitch
-          label="Push Notifications"
-          value={pushEnabled}
-          onValueChange={togglePush}
-        />
+        <ToggleSwitch label="Push Notifications" value={pushEnabled} onValueChange={togglePush} />
         <ToggleSwitch
           label="Email Notifications"
           value={emailEnabled}
@@ -691,28 +681,29 @@ const Settings = () => (
 ## Debugging Tips
 
 1. **Component Inspector**
+
    - Use Storybook's inspector to examine component props and state
    - Enable React DevTools for component debugging
 
 2. **Performance Monitoring**
+
    ```tsx
    import { Performance } from '@productshiv/baapuibeta';
-   
+
    // Wrap performance-critical sections
    <Performance.Monitor>
      <YourComponent />
-   </Performance.Monitor>
+   </Performance.Monitor>;
    ```
 
 3. **Error Boundaries**
+
    ```tsx
    import { ErrorBoundary } from '@productshiv/baapuibeta';
-   
-   <ErrorBoundary
-     fallback={<Typography>Something went wrong</Typography>}
-   >
+
+   <ErrorBoundary fallback={<Typography>Something went wrong</Typography>}>
      <YourComponent />
-   </ErrorBoundary>
+   </ErrorBoundary>;
    ```
 
 ## Platform-Specific Customization
@@ -727,16 +718,17 @@ import { Platform } from 'react-native';
       ios: iosStyles,
       android: materialStyles,
       web: webStyles,
-    })
+    }),
   }}
 >
   Platform Adaptive Button
-</Button>
+</Button>;
 ```
 
 ## Integration with Other Libraries
 
 ### 1. Navigation (React Navigation)
+
 ```tsx
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -748,7 +740,7 @@ const App = () => (
   <NavigationContainer>
     <Stack.Navigator
       screenOptions={{
-        header: (props) => <Header {...props} />
+        header: props => <Header {...props} />,
       }}
     >
       <Stack.Screen name="Home" component={HomeScreen} />
@@ -758,21 +750,15 @@ const App = () => (
 ```
 
 ### 2. Forms (Formik)
+
 ```tsx
 import { Formik } from 'formik';
 import { Input, Button } from '@productshiv/baapuibeta';
 
 const FormikForm = () => (
-  <Formik
-    initialValues={{ email: '' }}
-    onSubmit={handleSubmit}
-  >
+  <Formik initialValues={{ email: '' }} onSubmit={handleSubmit}>
     {({ handleChange, values }) => (
-      <Input
-        label="Email"
-        value={values.email}
-        onChangeText={handleChange('email')}
-      />
+      <Input label="Email" value={values.email} onChangeText={handleChange('email')} />
     )}
   </Formik>
 );
@@ -781,6 +767,7 @@ const FormikForm = () => (
 ## Advanced Customization
 
 ### 1. Custom Component Variants
+
 ```tsx
 const CustomButton = styled(Button)`
   border-radius: 20px;
@@ -789,6 +776,7 @@ const CustomButton = styled(Button)`
 ```
 
 ### 2. Custom Animations
+
 ```tsx
 import { Animated } from 'react-native';
 import { Card } from '@productshiv/baapuibeta';
@@ -799,16 +787,19 @@ const AnimatedCard = Animated.createAnimatedComponent(Card);
 ## Support and Resources
 
 1. Run Storybook locally for interactive documentation:
+
 ```bash
 npm run storybook
 ```
 
 2. Check component stories for implementation examples:
+
 ```
 src/components/ComponentName/ComponentName.stories.tsx
 ```
 
 3. Use the GitHub issue tracker for:
+
    - Bug reports
    - Feature requests
    - Documentation improvements
@@ -819,10 +810,13 @@ src/components/ComponentName/ComponentName.stories.tsx
    - Stack Overflow tag: `baapui`
 
 ## Contributing
+
 Please read our contributing guidelines before submitting pull requests.
 
 ## License
+
 MIT License - see LICENSE file for details.
 
 ## Support
+
 For issues and feature requests, please use the GitHub issue tracker.

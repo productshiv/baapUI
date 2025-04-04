@@ -5,7 +5,7 @@ import React from 'react';
 // Mock the Platform module
 jest.mock('react-native/Libraries/Utilities/Platform', () => ({
   OS: 'ios',
-  select: jest.fn((obj) => obj.ios),
+  select: jest.fn(obj => obj.ios),
 }));
 
 // Mock Reanimated
@@ -22,4 +22,4 @@ jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper');
 jest.mock('react-native-safe-area-context', () => ({
   useSafeAreaInsets: () => ({ top: 0, right: 0, bottom: 0, left: 0 }),
   SafeAreaProvider: ({ children }: { children: React.ReactNode }) => children,
-})); 
+}));

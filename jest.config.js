@@ -21,4 +21,4 @@ module.exports = {
     '!src/**/*.stories.{ts,tsx}',
     '!src/**/index.{ts,tsx}',
   ],
-}; 
+};

@@ -44,4 +44,4 @@ console.error = (...args) => {
     throw new Error(args[0]);
   }
   originalConsoleError(...args);
-}; 
+};
