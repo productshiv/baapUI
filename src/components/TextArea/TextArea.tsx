@@ -1,24 +1,69 @@
-import React from 'react';
-import { TextInput, StyleSheet, TextInputProps } from 'react-native';
+import React, { useState } from 'react';
+import { TextInput, StyleSheet, TextInputProps, ViewStyle } from 'react-native';
+import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
 
 interface TextAreaProps extends TextInputProps {
-  style?: object;
+  style?: ViewStyle;
+  design?: 'flat' | 'neumorphic';
+  backgroundColor?: string;
+  textColor?: string;
 }
 
-const TextArea: React.FC<TextAreaProps> = ({ style, ...props }) => {
-  return <TextInput style={[styles.textArea, style]} multiline {...props} />;
+const TextArea: React.FC<TextAreaProps> = ({
+  style,
+  design = 'flat',
+  backgroundColor = NEUMORPHIC_COLORS.background,
+  textColor = NEUMORPHIC_COLORS.text,
+  ...props
+}) => {
+  const [isFocused, setIsFocused] = useState(false);
+
+  const getTextAreaStyles = (): ViewStyle[] => {
+    const baseStyles: ViewStyle[] = [styles.textArea];
+
+    if (design === 'neumorphic') {
+      const neumorphicStyles = getNeumorphicStyles({
+        isPressed: isFocused,
+        customBackground: backgroundColor,
+        customBorderRadius: 8,
+      });
+      
+      baseStyles.push(...neumorphicStyles);
+      baseStyles.push({
+        backgroundColor,
+        borderWidth: 0,
+      });
+    }
+
+    if (style) {
+      baseStyles.push(style);
+    }
+
+    return baseStyles;
+  };
+
+  return (
+    <TextInput
+      style={getTextAreaStyles()}
+      multiline
+      onFocus={() => setIsFocused(true)}
+      onBlur={() => setIsFocused(false)}
+      placeholderTextColor={design === 'neumorphic' ? textColor + '80' : undefined}
+      defaultValue=""
+      {...props}
+      {...(design === 'neumorphic' && { selectionColor: textColor })}
+    />
+  );
 };
 
 const styles = StyleSheet.create({
   textArea: {
     height: 100,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    borderRadius: 5,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    borderRadius: 8,
     textAlignVertical: 'top',
-    marginVertical: 5,
+    marginVertical: 8,
   },
 });
 

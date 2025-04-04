@@ -1,17 +1,29 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Pressable, Platform } from 'react-native';
+import { View, Text, StyleSheet, Pressable, Platform, ViewStyle, TextStyle } from 'react-native';
+import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
 
 interface TooltipProps {
   content: string;
   children: React.ReactNode;
   position?: 'top' | 'bottom' | 'left' | 'right';
-  style?: object;
+  style?: ViewStyle;
+  design?: 'flat' | 'neumorphic';
+  backgroundColor?: string;
+  textColor?: string;
 }
 
-const Tooltip: React.FC<TooltipProps> = ({ content, children, position = 'top', style }) => {
+const Tooltip: React.FC<TooltipProps> = ({
+  content,
+  children,
+  position = 'top',
+  style,
+  design = 'flat',
+  backgroundColor = NEUMORPHIC_COLORS.background,
+  textColor = NEUMORPHIC_COLORS.text,
+}) => {
   const [visible, setVisible] = useState(false);
 
-  const getTooltipStyle = () => {
+  const getPositionStyle = (): ViewStyle => {
     switch (position) {
       case 'bottom':
         return styles.tooltipBottom;
@@ -24,6 +36,43 @@ const Tooltip: React.FC<TooltipProps> = ({ content, children, position = 'top', 
     }
   };
 
+  const getTooltipStyles = (): ViewStyle[] => {
+    const baseStyles: ViewStyle[] = [styles.tooltip, getPositionStyle()];
+
+    if (design === 'neumorphic') {
+      const neumorphicStyles = getNeumorphicStyles({
+        isPressed: false,
+        customBackground: backgroundColor,
+        customBorderRadius: 8,
+      });
+      
+      baseStyles.push(...neumorphicStyles);
+      baseStyles.push({
+        backgroundColor,
+        borderWidth: 0,
+        padding: 12,
+      });
+    }
+
+    return baseStyles;
+  };
+
+  const getTextStyles = (): TextStyle[] => {
+    const baseStyles: TextStyle[] = [styles.tooltipText];
+
+    if (design === 'neumorphic') {
+      baseStyles.push({
+        color: textColor,
+        fontSize: 14,
+        textShadowColor: NEUMORPHIC_COLORS.lightShadow,
+        textShadowOffset: { width: 1, height: 1 },
+        textShadowRadius: 1,
+      });
+    }
+
+    return baseStyles;
+  };
+
   return (
     <Pressable
       style={[styles.container, style]}
@@ -33,8 +82,8 @@ const Tooltip: React.FC<TooltipProps> = ({ content, children, position = 'top', 
     >
       {children}
       {visible && (
-        <View style={[styles.tooltip, getTooltipStyle()]}>
-          <Text style={styles.tooltipText}>{content}</Text>
+        <View style={getTooltipStyles()}>
+          <Text style={getTextStyles()}>{content}</Text>
         </View>
       )}
     </Pressable>
@@ -70,25 +119,25 @@ const styles = StyleSheet.create({
     bottom: '100%',
     left: '50%',
     transform: [{ translateX: -50 }],
-    marginBottom: 4,
+    marginBottom: 8,
   },
   tooltipBottom: {
     top: '100%',
     left: '50%',
     transform: [{ translateX: -50 }],
-    marginTop: 4,
+    marginTop: 8,
   },
   tooltipLeft: {
     right: '100%',
     top: '50%',
     transform: [{ translateY: -50 }],
-    marginRight: 4,
+    marginRight: 8,
   },
   tooltipRight: {
     left: '100%',
     top: '50%',
     transform: [{ translateY: -50 }],
-    marginLeft: 4,
+    marginLeft: 8,
   },
 });
 

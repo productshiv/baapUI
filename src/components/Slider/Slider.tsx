@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, ViewStyle } from 'react-native';
 import Slider from '@react-native-community/slider';
+import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
 
 interface SliderProps {
   value: number;
@@ -10,7 +11,11 @@ interface SliderProps {
   minimumTrackTintColor?: string;
   maximumTrackTintColor?: string;
   thumbTintColor?: string;
-  style?: object;
+  style?: ViewStyle;
+  design?: 'flat' | 'neumorphic';
+  backgroundColor?: string;
+  width?: number;
+  step?: number;
 }
 
 const CustomSlider: React.FC<SliderProps> = ({
@@ -18,14 +23,42 @@ const CustomSlider: React.FC<SliderProps> = ({
   onValueChange,
   minimumValue = 0,
   maximumValue = 100,
-  minimumTrackTintColor = '#007bff',
-  maximumTrackTintColor = '#ccc',
-  thumbTintColor = '#007bff',
+  minimumTrackTintColor = NEUMORPHIC_COLORS.primary,
+  maximumTrackTintColor = NEUMORPHIC_COLORS.lightShadow,
+  thumbTintColor = NEUMORPHIC_COLORS.primary,
   style,
+  design = 'flat',
+  backgroundColor = NEUMORPHIC_COLORS.background,
+  width = 200,
+  step,
   ...props
 }) => {
+  const getContainerStyles = (): ViewStyle[] => {
+    const baseStyles: ViewStyle[] = [styles.container];
+
+    if (design === 'neumorphic') {
+      const neumorphicStyles = getNeumorphicStyles({
+        isPressed: false,
+        customBackground: backgroundColor,
+        customBorderRadius: 8,
+      });
+      
+      baseStyles.push(...neumorphicStyles);
+      baseStyles.push({
+        backgroundColor,
+        padding: 12,
+      });
+    }
+
+    if (style) {
+      baseStyles.push(style);
+    }
+
+    return baseStyles;
+  };
+
   return (
-    <View style={[styles.container, style]}>
+    <View style={getContainerStyles()}>
       <Slider
         value={value}
         onValueChange={onValueChange}
@@ -34,7 +67,8 @@ const CustomSlider: React.FC<SliderProps> = ({
         minimumTrackTintColor={minimumTrackTintColor}
         maximumTrackTintColor={maximumTrackTintColor}
         thumbTintColor={thumbTintColor}
-        style={{ width: 200 }}
+        style={{ width }}
+        step={step}
         {...props}
       />
     </View>
@@ -44,6 +78,7 @@ const CustomSlider: React.FC<SliderProps> = ({
 const styles = StyleSheet.create({
   container: {
     marginVertical: 10,
+    alignItems: 'center',
   },
 });
 

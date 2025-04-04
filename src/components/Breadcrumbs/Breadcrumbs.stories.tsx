@@ -2,12 +2,19 @@ import React from 'react';
 import { View } from 'react-native';
 import type { Meta, StoryObj } from '@storybook/react';
 import Breadcrumbs from './Breadcrumbs';
+import { NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
 
 const meta: Meta<typeof Breadcrumbs> = {
   title: 'Navigation/Breadcrumbs',
   component: Breadcrumbs,
   parameters: {
     layout: 'centered',
+  },
+  argTypes: {
+    design: {
+      control: 'radio',
+      options: ['flat', 'neumorphic'],
+    },
   },
 };
 
@@ -50,4 +57,20 @@ const InteractiveBreadcrumbs = () => {
 
 export const Interactive: Story = {
   render: () => <InteractiveBreadcrumbs />,
+};
+
+export const CustomSeparator: Story = {
+  args: {
+    items: items,
+    separator: '→',
+  },
+};
+
+export const Neumorphic: Story = {
+  args: {
+    items: items,
+    design: 'neumorphic',
+    backgroundColor: NEUMORPHIC_COLORS.background,
+    textColor: NEUMORPHIC_COLORS.text,
+  },
 };

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View } from 'react-native';
 import type { Meta, StoryObj } from '@storybook/react';
 import Accordion from './Accordion';
-import Typography from '../Typography/Typography';
+import { NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
 
 const meta: Meta<typeof Accordion> = {
   title: 'Navigation/Accordion',
@@ -10,55 +10,58 @@ const meta: Meta<typeof Accordion> = {
   parameters: {
     layout: 'centered',
   },
+  argTypes: {
+    design: {
+      control: 'radio',
+      options: ['flat', 'neumorphic'],
+    },
+  },
 };
 
 export default meta;
 type Story = StoryObj<typeof Accordion>;
 
-const sections = [
+const sampleSections = [
   {
     id: '1',
-    title: 'What is React Native?',
-    content:
-      'React Native is a framework for building mobile applications using React and native platform capabilities.',
+    title: 'Section 1',
+    content: 'This is the content for section 1.',
   },
   {
     id: '2',
-    title: 'How does it work?',
-    content:
-      'It uses JavaScript/TypeScript to build native mobile apps by converting React components to native platform UI elements.',
+    title: 'Section 2',
+    content: 'This is the content for section 2.',
   },
   {
     id: '3',
-    title: 'Why use React Native?',
-    content:
-      'React Native allows you to build mobile apps for multiple platforms using a single codebase, saving time and resources.',
+    title: 'Section 3',
+    content: 'This is the content for section 3.',
   },
 ];
 
 export const Default: Story = {
   args: {
-    sections,
+    sections: sampleSections,
+    expandedSection: null,
+    onToggle: () => {},
+  },
+};
+
+export const WithExpandedSection: Story = {
+  args: {
+    sections: sampleSections,
     expandedSection: '1',
     onToggle: () => {},
   },
 };
 
-// Interactive example
-const InteractiveAccordion = () => {
-  const [expandedSection, setExpandedSection] = useState<string | null>(null);
-
-  return (
-    <View style={{ width: '100%', maxWidth: 600 }}>
-      <Accordion
-        sections={sections}
-        expandedSection={expandedSection}
-        onToggle={setExpandedSection}
-      />
-    </View>
-  );
-};
-
-export const Interactive: Story = {
-  render: () => <InteractiveAccordion />,
+export const Neumorphic: Story = {
+  args: {
+    sections: sampleSections,
+    expandedSection: null,
+    design: 'neumorphic',
+    backgroundColor: NEUMORPHIC_COLORS.background,
+    textColor: NEUMORPHIC_COLORS.text,
+    onToggle: () => {},
+  },
 };

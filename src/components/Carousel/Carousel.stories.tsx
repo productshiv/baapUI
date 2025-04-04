@@ -1,60 +1,92 @@
-import React from 'react';
+import React, { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import Carousel from './Carousel';
+import { NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
+
+const sampleItems = ['Home', 'Products', 'Services', 'About', 'Contact'];
 
 const meta: Meta<typeof Carousel> = {
-  title: 'Data Display/Carousel',
+  title: 'Navigation/Carousel',
   component: Carousel,
   parameters: {
     layout: 'centered',
+  },
+  argTypes: {
+    design: {
+      control: 'radio',
+      options: ['flat', 'neumorphic'],
+    },
   },
 };
 
 export default meta;
 type Story = StoryObj<typeof Carousel>;
 
-const basicItems = ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5'];
+interface CarouselDemoProps {
+  design?: 'flat' | 'neumorphic';
+  items?: string[];
+}
+
+const CarouselDemo = ({ design = 'flat', items = sampleItems }: CarouselDemoProps) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  return (
+    <div style={{ width: '600px' }}>
+      <Carousel
+        items={items}
+        currentIndex={currentIndex}
+        onIndexChange={setCurrentIndex}
+        design={design}
+      />
+    </div>
+  );
+};
 
 export const Default: Story = {
-  args: {
-    items: basicItems,
-    currentIndex: 0,
-    onIndexChange: () => {},
-  },
+  render: () => <CarouselDemo />,
 };
 
-export const WithCustomStyle: Story = {
-  args: {
-    items: basicItems,
-    currentIndex: 0,
-    onIndexChange: () => {},
-    itemStyle: {
-      backgroundColor: '#4A90E2',
-      padding: 20,
-      borderRadius: 8,
-      minWidth: 200,
-    },
-    textStyle: { color: '#FFFFFF' },
-    activeItemStyle: { backgroundColor: '#2962ff' },
-  },
+export const WithLongItems: Story = {
+  render: () => (
+    <CarouselDemo items={[
+      'Dashboard',
+      'User Management',
+      'System Settings',
+      'Notifications',
+      'Account Details',
+      'Help & Support',
+    ]} />
+  ),
 };
 
-const contentItems = ['React Native', 'TypeScript', 'Storybook', 'Components', 'Documentation'];
+export const Neumorphic: Story = {
+  render: () => (
+    <div style={{ 
+      backgroundColor: NEUMORPHIC_COLORS.background,
+      padding: '24px',
+      borderRadius: '12px',
+    }}>
+      <CarouselDemo design="neumorphic" />
+    </div>
+  ),
+};
 
-export const ContentCarousel: Story = {
-  args: {
-    items: contentItems,
-    currentIndex: 0,
-    onIndexChange: () => {},
-    itemStyle: {
-      padding: 16,
-      minWidth: 150,
-      backgroundColor: '#e3f2fd',
-    },
-    activeItemStyle: {
-      backgroundColor: '#2196f3',
-    },
-    textStyle: { color: '#1976d2' },
-    activeTextStyle: { color: '#ffffff' },
-  },
+export const NeumorphicWithCustomColors: Story = {
+  render: () => (
+    <div style={{ 
+      backgroundColor: NEUMORPHIC_COLORS.background,
+      padding: '24px',
+      borderRadius: '12px',
+    }}>
+      <Carousel
+        items={sampleItems}
+        currentIndex={0}
+        onIndexChange={() => {}}
+        design="neumorphic"
+        backgroundColor={NEUMORPHIC_COLORS.background}
+        textColor="#666"
+        activeTextColor="#2196f3"
+      />
+    </div>
+  ),
 };

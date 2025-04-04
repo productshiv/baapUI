@@ -1,5 +1,6 @@
 import React from 'react';
 import { Text, StyleSheet, TextStyle, TextProps, Platform, StyleProp } from 'react-native';
+import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
 
 /**
  * Available typography variants following Material Design typography scale
@@ -39,6 +40,10 @@ interface TypographyProps extends TextProps {
   adjustsFontSizeToFit?: boolean;
   /** Minimum scale factor for font size adjustment */
   minimumFontScale?: number;
+  /** Design style - flat or neumorphic */
+  design?: 'flat' | 'neumorphic';
+  /** Background color for neumorphic effect */
+  backgroundColor?: string;
 }
 
 /**
@@ -49,6 +54,15 @@ interface TypographyProps extends TextProps {
  * ```tsx
  * // Basic usage
  * <Typography variant="h1">Hello World</Typography>
+ *
+ * // With neumorphic styling
+ * <Typography
+ *   variant="h1"
+ *   design="neumorphic"
+ *   backgroundColor="#E0E5EC"
+ * >
+ *   Neumorphic Heading
+ * </Typography>
  *
  * // With custom styling
  * <Typography
@@ -77,6 +91,8 @@ const Typography: React.FC<TypographyProps> = ({
   numberOfLines,
   adjustsFontSizeToFit = true,
   minimumFontScale = 0.7,
+  design = 'flat',
+  backgroundColor = NEUMORPHIC_COLORS.background,
   ...props
 }) => {
   const variantStyles: Record<TypographyVariant, TextStyle> = {
@@ -94,10 +110,29 @@ const Typography: React.FC<TypographyProps> = ({
     overline: { fontSize: 10, fontWeight: '400', lineHeight: 16, textTransform: 'uppercase' },
   };
 
+  const getTypographyStyles = (): StyleProp<TextStyle> => {
+    const baseStyles: StyleProp<TextStyle>[] = [variantStyles[variant], { color, textAlign: align }];
+
+    if (design === 'neumorphic') {
+      const neumorphicStyles = getNeumorphicStyles({
+        customBackground: backgroundColor,
+        customBorderRadius: 8,
+      });
+      baseStyles.push(...neumorphicStyles);
+      baseStyles.push({ padding: 8 });
+    }
+
+    if (style) {
+      baseStyles.push(style);
+    }
+
+    return baseStyles;
+  };
+
   return (
     <Text
       {...props}
-      style={[variantStyles[variant], { color, textAlign: align }, style]}
+      style={getTypographyStyles()}
       numberOfLines={numberOfLines}
       adjustsFontSizeToFit={adjustsFontSizeToFit}
       minimumFontScale={minimumFontScale}

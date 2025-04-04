@@ -3,6 +3,7 @@ import { View } from 'react-native';
 import type { Meta, StoryObj } from '@storybook/react';
 import Stepper from './Stepper';
 import Typography from '../Typography/Typography';
+import { NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
 
 const meta: Meta<typeof Stepper> = {
   title: 'Form/Stepper',
@@ -15,6 +16,10 @@ const meta: Meta<typeof Stepper> = {
     step: { control: 'number' },
     minimumValue: { control: 'number' },
     maximumValue: { control: 'number' },
+    design: {
+      control: 'radio',
+      options: ['flat', 'neumorphic'],
+    },
   },
 };
 
@@ -59,4 +64,25 @@ const InteractiveStepperExample = () => {
 
 export const Interactive: Story = {
   render: () => <InteractiveStepperExample />,
+};
+
+export const WithCustomRange: Story = {
+  args: {
+    value: 5,
+    minimumValue: 0,
+    maximumValue: 10,
+    onValueChange: () => {},
+  },
+};
+
+export const Neumorphic: Story = {
+  args: {
+    value: 0,
+    minimumValue: 0,
+    maximumValue: 10,
+    design: 'neumorphic',
+    backgroundColor: NEUMORPHIC_COLORS.background,
+    textColor: NEUMORPHIC_COLORS.text,
+    onValueChange: () => {},
+  },
 };

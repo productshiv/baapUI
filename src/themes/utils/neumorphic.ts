@@ -1,10 +1,16 @@
 import { ViewStyle } from 'react-native';
 
 export const NEUMORPHIC_COLORS = {
-  background: '#e0e0e0',
+  background: '#fff',
   darkShadow: '#cacaca',
   lightShadow: '#f6f6f6',
   text: '#2d2d2d',
+  primary: '#4A90E2',
+  secondary: '#6c757d',
+  success: '#28a745',
+  danger: '#dc3545',
+  warning: '#ffc107',
+  info: '#17a2b8',
 };
 
 export const NEUMORPHIC_CONFIG = {

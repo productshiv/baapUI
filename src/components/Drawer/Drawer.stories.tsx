@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
-import { View } from 'react-native';
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import Drawer from './Drawer';
-import Button from '../Button/Button';
+import { NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
 
 const meta: Meta<typeof Drawer> = {
   title: 'Navigation/Drawer',
@@ -10,38 +9,47 @@ const meta: Meta<typeof Drawer> = {
   parameters: {
     layout: 'centered',
   },
+  argTypes: {
+    design: {
+      control: 'radio',
+      options: ['flat', 'neumorphic'],
+    },
+  },
 };
 
 export default meta;
 type Story = StoryObj<typeof Drawer>;
 
-const drawerItems = [
+const sampleItems = [
   { id: 'home', label: 'Home' },
   { id: 'profile', label: 'Profile' },
   { id: 'settings', label: 'Settings' },
-  { id: 'help', label: 'Help & Support' },
-  { id: 'about', label: 'About' },
+  { id: 'help', label: 'Help' },
 ];
 
 export const Default: Story = {
   args: {
-    items: drawerItems,
+    items: sampleItems,
     selectedItem: 'home',
     onSelect: () => {},
   },
 };
 
-// Interactive drawer example
-const InteractiveDrawerExample = () => {
-  const [selectedItem, setSelectedItem] = useState('home');
-
-  return (
-    <View style={{ width: '100%', height: 400 }}>
-      <Drawer items={drawerItems} selectedItem={selectedItem} onSelect={setSelectedItem} />
-    </View>
-  );
+export const WithSelectedItem: Story = {
+  args: {
+    items: sampleItems,
+    selectedItem: 'profile',
+    onSelect: () => {},
+  },
 };
 
-export const Interactive: Story = {
-  render: () => <InteractiveDrawerExample />,
+export const Neumorphic: Story = {
+  args: {
+    items: sampleItems,
+    selectedItem: 'home',
+    design: 'neumorphic',
+    backgroundColor: NEUMORPHIC_COLORS.background,
+    textColor: NEUMORPHIC_COLORS.text,
+    onSelect: () => {},
+  },
 };

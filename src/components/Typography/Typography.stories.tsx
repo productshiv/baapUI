@@ -1,14 +1,13 @@
 import React from 'react';
 import { View } from 'react-native';
-import type { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import Typography from './Typography';
+import { NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
 
 const meta: Meta<typeof Typography> = {
   title: 'Utility/Typography',
   component: Typography,
-  parameters: {
-    layout: 'centered',
-  },
+  tags: ['autodocs'],
   argTypes: {
     variant: {
       control: 'select',
@@ -27,9 +26,11 @@ const meta: Meta<typeof Typography> = {
         'overline',
       ],
     },
-    color: {
-      control: 'color',
+    design: {
+      control: 'radio',
+      options: ['flat', 'neumorphic'],
     },
+    color: { control: 'color' },
     align: {
       control: 'select',
       options: ['left', 'center', 'right'],
@@ -42,14 +43,23 @@ type Story = StoryObj<typeof Typography>;
 
 export const Default: Story = {
   args: {
-    children: 'Hello Typography',
+    children: 'Hello World',
     variant: 'body1',
+  },
+};
+
+export const Neumorphic: Story = {
+  args: {
+    children: 'Neumorphic Text',
+    variant: 'h1',
+    design: 'neumorphic',
+    backgroundColor: NEUMORPHIC_COLORS.background,
   },
 };
 
 export const AllVariants: Story = {
   render: () => (
-    <View style={{ gap: 16, padding: 20 }}>
+    <View style={{ padding: 20, gap: 10 }}>
       <Typography variant="h1">Heading 1</Typography>
       <Typography variant="h2">Heading 2</Typography>
       <Typography variant="h3">Heading 3</Typography>
@@ -58,10 +68,32 @@ export const AllVariants: Story = {
       <Typography variant="h6">Heading 6</Typography>
       <Typography variant="subtitle1">Subtitle 1</Typography>
       <Typography variant="subtitle2">Subtitle 2</Typography>
-      <Typography variant="body1">Body 1 - Main content text</Typography>
-      <Typography variant="body2">Body 2 - Secondary content text</Typography>
-      <Typography variant="caption">Caption - Small text and labels</Typography>
+      <Typography variant="body1">Body 1</Typography>
+      <Typography variant="body2">Body 2</Typography>
+      <Typography variant="caption">Caption Text</Typography>
       <Typography variant="overline">Overline Text</Typography>
+    </View>
+  ),
+};
+
+export const Alignments: Story = {
+  render: () => (
+    <View style={{ padding: 20, gap: 10 }}>
+      <Typography align="left">Left Aligned</Typography>
+      <Typography align="center">Center Aligned</Typography>
+      <Typography align="right">Right Aligned</Typography>
+    </View>
+  ),
+};
+
+export const Colors: Story = {
+  render: () => (
+    <View style={{ padding: 20, gap: 10 }}>
+      <Typography color={NEUMORPHIC_COLORS.primary}>Primary Color</Typography>
+      <Typography color={NEUMORPHIC_COLORS.success}>Success Color</Typography>
+      <Typography color={NEUMORPHIC_COLORS.danger}>Danger Color</Typography>
+      <Typography color={NEUMORPHIC_COLORS.warning}>Warning Color</Typography>
+      <Typography color={NEUMORPHIC_COLORS.info}>Info Color</Typography>
     </View>
   ),
 };

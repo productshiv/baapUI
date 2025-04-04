@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, ScrollView, TouchableOpacity, StyleSheet, ViewStyle, TextStyle } from 'react-native';
 import Typography from '../Typography/Typography';
+import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
 
 interface CarouselProps {
   items: string[];
@@ -11,6 +12,10 @@ interface CarouselProps {
   activeItemStyle?: ViewStyle;
   textStyle?: TextStyle;
   activeTextStyle?: TextStyle;
+  design?: 'flat' | 'neumorphic';
+  backgroundColor?: string;
+  textColor?: string;
+  activeTextColor?: string;
 }
 
 const Carousel: React.FC<CarouselProps> = ({
@@ -22,9 +27,104 @@ const Carousel: React.FC<CarouselProps> = ({
   activeItemStyle,
   textStyle,
   activeTextStyle,
+  design = 'flat',
+  backgroundColor = NEUMORPHIC_COLORS.background,
+  textColor = NEUMORPHIC_COLORS.text,
+  activeTextColor = NEUMORPHIC_COLORS.primary,
 }) => {
+  const [pressedIndex, setPressedIndex] = useState<number | null>(null);
+
+  const getWrapperStyles = (): ViewStyle[] => {
+    const baseStyles: ViewStyle[] = [styles.wrapper];
+
+    if (design === 'neumorphic') {
+      const neumorphicStyles = getNeumorphicStyles({
+        isPressed: false,
+        customBackground: backgroundColor,
+        customBorderRadius: 12,
+      });
+      
+      baseStyles.push(...neumorphicStyles);
+      baseStyles.push({
+        backgroundColor,
+        padding: 12,
+      });
+    }
+
+    if (style) {
+      baseStyles.push(style);
+    }
+
+    return baseStyles;
+  };
+
+  const getItemStyles = (index: number): ViewStyle[] => {
+    const isActive = index === currentIndex;
+    const baseStyles: ViewStyle[] = [styles.item];
+
+    if (design === 'neumorphic') {
+      const neumorphicStyles = getNeumorphicStyles({
+        isPressed: pressedIndex === index || isActive,
+        customBackground: backgroundColor,
+        customBorderRadius: 8,
+      });
+      
+      baseStyles.push(...neumorphicStyles);
+      baseStyles.push({
+        backgroundColor,
+        borderWidth: 0,
+      });
+    }
+
+    if (itemStyle) {
+      baseStyles.push(itemStyle);
+    }
+
+    if (isActive) {
+      if (design === 'neumorphic') {
+        baseStyles.push({
+          backgroundColor: NEUMORPHIC_COLORS.primary,
+        });
+      } else {
+        baseStyles.push(styles.activeItem);
+      }
+      if (activeItemStyle) {
+        baseStyles.push(activeItemStyle);
+      }
+    }
+
+    return baseStyles;
+  };
+
+  const getTextStyles = (index: number): TextStyle => {
+    const isActive = index === currentIndex;
+    const baseStyle: TextStyle = {
+      ...styles.text,
+      color: design === 'neumorphic' ? (isActive ? activeTextColor : textColor) : undefined,
+    };
+
+    if (design === 'neumorphic') {
+      baseStyle.textShadowColor = NEUMORPHIC_COLORS.lightShadow;
+      baseStyle.textShadowOffset = { width: 1, height: 1 };
+      baseStyle.textShadowRadius = 1;
+    }
+
+    if (textStyle) {
+      Object.assign(baseStyle, textStyle);
+    }
+
+    if (isActive) {
+      Object.assign(baseStyle, styles.activeText);
+      if (activeTextStyle) {
+        Object.assign(baseStyle, activeTextStyle);
+      }
+    }
+
+    return baseStyle;
+  };
+
   return (
-    <View style={[styles.wrapper, style]}>
+    <View style={getWrapperStyles()}>
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -34,20 +134,13 @@ const Carousel: React.FC<CarouselProps> = ({
           <TouchableOpacity
             key={index}
             onPress={() => onIndexChange(index)}
-            style={[
-              styles.item,
-              itemStyle,
-              index === currentIndex && styles.activeItem,
-              index === currentIndex && activeItemStyle,
-            ]}
+            onPressIn={() => setPressedIndex(index)}
+            onPressOut={() => setPressedIndex(null)}
+            style={getItemStyles(index)}
           >
             <Typography
               variant="body1"
-              style={
-                index === currentIndex
-                  ? { ...styles.text, ...styles.activeText, ...activeTextStyle }
-                  : { ...styles.text, ...textStyle }
-              }
+              style={getTextStyles(index)}
             >
               {item}
             </Typography>
@@ -69,12 +162,9 @@ const styles = StyleSheet.create({
   },
   item: {
     padding: 12,
-    backgroundColor: '#FFFFFF',
-    borderRadius: 4,
+    borderRadius: 8,
     minWidth: 100,
     alignItems: 'center',
-    borderWidth: 1,
-    borderColor: '#E0E0E0',
     marginRight: 8,
   },
   activeItem: {

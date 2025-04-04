@@ -1,14 +1,17 @@
 import React from 'react';
 import { View, StyleSheet, ViewStyle, DimensionValue } from 'react-native';
+import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
 
 interface GridProps {
   children: React.ReactNode;
   style?: ViewStyle;
+  design?: 'flat' | 'neumorphic';
+  backgroundColor?: string;
 }
 
 interface RowProps extends GridProps {
   spacing?: number;
-  columns?: number; // Number of columns per row
+  columns?: number;
   align?: 'flex-start' | 'center' | 'flex-end' | 'stretch' | 'baseline';
   justify?:
     | 'flex-start'
@@ -18,17 +21,47 @@ interface RowProps extends GridProps {
     | 'space-around'
     | 'space-evenly';
   wrap?: 'wrap' | 'nowrap';
+  elevated?: boolean;
 }
 
 interface ColProps extends GridProps {
-  size?: number; // Number of columns to span
+  size?: number;
   offset?: number;
-  flex?: boolean; // Whether to use flex: 1
+  flex?: boolean;
+  elevated?: boolean;
 }
 
-export const Container: React.FC<GridProps> = ({ children, style }) => (
-  <View style={[styles.container, style]}>{children}</View>
-);
+export const Container: React.FC<GridProps> = ({
+  children,
+  style,
+  design = 'flat',
+  backgroundColor = NEUMORPHIC_COLORS.background,
+}) => {
+  const getContainerStyles = (): ViewStyle[] => {
+    const baseStyles: ViewStyle[] = [styles.container];
+
+    if (design === 'neumorphic') {
+      const neumorphicStyles = getNeumorphicStyles({
+        isPressed: false,
+        customBackground: backgroundColor,
+        customBorderRadius: 12,
+      });
+      
+      baseStyles.push(...neumorphicStyles);
+      baseStyles.push({
+        backgroundColor,
+      });
+    }
+
+    if (style) {
+      baseStyles.push(style);
+    }
+
+    return baseStyles;
+  };
+
+  return <View style={getContainerStyles()}>{children}</View>;
+};
 
 export const Row: React.FC<RowProps> = ({
   children,
@@ -38,10 +71,12 @@ export const Row: React.FC<RowProps> = ({
   justify = 'flex-start',
   wrap = 'wrap',
   style,
+  design = 'flat',
+  backgroundColor = NEUMORPHIC_COLORS.background,
+  elevated = false,
 }) => {
   const childrenArray = React.Children.toArray(children);
 
-  // Calculate total fixed columns and count flex columns
   const { fixedColumns, flexCount } = childrenArray.reduce(
     (acc, child) => {
       if (React.isValidElement(child)) {
@@ -56,38 +91,58 @@ export const Row: React.FC<RowProps> = ({
     { fixedColumns: 0, flexCount: 0 }
   );
 
-  // Calculate remaining space for flex columns
   const remainingColumns = Math.max(0, columns - fixedColumns);
   const columnsPerFlex = flexCount > 0 ? remainingColumns / flexCount : 0;
 
+  const getRowStyles = (): ViewStyle[] => {
+    const baseStyles: ViewStyle[] = [
+      styles.row,
+      {
+        alignItems: align,
+        justifyContent: justify,
+        flexWrap: wrap,
+        margin: -(spacing * 4),
+      },
+    ];
+
+    if (design === 'neumorphic' && elevated) {
+      const neumorphicStyles = getNeumorphicStyles({
+        isPressed: false,
+        customBackground: backgroundColor,
+        customBorderRadius: 8,
+      });
+      
+      baseStyles.push(...neumorphicStyles);
+      baseStyles.push({
+        backgroundColor,
+        padding: 8,
+      });
+    }
+
+    if (style) {
+      baseStyles.push(style);
+    }
+
+    return baseStyles;
+  };
+
   return (
-    <View
-      style={[
-        styles.row,
-        {
-          alignItems: align,
-          justifyContent: justify,
-          flexWrap: wrap,
-          margin: -(spacing * 4),
-        },
-        style,
-      ]}
-    >
+    <View style={getRowStyles()}>
       {React.Children.map(children, child => {
         if (React.isValidElement(child)) {
           let width: DimensionValue;
 
           if (child.props.flex) {
-            // For flex columns, distribute remaining space evenly
             width = `${(columnsPerFlex / columns) * 100}%`;
           } else {
-            // For fixed columns, use specified size or default to 1
             const colSize = child.props.size || 1;
             width = `${(colSize / columns) * 100}%`;
           }
 
           return React.cloneElement(child, {
             ...child.props,
+            design,
+            backgroundColor,
             style: [
               child.props.style,
               {
@@ -109,18 +164,38 @@ export const Col: React.FC<ColProps> = ({
   offset = 0,
   flex = false,
   style,
+  design = 'flat',
+  backgroundColor = NEUMORPHIC_COLORS.background,
+  elevated = false,
 }) => {
-  return (
-    <View
-      style={[
-        styles.col,
-        offset > 0 && { marginLeft: `${(offset / 12) * 100}%` as DimensionValue },
-        style,
-      ]}
-    >
-      {children}
-    </View>
-  );
+  const getColStyles = (): ViewStyle[] => {
+    const baseStyles: ViewStyle[] = [
+      styles.col,
+      ...(offset > 0 ? [{ marginLeft: `${(offset / 12) * 100}%` as DimensionValue }] : []),
+    ];
+
+    if (design === 'neumorphic' && elevated) {
+      const neumorphicStyles = getNeumorphicStyles({
+        isPressed: false,
+        customBackground: backgroundColor,
+        customBorderRadius: 8,
+      });
+      
+      baseStyles.push(...neumorphicStyles);
+      baseStyles.push({
+        backgroundColor,
+        padding: 8,
+      });
+    }
+
+    if (style) {
+      baseStyles.push(style);
+    }
+
+    return baseStyles;
+  };
+
+  return <View style={getColStyles()}>{children}</View>;
 };
 
 const styles = StyleSheet.create({

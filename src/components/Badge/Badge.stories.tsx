@@ -1,7 +1,7 @@
 import React from 'react';
-import { View } from 'react-native';
 import type { Meta, StoryObj } from '@storybook/react';
 import Badge from './Badge';
+import { NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
 
 const meta: Meta<typeof Badge> = {
   title: 'Feedback/Badge',
@@ -18,6 +18,10 @@ const meta: Meta<typeof Badge> = {
       control: 'select',
       options: ['small', 'medium', 'large'],
     },
+    design: {
+      control: 'radio',
+      options: ['flat', 'neumorphic'],
+    },
   },
 };
 
@@ -28,39 +32,53 @@ export const Default: Story = {
   args: {
     children: '1',
     variant: 'primary',
+    size: 'medium',
   },
 };
 
-export const Variants: Story = {
+export const AllVariants: Story = {
   render: () => (
-    <View style={{ flexDirection: 'row', gap: 16, padding: 20 }}>
+    <div style={{ display: 'flex', gap: '16px' }}>
       <Badge variant="primary">1</Badge>
       <Badge variant="secondary">2</Badge>
       <Badge variant="success">3</Badge>
       <Badge variant="error">4</Badge>
       <Badge variant="warning">5</Badge>
       <Badge variant="info">6</Badge>
-    </View>
+    </div>
   ),
 };
 
-export const Sizes: Story = {
+export const AllSizes: Story = {
   render: () => (
-    <View style={{ flexDirection: 'row', gap: 16, padding: 20, alignItems: 'center' }}>
+    <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
       <Badge size="small">S</Badge>
       <Badge size="medium">M</Badge>
       <Badge size="large">L</Badge>
-    </View>
+    </div>
   ),
 };
 
-export const WithContent: Story = {
+export const Neumorphic: Story = {
+  args: {
+    children: '1',
+    variant: 'primary',
+    size: 'medium',
+    design: 'neumorphic',
+    backgroundColor: NEUMORPHIC_COLORS.background,
+    textColor: NEUMORPHIC_COLORS.text,
+  },
+};
+
+export const NeumorphicVariants: Story = {
   render: () => (
-    <View style={{ gap: 16, padding: 20 }}>
-      <Badge>1</Badge>
-      <Badge>99+</Badge>
-      <Badge>New</Badge>
-      <Badge>Hot</Badge>
-    </View>
+    <div style={{ display: 'flex', gap: '16px', backgroundColor: NEUMORPHIC_COLORS.background, padding: '16px', borderRadius: '8px' }}>
+      <Badge variant="primary" design="neumorphic">1</Badge>
+      <Badge variant="secondary" design="neumorphic">2</Badge>
+      <Badge variant="success" design="neumorphic">3</Badge>
+      <Badge variant="error" design="neumorphic">4</Badge>
+      <Badge variant="warning" design="neumorphic">5</Badge>
+      <Badge variant="info" design="neumorphic">6</Badge>
+    </div>
   ),
 };

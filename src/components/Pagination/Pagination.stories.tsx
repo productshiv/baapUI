@@ -3,6 +3,7 @@ import { View } from 'react-native';
 import type { Meta, StoryObj } from '@storybook/react';
 import Pagination from './Pagination';
 import Typography from '../Typography/Typography';
+import { NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
 
 const meta: Meta<typeof Pagination> = {
   title: 'Navigation/Pagination',
@@ -11,8 +12,10 @@ const meta: Meta<typeof Pagination> = {
     layout: 'centered',
   },
   argTypes: {
-    totalPages: { control: 'number' },
-    currentPage: { control: 'number' },
+    design: {
+      control: 'radio',
+      options: ['flat', 'neumorphic'],
+    },
   },
 };
 
@@ -21,16 +24,27 @@ type Story = StoryObj<typeof Pagination>;
 
 export const Default: Story = {
   args: {
-    totalPages: 5,
     currentPage: 1,
+    totalPages: 10,
     onPageChange: () => {},
   },
 };
 
-export const ManyPages: Story = {
+export const WithLargeRange: Story = {
   args: {
-    totalPages: 10,
     currentPage: 5,
+    totalPages: 20,
+    onPageChange: () => {},
+  },
+};
+
+export const Neumorphic: Story = {
+  args: {
+    currentPage: 1,
+    totalPages: 10,
+    design: 'neumorphic',
+    backgroundColor: NEUMORPHIC_COLORS.background,
+    textColor: NEUMORPHIC_COLORS.text,
     onPageChange: () => {},
   },
 };

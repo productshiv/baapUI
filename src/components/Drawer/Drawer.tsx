@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, TouchableOpacity, StyleSheet, ViewStyle } from 'react-native';
 import Typography from '../Typography/Typography';
+import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
 
 interface DrawerItem {
   id: string;
@@ -12,33 +13,132 @@ interface DrawerProps {
   selectedItem: string;
   onSelect: (id: string) => void;
   style?: ViewStyle;
+  design?: 'flat' | 'neumorphic';
+  backgroundColor?: string;
+  textColor?: string;
 }
 
-const Drawer: React.FC<DrawerProps> = ({ items, selectedItem, onSelect, style }) => {
+const Drawer: React.FC<DrawerProps> = ({
+  items,
+  selectedItem,
+  onSelect,
+  style,
+  design = 'flat',
+  backgroundColor = NEUMORPHIC_COLORS.background,
+  textColor = NEUMORPHIC_COLORS.text,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isHamburgerPressed, setIsHamburgerPressed] = useState(false);
+  const [pressedItemId, setPressedItemId] = useState<string | null>(null);
 
   const toggleDrawer = () => {
     setIsOpen(!isOpen);
   };
 
+  const getHamburgerStyles = (): ViewStyle[] => {
+    const baseStyles: ViewStyle[] = [styles.hamburger];
+
+    if (design === 'neumorphic') {
+      const neumorphicStyles = getNeumorphicStyles({
+        isPressed: isHamburgerPressed,
+        customBackground: backgroundColor,
+        customBorderRadius: 8,
+      });
+      
+      baseStyles.push(...neumorphicStyles);
+      baseStyles.push({
+        backgroundColor,
+      });
+    }
+
+    return baseStyles;
+  };
+
+  const getContainerStyles = (): ViewStyle[] => {
+    const baseStyles: ViewStyle[] = [styles.container];
+
+    if (design === 'neumorphic') {
+      const neumorphicStyles = getNeumorphicStyles({
+        isPressed: false,
+        customBackground: backgroundColor,
+        customBorderRadius: 12,
+      });
+      
+      baseStyles.push(...neumorphicStyles);
+      baseStyles.push({
+        backgroundColor,
+        borderWidth: 0,
+      });
+    }
+
+    if (style) {
+      baseStyles.push(style);
+    }
+
+    return baseStyles;
+  };
+
+  const getItemStyles = (itemId: string): ViewStyle[] => {
+    const baseStyles: ViewStyle[] = [styles.item];
+
+    if (design === 'neumorphic') {
+      const isSelected = selectedItem === itemId;
+      const isPressed = pressedItemId === itemId;
+      
+      const neumorphicStyles = getNeumorphicStyles({
+        isPressed: isPressed || isSelected,
+        customBackground: backgroundColor,
+        customBorderRadius: 8,
+      });
+      
+      baseStyles.push(...neumorphicStyles);
+      baseStyles.push({
+        margin: 8,
+        borderBottomWidth: 0,
+      });
+    } else if (selectedItem === itemId) {
+      baseStyles.push(styles.selectedItem);
+    }
+
+    return baseStyles;
+  };
+
   return (
     <View>
-      <TouchableOpacity onPress={toggleDrawer} style={styles.hamburger}>
-        <View style={styles.hamburgerLine} />
-        <View style={styles.hamburgerLine} />
-        <View style={styles.hamburgerLine} />
+      <TouchableOpacity
+        onPress={toggleDrawer}
+        style={getHamburgerStyles()}
+        onPressIn={() => setIsHamburgerPressed(true)}
+        onPressOut={() => setIsHamburgerPressed(false)}
+      >
+        <View style={[styles.hamburgerLine, design === 'neumorphic' && { backgroundColor: textColor }]} />
+        <View style={[styles.hamburgerLine, design === 'neumorphic' && { backgroundColor: textColor }]} />
+        <View style={[styles.hamburgerLine, design === 'neumorphic' && { backgroundColor: textColor }]} />
       </TouchableOpacity>
       {isOpen && (
-        <View style={[styles.container, style]}>
+        <View style={getContainerStyles()}>
           {items.map(item => (
             <TouchableOpacity
               key={item.id}
               onPress={() => onSelect(item.id)}
-              style={[styles.item, selectedItem === item.id && styles.selectedItem]}
+              onPressIn={() => setPressedItemId(item.id)}
+              onPressOut={() => setPressedItemId(null)}
+              style={getItemStyles(item.id)}
             >
               <Typography
                 variant="body1"
-                style={selectedItem === item.id ? styles.selectedLabel : styles.label}
+                style={[
+                  design === 'neumorphic'
+                    ? {
+                        color: textColor,
+                        textShadowColor: NEUMORPHIC_COLORS.lightShadow,
+                        textShadowOffset: { width: 1, height: 1 },
+                        textShadowRadius: 1,
+                      }
+                    : selectedItem === item.id
+                    ? styles.selectedLabel
+                    : styles.label
+                ]}
               >
                 {item.label}
               </Typography>
@@ -72,6 +172,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#E0E0E0',
     borderRadius: 4,
+    position: 'absolute',
+    top: 44,
+    left: 0,
+    zIndex: 1000,
   },
   item: {
     padding: 12,

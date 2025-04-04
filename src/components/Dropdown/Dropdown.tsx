@@ -10,6 +10,7 @@ import {
   ScrollView,
 } from 'react-native';
 import Typography from '../Typography/Typography';
+import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
 
 interface DropdownProps {
   options: string[];
@@ -22,6 +23,9 @@ interface DropdownProps {
   optionStyle?: ViewStyle;
   labelStyle?: TextStyle | TextStyle[];
   textStyle?: TextStyle | TextStyle[];
+  design?: 'flat' | 'neumorphic';
+  backgroundColor?: string;
+  textColor?: string;
 }
 
 const Dropdown: React.FC<DropdownProps> = ({
@@ -35,9 +39,13 @@ const Dropdown: React.FC<DropdownProps> = ({
   optionStyle,
   labelStyle,
   textStyle,
+  design = 'flat',
+  backgroundColor = NEUMORPHIC_COLORS.background,
+  textColor = NEUMORPHIC_COLORS.text,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [animation] = useState(new Animated.Value(0));
+  const [pressedOption, setPressedOption] = useState<string | null>(null);
 
   const toggleDropdown = () => {
     const toValue = isOpen ? 0 : 1;
@@ -52,55 +60,197 @@ const Dropdown: React.FC<DropdownProps> = ({
 
   const optionsHeight = animation.interpolate({
     inputRange: [0, 1],
-    outputRange: [0, Math.min(options.length * 48, 200)], // Max height of 200
+    outputRange: [0, Math.min(options.length * 48 + 16, 250)],
   });
 
+  const getContainerStyles = (): ViewStyle[] => {
+    const baseStyles: ViewStyle[] = [styles.container];
+
+    if (style) {
+      baseStyles.push(style);
+    }
+
+    return baseStyles;
+  };
+
+  const getDropdownStyles = (): ViewStyle[] => {
+    const baseStyles: ViewStyle[] = [styles.dropdown];
+
+    if (design === 'neumorphic') {
+      const neumorphicStyles = getNeumorphicStyles({
+        isPressed: isOpen,
+        customBackground: backgroundColor,
+        customBorderRadius: 8,
+      });
+      
+      baseStyles.push(...neumorphicStyles);
+      baseStyles.push({
+        borderWidth: 0,
+      });
+    }
+
+    if (dropdownStyle) {
+      baseStyles.push(dropdownStyle);
+    }
+
+    return baseStyles;
+  };
+
+  const getOptionsContainerStyles = (): ViewStyle[] => {
+    const baseStyles: ViewStyle[] = [styles.optionsContainer];
+
+    if (design === 'neumorphic') {
+      const neumorphicStyles = getNeumorphicStyles({
+        isPressed: true,
+        customBackground: backgroundColor,
+        customBorderRadius: 8,
+      });
+      
+      baseStyles.push({
+        shadowColor: neumorphicStyles[0].shadowColor,
+        shadowOffset: { width: 2, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 3,
+        elevation: 3,
+        borderWidth: 0,
+        marginTop: 8,
+      });
+    }
+
+    return baseStyles;
+  };
+
+  const getOptionStyles = (option: string): ViewStyle[] => {
+    const baseStyles: ViewStyle[] = [styles.option];
+
+    if (design === 'neumorphic') {
+      const neumorphicStyles = getNeumorphicStyles({
+        isPressed: pressedOption === option,
+        customBackground: backgroundColor,
+        customBorderRadius: 6,
+      });
+      
+      if (pressedOption === option) {
+        baseStyles.push({
+          shadowColor: neumorphicStyles[0].shadowColor,
+          shadowOffset: { width: 1, height: 1 },
+          shadowOpacity: 0.15,
+          shadowRadius: 2,
+          elevation: 2,
+        });
+      }
+      
+      baseStyles.push({
+        margin: 4,
+      });
+    }
+
+    if (optionStyle) {
+      baseStyles.push(optionStyle);
+    }
+
+    return baseStyles;
+  };
+
+  const getTextStyles = (): TextStyle[] => {
+    const baseStyles: TextStyle[] = [styles.text];
+
+    if (design === 'neumorphic') {
+      baseStyles.push({
+        color: textColor,
+        textShadowColor: NEUMORPHIC_COLORS.lightShadow,
+        textShadowOffset: { width: 1, height: 1 },
+        textShadowRadius: 1,
+      });
+    }
+
+    if (textStyle) {
+      if (Array.isArray(textStyle)) {
+        baseStyles.push(...textStyle);
+      } else {
+        baseStyles.push(textStyle);
+      }
+    }
+
+    return baseStyles;
+  };
+
+  const getLabelStyles = (): TextStyle[] => {
+    const baseStyles: TextStyle[] = [styles.label];
+
+    if (design === 'neumorphic') {
+      baseStyles.push({
+        color: textColor,
+        textShadowColor: NEUMORPHIC_COLORS.lightShadow,
+        textShadowOffset: { width: 1, height: 1 },
+        textShadowRadius: 1,
+      });
+    }
+
+    if (labelStyle) {
+      if (Array.isArray(labelStyle)) {
+        baseStyles.push(...labelStyle);
+      } else {
+        baseStyles.push(labelStyle);
+      }
+    }
+
+    return baseStyles;
+  };
+
   return (
-    <View style={[styles.container, style]}>
+    <View style={getContainerStyles()}>
       {label && (
-        <Typography variant="subtitle2" style={[styles.label, labelStyle]}>
+        <Typography variant="subtitle2" style={getLabelStyles()}>
           {label}
         </Typography>
       )}
       <TouchableOpacity
         onPress={toggleDropdown}
-        style={[styles.dropdown, dropdownStyle]}
+        style={getDropdownStyles()}
         activeOpacity={0.7}
       >
-        <Typography variant="body1" style={[styles.text, textStyle]}>
+        <Typography variant="body1" style={getTextStyles()}>
           {value || placeholder}
         </Typography>
-        <Typography variant="body1" style={[styles.arrow, isOpen ? styles.arrowUp : undefined]}>
+        <Typography
+          variant="body1"
+          style={[
+            styles.arrow,
+            isOpen ? styles.arrowUp : undefined,
+            design === 'neumorphic' && { color: textColor },
+          ]}
+        >
           ▼
         </Typography>
       </TouchableOpacity>
-      <Animated.View style={[styles.optionsContainer, { maxHeight: optionsHeight }]}>
-        <ScrollView
-          showsVerticalScrollIndicator={true}
-          bounces={false}
-          style={styles.scrollView}
-          contentContainerStyle={styles.scrollContent}
-        >
-          {options.map((option, index) => (
-            <TouchableOpacity
-              key={option}
-              onPress={() => {
-                onSelect(option);
-                toggleDropdown();
-              }}
-              style={[
-                styles.option,
-                index === options.length - 1 && styles.lastOption,
-                optionStyle,
-              ]}
-            >
-              <Typography variant="body1" style={[styles.optionText, textStyle]}>
-                {option}
-              </Typography>
-            </TouchableOpacity>
-          ))}
-        </ScrollView>
-      </Animated.View>
+      {isOpen && (
+        <Animated.View style={[getOptionsContainerStyles(), { maxHeight: optionsHeight }]}>
+          <ScrollView
+            showsVerticalScrollIndicator={true}
+            bounces={false}
+            style={styles.scrollView}
+            contentContainerStyle={styles.scrollContent}
+          >
+            {options.map((option) => (
+              <TouchableOpacity
+                key={option}
+                onPress={() => {
+                  onSelect(option);
+                  toggleDropdown();
+                }}
+                onPressIn={() => setPressedOption(option)}
+                onPressOut={() => setPressedOption(null)}
+                style={getOptionStyles(option)}
+              >
+                <Typography variant="body1" style={getTextStyles()}>
+                  {option}
+                </Typography>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+        </Animated.View>
+      )}
     </View>
   );
 };
@@ -108,69 +258,49 @@ const Dropdown: React.FC<DropdownProps> = ({
 const styles = StyleSheet.create({
   container: {
     marginVertical: 8,
+    position: 'relative',
     zIndex: 1000,
   },
   label: {
     marginBottom: 6,
-    color: '#495057',
   },
   dropdown: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 12,
-    backgroundColor: '#fff',
-    borderWidth: 1,
-    borderColor: '#dee2e6',
     borderRadius: 8,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 2,
-    elevation: 2,
+    zIndex: 1001,
   },
   text: {
-    color: '#495057',
     flex: 1,
   },
   arrow: {
     fontSize: 12,
-    color: '#495057',
     marginLeft: 8,
   },
   arrowUp: {
     transform: [{ rotate: '180deg' }],
   },
   optionsContainer: {
+    position: 'absolute',
+    top: '100%',
+    left: 0,
+    right: 0,
     overflow: 'hidden',
-    backgroundColor: '#fff',
     borderRadius: 8,
-    borderWidth: 1,
-    borderColor: '#dee2e6',
     marginTop: 4,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.15,
-    shadowRadius: 4,
-    elevation: 4,
+    zIndex: 1002,
   },
   scrollView: {
-    maxHeight: 200, // Maximum height for the dropdown
+    maxHeight: 200,
   },
   scrollContent: {
     flexGrow: 1,
   },
   option: {
     padding: 12,
-    borderBottomWidth: 1,
-    borderBottomColor: '#dee2e6',
-    backgroundColor: '#fff',
-  },
-  lastOption: {
-    borderBottomWidth: 0,
-  },
-  optionText: {
-    color: '#495057',
+    borderRadius: 6,
   },
 });
 

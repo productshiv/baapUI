@@ -1,18 +1,21 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View } from 'react-native';
-import type { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import ToggleSwitch from './ToggleSwitch';
-import Typography from '../Typography/Typography';
+import { NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
 
 const meta: Meta<typeof ToggleSwitch> = {
   title: 'Form/ToggleSwitch',
   component: ToggleSwitch,
-  parameters: {
-    layout: 'centered',
-  },
+  tags: ['autodocs'],
   argTypes: {
-    label: { control: 'text' },
+    design: {
+      control: 'radio',
+      options: ['flat', 'neumorphic'],
+    },
     initialValue: { control: 'boolean' },
+    disabled: { control: 'boolean' },
+    label: { control: 'text' },
   },
 };
 
@@ -21,48 +24,97 @@ type Story = StoryObj<typeof ToggleSwitch>;
 
 export const Default: Story = {
   args: {
-    label: 'Toggle Switch',
-  },
-};
-
-export const InitiallyOn: Story = {
-  args: {
-    label: 'Toggle Switch',
-    initialValue: true,
-  },
-};
-
-export const CustomLabel: Story = {
-  args: {
-    label: 'Enable Notifications',
+    label: 'Default Toggle',
     initialValue: false,
+    onToggle: () => {},
   },
 };
 
-// Interactive example with state display
-const InteractiveToggleSwitchExample = () => {
-  const [isEnabled, setIsEnabled] = useState(false);
+export const Neumorphic: Story = {
+  args: {
+    label: 'Neumorphic Toggle',
+    design: 'neumorphic',
+    backgroundColor: NEUMORPHIC_COLORS.background,
+    initialValue: false,
+    onToggle: () => {},
+  },
+};
 
-  return (
-    <View style={{ gap: 16, alignItems: 'center' }}>
-      <ToggleSwitch label="Interactive Toggle" initialValue={isEnabled} onToggle={setIsEnabled} />
-      <Typography>Status: {isEnabled ? 'ON' : 'OFF'}</Typography>
-    </View>
-  );
+export const Enabled: Story = {
+  args: {
+    label: 'Enabled Toggle',
+    initialValue: true,
+    onToggle: () => {},
+  },
+};
+
+export const Disabled: Story = {
+  args: {
+    label: 'Disabled Toggle',
+    disabled: true,
+    initialValue: false,
+    onToggle: () => {},
+  },
+};
+
+export const DisabledEnabled: Story = {
+  args: {
+    label: 'Disabled Enabled Toggle',
+    disabled: true,
+    initialValue: true,
+    onToggle: () => {},
+  },
 };
 
 export const Interactive: Story = {
-  render: () => <InteractiveToggleSwitchExample />,
+  render: () => {
+    const [value1, setValue1] = React.useState(false);
+    const [value2, setValue2] = React.useState(true);
+
+    return (
+      <View style={{ padding: 20, gap: 10 }}>
+        <ToggleSwitch
+          label="Interactive Toggle 1"
+          initialValue={value1}
+          onToggle={() => setValue1(!value1)}
+        />
+        <ToggleSwitch
+          label="Interactive Toggle 2"
+          initialValue={value2}
+          onToggle={() => setValue2(!value2)}
+        />
+      </View>
+    );
+  },
 };
 
-// Multiple toggles example
-export const MultipleToggles: Story = {
-  render: () => (
-    <View style={{ gap: 16 }}>
-      <ToggleSwitch label="Notifications" />
-      <ToggleSwitch label="Dark Mode" />
-      <ToggleSwitch label="Auto-Update" />
-      <ToggleSwitch label="Sound Effects" />
-    </View>
-  ),
+export const NeumorphicVariations: Story = {
+  render: () => {
+    const [value1, setValue1] = React.useState(false);
+    const [value2, setValue2] = React.useState(true);
+
+    return (
+      <View style={{ padding: 20, gap: 10 }}>
+        <ToggleSwitch
+          label="Neumorphic Toggle 1"
+          design="neumorphic"
+          initialValue={value1}
+          onToggle={() => setValue1(!value1)}
+        />
+        <ToggleSwitch
+          label="Neumorphic Toggle 2"
+          design="neumorphic"
+          initialValue={value2}
+          onToggle={() => setValue2(!value2)}
+        />
+        <ToggleSwitch
+          label="Neumorphic Disabled"
+          design="neumorphic"
+          initialValue={false}
+          disabled
+          onToggle={() => {}}
+        />
+      </View>
+    );
+  },
 };

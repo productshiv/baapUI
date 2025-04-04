@@ -8,6 +8,7 @@ import {
   ViewStyle,
   TextStyle,
 } from 'react-native';
+import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
 
 interface InputProps extends TextInputProps {
   style?: ViewStyle;
@@ -19,6 +20,7 @@ interface InputProps extends TextInputProps {
   design?: 'flat' | 'neumorphic';
   backgroundColor?: string;
   textColor?: string;
+  isFocused?: boolean;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -26,10 +28,13 @@ const Input: React.FC<InputProps> = ({
   label,
   error,
   design = 'flat',
-  backgroundColor = '#ffffff',
-  textColor = '#000000',
+  backgroundColor = NEUMORPHIC_COLORS.background,
+  textColor = NEUMORPHIC_COLORS.text,
+  isFocused = false,
   ...props
 }) => {
+  const [focused, setFocused] = React.useState(isFocused);
+
   const getInputStyles = (): ViewStyle[] => {
     const baseStyles: ViewStyle[] = [styles.input];
 
@@ -38,33 +43,18 @@ const Input: React.FC<InputProps> = ({
     }
 
     if (design === 'neumorphic') {
+      const neumorphicStyles = getNeumorphicStyles({
+        isPressed: focused,
+        customBackground: backgroundColor,
+        customBorderRadius: 12,
+      });
+      
+      baseStyles.push(...neumorphicStyles);
       baseStyles.push({
-        backgroundColor,
-        color: textColor,
-        borderWidth: 0,
         height: 40,
         paddingHorizontal: 10,
-        borderRadius: 12,
-        shadowColor: '#000',
-        shadowOffset: {
-          width: 0,
-          height: 0,
-        },
-        shadowOpacity: 0.1,
-        shadowRadius: 6,
-        elevation: 5,
-      } as ViewStyle);
-
-      // Inner shadow effect for neumorphic design
-      baseStyles.push({
-        shadowColor: '#000',
-        shadowOffset: {
-          width: 3,
-          height: 3,
-        },
-        shadowOpacity: 0.15,
-        shadowRadius: 8,
-        elevation: 5,
+        color: textColor,
+        borderWidth: 0,
       } as ViewStyle);
     }
 
@@ -84,7 +74,7 @@ const Input: React.FC<InputProps> = ({
         fontSize: 14,
         fontWeight: '500',
         marginBottom: 8,
-        textShadowColor: 'rgba(255, 255, 255, 0.5)',
+        textShadowColor: NEUMORPHIC_COLORS.lightShadow,
         textShadowOffset: { width: 1, height: 1 },
         textShadowRadius: 1,
       } as TextStyle);
@@ -99,6 +89,8 @@ const Input: React.FC<InputProps> = ({
       <TextInput
         style={getInputStyles()}
         placeholderTextColor={design === 'neumorphic' ? `${textColor}80` : undefined}
+        onFocus={() => setFocused(true)}
+        onBlur={() => setFocused(false)}
         {...props}
       />
       {error && <Text style={styles.error}>{error}</Text>}

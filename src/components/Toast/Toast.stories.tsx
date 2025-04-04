@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { View, Button } from 'react-native';
+import React, { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import Toast from './Toast';
+import Button from '../Button/Button';
+import { NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
 
 const meta: Meta<typeof Toast> = {
   title: 'Feedback/Toast',
@@ -10,88 +11,91 @@ const meta: Meta<typeof Toast> = {
     layout: 'centered',
   },
   argTypes: {
-    message: { control: 'text' },
-    duration: { control: 'number' },
-    visible: { control: 'boolean' },
+    type: {
+      control: 'select',
+      options: ['info', 'success', 'warning', 'error'],
+    },
+    design: {
+      control: 'radio',
+      options: ['flat', 'neumorphic'],
+    },
+    duration: {
+      control: { type: 'range', min: 1000, max: 5000, step: 500 },
+    },
   },
 };
 
 export default meta;
 type Story = StoryObj<typeof Toast>;
 
-export const Default: Story = {
-  args: {
-    message: 'This is a toast message',
-    visible: true,
-    onClose: () => {},
-  },
-};
+interface ToastDemoProps {
+  design?: 'flat' | 'neumorphic';
+  type?: 'info' | 'success' | 'warning' | 'error';
+}
 
-export const CustomDuration: Story = {
-  args: {
-    message: 'This toast will show for 5 seconds',
-    visible: true,
-    duration: 5000,
-    onClose: () => {},
-  },
-};
-
-// Interactive example with trigger button
-const InteractiveToastExample = () => {
+const ToastDemo = ({ design = 'flat', type = 'info' }: ToastDemoProps) => {
   const [visible, setVisible] = useState(false);
 
+  const showToast = () => {
+    setVisible(true);
+  };
+
   return (
-    <View style={{ gap: 16, alignItems: 'center' }}>
-      <Button title="Show Toast" onPress={() => setVisible(true)} />
+    <div style={{ minHeight: '200px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <Button onPress={showToast}>Show Toast</Button>
       <Toast
-        message="Action completed successfully!"
+        message={`This is a ${type} message`}
         visible={visible}
         onClose={() => setVisible(false)}
+        type={type}
+        design={design}
       />
-    </View>
+    </div>
   );
 };
 
-export const Interactive: Story = {
-  render: () => <InteractiveToastExample />,
+export const Default: Story = {
+  render: () => <ToastDemo />,
 };
 
-// Example with different styles
-const MultipleToastsExample = () => {
-  const [toasts, setToasts] = useState<Array<{ id: number; visible: boolean }>>([]);
-  const [counter, setCounter] = useState(0);
-
-  const showToast = (style: any) => {
-    const id = counter;
-    setCounter(prev => prev + 1);
-    setToasts(prev => [...prev, { id, visible: true }]);
-  };
-
-  const hideToast = (id: number) => {
-    setToasts(prev => prev.filter(toast => toast.id !== id));
-  };
-
-  return (
-    <View style={{ gap: 16, alignItems: 'center' }}>
-      <Button title="Success Toast" onPress={() => showToast({ backgroundColor: '#4CAF50' })} />
-      <Button title="Error Toast" onPress={() => showToast({ backgroundColor: '#f44336' })} />
-      <Button title="Info Toast" onPress={() => showToast({ backgroundColor: '#2196F3' })} />
-      {toasts.map(toast => (
-        <Toast
-          key={toast.id}
-          message={`Toast message #${toast.id}`}
-          visible={toast.visible}
-          onClose={() => hideToast(toast.id)}
-          style={{
-            backgroundColor:
-              toast.id % 3 === 0 ? '#4CAF50' : toast.id % 3 === 1 ? '#f44336' : '#2196F3',
-          }}
-        />
-      ))}
-    </View>
-  );
+export const AllTypes: Story = {
+  render: () => (
+    <div style={{ display: 'flex', gap: '16px', flexDirection: 'column' }}>
+      <ToastDemo type="info" />
+      <ToastDemo type="success" />
+      <ToastDemo type="warning" />
+      <ToastDemo type="error" />
+    </div>
+  ),
 };
 
-export const MultipleStyles: Story = {
-  render: () => <MultipleToastsExample />,
+export const Neumorphic: Story = {
+  render: () => (
+    <div style={{ 
+      backgroundColor: NEUMORPHIC_COLORS.background,
+      padding: '24px',
+      borderRadius: '12px',
+      minHeight: '200px',
+    }}>
+      <ToastDemo design="neumorphic" />
+    </div>
+  ),
+};
+
+export const NeumorphicTypes: Story = {
+  render: () => (
+    <div style={{ 
+      backgroundColor: NEUMORPHIC_COLORS.background,
+      padding: '24px',
+      borderRadius: '12px',
+      display: 'flex',
+      gap: '16px',
+      flexDirection: 'column',
+    }}>
+      <ToastDemo type="info" design="neumorphic" />
+      <ToastDemo type="success" design="neumorphic" />
+      <ToastDemo type="warning" design="neumorphic" />
+      <ToastDemo type="error" design="neumorphic" />
+    </div>
+  ),
 };

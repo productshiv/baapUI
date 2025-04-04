@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
-import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, Text, StyleSheet, ViewStyle } from 'react-native';
+import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
 
 interface RadioButtonProps {
   initialSelected?: boolean;
   onToggle?: (selected: boolean) => void;
   label?: string;
-  style?: object;
+  style?: ViewStyle;
+  disabled?: boolean;
+  design?: 'flat' | 'neumorphic';
+  backgroundColor?: string;
+  textColor?: string;
 }
 
 const RadioButton: React.FC<RadioButtonProps> = ({
@@ -13,10 +18,16 @@ const RadioButton: React.FC<RadioButtonProps> = ({
   onToggle,
   label = 'Radio Button',
   style,
+  disabled = false,
+  design = 'flat',
+  backgroundColor = NEUMORPHIC_COLORS.background,
+  textColor = NEUMORPHIC_COLORS.text,
 }) => {
   const [selected, setSelected] = useState(initialSelected);
+  const [isPressed, setIsPressed] = useState(false);
 
   const toggleSelection = () => {
+    if (disabled) return;
     const newSelected = !selected;
     setSelected(newSelected);
     if (onToggle) {
@@ -24,12 +35,72 @@ const RadioButton: React.FC<RadioButtonProps> = ({
     }
   };
 
+  const getRadioStyles = (): ViewStyle[] => {
+    const baseStyles: ViewStyle[] = [styles.radio];
+
+    if (design === 'neumorphic') {
+      const neumorphicStyles = getNeumorphicStyles({
+        isPressed: isPressed || selected,
+        customBackground: backgroundColor,
+        customBorderRadius: 15,
+      });
+      
+      baseStyles.push(...neumorphicStyles);
+      baseStyles.push({
+        width: 28,
+        height: 28,
+        borderWidth: 0,
+        padding: 0,
+      });
+    }
+
+    if (disabled) {
+      baseStyles.push(styles.disabled);
+    }
+
+    return baseStyles;
+  };
+
+  const getSelectedStyles = (): ViewStyle[] => {
+    const baseStyles: ViewStyle[] = [styles.selected];
+
+    if (design === 'neumorphic') {
+      baseStyles.push({
+        width: 14,
+        height: 14,
+        backgroundColor: textColor,
+        borderRadius: 7,
+      });
+    }
+
+    return baseStyles;
+  };
+
   return (
     <View style={[styles.container, style]}>
-      <TouchableOpacity style={styles.radio} onPress={toggleSelection}>
-        {selected && <View style={styles.selected} />}
+      <TouchableOpacity
+        style={getRadioStyles()}
+        onPress={toggleSelection}
+        disabled={disabled}
+        onPressIn={() => setIsPressed(true)}
+        onPressOut={() => setIsPressed(false)}
+      >
+        {selected && <View style={getSelectedStyles()} />}
       </TouchableOpacity>
-      <Text style={styles.label}>{label}</Text>
+      <Text 
+        style={[
+          styles.label,
+          disabled && styles.disabledText,
+          design === 'neumorphic' && {
+            color: textColor,
+            textShadowColor: NEUMORPHIC_COLORS.lightShadow,
+            textShadowOffset: { width: 1, height: 1 },
+            textShadowRadius: 1,
+          }
+        ]}
+      >
+        {label}
+      </Text>
     </View>
   );
 };
@@ -58,6 +129,12 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 16,
+  },
+  disabled: {
+    backgroundColor: '#ccc',
+  },
+  disabledText: {
+    color: '#ccc',
   },
 });
 

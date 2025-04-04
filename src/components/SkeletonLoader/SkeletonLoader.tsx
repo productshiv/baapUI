@@ -1,13 +1,24 @@
 import React from 'react';
-import { View, StyleSheet, Animated } from 'react-native';
+import { View, StyleSheet, Animated, ViewStyle, DimensionValue } from 'react-native';
+import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
 
 interface SkeletonLoaderProps {
-  width: number | string;
-  height: number | string;
-  style?: object;
+  width: DimensionValue;
+  height: DimensionValue;
+  style?: ViewStyle;
+  design?: 'flat' | 'neumorphic';
+  backgroundColor?: string;
+  borderRadius?: number;
 }
 
-const SkeletonLoader: React.FC<SkeletonLoaderProps> = ({ width, height, style }) => {
+const SkeletonLoader: React.FC<SkeletonLoaderProps> = ({
+  width,
+  height,
+  style,
+  design = 'flat',
+  backgroundColor = NEUMORPHIC_COLORS.background,
+  borderRadius = 4,
+}) => {
   const shimmerAnim = new Animated.Value(0);
 
   Animated.loop(
@@ -32,13 +43,42 @@ const SkeletonLoader: React.FC<SkeletonLoaderProps> = ({ width, height, style })
     }),
   };
 
-  return <Animated.View style={[styles.skeleton, { width, height }, shimmerStyle, style]} />;
+  const getSkeletonStyles = (): ViewStyle[] => {
+    const baseStyles: ViewStyle[] = [
+      styles.skeleton,
+      {
+        width,
+        height,
+        borderRadius,
+      },
+    ];
+
+    if (design === 'neumorphic') {
+      const neumorphicStyles = getNeumorphicStyles({
+        isPressed: true,
+        customBackground: backgroundColor,
+        customBorderRadius: borderRadius,
+      });
+      
+      baseStyles.push(...neumorphicStyles);
+      baseStyles.push({
+        backgroundColor,
+      });
+    }
+
+    if (style) {
+      baseStyles.push(style);
+    }
+
+    return baseStyles;
+  };
+
+  return <Animated.View style={[getSkeletonStyles(), shimmerStyle]} />;
 };
 
 const styles = StyleSheet.create({
   skeleton: {
     backgroundColor: '#e0e0e0',
-    borderRadius: 4,
   },
 });
 

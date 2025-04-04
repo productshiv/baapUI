@@ -1,14 +1,21 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View } from 'react-native';
-import type { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import RadioButton from './RadioButton';
-import Typography from '../Typography/Typography';
+import { NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
 
 const meta: Meta<typeof RadioButton> = {
   title: 'Core UI/RadioButton',
   component: RadioButton,
-  parameters: {
-    layout: 'centered',
+  tags: ['autodocs'],
+  argTypes: {
+    design: {
+      control: 'radio',
+      options: ['flat', 'neumorphic'],
+    },
+    initialSelected: { control: 'boolean' },
+    disabled: { control: 'boolean' },
+    label: { control: 'text' },
   },
 };
 
@@ -17,6 +24,17 @@ type Story = StoryObj<typeof RadioButton>;
 
 export const Default: Story = {
   args: {
+    label: 'Default Radio Button',
+    initialSelected: false,
+    onToggle: () => {},
+  },
+};
+
+export const Neumorphic: Story = {
+  args: {
+    label: 'Neumorphic Radio Button',
+    design: 'neumorphic',
+    backgroundColor: NEUMORPHIC_COLORS.background,
     initialSelected: false,
     onToggle: () => {},
   },
@@ -24,44 +42,81 @@ export const Default: Story = {
 
 export const Selected: Story = {
   args: {
+    label: 'Selected Radio Button',
     initialSelected: true,
     onToggle: () => {},
   },
 };
 
-// Interactive radio group example
-const RadioGroupExample = () => {
-  const [selected, setSelected] = useState('option1');
+export const Disabled: Story = {
+  args: {
+    label: 'Disabled Radio Button',
+    disabled: true,
+    initialSelected: false,
+    onToggle: () => {},
+  },
+};
 
-  return (
-    <View style={{ gap: 16 }}>
-      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
-        <RadioButton
-          initialSelected={selected === 'option1'}
-          onToggle={() => setSelected('option1')}
-        />
-        <Typography>Option 1</Typography>
-      </View>
-
-      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
-        <RadioButton
-          initialSelected={selected === 'option2'}
-          onToggle={() => setSelected('option2')}
-        />
-        <Typography>Option 2</Typography>
-      </View>
-
-      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
-        <RadioButton
-          initialSelected={selected === 'option3'}
-          onToggle={() => setSelected('option3')}
-        />
-        <Typography>Option 3</Typography>
-      </View>
-    </View>
-  );
+export const DisabledSelected: Story = {
+  args: {
+    label: 'Disabled Selected Radio Button',
+    disabled: true,
+    initialSelected: true,
+    onToggle: () => {},
+  },
 };
 
 export const RadioGroup: Story = {
-  render: () => <RadioGroupExample />,
+  render: () => {
+    const [selectedValue, setSelectedValue] = React.useState('option1');
+
+    return (
+      <View style={{ padding: 20, gap: 10 }}>
+        <RadioButton
+          label="Option 1"
+          initialSelected={selectedValue === 'option1'}
+          onToggle={() => setSelectedValue('option1')}
+        />
+        <RadioButton
+          label="Option 2"
+          initialSelected={selectedValue === 'option2'}
+          onToggle={() => setSelectedValue('option2')}
+        />
+        <RadioButton
+          label="Option 3"
+          initialSelected={selectedValue === 'option3'}
+          onToggle={() => setSelectedValue('option3')}
+        />
+      </View>
+    );
+  },
+};
+
+export const NeumorphicGroup: Story = {
+  render: () => {
+    const [selectedValue, setSelectedValue] = React.useState('option1');
+
+    return (
+      <View style={{ padding: 20, gap: 10 }}>
+        <RadioButton
+          label="Option 1"
+          design="neumorphic"
+          initialSelected={selectedValue === 'option1'}
+          onToggle={() => setSelectedValue('option1')}
+        />
+        <RadioButton
+          label="Option 2"
+          design="neumorphic"
+          initialSelected={selectedValue === 'option2'}
+          onToggle={() => setSelectedValue('option2')}
+        />
+        <RadioButton
+          label="Option 3"
+          design="neumorphic"
+          initialSelected={selectedValue === 'option3'}
+          onToggle={() => setSelectedValue('option3')}
+        />
+      </View>
+    );
+  },
 };

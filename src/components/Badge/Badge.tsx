@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, ViewStyle, TextStyle } from 'react-native';
+import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
 
 export interface BadgeProps {
   variant?: 'primary' | 'secondary' | 'success' | 'error' | 'warning' | 'info';
@@ -7,6 +8,9 @@ export interface BadgeProps {
   children: React.ReactNode;
   style?: ViewStyle;
   textStyle?: TextStyle;
+  design?: 'flat' | 'neumorphic';
+  backgroundColor?: string;
+  textColor?: string;
 }
 
 const Badge: React.FC<BadgeProps> = ({
@@ -15,8 +19,28 @@ const Badge: React.FC<BadgeProps> = ({
   size = 'medium',
   style,
   textStyle,
+  design = 'flat',
+  backgroundColor,
+  textColor = NEUMORPHIC_COLORS.text,
 }) => {
   const getVariantStyle = (): ViewStyle => {
+    if (design === 'neumorphic') {
+      switch (variant) {
+        case 'secondary':
+          return { backgroundColor: '#FCE4EC' };
+        case 'success':
+          return { backgroundColor: '#E8F5E9' };
+        case 'error':
+          return { backgroundColor: '#FFEBEE' };
+        case 'warning':
+          return { backgroundColor: '#FFF3E0' };
+        case 'info':
+          return { backgroundColor: '#E3F2FD' };
+        default:
+          return { backgroundColor: '#EDE7F6' };
+      }
+    }
+
     switch (variant) {
       case 'secondary':
         return { backgroundColor: '#f50057' };
@@ -74,12 +98,83 @@ const Badge: React.FC<BadgeProps> = ({
     }
   };
 
-  const sizeStyle = getSizeStyle();
-  const variantStyle = getVariantStyle();
+  const getBadgeStyles = (): ViewStyle[] => {
+    const baseStyles: ViewStyle[] = [styles.badge];
+    const sizeStyle = getSizeStyle();
+    const variantStyle = getVariantStyle();
+    const bgColor = (backgroundColor || variantStyle.backgroundColor || '') as string;
+
+    if (design === 'neumorphic') {
+      const neumorphicStyles = getNeumorphicStyles({
+        isPressed: false,
+        customBackground: bgColor,
+        customBorderRadius: sizeStyle.container.borderRadius as number,
+      });
+      
+      baseStyles.push(...neumorphicStyles);
+      baseStyles.push({
+        ...sizeStyle.container,
+        backgroundColor: bgColor,
+      });
+    } else {
+      baseStyles.push(variantStyle, sizeStyle.container);
+    }
+
+    if (style) {
+      baseStyles.push(style);
+    }
+
+    return baseStyles;
+  };
+
+  const getTextStyles = (): TextStyle[] => {
+    const baseStyles: TextStyle[] = [styles.text];
+    const sizeStyle = getSizeStyle();
+
+    if (design === 'neumorphic') {
+      baseStyles.push({
+        color: textColor,
+        fontSize: sizeStyle.text.fontSize,
+        fontWeight: '600',
+        textShadowColor: NEUMORPHIC_COLORS.lightShadow,
+        textShadowOffset: { width: 1, height: 1 },
+        textShadowRadius: 1,
+      });
+
+      // Add variant-specific text colors for neumorphic design
+      switch (variant) {
+        case 'secondary':
+          baseStyles.push({ color: '#C2185B' });
+          break;
+        case 'success':
+          baseStyles.push({ color: '#2E7D32' });
+          break;
+        case 'error':
+          baseStyles.push({ color: '#C62828' });
+          break;
+        case 'warning':
+          baseStyles.push({ color: '#F57C00' });
+          break;
+        case 'info':
+          baseStyles.push({ color: '#1976D2' });
+          break;
+        default:
+          baseStyles.push({ color: '#4527A0' });
+      }
+    } else {
+      baseStyles.push(sizeStyle.text);
+    }
+
+    if (textStyle) {
+      baseStyles.push(textStyle);
+    }
+
+    return baseStyles;
+  };
 
   return (
-    <View style={[styles.badge, variantStyle, sizeStyle.container, style]}>
-      <Text style={[styles.text, sizeStyle.text, textStyle]}>{children}</Text>
+    <View style={getBadgeStyles()}>
+      <Text style={getTextStyles()}>{children}</Text>
     </View>
   );
 };
@@ -88,10 +183,19 @@ const styles = StyleSheet.create({
   badge: {
     justifyContent: 'center',
     alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.41,
+    elevation: 2,
   },
   text: {
     color: '#fff',
     fontWeight: '600',
+    textAlign: 'center',
   },
 });
 

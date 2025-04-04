@@ -1,19 +1,20 @@
 import React from 'react';
-import { View } from 'react-native';
 import type { Meta, StoryObj } from '@storybook/react';
 import Table from './Table';
+import { NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
 
-const SAMPLE_COLUMNS = [
+const columns = [
   { key: 'id', label: 'ID' },
   { key: 'name', label: 'Name' },
-  { key: 'age', label: 'Age' },
-  { key: 'city', label: 'City' },
+  { key: 'role', label: 'Role' },
+  { key: 'status', label: 'Status' },
 ];
 
-const SAMPLE_DATA = [
-  { id: '1', name: 'John Doe', age: '30', city: 'New York' },
-  { id: '2', name: 'Jane Smith', age: '25', city: 'Los Angeles' },
-  { id: '3', name: 'Bob Johnson', age: '35', city: 'Chicago' },
+const sampleData = [
+  { id: '1', name: 'John Doe', role: 'Developer', status: 'Active' },
+  { id: '2', name: 'Jane Smith', role: 'Designer', status: 'Away' },
+  { id: '3', name: 'Mike Johnson', role: 'Manager', status: 'Active' },
+  { id: '4', name: 'Sarah Wilson', role: 'Developer', status: 'Busy' },
 ];
 
 const meta: Meta<typeof Table> = {
@@ -22,6 +23,12 @@ const meta: Meta<typeof Table> = {
   parameters: {
     layout: 'centered',
   },
+  argTypes: {
+    design: {
+      control: 'radio',
+      options: ['flat', 'neumorphic'],
+    },
+  },
 };
 
 export default meta;
@@ -29,67 +36,79 @@ type Story = StoryObj<typeof Table>;
 
 export const Default: Story = {
   args: {
-    columns: SAMPLE_COLUMNS,
-    data: SAMPLE_DATA,
+    columns,
+    data: sampleData,
   },
 };
 
 export const CustomStyles: Story = {
   args: {
-    columns: SAMPLE_COLUMNS,
-    data: SAMPLE_DATA,
-    headerStyle: {
-      backgroundColor: '#e3f2fd',
+    columns,
+    data: sampleData,
+    style: {
+      borderWidth: 0,
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.1,
+      shadowRadius: 4,
+      elevation: 2,
     },
-    headerCellStyle: {
-      color: '#1976d2',
-      fontWeight: '700',
+    headerStyle: {
+      backgroundColor: '#f5f5f5',
     },
     rowStyle: {
-      backgroundColor: '#fff',
+      borderBottomWidth: 1,
+      borderBottomColor: '#eee',
+    },
+    headerCellStyle: {
+      color: '#333',
+      fontWeight: '700',
     },
     cellStyle: {
-      color: '#333',
+      color: '#666',
     },
   },
 };
 
-// Example with many columns
-const WIDE_COLUMNS = [
-  { key: 'id', label: 'ID' },
-  { key: 'name', label: 'Name' },
-  { key: 'email', label: 'Email' },
-  { key: 'phone', label: 'Phone' },
-  { key: 'address', label: 'Address' },
-  { key: 'city', label: 'City' },
-  { key: 'country', label: 'Country' },
-];
-
-const WIDE_DATA = [
-  {
-    id: '1',
-    name: 'John Doe',
-    email: 'john@example.com',
-    phone: '123-456-7890',
-    address: '123 Main St',
-    city: 'New York',
-    country: 'USA',
+export const Neumorphic: Story = {
+  args: {
+    columns,
+    data: sampleData,
+    design: 'neumorphic',
+    backgroundColor: NEUMORPHIC_COLORS.background,
+    textColor: NEUMORPHIC_COLORS.text,
   },
-  {
-    id: '2',
-    name: 'Jane Smith',
-    email: 'jane@example.com',
-    phone: '098-765-4321',
-    address: '456 Oak Ave',
-    city: 'Los Angeles',
-    country: 'USA',
-  },
-];
+};
 
-export const WideTable: Story = {
+export const NeumorphicCustom: Story = {
   render: () => (
-    <View style={{ width: 800, padding: 20 }}>
-      <Table columns={WIDE_COLUMNS} data={WIDE_DATA} />
-    </View>
+    <div style={{ 
+      backgroundColor: NEUMORPHIC_COLORS.background,
+      padding: 32,
+      borderRadius: 16,
+      width: 800,
+    }}>
+      <Table
+        columns={[
+          { key: 'project', label: 'Project' },
+          { key: 'progress', label: 'Progress' },
+          { key: 'deadline', label: 'Deadline' },
+          { key: 'priority', label: 'Priority' },
+        ]}
+        data={[
+          { project: 'Website Redesign', progress: '75%', deadline: '2024-04-01', priority: 'High' },
+          { project: 'Mobile App', progress: '45%', deadline: '2024-05-15', priority: 'Medium' },
+          { project: 'API Integration', progress: '90%', deadline: '2024-03-20', priority: 'High' },
+          { project: 'Documentation', progress: '30%', deadline: '2024-04-30', priority: 'Low' },
+        ]}
+        design="neumorphic"
+        backgroundColor={NEUMORPHIC_COLORS.background}
+        textColor={NEUMORPHIC_COLORS.text}
+        headerCellStyle={{
+          color: NEUMORPHIC_COLORS.primary,
+          fontSize: 16,
+        }}
+      />
+    </div>
   ),
 };

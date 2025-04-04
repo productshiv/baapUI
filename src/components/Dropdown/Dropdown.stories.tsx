@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View } from 'react-native';
 import type { Meta, StoryObj } from '@storybook/react';
 import Dropdown from './Dropdown';
+import { NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
 
 const meta: Meta<typeof Dropdown> = {
   title: 'Form/Dropdown',
@@ -12,6 +13,10 @@ const meta: Meta<typeof Dropdown> = {
   argTypes: {
     label: { control: 'text' },
     placeholder: { control: 'text' },
+    design: {
+      control: 'radio',
+      options: ['flat', 'neumorphic'],
+    },
   },
 };
 
@@ -35,6 +40,18 @@ export const WithValue: Story = {
     value: 'Option 2',
     label: 'Selected option',
     placeholder: 'Choose...',
+    onSelect: () => {},
+  },
+};
+
+export const Neumorphic: Story = {
+  args: {
+    options: sampleOptions,
+    label: 'Neumorphic Dropdown',
+    placeholder: 'Choose...',
+    design: 'neumorphic',
+    backgroundColor: NEUMORPHIC_COLORS.background,
+    textColor: NEUMORPHIC_COLORS.text,
     onSelect: () => {},
   },
 };

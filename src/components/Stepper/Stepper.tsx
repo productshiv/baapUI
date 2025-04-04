@@ -1,5 +1,6 @@
-import React from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, ViewStyle, TextStyle } from 'react-native';
+import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
 
 interface StepperProps {
   value: number;
@@ -7,7 +8,11 @@ interface StepperProps {
   step?: number;
   minimumValue?: number;
   maximumValue?: number;
-  style?: object;
+  style?: ViewStyle;
+  design?: 'flat' | 'neumorphic';
+  backgroundColor?: string;
+  textColor?: string;
+  buttonColor?: string;
 }
 
 const Stepper: React.FC<StepperProps> = ({
@@ -17,7 +22,13 @@ const Stepper: React.FC<StepperProps> = ({
   minimumValue = 0,
   maximumValue = 100,
   style,
+  design = 'flat',
+  backgroundColor = NEUMORPHIC_COLORS.background,
+  textColor = NEUMORPHIC_COLORS.text,
+  buttonColor = '#4A90E2',
 }) => {
+  const [pressedButton, setPressedButton] = useState<'increment' | 'decrement' | null>(null);
+
   const increment = () => {
     if (value + step <= maximumValue) {
       onValueChange(value + step);
@@ -30,11 +41,100 @@ const Stepper: React.FC<StepperProps> = ({
     }
   };
 
+  const getContainerStyles = (): ViewStyle[] => {
+    const baseStyles: ViewStyle[] = [styles.container];
+
+    if (design === 'neumorphic') {
+      const neumorphicStyles = getNeumorphicStyles({
+        isPressed: false,
+        customBackground: backgroundColor,
+        customBorderRadius: 8,
+      });
+      
+      baseStyles.push(...neumorphicStyles);
+      baseStyles.push({
+        backgroundColor,
+        padding: 8,
+      });
+    }
+
+    if (style) {
+      baseStyles.push(style);
+    }
+
+    return baseStyles;
+  };
+
+  const getButtonStyles = (type: 'increment' | 'decrement'): ViewStyle[] => {
+    const baseStyles: ViewStyle[] = [styles.button];
+
+    if (design === 'neumorphic') {
+      const neumorphicStyles = getNeumorphicStyles({
+        isPressed: pressedButton === type,
+        customBackground: backgroundColor,
+        customBorderRadius: 6,
+      });
+      
+      baseStyles.push(...neumorphicStyles);
+      baseStyles.push({
+        backgroundColor,
+        width: 40,
+        height: 40,
+      });
+    }
+
+    return baseStyles;
+  };
+
+  const getButtonTextStyles = (): TextStyle => {
+    const baseStyle: TextStyle = {
+      ...styles.buttonText,
+      color: buttonColor,
+    };
+
+    if (design === 'neumorphic') {
+      baseStyle.textShadowColor = NEUMORPHIC_COLORS.lightShadow;
+      baseStyle.textShadowOffset = { width: 1, height: 1 };
+      baseStyle.textShadowRadius = 1;
+    }
+
+    return baseStyle;
+  };
+
+  const getValueStyles = (): TextStyle => {
+    const baseStyle: TextStyle = {
+      ...styles.value,
+      color: textColor,
+    };
+
+    if (design === 'neumorphic') {
+      baseStyle.textShadowColor = NEUMORPHIC_COLORS.lightShadow;
+      baseStyle.textShadowOffset = { width: 1, height: 1 };
+      baseStyle.textShadowRadius = 1;
+    }
+
+    return baseStyle;
+  };
+
   return (
-    <View style={[styles.container, style]}>
-      <Button title="-" onPress={decrement} />
-      <Text style={styles.value}>{value}</Text>
-      <Button title="+" onPress={increment} />
+    <View style={getContainerStyles()}>
+      <TouchableOpacity
+        onPress={decrement}
+        onPressIn={() => setPressedButton('decrement')}
+        onPressOut={() => setPressedButton(null)}
+        style={getButtonStyles('decrement')}
+      >
+        <Text style={getButtonTextStyles()}>-</Text>
+      </TouchableOpacity>
+      <Text style={getValueStyles()}>{value}</Text>
+      <TouchableOpacity
+        onPress={increment}
+        onPressIn={() => setPressedButton('increment')}
+        onPressOut={() => setPressedButton(null)}
+        style={getButtonStyles('increment')}
+      >
+        <Text style={getButtonTextStyles()}>+</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -43,10 +143,24 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'center',
+  },
+  button: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 40,
+    height: 40,
+    borderRadius: 6,
+  },
+  buttonText: {
+    fontSize: 24,
+    fontWeight: 'bold',
   },
   value: {
-    marginHorizontal: 10,
+    marginHorizontal: 16,
     fontSize: 18,
+    minWidth: 40,
+    textAlign: 'center',
   },
 });
 

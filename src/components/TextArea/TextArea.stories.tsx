@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text } from 'react-native';
 import type { Meta, StoryObj } from '@storybook/react';
 import TextArea from './TextArea';
+import { NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
 
 const meta: Meta<typeof TextArea> = {
   title: 'Form/TextArea',
@@ -14,6 +15,10 @@ const meta: Meta<typeof TextArea> = {
     numberOfLines: { control: 'number' },
     maxLength: { control: 'number' },
     editable: { control: 'boolean' },
+    design: {
+      control: 'radio',
+      options: ['flat', 'neumorphic'],
+    },
   },
 };
 
@@ -72,4 +77,22 @@ const InteractiveTextAreaExample = () => {
 
 export const Interactive: Story = {
   render: () => <InteractiveTextAreaExample />,
+};
+
+export const WithValue: Story = {
+  args: {
+    value: 'This is some sample text in the text area.',
+    placeholder: 'Enter your text here...',
+    onChangeText: () => {},
+  },
+};
+
+export const Neumorphic: Story = {
+  args: {
+    placeholder: 'Enter your text here...',
+    design: 'neumorphic',
+    backgroundColor: NEUMORPHIC_COLORS.background,
+    textColor: NEUMORPHIC_COLORS.text,
+    onChangeText: () => {},
+  },
 };

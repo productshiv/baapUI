@@ -1,124 +1,62 @@
 import React from 'react';
 import { View } from 'react-native';
-import type { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import Input from './Input';
-import { ThemeProvider } from '../../themes/ThemeContext';
+import { NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
 
 const meta: Meta<typeof Input> = {
   title: 'Core UI/Input',
   component: Input,
-  decorators: [
-    Story => (
-      <ThemeProvider>
-        <View style={{ padding: 20 }}>
-          <Story />
-        </View>
-      </ThemeProvider>
-    ),
-  ],
-  parameters: {
-    layout: 'centered',
-  },
+  tags: ['autodocs'],
   argTypes: {
-    placeholder: { control: 'text' },
-    label: { control: 'text' },
-    error: { control: 'text' },
-    disabled: { control: 'boolean' },
-    secureTextEntry: { control: 'boolean' },
     design: {
-      control: 'select',
+      control: 'radio',
       options: ['flat', 'neumorphic'],
     },
-    backgroundColor: {
-      control: 'color',
-      description: 'Custom background color for neumorphic design',
-    },
-    textColor: {
-      control: 'color',
-      description: 'Custom text color for the input',
-    },
+    placeholder: { control: 'text' },
+    disabled: { control: 'boolean' },
+    error: { control: 'text' },
   },
 };
 
 export default meta;
 type Story = StoryObj<typeof Input>;
 
-// Flat Design Stories
 export const Default: Story = {
   args: {
     placeholder: 'Enter text...',
-    design: 'flat',
   },
 };
 
-export const WithLabel: Story = {
+export const Neumorphic: Story = {
   args: {
-    label: 'Username',
-    placeholder: 'Enter username',
-    design: 'flat',
-  },
-};
-
-// Neumorphic Design Stories
-export const NeumorphicDefault: Story = {
-  args: {
-    placeholder: 'Enter text...',
+    placeholder: 'Neumorphic Input',
     design: 'neumorphic',
-    backgroundColor: '#ffffff',
+    backgroundColor: NEUMORPHIC_COLORS.background,
   },
 };
 
-export const NeumorphicWithLabel: Story = {
+export const WithError: Story = {
   args: {
-    label: 'Username',
-    placeholder: 'Enter username',
-    design: 'neumorphic',
-    backgroundColor: '#ffffff',
+    placeholder: 'Error Input',
+    error: 'This field is required',
   },
 };
 
-export const NeumorphicCustomColors: Story = {
+export const Disabled: Story = {
   args: {
-    label: 'Custom Colors',
-    placeholder: 'Type here...',
-    design: 'neumorphic',
-    backgroundColor: '#ffffff',
-    textColor: '#000000',
+    placeholder: 'Disabled Input',
+    disabled: true,
   },
 };
 
-// State Variations
-export const States: Story = {
+export const AllStates: Story = {
   render: () => (
-    <View style={{ gap: 16, padding: 20, width: 300 }}>
-      <Input label="Flat Default" placeholder="Default input" design="flat" />
-      <Input
-        label="Neumorphic Default"
-        placeholder="Neumorphic input"
-        design="neumorphic"
-        backgroundColor="#ffffff"
-      />
-      <Input
-        label="With Error"
-        placeholder="Error state"
-        error="This field is required"
-        design="neumorphic"
-        backgroundColor="#ffffff"
-      />
-      <Input
-        label="Disabled"
-        placeholder="Disabled input"
-        disabled
-        design="neumorphic"
-        backgroundColor="#ffffff"
-      />
-      <Input
-        label="Password"
-        placeholder="Enter password"
-        secureTextEntry
-        design="neumorphic"
-        backgroundColor="#ffffff"
-      />
+    <View style={{ padding: 20, gap: 10 }}>
+      <Input placeholder="Default Input" />
+      <Input placeholder="With Error" error="Invalid input" />
+      <Input placeholder="Disabled Input" disabled />
+      <Input placeholder="Neumorphic Input" design="neumorphic" />
     </View>
   ),
 };
