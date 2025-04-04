@@ -58,7 +58,7 @@ export const Neumorphic: Story = {
   args: {
     design: 'neumorphic',
     children: 'Neumorphic Card',
-    backgroundColor: '#ffffff',
+    backgroundColor: '#fff',
     style: { width: 200, alignItems: 'center' },
   },
 };
@@ -67,7 +67,7 @@ export const Interactive: Story = {
   args: {
     design: 'neumorphic',
     children: 'Click Me',
-    backgroundColor: '#ffffff',
+    backgroundColor: '#fff',
     style: { width: 200, alignItems: 'center' },
     onPress: () => console.log('Card pressed'),
   },
@@ -106,7 +106,7 @@ export const WithHeader: Story = {
         </View>
       </Card>
 
-      <Card design="neumorphic" backgroundColor="#ffffff">
+      <Card design="neumorphic" backgroundColor="#fff">
         <View style={{ padding: 16, borderBottomWidth: 1, borderBottomColor: '#E5E5E5' }}>
           <Typography variant="h6">Neumorphic Card with Header</Typography>
         </View>

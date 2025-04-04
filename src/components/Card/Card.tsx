@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, Pressable, ViewStyle, Text } from 'react-native';
+import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
 
 export interface CardProps {
   children: React.ReactNode | string;
@@ -14,36 +15,16 @@ const Card: React.FC<CardProps> = ({
   style, 
   onPress,
   design = 'flat',
-  backgroundColor = '#ffffff',
+  backgroundColor = NEUMORPHIC_COLORS.background,
 }) => {
   const getCardStyles = (pressed?: boolean): ViewStyle[] => {
     const baseStyles: ViewStyle[] = [styles.container];
 
     if (design === 'neumorphic') {
-      baseStyles.push({
-        backgroundColor,
-        borderWidth: 0,
-        borderRadius: 15,
-        shadowColor: '#000',
-        shadowOffset: {
-          width: pressed ? -2 : 6,
-          height: pressed ? -2 : 6,
-        },
-        shadowOpacity: pressed ? 0.2 : 0.25,
-        shadowRadius: pressed ? 3 : 8,
-        elevation: pressed ? 3 : 8,
-      } as ViewStyle);
-
-      // Light shadow
-      baseStyles.push({
-        shadowColor: '#fff',
-        shadowOffset: {
-          width: pressed ? 2 : -6,
-          height: pressed ? 2 : -6,
-        },
-        shadowOpacity: 0.7,
-        shadowRadius: pressed ? 3 : 8,
-      } as ViewStyle);
+      baseStyles.push(...getNeumorphicStyles({ 
+        isPressed: pressed,
+        customBackground: backgroundColor,
+      }));
     }
 
     if (style) {
@@ -54,7 +35,10 @@ const Card: React.FC<CardProps> = ({
   };
 
   const content = typeof children === 'string' ? (
-    <Text style={styles.text}>{children}</Text>
+    <Text style={[
+      styles.text, 
+      design === 'neumorphic' && styles.neumorphicText
+    ]}>{children}</Text>
   ) : (
     children
   );
@@ -85,6 +69,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#000000',
     textAlign: 'center',
+  },
+  neumorphicText: {
+    color: NEUMORPHIC_COLORS.text,
   },
 });
 
