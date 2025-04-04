@@ -111,7 +111,12 @@ It aims to provide a versatile, scalable, and performant UI solution for Android
 - Ensure compatibility across Android, iOS, and Web.
 
 ### Phase 2: Multi-Design Support (Iteration 3-4)
-- Introduce Neumorphism, Skeuomorphism, Material UI, and Simplistic designs.
+- Introduce 
+	- Dark Theme UI
+	- Neumorphism
+	- Skeuomorphism
+	- Material UI
+	- Simplistic designs
 - Implement dynamic theming with a switchable UI system.
 - Enhance performance and animations.
 

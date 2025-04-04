@@ -1,20 +1,34 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 import type { Meta, StoryObj } from '@storybook/react';
-import { fn } from '@storybook/test';
 import Card from './Card';
 import Typography from '../Typography/Typography';
+import { ThemeProvider } from '../../themes/ThemeContext';
 
 const meta: Meta<typeof Card> = {
   title: 'Core UI/Card',
   component: Card,
+  decorators: [
+    (Story) => (
+      <ThemeProvider>
+        <View style={{ padding: 20, alignItems: 'center' }}>
+          <Story />
+        </View>
+      </ThemeProvider>
+    ),
+  ],
   parameters: {
     layout: 'centered',
   },
   argTypes: {
-    elevation: { 
-      control: { type: 'range', min: 0, max: 5 },
-      description: 'Shadow elevation of the card',
+    design: {
+      control: 'select',
+      options: ['flat', 'neumorphic'],
+      defaultValue: 'flat',
+    },
+    backgroundColor: {
+      control: 'color',
+      defaultValue: '#ffffff',
     },
     style: {
       control: 'object',
@@ -30,51 +44,77 @@ const meta: Meta<typeof Card> = {
 export default meta;
 type Story = StoryObj<typeof Card>;
 
-export const Default: Story = {
+// Flat Design Stories
+export const Flat: Story = {
   args: {
-    style: { padding: 16, width: 300 },
-    onPress: fn(),
+    design: 'flat',
+    children: 'Flat Card',
+    style: { width: 200, alignItems: 'center' },
   },
-  render: (args) => (
-    <Card {...args}>
-      <Typography variant="h6">Card Title</Typography>
-      <Typography variant="body2">
-        This is a basic card component with some content inside it.
-      </Typography>
-    </Card>
+};
+
+// Neumorphic Design Stories
+export const Neumorphic: Story = {
+  args: {
+    design: 'neumorphic',
+    children: 'Neumorphic Card',
+    backgroundColor: '#ffffff',
+    style: { width: 200, alignItems: 'center' },
+  },
+};
+
+export const Interactive: Story = {
+  args: {
+    design: 'neumorphic',
+    children: 'Click Me',
+    backgroundColor: '#ffffff',
+    style: { width: 200, alignItems: 'center' },
+    onPress: () => console.log('Card pressed'),
+  },
+};
+
+// Variations
+export const Variations: Story = {
+  render: () => (
+    <View style={{ gap: 20, maxWidth: 300 }}>
+      <Card design="flat">
+        <Text>Flat Card with Border</Text>
+      </Card>
+      
+      <Card design="neumorphic" backgroundColor="#ffffff">
+        <Text>Neumorphic Card</Text>
+      </Card>
+      
+      <Card design="neumorphic" backgroundColor="#ffffff" onPress={() => console.log('Pressed')}>
+        <Text>Interactive Neumorphic Card</Text>
+      </Card>
+    </View>
   ),
 };
 
 export const WithHeader: Story = {
-  args: {
-    style: { width: 300 },
-    onPress: fn(),
-  },
-  render: (args) => (
-    <Card {...args}>
-      <View style={{ padding: 16, borderBottomWidth: 1, borderBottomColor: '#eee' }}>
-        <Typography variant="h6">Card Header</Typography>
-      </View>
-      <View style={{ padding: 16 }}>
-        <Typography variant="body2">
-          This card has a header section separated by a border.
-        </Typography>
-      </View>
-    </Card>
-  ),
-};
-
-export const Elevations: Story = {
   render: () => (
-    <View style={{ gap: 16, padding: 20 }}>
-      <Card elevation={1} style={{ padding: 16 }}>
-        <Typography>Elevation 1</Typography>
+    <View style={{ gap: 20, maxWidth: 300 }}>
+      <Card design="flat">
+        <View style={{ padding: 16, borderBottomWidth: 1, borderBottomColor: '#E5E5E5' }}>
+          <Typography variant="h6">Flat Card with Header</Typography>
+        </View>
+        <View style={{ padding: 16 }}>
+          <Typography variant="body2">
+            This card has a header section separated by a border.
+          </Typography>
+        </View>
       </Card>
-      <Card elevation={2} style={{ padding: 16 }}>
-        <Typography>Elevation 2</Typography>
-      </Card>
-      <Card elevation={3} style={{ padding: 16 }}>
-        <Typography>Elevation 3</Typography>
+
+      <Card design="neumorphic" backgroundColor="#ffffff">
+        <View style={{ padding: 16, borderBottomWidth: 1, borderBottomColor: '#E5E5E5' }}>
+          <Typography variant="h6">Neumorphic Card with Header</Typography>
+        </View>
+        <View style={{ padding: 16 }}>
+          <Typography variant="body2">
+            This card has a header section separated by a border.
+          </Typography>
+        </View>
       </Card>
     </View>
   ),

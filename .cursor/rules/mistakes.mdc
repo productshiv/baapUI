@@ -1,0 +1,9 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+
+# You did these mistakes so often, stop repeating same
+
+- You add grey background to componenets unnecessarily when we are making componenets neumorphic version.
