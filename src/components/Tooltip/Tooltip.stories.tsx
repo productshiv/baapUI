@@ -35,17 +35,17 @@ export const Positions: Story = {
       <Tooltip content="Top tooltip" position="top">
         <Text>Top</Text>
       </Tooltip>
-      
+
       <View style={{ flexDirection: 'row', gap: 50 }}>
         <Tooltip content="Left tooltip" position="left">
           <Text>Left</Text>
         </Tooltip>
-        
+
         <Tooltip content="Right tooltip" position="right">
           <Text>Right</Text>
         </Tooltip>
       </View>
-      
+
       <Tooltip content="Bottom tooltip" position="bottom">
         <Text>Bottom</Text>
       </Tooltip>
@@ -57,24 +57,28 @@ export const WithButtons: Story = {
   render: () => (
     <View style={{ gap: 20 }}>
       <Tooltip content="Save your changes">
-        <TouchableOpacity style={{
-          backgroundColor: '#4CAF50',
-          padding: 10,
-          borderRadius: 5,
-        }}>
+        <TouchableOpacity
+          style={{
+            backgroundColor: '#4CAF50',
+            padding: 10,
+            borderRadius: 5,
+          }}
+        >
           <Text style={{ color: 'white' }}>Save</Text>
         </TouchableOpacity>
       </Tooltip>
-      
+
       <Tooltip content="Delete this item">
-        <TouchableOpacity style={{
-          backgroundColor: '#f44336',
-          padding: 10,
-          borderRadius: 5,
-        }}>
+        <TouchableOpacity
+          style={{
+            backgroundColor: '#f44336',
+            padding: 10,
+            borderRadius: 5,
+          }}
+        >
           <Text style={{ color: 'white' }}>Delete</Text>
         </TouchableOpacity>
       </Tooltip>
     </View>
   ),
-}; 
+};

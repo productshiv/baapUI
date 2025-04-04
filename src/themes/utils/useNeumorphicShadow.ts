@@ -12,12 +12,12 @@ interface NeumorphicShadowOptions {
 
 export const useNeumorphicShadow = (options: NeumorphicShadowOptions = {}): ViewStyle => {
   const { theme } = useTheme();
-  const { 
-    size = 'medium', 
-    intensity = 1, 
+  const {
+    size = 'medium',
+    intensity = 1,
     inset = false,
     distance: customDistance,
-    blur: customBlur 
+    blur: customBlur,
   } = options;
 
   return useMemo(() => {
@@ -28,13 +28,13 @@ export const useNeumorphicShadow = (options: NeumorphicShadowOptions = {}): View
     const distances = {
       small: 3,
       medium: 5,
-      large: 8
+      large: 8,
     };
 
     const blurs = {
       small: 6,
       medium: 10,
-      large: 16
+      large: 16,
     };
 
     const distance = customDistance || distances[size];
@@ -73,4 +73,4 @@ export const useNeumorphicShadow = (options: NeumorphicShadowOptions = {}): View
       elevation: distance,
     };
   }, [theme, size, intensity, inset, customDistance, customBlur]);
-}; 
+};

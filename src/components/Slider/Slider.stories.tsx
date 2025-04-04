@@ -52,20 +52,15 @@ export const CustomColors: Story = {
 // Interactive example with value display
 const InteractiveSliderExample = () => {
   const [value, setValue] = useState(50);
-  
+
   return (
     <View style={{ gap: 16, alignItems: 'center' }}>
       <Typography>Value: {Math.round(value)}</Typography>
-      <Slider
-        value={value}
-        onValueChange={setValue}
-        minimumValue={0}
-        maximumValue={100}
-      />
+      <Slider value={value} onValueChange={setValue} minimumValue={0} maximumValue={100} />
     </View>
   );
 };
 
 export const Interactive: Story = {
   render: () => <InteractiveSliderExample />,
-}; 
+};

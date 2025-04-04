@@ -39,14 +39,14 @@ export const ContentLoading: Story = {
     <View style={{ gap: 8 }}>
       {/* Header */}
       <SkeletonLoader width={150} height={24} style={{ borderRadius: 4 }} />
-      
+
       {/* Content lines */}
       <SkeletonLoader width={300} height={16} style={{ borderRadius: 4 }} />
       <SkeletonLoader width={280} height={16} style={{ borderRadius: 4 }} />
       <SkeletonLoader width={260} height={16} style={{ borderRadius: 4 }} />
-      
+
       {/* Image placeholder */}
       <SkeletonLoader width={300} height={200} style={{ borderRadius: 8 }} />
     </View>
   ),
-}; 
+};

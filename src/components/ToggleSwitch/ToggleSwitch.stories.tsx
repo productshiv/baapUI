@@ -42,17 +42,11 @@ export const CustomLabel: Story = {
 // Interactive example with state display
 const InteractiveToggleSwitchExample = () => {
   const [isEnabled, setIsEnabled] = useState(false);
-  
+
   return (
     <View style={{ gap: 16, alignItems: 'center' }}>
-      <ToggleSwitch
-        label="Interactive Toggle"
-        initialValue={isEnabled}
-        onToggle={setIsEnabled}
-      />
-      <Typography>
-        Status: {isEnabled ? 'ON' : 'OFF'}
-      </Typography>
+      <ToggleSwitch label="Interactive Toggle" initialValue={isEnabled} onToggle={setIsEnabled} />
+      <Typography>Status: {isEnabled ? 'ON' : 'OFF'}</Typography>
     </View>
   );
 };
@@ -71,4 +65,4 @@ export const MultipleToggles: Story = {
       <ToggleSwitch label="Sound Effects" />
     </View>
   ),
-}; 
+};

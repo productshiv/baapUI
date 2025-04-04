@@ -32,9 +32,7 @@ const SkeletonLoader: React.FC<SkeletonLoaderProps> = ({ width, height, style })
     }),
   };
 
-  return (
-    <Animated.View style={[styles.skeleton, { width, height }, shimmerStyle, style]} />
-  );
+  return <Animated.View style={[styles.skeleton, { width, height }, shimmerStyle, style]} />;
 };
 
 const styles = StyleSheet.create({
@@ -44,4 +42,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SkeletonLoader; 
+export default SkeletonLoader;

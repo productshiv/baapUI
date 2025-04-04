@@ -37,15 +37,11 @@ const InteractiveDrawerExample = () => {
 
   return (
     <View style={{ width: '100%', height: 400 }}>
-      <Drawer
-        items={drawerItems}
-        selectedItem={selectedItem}
-        onSelect={setSelectedItem}
-      />
+      <Drawer items={drawerItems} selectedItem={selectedItem} onSelect={setSelectedItem} />
     </View>
   );
 };
 
 export const Interactive: Story = {
   render: () => <InteractiveDrawerExample />,
-}; 
+};

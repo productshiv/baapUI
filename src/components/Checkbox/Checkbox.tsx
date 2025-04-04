@@ -9,7 +9,13 @@ interface CheckboxProps {
   disabled?: boolean;
 }
 
-const Checkbox: React.FC<CheckboxProps> = ({ checked = false, onChange, label = "Checkbox", style, disabled = false }) => {
+const Checkbox: React.FC<CheckboxProps> = ({
+  checked = false,
+  onChange,
+  label = 'Checkbox',
+  style,
+  disabled = false,
+}) => {
   const [isChecked, setIsChecked] = useState(checked);
 
   const toggleCheckbox = () => {
@@ -23,8 +29,8 @@ const Checkbox: React.FC<CheckboxProps> = ({ checked = false, onChange, label = 
 
   return (
     <View style={[styles.container, style]}>
-      <TouchableOpacity 
-        style={[styles.checkbox, disabled && styles.disabled]} 
+      <TouchableOpacity
+        style={[styles.checkbox, disabled && styles.disabled]}
         onPress={toggleCheckbox}
         disabled={disabled}
       >
@@ -66,4 +72,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Checkbox; 
+export default Checkbox;

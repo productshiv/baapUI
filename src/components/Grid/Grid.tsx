@@ -10,7 +10,13 @@ interface RowProps extends GridProps {
   spacing?: number;
   columns?: number; // Number of columns per row
   align?: 'flex-start' | 'center' | 'flex-end' | 'stretch' | 'baseline';
-  justify?: 'flex-start' | 'center' | 'flex-end' | 'space-between' | 'space-around' | 'space-evenly';
+  justify?:
+    | 'flex-start'
+    | 'center'
+    | 'flex-end'
+    | 'space-between'
+    | 'space-around'
+    | 'space-evenly';
   wrap?: 'wrap' | 'nowrap';
 }
 
@@ -34,18 +40,21 @@ export const Row: React.FC<RowProps> = ({
   style,
 }) => {
   const childrenArray = React.Children.toArray(children);
-  
+
   // Calculate total fixed columns and count flex columns
-  const { fixedColumns, flexCount } = childrenArray.reduce((acc, child) => {
-    if (React.isValidElement(child)) {
-      if (child.props.flex) {
-        return { ...acc, flexCount: acc.flexCount + 1 };
-      } else {
-        return { ...acc, fixedColumns: acc.fixedColumns + (child.props.size || 1) };
+  const { fixedColumns, flexCount } = childrenArray.reduce(
+    (acc, child) => {
+      if (React.isValidElement(child)) {
+        if (child.props.flex) {
+          return { ...acc, flexCount: acc.flexCount + 1 };
+        } else {
+          return { ...acc, fixedColumns: acc.fixedColumns + (child.props.size || 1) };
+        }
       }
-    }
-    return acc;
-  }, { fixedColumns: 0, flexCount: 0 });
+      return acc;
+    },
+    { fixedColumns: 0, flexCount: 0 }
+  );
 
   // Calculate remaining space for flex columns
   const remainingColumns = Math.max(0, columns - fixedColumns);
@@ -64,10 +73,10 @@ export const Row: React.FC<RowProps> = ({
         style,
       ]}
     >
-      {React.Children.map(children, (child) => {
+      {React.Children.map(children, child => {
         if (React.isValidElement(child)) {
           let width: DimensionValue;
-          
+
           if (child.props.flex) {
             // For flex columns, distribute remaining space evenly
             width = `${(columnsPerFlex / columns) * 100}%`;
@@ -94,12 +103,12 @@ export const Row: React.FC<RowProps> = ({
   );
 };
 
-export const Col: React.FC<ColProps> = ({ 
-  children, 
-  size = 1, 
-  offset = 0, 
+export const Col: React.FC<ColProps> = ({
+  children,
+  size = 1,
+  offset = 0,
   flex = false,
-  style 
+  style,
 }) => {
   return (
     <View
@@ -132,4 +141,4 @@ export default {
   Container,
   Row,
   Col,
-}; 
+};

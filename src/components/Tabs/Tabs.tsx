@@ -16,7 +16,7 @@ interface TabsProps {
 const Tabs: React.FC<TabsProps> = ({ tabs, selectedTab, onSelect, style }) => {
   return (
     <View style={[styles.container, style]}>
-      {tabs.map((tab) => (
+      {tabs.map(tab => (
         <TouchableOpacity
           key={tab.id}
           style={[styles.tab, selectedTab === tab.id && styles.selectedTab]}
@@ -49,4 +49,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Tabs; 
+export default Tabs;

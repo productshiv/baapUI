@@ -37,4 +37,4 @@ export const AvatarGroup: Story = {
       <Avatar imageUrl="https://randomuser.me/api/portraits/women/4.jpg" size={40} />
     </View>
   ),
-}; 
+};

@@ -16,7 +16,7 @@ export const neumorphicLightTheme: Theme = {
     warning: '#FF9500',
     info: '#5856D6',
     lightShadow: '#FFFFFF',
-    darkShadow: '#A3B1C6'
+    darkShadow: '#A3B1C6',
   },
   shadows: {
     small: {
@@ -24,29 +24,29 @@ export const neumorphicLightTheme: Theme = {
       shadowOffset: { width: -3, height: -3 },
       shadowOpacity: 0.2,
       shadowRadius: 3,
-      elevation: 3
+      elevation: 3,
     },
     medium: {
       shadowColor: '#000000',
       shadowOffset: { width: -5, height: -5 },
       shadowOpacity: 0.2,
       shadowRadius: 6,
-      elevation: 5
+      elevation: 5,
     },
     large: {
       shadowColor: '#000000',
       shadowOffset: { width: -8, height: -8 },
       shadowOpacity: 0.2,
       shadowRadius: 10,
-      elevation: 8
-    }
+      elevation: 8,
+    },
   },
   spacing: {
     xs: 4,
     sm: 8,
     md: 16,
     lg: 24,
-    xl: 32
+    xl: 32,
   },
   typography: {
     h1: {
@@ -78,14 +78,14 @@ export const neumorphicLightTheme: Theme = {
       fontSize: 12,
       fontWeight: 'normal',
       letterSpacing: 0,
-    }
+    },
   },
   shape: {
     borderRadius: {
       sm: 8,
       md: 12,
       lg: 16,
-      full: 9999
-    }
-  }
-}; 
+      full: 9999,
+    },
+  },
+};

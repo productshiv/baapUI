@@ -30,14 +30,14 @@ const Drawer: React.FC<DrawerProps> = ({ items, selectedItem, onSelect, style })
       </TouchableOpacity>
       {isOpen && (
         <View style={[styles.container, style]}>
-          {items.map((item) => (
+          {items.map(item => (
             <TouchableOpacity
               key={item.id}
               onPress={() => onSelect(item.id)}
               style={[styles.item, selectedItem === item.id && styles.selectedItem]}
             >
-              <Typography 
-                variant="body1" 
+              <Typography
+                variant="body1"
                 style={selectedItem === item.id ? styles.selectedLabel : styles.label}
               >
                 {item.label}
@@ -89,4 +89,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Drawer; 
+export default Drawer;

@@ -18,13 +18,7 @@ const meta: Meta<typeof Dropdown> = {
 export default meta;
 type Story = StoryObj<typeof Dropdown>;
 
-const sampleOptions = [
-  'Option 1',
-  'Option 2',
-  'Option 3',
-  'Option 4',
-  'Option 5',
-];
+const sampleOptions = ['Option 1', 'Option 2', 'Option 3', 'Option 4', 'Option 5'];
 
 export const Default: Story = {
   args: {
@@ -48,19 +42,11 @@ export const WithValue: Story = {
 // Interactive example with state management
 const InteractiveDropdownExample = () => {
   const [value, setValue] = useState<string | null>(null);
-  
+
   return (
     <View style={{ width: 300 }}>
       <Dropdown
-        options={[
-          'React',
-          'Vue',
-          'Angular',
-          'Svelte',
-          'Next.js',
-          'Nuxt.js',
-          'Gatsby',
-        ]}
+        options={['React', 'Vue', 'Angular', 'Svelte', 'Next.js', 'Nuxt.js', 'Gatsby']}
         value={value}
         onSelect={setValue}
         label="Choose Framework"
@@ -72,4 +58,4 @@ const InteractiveDropdownExample = () => {
 
 export const Interactive: Story = {
   render: () => <InteractiveDropdownExample />,
-}; 
+};

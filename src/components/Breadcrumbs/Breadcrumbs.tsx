@@ -19,7 +19,9 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items, currentItem, onSelect,
       {items.map((item, index) => (
         <View key={item.id} style={styles.itemContainer}>
           <TouchableOpacity onPress={() => onSelect(item.id)} disabled={item.id === currentItem}>
-            <Text style={[styles.item, item.id === currentItem && styles.currentItem]}>{item.label}</Text>
+            <Text style={[styles.item, item.id === currentItem && styles.currentItem]}>
+              {item.label}
+            </Text>
           </TouchableOpacity>
           {index < items.length - 1 && <Text style={styles.separator}>/</Text>}
         </View>
@@ -51,4 +53,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Breadcrumbs; 
+export default Breadcrumbs;

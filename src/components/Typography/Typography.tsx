@@ -4,7 +4,19 @@ import { Text, StyleSheet, TextStyle, TextProps, Platform, StyleProp } from 'rea
 /**
  * Available typography variants following Material Design typography scale
  */
-type TypographyVariant = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'subtitle1' | 'subtitle2' | 'body1' | 'body2' | 'caption' | 'overline';
+type TypographyVariant =
+  | 'h1'
+  | 'h2'
+  | 'h3'
+  | 'h4'
+  | 'h5'
+  | 'h6'
+  | 'subtitle1'
+  | 'subtitle2'
+  | 'body1'
+  | 'body2'
+  | 'caption'
+  | 'overline';
 
 /**
  * Props for the Typography component
@@ -37,18 +49,18 @@ interface TypographyProps extends TextProps {
  * ```tsx
  * // Basic usage
  * <Typography variant="h1">Hello World</Typography>
- * 
+ *
  * // With custom styling
- * <Typography 
- *   variant="body1" 
+ * <Typography
+ *   variant="body1"
  *   color="#007AFF"
  *   align="center"
  * >
  *   Centered blue text
  * </Typography>
- * 
+ *
  * // Auto-sizing text
- * <Typography 
+ * <Typography
  *   adjustsFontSizeToFit
  *   numberOfLines={1}
  * >
@@ -85,11 +97,7 @@ const Typography: React.FC<TypographyProps> = ({
   return (
     <Text
       {...props}
-      style={[
-        variantStyles[variant],
-        { color, textAlign: align },
-        style,
-      ]}
+      style={[variantStyles[variant], { color, textAlign: align }, style]}
       numberOfLines={numberOfLines}
       adjustsFontSizeToFit={adjustsFontSizeToFit}
       minimumFontScale={minimumFontScale}
@@ -104,7 +112,7 @@ const styles = StyleSheet.create({
     fontFamily: Platform.select({
       ios: 'System',
       android: 'Roboto',
-      default: 'System'
+      default: 'System',
     }),
   },
   h1: {
@@ -186,4 +194,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Typography; 
+export default Typography;

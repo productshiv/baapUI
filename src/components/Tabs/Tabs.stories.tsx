@@ -32,7 +32,7 @@ export const Default: Story = {
 // Interactive example with content
 const InteractiveTabsExample = () => {
   const [selectedTab, setSelectedTab] = useState('tab1');
-  
+
   const getContent = () => {
     switch (selectedTab) {
       case 'tab1':
@@ -45,14 +45,10 @@ const InteractiveTabsExample = () => {
         return '';
     }
   };
-  
+
   return (
     <View style={{ gap: 16, width: 300 }}>
-      <Tabs
-        tabs={SAMPLE_TABS}
-        selectedTab={selectedTab}
-        onSelect={setSelectedTab}
-      />
+      <Tabs tabs={SAMPLE_TABS} selectedTab={selectedTab} onSelect={setSelectedTab} />
       <View style={{ padding: 16, backgroundColor: '#f5f5f5', borderRadius: 8 }}>
         <Typography>{getContent()}</Typography>
       </View>
@@ -77,4 +73,4 @@ export const ManyTabs: Story = {
     selectedTab: 'home',
     onSelect: () => {},
   },
-}; 
+};

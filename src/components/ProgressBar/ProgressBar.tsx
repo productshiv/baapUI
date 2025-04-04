@@ -9,15 +9,10 @@ interface ProgressBarProps {
 const ProgressBar: React.FC<ProgressBarProps> = ({ progress, style }) => {
   // Ensure progress is between 0 and 1
   const normalizedProgress = Math.max(0, Math.min(progress || 0, 1));
-  
+
   return (
     <View style={[styles.container, style]}>
-      <View 
-        style={[
-          styles.progress, 
-          { width: `${normalizedProgress * 100}%` }
-        ]} 
-      />
+      <View style={[styles.progress, { width: `${normalizedProgress * 100}%` }]} />
     </View>
   );
 };
@@ -37,4 +32,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProgressBar; 
+export default ProgressBar;

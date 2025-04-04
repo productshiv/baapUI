@@ -39,7 +39,7 @@ export const ManyPages: Story = {
 const InteractivePaginationExample = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = 5;
-  
+
   const getContent = () => {
     switch (currentPage) {
       case 1:
@@ -56,24 +56,22 @@ const InteractivePaginationExample = () => {
         return '';
     }
   };
-  
+
   return (
     <View style={{ gap: 20, alignItems: 'center' }}>
-      <View style={{ 
-        padding: 20, 
-        backgroundColor: '#f5f5f5', 
-        borderRadius: 8,
-        minWidth: 200,
-        alignItems: 'center'
-      }}>
+      <View
+        style={{
+          padding: 20,
+          backgroundColor: '#f5f5f5',
+          borderRadius: 8,
+          minWidth: 200,
+          alignItems: 'center',
+        }}
+      >
         <Typography>{getContent()}</Typography>
       </View>
-      
-      <Pagination
-        totalPages={totalPages}
-        currentPage={currentPage}
-        onPageChange={setCurrentPage}
-      />
+
+      <Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={setCurrentPage} />
     </View>
   );
 };
@@ -88,30 +86,18 @@ export const States: Story = {
     <View style={{ gap: 20 }}>
       <View>
         <Typography variant="caption">First page</Typography>
-        <Pagination
-          totalPages={5}
-          currentPage={1}
-          onPageChange={() => {}}
-        />
+        <Pagination totalPages={5} currentPage={1} onPageChange={() => {}} />
       </View>
-      
+
       <View>
         <Typography variant="caption">Middle page</Typography>
-        <Pagination
-          totalPages={5}
-          currentPage={3}
-          onPageChange={() => {}}
-        />
+        <Pagination totalPages={5} currentPage={3} onPageChange={() => {}} />
       </View>
-      
+
       <View>
         <Typography variant="caption">Last page</Typography>
-        <Pagination
-          totalPages={5}
-          currentPage={5}
-          onPageChange={() => {}}
-        />
+        <Pagination totalPages={5} currentPage={5} onPageChange={() => {}} />
       </View>
     </View>
   ),
-}; 
+};

@@ -28,7 +28,7 @@ export const Default: Story = {
 
 export const WithCustomStyle: Story = {
   render: () => (
-    <BaapSafeArea 
+    <BaapSafeArea
       style={{ flex: 1, backgroundColor: '#e3f2fd' }}
       contentContainerStyle={{ padding: 20 }}
     >
@@ -36,4 +36,4 @@ export const WithCustomStyle: Story = {
       <Typography>Content with custom padding and background color.</Typography>
     </BaapSafeArea>
   ),
-}; 
+};

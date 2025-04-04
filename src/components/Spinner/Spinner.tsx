@@ -13,14 +13,14 @@ interface SpinnerProps {
   style?: ViewStyle;
 }
 
-const getSpinnerSize = (size: SpinnerSize): "small" | "large" | number => {
+const getSpinnerSize = (size: SpinnerSize): 'small' | 'large' | number => {
   switch (size) {
     case 'small':
-      return "small";
+      return 'small';
     case 'medium':
       return 36;
     case 'large':
-      return "large";
+      return 'large';
     default:
       return 36;
   }
@@ -53,18 +53,12 @@ const Spinner: React.FC<SpinnerProps> = ({
   style,
 }) => {
   const spinnerColor = color || getSpinnerColor(variant);
-  
+
   return (
     <View style={[styles.container, style]}>
-      <ActivityIndicator
-        size={getSpinnerSize(size)}
-        color={spinnerColor}
-      />
+      <ActivityIndicator size={getSpinnerSize(size)} color={spinnerColor} />
       {label && (
-        <Typography
-          variant="caption"
-          style={{ ...styles.label, color: spinnerColor }}
-        >
+        <Typography variant="caption" style={{ ...styles.label, color: spinnerColor }}>
           {label}
         </Typography>
       )}
@@ -84,4 +78,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Spinner; 
+export default Spinner;

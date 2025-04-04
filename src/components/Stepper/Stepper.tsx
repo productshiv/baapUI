@@ -50,4 +50,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Stepper; 
+export default Stepper;

@@ -10,9 +10,9 @@ export interface CardProps {
   backgroundColor?: string;
 }
 
-const Card: React.FC<CardProps> = ({ 
-  children, 
-  style, 
+const Card: React.FC<CardProps> = ({
+  children,
+  style,
   onPress,
   design = 'flat',
   backgroundColor = NEUMORPHIC_COLORS.background,
@@ -21,10 +21,12 @@ const Card: React.FC<CardProps> = ({
     const baseStyles: ViewStyle[] = [styles.container];
 
     if (design === 'neumorphic') {
-      baseStyles.push(...getNeumorphicStyles({ 
-        isPressed: pressed,
-        customBackground: backgroundColor,
-      }));
+      baseStyles.push(
+        ...getNeumorphicStyles({
+          isPressed: pressed,
+          customBackground: backgroundColor,
+        })
+      );
     }
 
     if (style) {
@@ -34,21 +36,18 @@ const Card: React.FC<CardProps> = ({
     return baseStyles;
   };
 
-  const content = typeof children === 'string' ? (
-    <Text style={[
-      styles.text, 
-      design === 'neumorphic' && styles.neumorphicText
-    ]}>{children}</Text>
-  ) : (
-    children
-  );
+  const content =
+    typeof children === 'string' ? (
+      <Text style={[styles.text, design === 'neumorphic' && styles.neumorphicText]}>
+        {children}
+      </Text>
+    ) : (
+      children
+    );
 
   if (onPress) {
     return (
-      <Pressable 
-        style={({ pressed }) => getCardStyles(pressed)} 
-        onPress={onPress}
-      >
+      <Pressable style={({ pressed }) => getCardStyles(pressed)} onPress={onPress}>
         {content}
       </Pressable>
     );
@@ -75,4 +74,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Card; 
+export default Card;

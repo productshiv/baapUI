@@ -48,21 +48,15 @@ export const WithRange: Story = {
 // Interactive example with value display
 const InteractiveStepperExample = () => {
   const [value, setValue] = useState(0);
-  
+
   return (
     <View style={{ gap: 16, alignItems: 'center' }}>
       <Typography>Value: {value}</Typography>
-      <Stepper
-        value={value}
-        onValueChange={setValue}
-        step={1}
-        minimumValue={0}
-        maximumValue={10}
-      />
+      <Stepper value={value} onValueChange={setValue} step={1} minimumValue={0} maximumValue={10} />
     </View>
   );
 };
 
 export const Interactive: Story = {
   render: () => <InteractiveStepperExample />,
-}; 
+};

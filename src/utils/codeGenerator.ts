@@ -35,7 +35,7 @@ const formatValue = (value: any): string => {
     const fnBody = value.toString();
     // Format event handlers to be more readable
     if (fnBody.includes('console.log')) {
-      return `() => console.log('${fnBody.match(/['"]([^'"]*)['"]/)?.[1] || 'clicked'}')`; 
+      return `() => console.log('${fnBody.match(/['"]([^'"]*)['"]/)?.[1] || 'clicked'}')`;
     }
     // If it's an arrow function or regular function, keep it clean
     if (fnBody.includes('=>')) {
@@ -65,12 +65,12 @@ const formatValue = (value: any): string => {
 export const generateComponentCode = ({ componentName, props }: CodeGeneratorOptions): string => {
   // Filter out undefined props
   const validProps = Object.entries(props).filter(([_, value]) => value !== undefined);
-  
+
   // Sort props based on the defined order
   const sortedProps = validProps.sort(([a], [b]) => {
     const aIndex = PROP_ORDER.indexOf(a);
     const bIndex = PROP_ORDER.indexOf(b);
-    
+
     // If both props are in the order list, sort by their index
     if (aIndex !== -1 && bIndex !== -1) {
       return aIndex - bIndex;
@@ -86,7 +86,7 @@ export const generateComponentCode = ({ componentName, props }: CodeGeneratorOpt
   if (componentName === 'Card') {
     const hasTitle = props.title || typeof props.children === 'string';
     const hasContent = props.content || (typeof props.children === 'string' && !props.title);
-    
+
     return `import { Card } from '@productshiv/baapuibeta';
 
 export const Example = () => {
@@ -98,7 +98,13 @@ export const Example = () => {
         .join('\n      ')}
     >
       ${hasTitle ? `<Card.Title>${formatValue(props.title || props.children)}</Card.Title>` : ''}
-      ${hasContent ? `<Card.Content>${formatValue(props.content || (!props.title ? props.children : ''))}</Card.Content>` : ''}
+      ${
+        hasContent
+          ? `<Card.Content>${formatValue(
+              props.content || (!props.title ? props.children : '')
+            )}</Card.Content>`
+          : ''
+      }
     </Card>
   );
 };`;
@@ -127,4 +133,4 @@ export const formatCode = (code: string): string => {
     .replace(/\n\s*\n/g, '\n') // Remove multiple empty lines
     .replace(/;\s*$/, '') // Remove trailing semicolon
     .replace(/>\s+</g, '>\n      <'); // Format nested JSX
-}; 
+};

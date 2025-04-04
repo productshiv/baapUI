@@ -68,7 +68,18 @@ const SampleScreen: React.FC = () => {
   const [selectedDrawerItem, setSelectedDrawerItem] = useState('home');
   const [toastVisible, setToastVisible] = useState(false);
   const [carouselIndex, setCarouselIndex] = useState(0);
-  const carouselItems = ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5', 'Item 6', 'Item 7', 'Item 8', 'Item 9', 'Item 10'];
+  const carouselItems = [
+    'Item 1',
+    'Item 2',
+    'Item 3',
+    'Item 4',
+    'Item 5',
+    'Item 6',
+    'Item 7',
+    'Item 8',
+    'Item 9',
+    'Item 10',
+  ];
   const [progress, setProgress] = useState(0.5);
   const badgeCount = 5;
   const listItems = ['Item 1', 'Item 2', 'Item 3'];
@@ -85,13 +96,13 @@ const SampleScreen: React.FC = () => {
     {
       id: '1',
       title: 'Section 1',
-      content: 'This is the content for section 1'
+      content: 'This is the content for section 1',
     },
     {
       id: '2',
       title: 'Section 2',
-      content: 'This is the content for section 2'
-    }
+      content: 'This is the content for section 2',
+    },
   ];
 
   const handlePress = () => {
@@ -150,16 +161,16 @@ const SampleScreen: React.FC = () => {
               <ToggleSwitch initialValue={isToggled} onToggle={setToggled} label="Toggle Switch" />
               <Dropdown
                 options={[
-                  "Option 1",
-                  "Option 2",
-                  "Option 3",
-                  "Option 4",
-                  "Option 5",
-                  "Option 6",
-                  "Option 7",
-                  "Option 8",
-                  "Option 9",
-                  "Option 10"
+                  'Option 1',
+                  'Option 2',
+                  'Option 3',
+                  'Option 4',
+                  'Option 5',
+                  'Option 6',
+                  'Option 7',
+                  'Option 8',
+                  'Option 9',
+                  'Option 10',
                 ]}
                 value={selectedOption}
                 onSelect={setSelectedOption}
@@ -169,7 +180,7 @@ const SampleScreen: React.FC = () => {
               <Text>Selected: {selectedOption}</Text>
               <CustomSlider
                 value={50}
-                onValueChange={(value) => console.log('Slider Value:', value)}
+                onValueChange={value => console.log('Slider Value:', value)}
                 minimumValue={0}
                 maximumValue={100}
                 minimumTrackTintColor="#007bff"
@@ -184,9 +195,9 @@ const SampleScreen: React.FC = () => {
                 maximumValue={10}
               />
             </>
-          )
-        }
-      ]
+          ),
+        },
+      ],
     },
     {
       title: 'Navigation Components',
@@ -199,11 +210,7 @@ const SampleScreen: React.FC = () => {
               <Modal visible={isModalVisible} onClose={() => setModalVisible(false)}>
                 <Text>This is a modal</Text>
               </Modal>
-              <Tabs
-                tabs={tabs}
-                selectedTab={selectedTab}
-                onSelect={setSelectedTab}
-              />
+              <Tabs tabs={tabs} selectedTab={selectedTab} onSelect={setSelectedTab} />
               <Accordion
                 sections={accordionSections}
                 expandedSection={expandedSection}
@@ -273,10 +280,7 @@ const SampleScreen: React.FC = () => {
                 ))}
               />
               <Divider />
-              <Table
-                data={tableData}
-                columns={tableColumns}
-              />
+              <Table data={tableData} columns={tableColumns} />
             </>
           ),
         },
@@ -289,68 +293,71 @@ const SampleScreen: React.FC = () => {
           key: 'utility',
           render: () => (
             <>
-            <Card style={styles.typographyCard}>
-              <Typography variant="h4" style={styles.cardTitle}>Typography System</Typography>
-              <View style={styles.typographyDemo}>
-                <Typography variant="h1">Heading 1</Typography>
-                <Typography variant="h2">Heading 2</Typography>
-                <Typography variant="subtitle1">Subtitle 1</Typography>
-                <Typography variant="body1">Body Text 1</Typography>
-                <Typography variant="caption">Caption Text</Typography>
-              </View>
-            </Card>
-            
-            <Card>
-              <Typography variant="h4">Loading States</Typography>
-                  <Spinner size="large" variant="primary" label="Large" />
-                  <Spinner size="small" variant="success" label="Small" />
-            </Card>
-            
-            <Grid.Container style={styles.gridExample}>
-              <Grid.Row>
-                <Grid.Col size={12}>
-                  <Typography variant="h4" style={styles.gridTitle}>Grid Layout System</Typography>
-                </Grid.Col>
-              </Grid.Row>
-              
-              {/* Two columns example */}
-              <Grid.Row spacing={2}>
-                {[1, 2].map((num) => (
-                  <Grid.Col key={num} size={6}>
-                    <Card style={styles.gridCard}>
-                      <Typography 
-                        variant="body1"
-                        adjustsFontSizeToFit
-                        numberOfLines={1}
-                        style={styles.gridText}
-                      >
-                        Column {num}
-                      </Typography>
-                    </Card>
-                  </Grid.Col>
-                ))}
-              </Grid.Row>
+              <Card style={styles.typographyCard}>
+                <Typography variant="h4" style={styles.cardTitle}>
+                  Typography System
+                </Typography>
+                <View style={styles.typographyDemo}>
+                  <Typography variant="h1">Heading 1</Typography>
+                  <Typography variant="h2">Heading 2</Typography>
+                  <Typography variant="subtitle1">Subtitle 1</Typography>
+                  <Typography variant="body1">Body Text 1</Typography>
+                  <Typography variant="caption">Caption Text</Typography>
+                </View>
+              </Card>
 
-              {/* Three columns example */}
-              <Grid.Row spacing={2} style={{ marginTop: 16 }}>
-                {[1, 2, 3].map((num) => (
-                  <Grid.Col key={num} size={4}>
-                    <Card style={styles.gridCard}>
-                      <Typography 
-                        variant="body1"
-                        adjustsFontSizeToFit
-                        numberOfLines={1}
-                        style={styles.gridText}
-                      >
-                        Column {num}
-                      </Typography>
-                    </Card>
+              <Card>
+                <Typography variant="h4">Loading States</Typography>
+                <Spinner size="large" variant="primary" label="Large" />
+                <Spinner size="small" variant="success" label="Small" />
+              </Card>
+
+              <Grid.Container style={styles.gridExample}>
+                <Grid.Row>
+                  <Grid.Col size={12}>
+                    <Typography variant="h4" style={styles.gridTitle}>
+                      Grid Layout System
+                    </Typography>
                   </Grid.Col>
-                ))}
-              </Grid.Row>
-            </Grid.Container>
+                </Grid.Row>
+
+                {/* Two columns example */}
+                <Grid.Row spacing={2}>
+                  {[1, 2].map(num => (
+                    <Grid.Col key={num} size={6}>
+                      <Card style={styles.gridCard}>
+                        <Typography
+                          variant="body1"
+                          adjustsFontSizeToFit
+                          numberOfLines={1}
+                          style={styles.gridText}
+                        >
+                          Column {num}
+                        </Typography>
+                      </Card>
+                    </Grid.Col>
+                  ))}
+                </Grid.Row>
+
+                {/* Three columns example */}
+                <Grid.Row spacing={2} style={{ marginTop: 16 }}>
+                  {[1, 2, 3].map(num => (
+                    <Grid.Col key={num} size={4}>
+                      <Card style={styles.gridCard}>
+                        <Typography
+                          variant="body1"
+                          adjustsFontSizeToFit
+                          numberOfLines={1}
+                          style={styles.gridText}
+                        >
+                          Column {num}
+                        </Typography>
+                      </Card>
+                    </Grid.Col>
+                  ))}
+                </Grid.Row>
+              </Grid.Container>
             </>
-            
           ),
         },
       ],
@@ -358,14 +365,11 @@ const SampleScreen: React.FC = () => {
   ];
 
   return (
-    <BaapSafeArea 
-      contentContainerStyle={styles.contentContainer}
-      style={styles.container}
-    >
-      {sampleSections.map((section) => (
+    <BaapSafeArea contentContainerStyle={styles.contentContainer} style={styles.container}>
+      {sampleSections.map(section => (
         <View key={section.title}>
           <Typography variant="h3">{section.title}</Typography>
-          {section.data.map((item) => (
+          {section.data.map(item => (
             <View key={item.key} style={styles.sectionContent}>
               {item.render()}
             </View>
@@ -424,4 +428,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SampleScreen; 
+export default SampleScreen;

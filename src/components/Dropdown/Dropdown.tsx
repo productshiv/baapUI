@@ -1,5 +1,14 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Animated, ViewStyle, TextStyle, ScrollView } from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Animated,
+  ViewStyle,
+  TextStyle,
+  ScrollView,
+} from 'react-native';
 import Typography from '../Typography/Typography';
 
 interface DropdownProps {
@@ -18,9 +27,9 @@ interface DropdownProps {
 const Dropdown: React.FC<DropdownProps> = ({
   options,
   onSelect,
-  label = "Select",
+  label = 'Select',
   value,
-  placeholder = "Choose an option",
+  placeholder = 'Choose an option',
   style,
   dropdownStyle,
   optionStyle,
@@ -33,7 +42,7 @@ const Dropdown: React.FC<DropdownProps> = ({
   const toggleDropdown = () => {
     const toValue = isOpen ? 0 : 1;
     setIsOpen(!isOpen);
-    
+
     Animated.timing(animation, {
       toValue,
       duration: 200,
@@ -49,10 +58,7 @@ const Dropdown: React.FC<DropdownProps> = ({
   return (
     <View style={[styles.container, style]}>
       {label && (
-        <Typography 
-          variant="subtitle2" 
-          style={[styles.label, labelStyle]}
-        >
+        <Typography variant="subtitle2" style={[styles.label, labelStyle]}>
           {label}
         </Typography>
       )}
@@ -61,21 +67,15 @@ const Dropdown: React.FC<DropdownProps> = ({
         style={[styles.dropdown, dropdownStyle]}
         activeOpacity={0.7}
       >
-        <Typography 
-          variant="body1" 
-          style={[styles.text, textStyle]}
-        >
+        <Typography variant="body1" style={[styles.text, textStyle]}>
           {value || placeholder}
         </Typography>
-        <Typography 
-          variant="body1"
-          style={[styles.arrow, isOpen ? styles.arrowUp : undefined]}
-        >
+        <Typography variant="body1" style={[styles.arrow, isOpen ? styles.arrowUp : undefined]}>
           ▼
         </Typography>
       </TouchableOpacity>
       <Animated.View style={[styles.optionsContainer, { maxHeight: optionsHeight }]}>
-        <ScrollView 
+        <ScrollView
           showsVerticalScrollIndicator={true}
           bounces={false}
           style={styles.scrollView}
@@ -94,10 +94,7 @@ const Dropdown: React.FC<DropdownProps> = ({
                 optionStyle,
               ]}
             >
-              <Typography 
-                variant="body1" 
-                style={[styles.optionText, textStyle]}
-              >
+              <Typography variant="body1" style={[styles.optionText, textStyle]}>
                 {option}
               </Typography>
             </TouchableOpacity>

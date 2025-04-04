@@ -39,13 +39,10 @@ export const CustomDuration: Story = {
 // Interactive example with trigger button
 const InteractiveToastExample = () => {
   const [visible, setVisible] = useState(false);
-  
+
   return (
     <View style={{ gap: 16, alignItems: 'center' }}>
-      <Button 
-        title="Show Toast" 
-        onPress={() => setVisible(true)} 
-      />
+      <Button title="Show Toast" onPress={() => setVisible(true)} />
       <Toast
         message="Action completed successfully!"
         visible={visible}
@@ -76,25 +73,19 @@ const MultipleToastsExample = () => {
 
   return (
     <View style={{ gap: 16, alignItems: 'center' }}>
-      <Button 
-        title="Success Toast" 
-        onPress={() => showToast({ backgroundColor: '#4CAF50' })} 
-      />
-      <Button 
-        title="Error Toast" 
-        onPress={() => showToast({ backgroundColor: '#f44336' })} 
-      />
-      <Button 
-        title="Info Toast" 
-        onPress={() => showToast({ backgroundColor: '#2196F3' })} 
-      />
+      <Button title="Success Toast" onPress={() => showToast({ backgroundColor: '#4CAF50' })} />
+      <Button title="Error Toast" onPress={() => showToast({ backgroundColor: '#f44336' })} />
+      <Button title="Info Toast" onPress={() => showToast({ backgroundColor: '#2196F3' })} />
       {toasts.map(toast => (
         <Toast
           key={toast.id}
           message={`Toast message #${toast.id}`}
           visible={toast.visible}
           onClose={() => hideToast(toast.id)}
-          style={{ backgroundColor: toast.id % 3 === 0 ? '#4CAF50' : toast.id % 3 === 1 ? '#f44336' : '#2196F3' }}
+          style={{
+            backgroundColor:
+              toast.id % 3 === 0 ? '#4CAF50' : toast.id % 3 === 1 ? '#f44336' : '#2196F3',
+          }}
         />
       ))}
     </View>
@@ -103,4 +94,4 @@ const MultipleToastsExample = () => {
 
 export const MultipleStyles: Story = {
   render: () => <MultipleToastsExample />,
-}; 
+};

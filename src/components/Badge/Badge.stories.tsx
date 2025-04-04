@@ -63,4 +63,4 @@ export const WithContent: Story = {
       <Badge>Hot</Badge>
     </View>
   ),
-}; 
+};

@@ -8,7 +8,12 @@ interface ToggleSwitchProps {
   style?: object;
 }
 
-const ToggleSwitch: React.FC<ToggleSwitchProps> = ({ initialValue = false, onToggle, label = "Toggle", style }) => {
+const ToggleSwitch: React.FC<ToggleSwitchProps> = ({
+  initialValue = false,
+  onToggle,
+  label = 'Toggle',
+  style,
+}) => {
   const [value, setValue] = useState(initialValue);
 
   const toggleSwitch = () => {

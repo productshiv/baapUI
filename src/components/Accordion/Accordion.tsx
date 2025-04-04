@@ -17,7 +17,7 @@ interface AccordionProps {
 const Accordion: React.FC<AccordionProps> = ({ sections, expandedSection, onToggle, style }) => {
   return (
     <View style={[styles.container, style]}>
-      {sections.map((section) => (
+      {sections.map(section => (
         <View key={section.id} style={styles.section}>
           <TouchableOpacity onPress={() => onToggle(section.id)} style={styles.header}>
             <Text style={styles.title}>{section.title}</Text>
@@ -59,4 +59,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Accordion; 
+export default Accordion;

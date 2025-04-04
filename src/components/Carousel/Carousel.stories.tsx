@@ -39,13 +39,7 @@ export const WithCustomStyle: Story = {
   },
 };
 
-const contentItems = [
-  'React Native',
-  'TypeScript',
-  'Storybook',
-  'Components',
-  'Documentation',
-];
+const contentItems = ['React Native', 'TypeScript', 'Storybook', 'Components', 'Documentation'];
 
 export const ContentCarousel: Story = {
   args: {
@@ -63,4 +57,4 @@ export const ContentCarousel: Story = {
     textStyle: { color: '#1976d2' },
     activeTextStyle: { color: '#ffffff' },
   },
-}; 
+};

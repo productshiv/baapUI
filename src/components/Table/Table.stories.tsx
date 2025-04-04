@@ -89,10 +89,7 @@ const WIDE_DATA = [
 export const WideTable: Story = {
   render: () => (
     <View style={{ width: 800, padding: 20 }}>
-      <Table
-        columns={WIDE_COLUMNS}
-        data={WIDE_DATA}
-      />
+      <Table columns={WIDE_COLUMNS} data={WIDE_DATA} />
     </View>
   ),
-}; 
+};

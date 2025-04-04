@@ -43,15 +43,11 @@ const InteractiveBreadcrumbs = () => {
 
   return (
     <View style={{ width: '100%', maxWidth: 600 }}>
-      <Breadcrumbs
-        items={items}
-        currentItem={currentItem}
-        onSelect={setCurrentItem}
-      />
+      <Breadcrumbs items={items} currentItem={currentItem} onSelect={setCurrentItem} />
     </View>
   );
 };
 
 export const Interactive: Story = {
   render: () => <InteractiveBreadcrumbs />,
-}; 
+};

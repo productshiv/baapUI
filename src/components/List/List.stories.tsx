@@ -97,4 +97,4 @@ export const Interactive: Story = {
       borderRadius: 0,
     },
   },
-}; 
+};

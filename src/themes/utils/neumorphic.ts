@@ -20,17 +20,19 @@ interface NeumorphicStyleOptions {
   customBorderRadius?: number;
 }
 
-export const getNeumorphicStyles = ({ 
-  isPressed = false, 
+export const getNeumorphicStyles = ({
+  isPressed = false,
   customBackground,
   customBorderRadius,
 }: NeumorphicStyleOptions = {}): ViewStyle[] => {
-  const baseStyles: ViewStyle[] = [{
-    backgroundColor: customBackground || NEUMORPHIC_COLORS.background,
-    borderWidth: 0,
-    borderRadius: customBorderRadius || NEUMORPHIC_CONFIG.borderRadius,
-    padding: 16,
-  }];
+  const baseStyles: ViewStyle[] = [
+    {
+      backgroundColor: customBackground || NEUMORPHIC_COLORS.background,
+      borderWidth: 0,
+      borderRadius: customBorderRadius || NEUMORPHIC_CONFIG.borderRadius,
+      padding: 16,
+    },
+  ];
 
   if (isPressed) {
     // Inset shadow effect when pressed

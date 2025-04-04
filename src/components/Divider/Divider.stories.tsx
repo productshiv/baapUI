@@ -48,4 +48,4 @@ export const MultipleContent: Story = {
       <Typography>Content for section 3</Typography>
     </View>
   ),
-}; 
+};

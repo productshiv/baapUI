@@ -36,21 +36,9 @@ export const ChipGroup: Story = {
   render: () => (
     <View style={{ flexDirection: 'row', gap: 8, flexWrap: 'wrap' }}>
       <Chip label="React" onPress={() => {}} />
-      <Chip 
-        label="TypeScript" 
-        onPress={() => {}}
-        style={{ backgroundColor: '#007ACC' }}
-      />
-      <Chip 
-        label="JavaScript" 
-        onPress={() => {}}
-        style={{ backgroundColor: '#F7DF1E' }}
-      />
-      <Chip 
-        label="Node.js" 
-        onPress={() => {}}
-        style={{ backgroundColor: '#339933' }}
-      />
+      <Chip label="TypeScript" onPress={() => {}} style={{ backgroundColor: '#007ACC' }} />
+      <Chip label="JavaScript" onPress={() => {}} style={{ backgroundColor: '#F7DF1E' }} />
+      <Chip label="Node.js" onPress={() => {}} style={{ backgroundColor: '#339933' }} />
     </View>
   ),
-}; 
+};

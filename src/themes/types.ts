@@ -59,4 +59,4 @@ export interface Theme {
   spacing: ThemeSpacing;
   typography: ThemeTypography;
   shape: ThemeShape;
-} 
+}

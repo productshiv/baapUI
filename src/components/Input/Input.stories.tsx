@@ -8,7 +8,7 @@ const meta: Meta<typeof Input> = {
   title: 'Core UI/Input',
   component: Input,
   decorators: [
-    (Story) => (
+    Story => (
       <ThemeProvider>
         <View style={{ padding: 20 }}>
           <Story />
@@ -91,32 +91,28 @@ export const NeumorphicCustomColors: Story = {
 export const States: Story = {
   render: () => (
     <View style={{ gap: 16, padding: 20, width: 300 }}>
-      <Input 
-        label="Flat Default"
-        placeholder="Default input"
-        design="flat"
-      />
-      <Input 
+      <Input label="Flat Default" placeholder="Default input" design="flat" />
+      <Input
         label="Neumorphic Default"
         placeholder="Neumorphic input"
         design="neumorphic"
         backgroundColor="#ffffff"
       />
-      <Input 
+      <Input
         label="With Error"
         placeholder="Error state"
         error="This field is required"
         design="neumorphic"
         backgroundColor="#ffffff"
       />
-      <Input 
+      <Input
         label="Disabled"
         placeholder="Disabled input"
         disabled
         design="neumorphic"
         backgroundColor="#ffffff"
       />
-      <Input 
+      <Input
         label="Password"
         placeholder="Enter password"
         secureTextEntry
@@ -125,4 +121,4 @@ export const States: Story = {
       />
     </View>
   ),
-}; 
+};

@@ -22,4 +22,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default TextArea; 
+export default TextArea;

@@ -9,7 +9,7 @@ const meta: Meta<typeof Card> = {
   title: 'Core UI/Card',
   component: Card,
   decorators: [
-    (Story) => (
+    Story => (
       <ThemeProvider>
         <View style={{ padding: 20, alignItems: 'center' }}>
           <Story />
@@ -80,11 +80,11 @@ export const Variations: Story = {
       <Card design="flat">
         <Text>Flat Card with Border</Text>
       </Card>
-      
+
       <Card design="neumorphic" backgroundColor="#ffffff">
         <Text>Neumorphic Card</Text>
       </Card>
-      
+
       <Card design="neumorphic" backgroundColor="#ffffff" onPress={() => console.log('Pressed')}>
         <Text>Interactive Neumorphic Card</Text>
       </Card>
@@ -118,4 +118,4 @@ export const WithHeader: Story = {
       </Card>
     </View>
   ),
-}; 
+};

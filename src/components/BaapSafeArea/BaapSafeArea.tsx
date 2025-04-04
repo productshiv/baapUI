@@ -1,5 +1,12 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, Platform, ViewStyle, ScrollView, ScrollViewProps } from 'react-native';
+import {
+  SafeAreaView,
+  StyleSheet,
+  Platform,
+  ViewStyle,
+  ScrollView,
+  ScrollViewProps,
+} from 'react-native';
 
 interface BaapSafeAreaProps extends ScrollViewProps {
   children: React.ReactNode;
@@ -8,19 +15,19 @@ interface BaapSafeAreaProps extends ScrollViewProps {
   disableScroll?: boolean;
 }
 
-const BaapSafeArea: React.FC<BaapSafeAreaProps> = ({ 
-  children, 
-  style, 
+const BaapSafeArea: React.FC<BaapSafeAreaProps> = ({
+  children,
+  style,
   contentContainerStyle,
   disableScroll = false,
-  ...scrollViewProps 
+  ...scrollViewProps
 }) => {
   return (
     <SafeAreaView style={[styles.safeArea, style]}>
       {disableScroll ? (
         children
       ) : (
-        <ScrollView 
+        <ScrollView
           {...scrollViewProps}
           contentContainerStyle={[styles.scrollContainer, contentContainerStyle]}
         >
@@ -34,11 +41,11 @@ const BaapSafeArea: React.FC<BaapSafeAreaProps> = ({
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#f5f5f5'
+    backgroundColor: '#f5f5f5',
   },
   scrollContainer: {
     flexGrow: 1,
   },
 });
 
-export default BaapSafeArea; 
+export default BaapSafeArea;

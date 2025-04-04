@@ -44,4 +44,4 @@ export const MultipleLabels: Story = {
       <Label text="Phone Number:" />
     </View>
   ),
-}; 
+};

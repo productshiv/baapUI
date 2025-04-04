@@ -44,4 +44,4 @@ export const WithLabels: Story = {
       <Checkbox label="Remember me" />
     </View>
   ),
-}; 
+};

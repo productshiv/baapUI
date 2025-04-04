@@ -14,17 +14,10 @@ interface ListProps {
 }
 
 export const ListItem: React.FC<ListItemProps> = ({ children, style }) => (
-  <View style={[styles.listItem, style]}>
-    {children}
-  </View>
+  <View style={[styles.listItem, style]}>{children}</View>
 );
 
-const List: React.FC<ListProps> = ({ 
-  items, 
-  style,
-  itemStyle,
-  containerStyle 
-}) => {
+const List: React.FC<ListProps> = ({ items, style, itemStyle, containerStyle }) => {
   return (
     <View style={[styles.container, containerStyle]}>
       {items.map((item, index) => (
@@ -54,4 +47,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default List; 
+export default List;

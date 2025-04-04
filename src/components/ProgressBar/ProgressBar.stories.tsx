@@ -56,17 +56,17 @@ export const States: Story = {
 
 const AnimatedExample = () => {
   const [progress, setProgress] = useState(0);
-  
+
   useEffect(() => {
     const interval = setInterval(() => {
-      setProgress((prev) => {
+      setProgress(prev => {
         const next = prev + 0.1;
         return next > 1 ? 0 : next;
       });
     }, 1000);
     return () => clearInterval(interval);
   }, []);
-  
+
   return (
     <View style={{ gap: 8, minWidth: 300 }}>
       <Typography>Progress: {Math.round(progress * 100)}%</Typography>
@@ -77,4 +77,4 @@ const AnimatedExample = () => {
 
 export const Animated: Story = {
   render: () => <AnimatedExample />,
-}; 
+};

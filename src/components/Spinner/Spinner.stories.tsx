@@ -1,6 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
-import Spinner  from './Spinner';
+import Spinner from './Spinner';
 import type { Meta, StoryObj } from '@storybook/react';
 
 const meta: Meta<typeof Spinner> = {
@@ -58,4 +58,4 @@ export const Colors: Story = {
       <Spinner size="medium" color="#FF9500" label="Warning" />
     </View>
   ),
-}; 
+};

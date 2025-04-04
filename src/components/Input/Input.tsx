@@ -1,5 +1,13 @@
 import React from 'react';
-import { TextInput, StyleSheet, TextInputProps, View, Text, ViewStyle, TextStyle } from 'react-native';
+import {
+  TextInput,
+  StyleSheet,
+  TextInputProps,
+  View,
+  Text,
+  ViewStyle,
+  TextStyle,
+} from 'react-native';
 
 interface InputProps extends TextInputProps {
   style?: ViewStyle;
@@ -13,14 +21,14 @@ interface InputProps extends TextInputProps {
   textColor?: string;
 }
 
-const Input: React.FC<InputProps> = ({ 
-  style, 
-  label, 
-  error, 
+const Input: React.FC<InputProps> = ({
+  style,
+  label,
+  error,
   design = 'flat',
   backgroundColor = '#ffffff',
   textColor = '#000000',
-  ...props 
+  ...props
 }) => {
   const getInputStyles = (): ViewStyle[] => {
     const baseStyles: ViewStyle[] = [styles.input];
@@ -69,7 +77,7 @@ const Input: React.FC<InputProps> = ({
 
   const getLabelStyles = (): TextStyle[] => {
     const labelStyles: TextStyle[] = [styles.label];
-    
+
     if (design === 'neumorphic') {
       labelStyles.push({
         color: textColor,
@@ -88,10 +96,10 @@ const Input: React.FC<InputProps> = ({
   return (
     <View style={styles.container}>
       {label && <Text style={getLabelStyles()}>{label}</Text>}
-      <TextInput 
+      <TextInput
         style={getInputStyles()}
         placeholderTextColor={design === 'neumorphic' ? `${textColor}80` : undefined}
-        {...props} 
+        {...props}
       />
       {error && <Text style={styles.error}>{error}</Text>}
     </View>
@@ -122,4 +130,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Input; 
+export default Input;

@@ -17,14 +17,16 @@ type Story = StoryObj<typeof Grid.Container>;
 
 // Helper component for grid items
 const GridItem = ({ children }: { children: React.ReactNode }) => (
-  <View style={{
-    backgroundColor: '#e3f2fd',
-    padding: 16,
-    borderRadius: 8,
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: '100%',
-  }}>
+  <View
+    style={{
+      backgroundColor: '#e3f2fd',
+      padding: 16,
+      borderRadius: 8,
+      alignItems: 'center',
+      justifyContent: 'center',
+      height: '100%',
+    }}
+  >
     <Typography>{children}</Typography>
   </View>
 );
@@ -66,7 +68,7 @@ export const FourColumns: Story = {
   render: () => (
     <Grid.Container style={{ width: 800 }}>
       <Grid.Row columns={4} spacing={2}>
-        {[1, 2, 3, 4].map((num) => (
+        {[1, 2, 3, 4].map(num => (
           <Grid.Col key={num}>
             <GridItem>Column {num}</GridItem>
           </Grid.Col>
@@ -161,4 +163,4 @@ export const NestedGrid: Story = {
       </Grid.Row>
     </Grid.Container>
   ),
-}; 
+};

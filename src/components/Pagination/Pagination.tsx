@@ -8,7 +8,12 @@ interface PaginationProps {
   style?: object;
 }
 
-const Pagination: React.FC<PaginationProps> = ({ totalPages, currentPage, onPageChange, style }) => {
+const Pagination: React.FC<PaginationProps> = ({
+  totalPages,
+  currentPage,
+  onPageChange,
+  style,
+}) => {
   const handlePrevious = () => {
     if (currentPage > 1) {
       onPageChange(currentPage - 1);
@@ -27,7 +32,11 @@ const Pagination: React.FC<PaginationProps> = ({ totalPages, currentPage, onPage
         <Text style={styles.buttonText}>Previous</Text>
       </TouchableOpacity>
       <Text style={styles.pageInfo}>{`Page ${currentPage} of ${totalPages}`}</Text>
-      <TouchableOpacity onPress={handleNext} disabled={currentPage === totalPages} style={styles.button}>
+      <TouchableOpacity
+        onPress={handleNext}
+        disabled={currentPage === totalPages}
+        style={styles.button}
+      >
         <Text style={styles.buttonText}>Next</Text>
       </TouchableOpacity>
     </View>
@@ -56,4 +65,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Pagination; 
+export default Pagination;

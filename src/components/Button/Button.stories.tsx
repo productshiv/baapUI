@@ -8,7 +8,7 @@ const meta: Meta<typeof Button> = {
   title: 'Core UI/Button',
   component: Button,
   decorators: [
-    (Story) => (
+    Story => (
       <ThemeProvider>
         <View style={{ padding: 20 }}>
           <Story />
@@ -138,4 +138,4 @@ export const Loading: Story = {
     children: 'Loading Button',
     loading: true,
   },
-}; 
+};

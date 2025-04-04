@@ -12,7 +12,20 @@ const meta: Meta<typeof Typography> = {
   argTypes: {
     variant: {
       control: 'select',
-      options: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'subtitle1', 'subtitle2', 'body1', 'body2', 'caption', 'overline'],
+      options: [
+        'h1',
+        'h2',
+        'h3',
+        'h4',
+        'h5',
+        'h6',
+        'subtitle1',
+        'subtitle2',
+        'body1',
+        'body2',
+        'caption',
+        'overline',
+      ],
     },
     color: {
       control: 'color',
@@ -51,4 +64,4 @@ export const AllVariants: Story = {
       <Typography variant="overline">Overline Text</Typography>
     </View>
   ),
-}; 
+};

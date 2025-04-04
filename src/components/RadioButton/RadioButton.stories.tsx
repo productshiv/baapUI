@@ -32,7 +32,7 @@ export const Selected: Story = {
 // Interactive radio group example
 const RadioGroupExample = () => {
   const [selected, setSelected] = useState('option1');
-  
+
   return (
     <View style={{ gap: 16 }}>
       <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
@@ -42,7 +42,7 @@ const RadioGroupExample = () => {
         />
         <Typography>Option 1</Typography>
       </View>
-      
+
       <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
         <RadioButton
           initialSelected={selected === 'option2'}
@@ -50,7 +50,7 @@ const RadioGroupExample = () => {
         />
         <Typography>Option 2</Typography>
       </View>
-      
+
       <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
         <RadioButton
           initialSelected={selected === 'option3'}
@@ -64,4 +64,4 @@ const RadioGroupExample = () => {
 
 export const RadioGroup: Story = {
   render: () => <RadioGroupExample />,
-}; 
+};

@@ -52,7 +52,7 @@ export const Disabled: Story = {
 const InteractiveTextAreaExample = () => {
   const [text, setText] = useState('');
   const maxLength = 100;
-  
+
   return (
     <View style={{ width: 300, gap: 8 }}>
       <TextArea
@@ -72,4 +72,4 @@ const InteractiveTextAreaExample = () => {
 
 export const Interactive: Story = {
   render: () => <InteractiveTextAreaExample />,
-}; 
+};

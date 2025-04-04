@@ -28,7 +28,7 @@ const Table: React.FC<TableProps> = ({
   return (
     <View style={[styles.container, style]}>
       <View style={[styles.header, headerStyle]}>
-        {columns.map((column) => (
+        {columns.map(column => (
           <Text key={column.key} style={[styles.headerCell, headerCellStyle]}>
             {column.label}
           </Text>
@@ -36,7 +36,7 @@ const Table: React.FC<TableProps> = ({
       </View>
       {data.map((row, rowIndex) => (
         <View key={rowIndex} style={[styles.row, rowStyle]}>
-          {columns.map((column) => (
+          {columns.map(column => (
             <Text key={column.key} style={[styles.cell, cellStyle]}>
               {row[column.key]}
             </Text>
@@ -83,4 +83,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Table; 
+export default Table;

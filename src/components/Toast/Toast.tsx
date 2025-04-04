@@ -73,4 +73,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Toast; 
+export default Toast;

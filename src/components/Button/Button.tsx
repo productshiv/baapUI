@@ -1,5 +1,12 @@
 import React, { useState } from 'react';
-import { TouchableOpacity, Text, StyleSheet, ViewStyle, TextStyle, ActivityIndicator } from 'react-native';
+import {
+  TouchableOpacity,
+  Text,
+  StyleSheet,
+  ViewStyle,
+  TextStyle,
+  ActivityIndicator,
+} from 'react-native';
 import { useTheme } from '../../themes/ThemeContext';
 import { useNeumorphicShadow } from '../../themes/utils/useNeumorphicShadow';
 import { ThemeDesign } from '../../themes/types';
@@ -18,7 +25,7 @@ export interface ButtonProps {
   textColor?: string;
 }
 
-const Button: React.FC<ButtonProps> = ({ 
+const Button: React.FC<ButtonProps> = ({
   children,
   variant = 'primary',
   size = 'medium',
@@ -29,28 +36,30 @@ const Button: React.FC<ButtonProps> = ({
   style,
   textStyle,
   backgroundColor,
-  textColor
+  textColor,
 }) => {
   const { theme } = useTheme();
   const [isPressed, setIsPressed] = useState(false);
   const activeDesign = design || theme.design;
 
-  const getVariantStyles = (): { container: ViewStyle, text: TextStyle } => {
+  const getVariantStyles = (): { container: ViewStyle; text: TextStyle } => {
     // If design is neumorphic, use neumorphic styles
     if (activeDesign === 'neumorphic') {
       return {
         container: {
           backgroundColor: backgroundColor || '#fff',
           borderRadius: 22,
-          ...(isPressed ? {
-            boxShadow: 'inset 10px 10px 41px #cacaca, inset -10px -10px 41px #f6f6f6'
-          } : {
-            boxShadow: '10px 10px 41px #cacaca, -10px -10px 41px #f6f6f6'
-          }),
+          ...(isPressed
+            ? {
+                boxShadow: 'inset 10px 10px 41px #cacaca, inset -10px -10px 41px #f6f6f6',
+              }
+            : {
+                boxShadow: '10px 10px 41px #cacaca, -10px -10px 41px #f6f6f6',
+              }),
           opacity: disabled ? 0.6 : 1,
         },
         text: {
-          color: disabled ? '#9e9e9e' : (textColor || '#2196f3'),
+          color: disabled ? '#9e9e9e' : textColor || '#2196f3',
           ...theme.typography.button,
         },
       };
@@ -77,7 +86,7 @@ const Button: React.FC<ButtonProps> = ({
           },
           text: {
             ...styles.outlineText,
-            color: textColor || (backgroundColor || '#2196f3'),
+            color: textColor || backgroundColor || '#2196f3',
           },
         };
       case 'text':
@@ -128,14 +137,14 @@ const Button: React.FC<ButtonProps> = ({
   const sizeStyles = getSizeStyles();
 
   return (
-    <TouchableOpacity 
+    <TouchableOpacity
       style={[
         styles.button,
         variantStyles.container,
         sizeStyles,
         disabled && styles.disabledButton,
         style,
-      ]} 
+      ]}
       onPress={onPress}
       onPressIn={() => setIsPressed(true)}
       onPressOut={() => setIsPressed(false)}
@@ -145,12 +154,7 @@ const Button: React.FC<ButtonProps> = ({
       {loading ? (
         <ActivityIndicator color={variant === 'primary' ? 'white' : '#666666'} />
       ) : (
-        <Text style={[
-          styles.text,
-          variantStyles.text,
-          disabled && styles.disabledText,
-          textStyle,
-        ]}>
+        <Text style={[styles.text, variantStyles.text, disabled && styles.disabledText, textStyle]}>
           {children}
         </Text>
       )}
@@ -207,4 +211,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Button; 
+export default Button;

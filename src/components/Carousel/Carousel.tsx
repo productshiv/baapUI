@@ -43,7 +43,11 @@ const Carousel: React.FC<CarouselProps> = ({
           >
             <Typography
               variant="body1"
-              style={index === currentIndex ? { ...styles.text, ...styles.activeText, ...activeTextStyle } : { ...styles.text, ...textStyle }}
+              style={
+                index === currentIndex
+                  ? { ...styles.text, ...styles.activeText, ...activeTextStyle }
+                  : { ...styles.text, ...textStyle }
+              }
             >
               {item}
             </Typography>
@@ -85,4 +89,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Carousel; 
+export default Carousel;

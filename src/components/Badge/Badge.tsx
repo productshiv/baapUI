@@ -14,7 +14,7 @@ const Badge: React.FC<BadgeProps> = ({
   variant = 'primary',
   size = 'medium',
   style,
-  textStyle
+  textStyle,
 }) => {
   const getVariantStyle = (): ViewStyle => {
     switch (variant) {
@@ -33,7 +33,7 @@ const Badge: React.FC<BadgeProps> = ({
     }
   };
 
-  const getSizeStyle = (): { container: ViewStyle, text: TextStyle } => {
+  const getSizeStyle = (): { container: ViewStyle; text: TextStyle } => {
     switch (size) {
       case 'small':
         return {
@@ -78,19 +78,8 @@ const Badge: React.FC<BadgeProps> = ({
   const variantStyle = getVariantStyle();
 
   return (
-    <View style={[
-      styles.badge,
-      variantStyle,
-      sizeStyle.container,
-      style
-    ]}>
-      <Text style={[
-        styles.text,
-        sizeStyle.text,
-        textStyle
-      ]}>
-        {children}
-      </Text>
+    <View style={[styles.badge, variantStyle, sizeStyle.container, style]}>
+      <Text style={[styles.text, sizeStyle.text, textStyle]}>{children}</Text>
     </View>
   );
 };
@@ -106,4 +95,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Badge; 
+export default Badge;

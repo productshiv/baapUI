@@ -8,7 +8,12 @@ interface RadioButtonProps {
   style?: object;
 }
 
-const RadioButton: React.FC<RadioButtonProps> = ({ initialSelected = false, onToggle, label = "Radio Button", style }) => {
+const RadioButton: React.FC<RadioButtonProps> = ({
+  initialSelected = false,
+  onToggle,
+  label = 'Radio Button',
+  style,
+}) => {
   const [selected, setSelected] = useState(initialSelected);
 
   const toggleSelection = () => {
@@ -56,4 +61,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default RadioButton; 
+export default RadioButton;
