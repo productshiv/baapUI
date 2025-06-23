@@ -17,7 +17,7 @@
     "test": "jest --config jest.config.js",
     "storybook": "npx storybook dev -p 6006",
     "build-storybook": "npx storybook build -o public",
-    "build": "npm run build-storybook",
+    "build": "npm run generate-metadata && npm run build-storybook && cp components-metadata.json public/components.json",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "typecheck": "tsc --noEmit",
