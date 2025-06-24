@@ -1,6 +1,6 @@
 {
   "version": "1.0.3",
-  "generatedAt": "2025-06-23T11:31:49.590Z",
+  "generatedAt": "2025-06-24T16:57:11.731Z",
   "totalComponents": 32,
   "categories": {
     "Data Display": [
@@ -384,7 +384,7 @@
           "type": "ViewStyle",
           "required": false,
           "description": "style property",
-          "defaultValue": "{[\r\n        styles.button"
+          "defaultValue": "{[\n        styles.button"
         },
         {
           "name": "textStyle",

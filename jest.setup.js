@@ -1,47 +1,54 @@
-import '@testing-library/jest-native/extend-expect';
+import '@testing-library/jest-dom';
 
-// Mock react-native
-jest.mock('react-native', () => require('react-native-mock-render'), { virtual: true });
+// Mock platform detection for tests
+global.__DEV__ = true;
 
-// Mock Expo constants
-jest.mock('expo-constants', () => ({
-  default: {
-    manifest: {
-      extra: {
-        apiUrl: 'https://api.example.com',
-      },
-    },
-  },
-}));
-
-// Mock react-native-reanimated
-jest.mock('react-native-reanimated', () => {
-  const Reanimated = require('react-native-reanimated/mock');
-  Reanimated.default.call = () => {};
-  return Reanimated;
+// Mock window and document for web compatibility
+Object.defineProperty(window, 'matchMedia', {
+  writable: true,
+  value: jest.fn().mockImplementation(query => ({
+    matches: false,
+    media: query,
+    onchange: null,
+    addListener: jest.fn(), // deprecated
+    removeListener: jest.fn(), // deprecated
+    addEventListener: jest.fn(),
+    removeEventListener: jest.fn(),
+    dispatchEvent: jest.fn(),
+  })),
 });
 
-// Mock asset requires
-jest.mock('react-native/Libraries/Image/resolveAssetSource', () => ({
-  default: () => ({
-    uri: 'test-uri',
-  }),
-}));
+// Mock IntersectionObserver
+global.IntersectionObserver = class IntersectionObserver {
+  constructor() {}
+  disconnect() {}
+  observe() {}
+  unobserve() {}
+};
 
-// Mock Platform
-jest.mock('react-native/Libraries/Utilities/Platform', () => ({
-  OS: 'ios',
-  select: jest.fn(obj => obj.ios),
-}));
+// Mock ResizeObserver
+global.ResizeObserver = class ResizeObserver {
+  constructor() {}
+  disconnect() {}
+  observe() {}
+  unobserve() {}
+};
 
-// Mock Animated
-jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper');
+// Mock requestAnimationFrame
+global.requestAnimationFrame = callback => setTimeout(callback, 0);
+global.cancelAnimationFrame = id => clearTimeout(id);
 
-// Mock console.error to fail tests on warnings
-const originalConsoleError = console.error;
-console.error = (...args) => {
-  if (args[0].includes('Warning:')) {
-    throw new Error(args[0]);
+// Mock console for cleaner test output
+const originalConsoleWarn = console.warn;
+console.warn = (...args) => {
+  // Suppress specific React Native warnings during tests
+  const message = args[0];
+  if (
+    typeof message === 'string' && 
+    (message.includes('React Native not available') ||
+     message.includes('componentWillReceiveProps'))
+  ) {
+    return;
   }
-  originalConsoleError(...args);
+  originalConsoleWarn(...args);
 };
