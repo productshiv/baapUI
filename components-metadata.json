@@ -1,11 +1,26 @@
 {
-  "version": "1.0.3",
-  "generatedAt": "2025-06-24T16:57:11.731Z",
+  "version": "2.0.4",
+  "generatedAt": "2025-06-25T18:22:40.764Z",
   "totalComponents": 32,
   "categories": {
-    "Data Display": ["Breadcrumbs", "List", "Pagination", "Table"],
-    "Display": ["Avatar", "Badge", "Chip", "Divider", "Label"],
-    "Feedback": ["ProgressBar", "SkeletonLoader", "Spinner"],
+    "Data Display": [
+      "Breadcrumbs",
+      "List",
+      "Pagination",
+      "Table"
+    ],
+    "Display": [
+      "Avatar",
+      "Badge",
+      "Chip",
+      "Divider",
+      "Label"
+    ],
+    "Feedback": [
+      "ProgressBar",
+      "SkeletonLoader",
+      "Spinner"
+    ],
     "Form Controls": [
       "Button",
       "Checkbox",
@@ -16,12 +31,31 @@
       "TextArea",
       "ToggleSwitch"
     ],
-    "Layout": ["Accordion", "BaapSafeArea", "Card", "Carousel", "Grid", "Tabs"],
-    "Navigation": ["Stepper"],
-    "Overlays": ["Drawer", "Modal", "Toast", "Tooltip"],
-    "Typography": ["Typography"]
+    "Layout": [
+      "Accordion",
+      "BaapSafeArea",
+      "Card",
+      "Carousel",
+      "Grid",
+      "Tabs"
+    ],
+    "Navigation": [
+      "Stepper"
+    ],
+    "Overlays": [
+      "Drawer",
+      "Modal",
+      "Toast",
+      "Tooltip"
+    ],
+    "Typography": [
+      "Typography"
+    ]
   },
-  "designSystems": ["flat", "neumorphic"],
+  "designSystems": [
+    "flat",
+    "neumorphic"
+  ],
   "components": [
     {
       "name": "Accordion",
@@ -77,7 +111,10 @@
         }
       ],
       "examples": [],
-      "designSystems": ["flat", "neumorphic"],
+      "designSystems": [
+        "flat",
+        "neumorphic"
+      ],
       "category": "Layout"
     },
     {
@@ -134,7 +171,10 @@
         }
       ],
       "examples": [],
-      "designSystems": ["flat", "neumorphic"],
+      "designSystems": [
+        "flat",
+        "neumorphic"
+      ],
       "category": "Display"
     },
     {
@@ -143,7 +183,10 @@
       "description": "A baap safe area props component",
       "props": [],
       "examples": [],
-      "designSystems": ["flat", "neumorphic"],
+      "designSystems": [
+        "flat",
+        "neumorphic"
+      ],
       "category": "Layout"
     },
     {
@@ -206,7 +249,10 @@
         }
       ],
       "examples": [],
-      "designSystems": ["flat", "neumorphic"],
+      "designSystems": [
+        "flat",
+        "neumorphic"
+      ],
       "category": "Display"
     },
     {
@@ -276,7 +322,10 @@
         }
       ],
       "examples": [],
-      "designSystems": ["flat", "neumorphic"],
+      "designSystems": [
+        "flat",
+        "neumorphic"
+      ],
       "category": "Data Display"
     },
     {
@@ -357,7 +406,10 @@
         }
       ],
       "examples": [],
-      "designSystems": ["flat", "neumorphic"],
+      "designSystems": [
+        "flat",
+        "neumorphic"
+      ],
       "category": "Form Controls"
     },
     {
@@ -402,7 +454,10 @@
         }
       ],
       "examples": [],
-      "designSystems": ["flat", "neumorphic"],
+      "designSystems": [
+        "flat",
+        "neumorphic"
+      ],
       "category": "Layout"
     },
     {
@@ -489,7 +544,10 @@
         }
       ],
       "examples": [],
-      "designSystems": ["flat", "neumorphic"],
+      "designSystems": [
+        "flat",
+        "neumorphic"
+      ],
       "category": "Layout"
     },
     {
@@ -554,7 +612,10 @@
         }
       ],
       "examples": [],
-      "designSystems": ["flat", "neumorphic"],
+      "designSystems": [
+        "flat",
+        "neumorphic"
+      ],
       "category": "Form Controls"
     },
     {
@@ -618,7 +679,10 @@
         }
       ],
       "examples": [],
-      "designSystems": ["flat", "neumorphic"],
+      "designSystems": [
+        "flat",
+        "neumorphic"
+      ],
       "category": "Display"
     },
     {
@@ -656,7 +720,10 @@
         }
       ],
       "examples": [],
-      "designSystems": ["flat", "neumorphic"],
+      "designSystems": [
+        "flat",
+        "neumorphic"
+      ],
       "category": "Display"
     },
     {
@@ -713,7 +780,10 @@
         }
       ],
       "examples": [],
-      "designSystems": ["flat", "neumorphic"],
+      "designSystems": [
+        "flat",
+        "neumorphic"
+      ],
       "category": "Overlays"
     },
     {
@@ -807,7 +877,10 @@
         }
       ],
       "examples": [],
-      "designSystems": ["flat", "neumorphic"],
+      "designSystems": [
+        "flat",
+        "neumorphic"
+      ],
       "category": "Form Controls"
     },
     {
@@ -844,7 +917,10 @@
         }
       ],
       "examples": [],
-      "designSystems": ["flat", "neumorphic"],
+      "designSystems": [
+        "flat",
+        "neumorphic"
+      ],
       "category": "Layout"
     },
     {
@@ -853,7 +929,10 @@
       "description": "A input props component",
       "props": [],
       "examples": [],
-      "designSystems": ["flat", "neumorphic"],
+      "designSystems": [
+        "flat",
+        "neumorphic"
+      ],
       "category": "Form Controls"
     },
     {
@@ -896,7 +975,10 @@
         }
       ],
       "examples": [],
-      "designSystems": ["flat", "neumorphic"],
+      "designSystems": [
+        "flat",
+        "neumorphic"
+      ],
       "category": "Display"
     },
     {
@@ -992,7 +1074,10 @@
         }
       ],
       "examples": [],
-      "designSystems": ["flat", "neumorphic"],
+      "designSystems": [
+        "flat",
+        "neumorphic"
+      ],
       "category": "Data Display"
     },
     {
@@ -1049,7 +1134,10 @@
         }
       ],
       "examples": [],
-      "designSystems": ["flat", "neumorphic"],
+      "designSystems": [
+        "flat",
+        "neumorphic"
+      ],
       "category": "Overlays"
     },
     {
@@ -1106,7 +1194,10 @@
         }
       ],
       "examples": [],
-      "designSystems": ["flat", "neumorphic"],
+      "designSystems": [
+        "flat",
+        "neumorphic"
+      ],
       "category": "Data Display"
     },
     {
@@ -1164,7 +1255,10 @@
         }
       ],
       "examples": [],
-      "designSystems": ["flat", "neumorphic"],
+      "designSystems": [
+        "flat",
+        "neumorphic"
+      ],
       "category": "Feedback"
     },
     {
@@ -1229,7 +1323,10 @@
         }
       ],
       "examples": [],
-      "designSystems": ["flat", "neumorphic"],
+      "designSystems": [
+        "flat",
+        "neumorphic"
+      ],
       "category": "Form Controls"
     },
     {
@@ -1279,7 +1376,10 @@
         }
       ],
       "examples": [],
-      "designSystems": ["flat", "neumorphic"],
+      "designSystems": [
+        "flat",
+        "neumorphic"
+      ],
       "category": "Feedback"
     },
     {
@@ -1298,8 +1398,7 @@
           "name": "onValueChange",
           "type": "(value: number) => void",
           "required": true,
-          "description": "onValueChange property",
-          "defaultValue": "{onValueChange"
+          "description": "onValueChange property"
         },
         {
           "name": "minimumValue",
@@ -1341,7 +1440,7 @@
           "type": "ViewStyle",
           "required": false,
           "description": "style property",
-          "defaultValue": "{getContainerStyles()"
+          "defaultValue": "{{\n        width"
         },
         {
           "name": "design",
@@ -1373,7 +1472,10 @@
         }
       ],
       "examples": [],
-      "designSystems": ["flat", "neumorphic"],
+      "designSystems": [
+        "flat",
+        "neumorphic"
+      ],
       "category": "Form Controls"
     },
     {
@@ -1437,7 +1539,10 @@
         }
       ],
       "examples": [],
-      "designSystems": ["flat", "neumorphic"],
+      "designSystems": [
+        "flat",
+        "neumorphic"
+      ],
       "category": "Feedback"
     },
     {
@@ -1515,7 +1620,10 @@
         }
       ],
       "examples": [],
-      "designSystems": ["flat", "neumorphic"],
+      "designSystems": [
+        "flat",
+        "neumorphic"
+      ],
       "category": "Navigation"
     },
     {
@@ -1589,7 +1697,10 @@
         }
       ],
       "examples": [],
-      "designSystems": ["flat", "neumorphic"],
+      "designSystems": [
+        "flat",
+        "neumorphic"
+      ],
       "category": "Data Display"
     },
     {
@@ -1646,7 +1757,10 @@
         }
       ],
       "examples": [],
-      "designSystems": ["flat", "neumorphic"],
+      "designSystems": [
+        "flat",
+        "neumorphic"
+      ],
       "category": "Layout"
     },
     {
@@ -1655,7 +1769,10 @@
       "description": "A text area props component",
       "props": [],
       "examples": [],
-      "designSystems": ["flat", "neumorphic"],
+      "designSystems": [
+        "flat",
+        "neumorphic"
+      ],
       "category": "Form Controls"
     },
     {
@@ -1725,7 +1842,10 @@
         }
       ],
       "examples": [],
-      "designSystems": ["flat", "neumorphic"],
+      "designSystems": [
+        "flat",
+        "neumorphic"
+      ],
       "category": "Overlays"
     },
     {
@@ -1797,7 +1917,10 @@
         }
       ],
       "examples": [],
-      "designSystems": ["flat", "neumorphic"],
+      "designSystems": [
+        "flat",
+        "neumorphic"
+      ],
       "category": "Form Controls"
     },
     {
@@ -1854,7 +1977,10 @@
         }
       ],
       "examples": [],
-      "designSystems": ["flat", "neumorphic"],
+      "designSystems": [
+        "flat",
+        "neumorphic"
+      ],
       "category": "Overlays"
     },
     {
@@ -1863,7 +1989,10 @@
       "description": "Available typography variants following Material Design typography scale",
       "props": [],
       "examples": [],
-      "designSystems": ["flat", "neumorphic"],
+      "designSystems": [
+        "flat",
+        "neumorphic"
+      ],
       "category": "Typography"
     }
   ]
