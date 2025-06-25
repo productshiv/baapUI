@@ -276,7 +276,9 @@ const SampleScreen: React.FC = () => {
               <Chip label="Example Chip" onPress={handleChipPress} />
               <List
                 items={listItems.map((item, index) => (
-                  <Typography key={index} variant="body1">{item}</Typography>
+                  <Typography key={index} variant="body1">
+                    {item}
+                  </Typography>
                 ))}
               />
               <Divider />

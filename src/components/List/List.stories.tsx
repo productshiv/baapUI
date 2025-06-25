@@ -4,7 +4,9 @@ import List, { ListItem } from './List';
 import { NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
 
 const sampleItems = ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5'].map((text, index) => (
-  <div key={index} style={{ padding: 8 }}>{text}</div>
+  <div key={index} style={{ padding: 8 }}>
+    {text}
+  </div>
 ));
 
 const meta: Meta<typeof List> = {
@@ -111,5 +113,3 @@ export const CustomStyles: Story = {
     },
   },
 };
-
-

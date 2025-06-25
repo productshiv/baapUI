@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ViewStyle,
-  ScrollView,
-  ScrollViewProps,
-} from '../../platform';
+import { SafeAreaView, StyleSheet, ViewStyle, ScrollView, ScrollViewProps } from '../../platform';
 import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
 
 interface BaapSafeAreaProps extends ScrollViewProps {

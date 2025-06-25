@@ -133,21 +133,21 @@ const MockAnimated = {
       return this.value;
     }
   },
-  timing: (animatedValue: any, config: any) => ({ 
+  timing: (animatedValue: any, config: any) => ({
     start: (callback?: () => void) => {
       if (animatedValue && animatedValue.setValue) {
         animatedValue.setValue(config.toValue);
       }
       callback?.();
-    }
+    },
   }),
-  spring: (animatedValue: any, config: any) => ({ 
+  spring: (animatedValue: any, config: any) => ({
     start: (callback?: () => void) => {
       if (animatedValue && animatedValue.setValue) {
         animatedValue.setValue(config.toValue);
       }
       callback?.();
-    }
+    },
   }),
   loop: (animation: any) => ({ start: () => {} }),
   sequence: (animations: any[]) => ({ start: (callback?: () => void) => callback?.() }),
