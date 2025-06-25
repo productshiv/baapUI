@@ -7,7 +7,7 @@ import {
   Text,
   ViewStyle,
   TextStyle,
-} from 'react-native';
+} from '../../platform';
 import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
 
 interface InputProps extends TextInputProps {

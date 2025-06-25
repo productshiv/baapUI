@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Modal as RNModal, View, Text, StyleSheet, TouchableOpacity, ViewStyle } from 'react-native';
+import { Modal as RNModal, View, Text, StyleSheet, TouchableOpacity, ViewStyle } from '../../platform';
 import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
 
 interface ModalProps {

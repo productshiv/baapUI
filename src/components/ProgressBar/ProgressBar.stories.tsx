@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View } from 'react-native';
+import { View } from '../../platform';
 import type { Meta, StoryObj } from '@storybook/react';
 import ProgressBar from './ProgressBar';
 import Typography from '../Typography/Typography';

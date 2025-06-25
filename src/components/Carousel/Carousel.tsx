@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, ScrollView, TouchableOpacity, StyleSheet, ViewStyle, TextStyle } from 'react-native';
+import { View, ScrollView, TouchableOpacity, StyleSheet, ViewStyle, TextStyle } from '../../platform';
 import Typography from '../Typography/Typography';
 import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
 

@@ -8,7 +8,7 @@ import {
   ViewStyle,
   TextStyle,
   ScrollView,
-} from 'react-native';
+} from '../../platform';
 import Typography from '../Typography/Typography';
 import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
 

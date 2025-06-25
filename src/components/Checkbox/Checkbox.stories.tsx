@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View } from '../../platform';
 import { Meta, StoryObj } from '@storybook/react';
 import Checkbox from './Checkbox';
 import { NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';

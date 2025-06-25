@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Pressable, ViewStyle, Text } from 'react-native';
+import { View, StyleSheet, Pressable, ViewStyle, Text } from '../../platform';
 import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
 
 export interface CardProps {
@@ -47,7 +47,7 @@ const Card: React.FC<CardProps> = ({
 
   if (onPress) {
     return (
-      <Pressable style={({ pressed }) => getCardStyles(pressed)} onPress={onPress}>
+      <Pressable style={({ pressed }: { pressed: boolean }) => getCardStyles(pressed)} onPress={onPress}>
         {content}
       </Pressable>
     );

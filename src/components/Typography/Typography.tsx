@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, StyleSheet, TextStyle, TextProps, Platform, StyleProp } from 'react-native';
+import { Text, StyleSheet, TextStyle, TextProps, Platform, StyleProp } from '../../platform';
 import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
 
 /**

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View } from '../../platform';
 import type { Meta, StoryObj } from '@storybook/react';
 import Breadcrumbs from './Breadcrumbs';
 import { NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';

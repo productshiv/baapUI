@@ -1,252 +1,380 @@
 // Platform abstraction layer for cross-platform compatibility
-import React from 'react';
+import React, { DetailedHTMLProps, HTMLAttributes } from 'react';
 
-// Detect platform
-const isReactNative = () => {
-  try {
-    return typeof require('react-native') !== 'undefined';
-  } catch {
-    return false;
-  }
+// Platform detection using environment-specific globals
+const PlatformInfo = {
+  isReactNative: (
+    typeof navigator !== 'undefined' && 
+    navigator.product === 'ReactNative'
+  ) || (
+    typeof global !== 'undefined' && 
+    // @ts-ignore
+    global.__DEV__ !== undefined &&
+    typeof window === 'undefined'
+  ),
+  isWeb: typeof window !== 'undefined' && typeof document !== 'undefined',
 };
 
-const isWeb = () => {
-  return typeof window !== 'undefined';
+// Enhanced style conversion function
+const convertRNStyleToCSS = (style: any): React.CSSProperties => {
+  if (!style) return {};
+  
+  const cssStyle: any = { ...style };
+  
+  // Handle React Native specific properties
+  if (style.paddingHorizontal !== undefined) {
+    cssStyle.paddingLeft = style.paddingHorizontal;
+    cssStyle.paddingRight = style.paddingHorizontal;
+    delete cssStyle.paddingHorizontal;
+  }
+  
+  if (style.paddingVertical !== undefined) {
+    cssStyle.paddingTop = style.paddingVertical;
+    cssStyle.paddingBottom = style.paddingVertical;
+    delete cssStyle.paddingVertical;
+  }
+  
+  if (style.marginHorizontal !== undefined) {
+    cssStyle.marginLeft = style.marginHorizontal;
+    cssStyle.marginRight = style.marginHorizontal;
+    delete cssStyle.marginHorizontal;
+  }
+  
+  if (style.marginVertical !== undefined) {
+    cssStyle.marginTop = style.marginVertical;
+    cssStyle.marginBottom = style.marginVertical;
+    delete cssStyle.marginVertical;
+  }
+  
+  // Handle text shadow properties
+  if (style.textShadowColor || style.textShadowOffset || style.textShadowRadius) {
+    const color = style.textShadowColor || 'rgba(0,0,0,0.3)';
+    const offsetX = style.textShadowOffset?.width || 1;
+    const offsetY = style.textShadowOffset?.height || 1;
+    const radius = style.textShadowRadius || 1;
+    cssStyle.textShadow = `${offsetX}px ${offsetY}px ${radius}px ${color}`;
+    delete cssStyle.textShadowColor;
+    delete cssStyle.textShadowOffset;
+    delete cssStyle.textShadowRadius;
+  }
+  
+  // Handle shadow properties
+  if (style.shadowColor || style.shadowOffset || style.shadowRadius || style.shadowOpacity) {
+    const color = style.shadowColor || 'rgba(0,0,0,0.3)';
+    const offsetX = style.shadowOffset?.width || 0;
+    const offsetY = style.shadowOffset?.height || 2;
+    const radius = style.shadowRadius || 4;
+    const opacity = style.shadowOpacity || 0.3;
+    cssStyle.boxShadow = `${offsetX}px ${offsetY}px ${radius}px rgba(0,0,0,${opacity})`;
+    delete cssStyle.shadowColor;
+    delete cssStyle.shadowOffset;
+    delete cssStyle.shadowRadius;
+    delete cssStyle.shadowOpacity;
+  }
+  
+  // Handle elevation (Android)
+  if (style.elevation !== undefined) {
+    cssStyle.boxShadow = `0px ${style.elevation}px ${style.elevation * 2}px rgba(0,0,0,0.2)`;
+    delete cssStyle.elevation;
+  }
+  
+  // Ensure color values are strings
+  if (style.backgroundColor && typeof style.backgroundColor === 'object') {
+    cssStyle.backgroundColor = String(style.backgroundColor);
+  }
+  
+  if (style.color && typeof style.color === 'object') {
+    cssStyle.color = String(style.color);
+  }
+  
+  return cssStyle as React.CSSProperties;
 };
 
-// Platform-specific imports
-let PlatformComponents: any = {};
-let PlatformAPIs: any = {};
-
-if (isReactNative()) {
-  // React Native imports
-  try {
-    const RN = require('react-native');
-    PlatformComponents = {
-      View: RN.View,
-      Text: RN.Text,
-      TextInput: RN.TextInput,
-      TouchableOpacity: RN.TouchableOpacity,
-      Pressable: RN.Pressable,
-      ScrollView: RN.ScrollView,
-      Image: RN.Image,
-      ActivityIndicator: RN.ActivityIndicator,
-      Modal: RN.Modal,
-      Animated: RN.Animated,
-    };
-    
-    PlatformAPIs = {
-      StyleSheet: RN.StyleSheet,
-      Platform: RN.Platform,
-      Dimensions: RN.Dimensions,
-    };
-  } catch (error) {
-    console.warn('React Native not available, falling back to web components');
+// Style processing helper
+const processStyle = (style: any): React.CSSProperties => {
+  if (Array.isArray(style)) {
+    return style.reduce((acc, s) => ({ ...acc, ...convertRNStyleToCSS(s) }), {});
   }
-}
+  return convertRNStyleToCSS(style);
+};
 
-if (!PlatformComponents.View) {
-  // Web/React fallback components
-  PlatformComponents = {
-    View: ({ style, children, onPress, ...props }: any) => {
-      const webStyle = convertRNStyleToWeb(style);
-      return React.createElement(
-        onPress ? 'button' : 'div',
-        {
-          style: webStyle,
-          onClick: onPress,
-          ...props,
-        },
-        children
-      );
-    },
+// Mock Animated for web
+const MockAnimated = {
+  View: ({ style, children, ...props }: any) => {
+    const processedStyle = processStyle(style);
+    return React.createElement('div', { 
+      style: processedStyle, 
+      ...props 
+    }, children);
+  },
+  Text: ({ style, children, ...props }: any) => {
+    const processedStyle = processStyle(style);
+    return React.createElement('span', { 
+      style: processedStyle, 
+      ...props 
+    }, children);
+  },
+  Value: class MockValue {
+    constructor(public value: number) {}
+    setValue(value: number) { this.value = value; }
+    addListener() { return 'mock-listener'; }
+    removeListener() {}
+  },
+  timing: () => ({ start: (callback?: () => void) => callback?.() }),
+  spring: () => ({ start: (callback?: () => void) => callback?.() }),
+  loop: (animation: any) => ({ start: () => {} }),
+  sequence: (animations: any[]) => ({ start: (callback?: () => void) => callback?.() }),
+  decay: () => ({ start: (callback?: () => void) => callback?.() }),
+  parallel: (animations: any[]) => ({ start: (callback?: () => void) => callback?.() }),
+  stagger: (time: number, animations: any[]) => ({ start: (callback?: () => void) => callback?.() }),
+  delay: (time: number) => ({ start: (callback?: () => void) => callback?.() }),
+};
+
+// Web-only components (no React Native dependencies)
+const WebComponents = {
+  View: ({ style, children, onPress, ...props }: any) => {
+    const processedStyle = processStyle(style);
+    const webProps: any = { style: processedStyle, ...props };
     
-    Text: ({ style, children, ...props }: any) => {
-      const webStyle = convertRNStyleToWeb(style);
-      return React.createElement('span', {
-        style: webStyle,
-        ...props,
-      }, children);
-    },
+    if (onPress) {
+      webProps.onClick = onPress;
+      webProps.style = { 
+        ...processedStyle, 
+        cursor: 'pointer',
+        userSelect: 'none'
+      };
+      return React.createElement('button', webProps, children);
+    }
     
-    TextInput: ({ style, onChangeText, value, placeholder, ...props }: any) => {
-      const webStyle = convertRNStyleToWeb(style);
-      return React.createElement('input', {
-        type: 'text',
-        style: webStyle,
-        onChange: (e: any) => onChangeText?.(e.target.value),
+    return React.createElement('div', webProps, children);
+  },
+
+  Text: ({ style, children, ...props }: any) => {
+    const processedStyle = processStyle(style);
+    return React.createElement('span', { style: processedStyle, ...props }, children);
+  },
+
+  TextInput: ({ style, value, onChangeText, placeholder, multiline, numberOfLines, ...props }: any) => {
+    const processedStyle = processStyle(style);
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      onChangeText?.(e.target.value);
+    };
+    
+    if (multiline) {
+      return React.createElement('textarea', {
+        style: { ...processedStyle, resize: 'vertical' },
         value,
+        onChange: handleChange,
         placeholder,
-        ...props,
+        rows: numberOfLines || 4,
+        ...props
       });
-    },
+    }
     
-    TouchableOpacity: ({ style, onPress, children, disabled, ...props }: any) => {
-      const webStyle = convertRNStyleToWeb(style);
-      return React.createElement('button', {
-        style: {
-          ...webStyle,
-          cursor: disabled ? 'not-allowed' : 'pointer',
-          opacity: disabled ? 0.6 : 1,
-        },
-        onClick: disabled ? undefined : onPress,
-        disabled,
-        ...props,
-      }, children);
-    },
-    
-    Pressable: ({ style, onPress, children, disabled, ...props }: any) => {
-      const webStyle = convertRNStyleToWeb(style);
-      return React.createElement('button', {
-        style: {
-          ...webStyle,
-          cursor: disabled ? 'not-allowed' : 'pointer',
-          opacity: disabled ? 0.6 : 1,
-        },
-        onClick: disabled ? undefined : onPress,
-        disabled,
-        ...props,
-      }, children);
-    },
-    
-    ScrollView: ({ style, children, ...props }: any) => {
-      const webStyle = convertRNStyleToWeb(style);
-      return React.createElement('div', {
-        style: {
-          ...webStyle,
-          overflow: 'auto',
-        },
-        ...props,
-      }, children);
-    },
-    
-    Image: ({ style, source, ...props }: any) => {
-      const webStyle = convertRNStyleToWeb(style);
-      const src = typeof source === 'object' ? source.uri : source;
-      return React.createElement('img', {
-        style: webStyle,
-        src,
-        ...props,
-      });
-    },
-    
-    ActivityIndicator: ({ color = '#000', size = 'medium', style }: any) => {
-      const webStyle = convertRNStyleToWeb(style);
-      const sizeValue = size === 'small' ? '16px' : size === 'large' ? '32px' : '24px';
-      
-      return React.createElement('div', {
-        style: {
-          ...webStyle,
-          width: sizeValue,
-          height: sizeValue,
-          border: `2px solid ${color}30`,
-          borderTop: `2px solid ${color}`,
-          borderRadius: '50%',
-          animation: 'baap-spin 1s linear infinite',
-        },
-      });
-    },
-    
-    Modal: ({ visible, children, onRequestClose, ...props }: any) => {
-      if (!visible) return null;
-      
-      return React.createElement('div', {
-        style: {
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          backgroundColor: 'rgba(0,0,0,0.5)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          zIndex: 1000,
-        },
-        onClick: onRequestClose,
-        ...props,
-      }, React.createElement('div', {
-        onClick: (e: any) => e.stopPropagation(),
-      }, children));
-    },
-    
-    Animated: {
-      View: PlatformComponents.View || (() => null),
-      Text: PlatformComponents.Text || (() => null),
-    },
-  };
-  
-  PlatformAPIs = {
-    StyleSheet: {
-      create: (styles: any) => styles,
-    },
-    Platform: {
-      OS: isWeb() ? 'web' : 'unknown',
-      select: (options: any) => options.web || options.default,
-    },
-    Dimensions: {
-      get: () => ({
-        width: typeof window !== 'undefined' ? window.innerWidth : 0,
-        height: typeof window !== 'undefined' ? window.innerHeight : 0,
-      }),
-    },
-  };
-}
+    return React.createElement('input', {
+      style: processedStyle,
+      type: 'text',
+      value,
+      onChange: handleChange,
+      placeholder,
+      ...props
+    });
+  },
 
-// Convert React Native styles to web-compatible styles
-function convertRNStyleToWeb(rnStyle: any): React.CSSProperties {
-  if (!rnStyle) return {};
+  TouchableOpacity: ({ style, children, onPress, disabled, ...props }: any) => {
+    const processedStyle = processStyle(style);
+    return React.createElement('button', {
+      style: {
+        ...processedStyle,
+        cursor: disabled ? 'not-allowed' : 'pointer',
+        opacity: disabled ? 0.6 : 1,
+        border: 'none',
+        background: 'transparent',
+        padding: 0,
+        userSelect: 'none'
+      },
+      onClick: disabled ? undefined : onPress,
+      disabled,
+      ...props
+    }, children);
+  },
+
+  Pressable: ({ style, onPress, children, disabled, ...props }: any) => {
+    const processedStyle = processStyle(style);
+    return React.createElement('button', {
+      style: {
+        ...processedStyle,
+        cursor: disabled ? 'not-allowed' : 'pointer',
+        opacity: disabled ? 0.6 : 1,
+        background: 'transparent',
+        border: 'none',
+      },
+      onClick: disabled ? undefined : onPress,
+      disabled,
+      ...props,
+    }, children);
+  },
+
+  ScrollView: ({ style, children, horizontal, ...props }: any) => {
+    const processedStyle = processStyle(style);
+    return React.createElement('div', {
+      style: {
+        ...processedStyle,
+        overflow: 'auto',
+        display: horizontal ? 'flex' : 'block',
+        flexDirection: horizontal ? 'row' : 'column'
+      },
+      ...props
+    }, children);
+  },
   
-  const webStyle: any = { ...rnStyle };
-  
-  // Convert RN-specific style properties to web equivalents
-  const conversions: Record<string, string> = {
-    shadowColor: 'boxShadow',
-    shadowOffset: 'boxShadow',
-    shadowOpacity: 'boxShadow',
-    shadowRadius: 'boxShadow',
-    elevation: 'boxShadow',
-  };
-  
-  // Handle shadow conversion
-  if (webStyle.shadowColor || webStyle.elevation) {
-    const shadowColor = webStyle.shadowColor || 'rgba(0,0,0,0.2)';
-    const shadowOffset = webStyle.shadowOffset || { width: 0, height: 2 };
-    const shadowOpacity = webStyle.shadowOpacity || 0.2;
-    const shadowRadius = webStyle.shadowRadius || webStyle.elevation || 4;
+  SafeAreaView: ({ style, children, ...props }: any) => {
+    const processedStyle = processStyle(style);
+    return React.createElement('div', {
+      style: {
+        ...processedStyle,
+        paddingTop: 'env(safe-area-inset-top)',
+        paddingBottom: 'env(safe-area-inset-bottom)',
+        paddingLeft: 'env(safe-area-inset-left)',
+        paddingRight: 'env(safe-area-inset-right)',
+      },
+      ...props,
+    }, children);
+  },
+
+  Image: ({ style, source, ...props }: any) => {
+    const processedStyle = processStyle(style);
+    const src = typeof source === 'object' ? source.uri : source;
+    return React.createElement('img', {
+      style: processedStyle,
+      src,
+      ...props,
+    });
+  },
+
+  ActivityIndicator: ({ color = '#000', size = 'medium', style }: any) => {
+    const processedStyle = processStyle(style);
+    const sizeValue = size === 'small' ? '16px' : size === 'large' ? '32px' : '24px';
+    return React.createElement('div', {
+      style: {
+        ...processedStyle,
+        width: sizeValue,
+        height: sizeValue,
+        border: `2px solid ${color}30`,
+        borderTop: `2px solid ${color}`,
+        borderRadius: '50%',
+        animation: 'baap-spin 1s linear infinite',
+      },
+    });
+  },
+
+  Modal: ({ visible, transparent, animationType, onRequestClose, children, ...props }: any) => {
+    if (PlatformInfo.isReactNative) {
+      const RN = require('react-native');
+      return React.createElement(RN.Modal, { visible, transparent, animationType, onRequestClose, ...props }, children);
+    }
     
-    webStyle.boxShadow = `${shadowOffset.width}px ${shadowOffset.height}px ${shadowRadius}px ${shadowColor}`;
+    if (!visible) return null;
     
-    // Clean up RN-specific properties
-    delete webStyle.shadowColor;
-    delete webStyle.shadowOffset;
-    delete webStyle.shadowOpacity;
-    delete webStyle.shadowRadius;
-    delete webStyle.elevation;
-  }
-  
-  // Handle flexbox differences
-  if (webStyle.alignItems === 'stretch') {
-    webStyle.alignItems = 'stretch';
-  }
-  
-  // Add CSS animation keyframes if needed
-  if (typeof document !== 'undefined' && !document.querySelector('#baap-animations')) {
-    const style = document.createElement('style');
-    style.id = 'baap-animations';
-    style.textContent = `
-      @keyframes baap-spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
+    return React.createElement('div', {
+      style: {
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: transparent ? 'transparent' : 'rgba(0,0,0,0.5)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        zIndex: 1000
+      },
+      onClick: (e: React.MouseEvent) => {
+        if (e.target === e.currentTarget) {
+          onRequestClose?.();
+        }
+      },
+      ...props
+    }, children);
+  },
+
+  Animated: {
+    View: ({ style, children, ...props }: any) => {
+      const processedStyle = processStyle(style);
+      return React.createElement('div', { 
+        style: processedStyle, 
+        ...props 
+      }, children);
+    },
+    Text: ({ style, children, ...props }: any) => {
+      const processedStyle = processStyle(style);
+      return React.createElement('span', { 
+        style: processedStyle, 
+        ...props 
+      }, children);
+    },
+  },
+};
+
+// Web-only APIs
+const WebAPIs = {
+  StyleSheet: {
+    create: <T extends { [key: string]: any }>(styles: T): T => {
+      if (PlatformInfo.isReactNative) {
+        try {
+          return require('react-native').StyleSheet.create(styles);
+        } catch (e) {
+          return styles;
+        }
       }
-    `;
-    document.head.appendChild(style);
-  }
-  
-  return webStyle;
-}
+      return styles;
+    },
+    flatten: (style: any) => {
+      if (Array.isArray(style)) {
+        return style.reduce((acc, s) => ({ ...acc, ...s }), {});
+      }
+      return style || {};
+    }
+  },
+  Platform: {
+    OS: (() => {
+      if (PlatformInfo.isReactNative) {
+        try {
+          return require('react-native').Platform.OS;
+        } catch (e) {
+          return 'web';
+        }
+      }
+      return 'web';
+    })(),
+    select: (options: { [key: string]: any }) => {
+      const os = WebAPIs.Platform.OS;
+      return options[os] || options.default;
+    }
+  },
+  Dimensions: {
+    get: (dimension: 'window' | 'screen') => {
+      if (PlatformInfo.isReactNative) {
+        try {
+          return require('react-native').Dimensions.get(dimension);
+        } catch (e) {
+          return { width: 375, height: 667 };
+        }
+      }
+      
+      if (typeof window !== 'undefined') {
+        return {
+          width: window.innerWidth,
+          height: window.innerHeight
+        };
+      }
+      
+      return { width: 375, height: 667 };
+    }
+  },
+};
 
-// Export platform components and APIs
+// Export platform components and APIs (always web components)
 export const {
   View,
   Text,
@@ -254,26 +382,40 @@ export const {
   TouchableOpacity,
   Pressable,
   ScrollView,
+  SafeAreaView,
   Image,
   ActivityIndicator,
   Modal,
   Animated,
-} = PlatformComponents;
+} = WebComponents;
 
 export const {
   StyleSheet,
   Platform,
   Dimensions,
-} = PlatformAPIs;
+} = WebAPIs;
 
-// Export types based on platform
+// Export types - flexible style types that work with both RN and CSS
 export type ViewStyle = any;
 export type TextStyle = any;
 export type ImageStyle = any;
+export type TextProps = React.HTMLAttributes<HTMLSpanElement>;
+export type TextInputProps = React.InputHTMLAttributes<HTMLInputElement>;
+export type ScrollViewProps = React.HTMLAttributes<HTMLDivElement>;
+export type DimensionValue = string | number;
+export type StyleProp<T> = T | T[] | null | undefined;
 
-// Platform detection utilities
-export const PlatformInfo = {
-  isReactNative: isReactNative(),
-  isWeb: isWeb(),
-  OS: PlatformAPIs.Platform.OS,
-}; 
+// Export platform info
+export { PlatformInfo };
+
+// Add CSS animation for spinner
+if (typeof document !== 'undefined') {
+  const style = document.createElement('style');
+  style.textContent = `
+    @keyframes baap-spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  `;
+  document.head.appendChild(style);
+} 

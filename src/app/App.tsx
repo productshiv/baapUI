@@ -1,5 +1,5 @@
 import React from 'react';
-import { Platform, View } from 'react-native';
+import { Platform, View } from '../platform';
 import SampleScreen from '../screens/SampleScreen';
 
 const App: React.FC = () => {

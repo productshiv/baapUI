@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Animated, ViewStyle, DimensionValue } from 'react-native';
+import { View, StyleSheet, Animated, ViewStyle, DimensionValue } from '../../platform';
 import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
 
 interface SkeletonLoaderProps {

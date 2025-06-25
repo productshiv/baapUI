@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Platform, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Platform, ScrollView, TouchableOpacity } from '../platform';
 import Button from '../components/Button/Button';
 import Input from '../components/Input/Input';
 import Checkbox from '../components/Checkbox/Checkbox';

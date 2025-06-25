@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TouchableOpacity, StyleSheet, Text, ViewStyle, Animated } from 'react-native';
+import { View, TouchableOpacity, StyleSheet, Text, ViewStyle, Animated } from '../../platform';
 import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
 
 interface ToggleSwitchProps {

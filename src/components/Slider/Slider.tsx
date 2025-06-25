@@ -1,6 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, ViewStyle } from 'react-native';
-import Slider from '@react-native-community/slider';
+import { View, StyleSheet, ViewStyle } from '../../platform';
 import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
 
 interface SliderProps {
@@ -47,7 +46,7 @@ const CustomSlider: React.FC<SliderProps> = ({
       baseStyles.push({
         backgroundColor,
         padding: 12,
-      });
+      } as ViewStyle);
     }
 
     if (style) {
@@ -57,20 +56,34 @@ const CustomSlider: React.FC<SliderProps> = ({
     return baseStyles;
   };
 
+  // Cross-platform slider using HTML input range
+  const WebSlider = () => (
+    <input
+      type="range"
+      min={minimumValue}
+      max={maximumValue}
+      value={value}
+      step={step}
+      onChange={(e) => onValueChange(Number(e.target.value))}
+      style={{
+        width,
+        height: 20,
+        background: maximumTrackTintColor,
+        outline: 'none',
+        opacity: 0.7,
+        transition: 'opacity 0.2s',
+        cursor: 'pointer',
+        borderRadius: '10px',
+        appearance: 'none',
+        WebkitAppearance: 'none',
+      }}
+      {...props}
+    />
+  );
+
   return (
     <View style={getContainerStyles()}>
-      <Slider
-        value={value}
-        onValueChange={onValueChange}
-        minimumValue={minimumValue}
-        maximumValue={maximumValue}
-        minimumTrackTintColor={minimumTrackTintColor}
-        maximumTrackTintColor={maximumTrackTintColor}
-        thumbTintColor={thumbTintColor}
-        style={{ width }}
-        step={step}
-        {...props}
-      />
+      <WebSlider />
     </View>
   );
 };

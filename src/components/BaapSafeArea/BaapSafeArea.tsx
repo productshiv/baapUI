@@ -6,7 +6,7 @@ import {
   ViewStyle,
   ScrollView,
   ScrollViewProps,
-} from 'react-native';
+} from '../../platform';
 import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
 
 interface BaapSafeAreaProps extends ScrollViewProps {

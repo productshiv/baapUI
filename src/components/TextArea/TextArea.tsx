@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TextInput, StyleSheet, TextInputProps, ViewStyle } from 'react-native';
+import { TextInput, StyleSheet, TextInputProps, ViewStyle } from '../../platform';
 import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
 
 interface TextAreaProps extends TextInputProps {
