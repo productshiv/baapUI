@@ -37,7 +37,7 @@ const Tabs: React.FC<TabsProps> = ({
         customBackground: backgroundColor,
         customBorderRadius: 12,
       });
-      
+
       baseStyles.push(...neumorphicStyles);
       baseStyles.push({
         backgroundColor,
@@ -63,7 +63,7 @@ const Tabs: React.FC<TabsProps> = ({
         customBackground: backgroundColor,
         customBorderRadius: 8,
       });
-      
+
       baseStyles.push(...neumorphicStyles);
       baseStyles.push({
         backgroundColor,

@@ -41,7 +41,7 @@ const Table: React.FC<TableProps> = ({
         customBackground: backgroundColor,
         customBorderRadius: 12,
       });
-      
+
       baseStyles.push(...neumorphicStyles);
       baseStyles.push({
         backgroundColor,
@@ -66,7 +66,7 @@ const Table: React.FC<TableProps> = ({
         customBackground: backgroundColor,
         customBorderRadius: 8,
       });
-      
+
       baseStyles.push(...neumorphicStyles);
       baseStyles.push({
         backgroundColor,
@@ -91,7 +91,7 @@ const Table: React.FC<TableProps> = ({
         customBackground: backgroundColor,
         customBorderRadius: 8,
       });
-      
+
       baseStyles.push(...neumorphicStyles);
       baseStyles.push({
         backgroundColor,

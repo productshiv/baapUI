@@ -67,29 +67,27 @@ export const Neumorphic: Story = {
 
 export const NeumorphicVariations: Story = {
   render: () => (
-    <div style={{ 
-      display: 'flex', 
-      gap: '24px', 
-      alignItems: 'center',
-      backgroundColor: NEUMORPHIC_COLORS.background,
-      padding: '32px',
-      borderRadius: '16px',
-    }}>
-      <Avatar 
-        imageUrl={sampleImageUrl} 
-        size={64} 
-        design="neumorphic"
-      />
-      <Avatar 
-        imageUrl={sampleImageUrl} 
-        size={96} 
+    <div
+      style={{
+        display: 'flex',
+        gap: '24px',
+        alignItems: 'center',
+        backgroundColor: NEUMORPHIC_COLORS.background,
+        padding: '32px',
+        borderRadius: '16px',
+      }}
+    >
+      <Avatar imageUrl={sampleImageUrl} size={64} design="neumorphic" />
+      <Avatar
+        imageUrl={sampleImageUrl}
+        size={96}
         design="neumorphic"
         borderWidth={4}
         borderColor={NEUMORPHIC_COLORS.lightShadow}
       />
-      <Avatar 
-        imageUrl={sampleImageUrl} 
-        size={128} 
+      <Avatar
+        imageUrl={sampleImageUrl}
+        size={128}
         design="neumorphic"
         borderWidth={6}
         borderColor="#2196f3"

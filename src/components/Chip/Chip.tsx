@@ -34,7 +34,7 @@ const Chip: React.FC<ChipProps> = ({
         customBackground: backgroundColor,
         customBorderRadius: 15,
       });
-      
+
       baseStyles.push(...neumorphicStyles);
       baseStyles.push({
         backgroundColor,

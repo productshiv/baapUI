@@ -59,8 +59,12 @@ export const WithActions: Story = {
             This card contains interactive elements.
           </Typography>
           <View style={{ flexDirection: 'row', gap: 8 }}>
-            <Button onPress={() => {}} design="neumorphic">Action 1</Button>
-            <Button onPress={() => {}} design="neumorphic" variant="secondary">Action 2</Button>
+            <Button onPress={() => {}} design="neumorphic">
+              Action 1
+            </Button>
+            <Button onPress={() => {}} design="neumorphic" variant="secondary">
+              Action 2
+            </Button>
           </View>
         </View>
       </Card>
@@ -70,7 +74,7 @@ export const WithActions: Story = {
 
 export const WithShadow: Story = {
   args: {
-    style: { 
+    style: {
       shadowColor: '#000',
       shadowOffset: { width: 0, height: 2 },
       shadowOpacity: 0.25,
@@ -103,13 +107,15 @@ export const AllDesigns: Story = {
           <Typography variant="body2">With soft shadows</Typography>
         </View>
       </Card>
-      <Card style={{ 
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.3,
-        shadowRadius: 4.65,
-        elevation: 8,
-      }}>
+      <Card
+        style={{
+          shadowColor: '#000',
+          shadowOffset: { width: 0, height: 4 },
+          shadowOpacity: 0.3,
+          shadowRadius: 4.65,
+          elevation: 8,
+        }}
+      >
         <View style={{ padding: 16 }}>
           <Typography variant="h6">Shadow Design</Typography>
           <Typography variant="body2">With stronger shadows</Typography>

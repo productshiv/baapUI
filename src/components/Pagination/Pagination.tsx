@@ -44,7 +44,7 @@ const Pagination: React.FC<PaginationProps> = ({
         customBackground: backgroundColor,
         customBorderRadius: 12,
       });
-      
+
       baseStyles.push(...neumorphicStyles);
       baseStyles.push({
         backgroundColor,
@@ -70,7 +70,7 @@ const Pagination: React.FC<PaginationProps> = ({
         customBackground: backgroundColor,
         customBorderRadius: 8,
       });
-      
+
       baseStyles.push(...neumorphicStyles);
       baseStyles.push({
         backgroundColor,

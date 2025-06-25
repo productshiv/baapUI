@@ -74,34 +74,20 @@ export const Neumorphic: Story = {
 
 export const NeumorphicVariations: Story = {
   render: () => (
-    <div style={{ 
-      display: 'flex', 
-      flexDirection: 'column', 
-      gap: '16px',
-      backgroundColor: NEUMORPHIC_COLORS.background,
-      padding: '24px',
-      borderRadius: '12px',
-    }}>
-      <ProgressBar 
-        progress={0.3} 
-        design="neumorphic" 
-        progressColor="#4caf50"
-      />
-      <ProgressBar 
-        progress={0.5} 
-        design="neumorphic" 
-        progressColor="#f50057"
-      />
-      <ProgressBar 
-        progress={0.7} 
-        design="neumorphic" 
-        progressColor="#ff9800"
-      />
-      <ProgressBar 
-        progress={0.9} 
-        design="neumorphic" 
-        progressColor="#9c27b0"
-      />
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '16px',
+        backgroundColor: NEUMORPHIC_COLORS.background,
+        padding: '24px',
+        borderRadius: '12px',
+      }}
+    >
+      <ProgressBar progress={0.3} design="neumorphic" progressColor="#4caf50" />
+      <ProgressBar progress={0.5} design="neumorphic" progressColor="#f50057" />
+      <ProgressBar progress={0.7} design="neumorphic" progressColor="#ff9800" />
+      <ProgressBar progress={0.9} design="neumorphic" progressColor="#9c27b0" />
     </div>
   ),
 };

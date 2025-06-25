@@ -3,49 +3,46 @@ import React, { DetailedHTMLProps, HTMLAttributes } from 'react';
 
 // Platform detection using environment-specific globals
 const PlatformInfo = {
-  isReactNative: (
-    typeof navigator !== 'undefined' && 
-    navigator.product === 'ReactNative'
-  ) || (
-    typeof global !== 'undefined' && 
-    // @ts-ignore
-    global.__DEV__ !== undefined &&
-    typeof window === 'undefined'
-  ),
+  isReactNative:
+    (typeof navigator !== 'undefined' && navigator.product === 'ReactNative') ||
+    (typeof global !== 'undefined' &&
+      // @ts-ignore
+      global.__DEV__ !== undefined &&
+      typeof window === 'undefined'),
   isWeb: typeof window !== 'undefined' && typeof document !== 'undefined',
 };
 
 // Enhanced style conversion function
 const convertRNStyleToCSS = (style: any): React.CSSProperties => {
   if (!style) return {};
-  
+
   const cssStyle: any = { ...style };
-  
+
   // Handle React Native specific properties
   if (style.paddingHorizontal !== undefined) {
     cssStyle.paddingLeft = style.paddingHorizontal;
     cssStyle.paddingRight = style.paddingHorizontal;
     delete cssStyle.paddingHorizontal;
   }
-  
+
   if (style.paddingVertical !== undefined) {
     cssStyle.paddingTop = style.paddingVertical;
     cssStyle.paddingBottom = style.paddingVertical;
     delete cssStyle.paddingVertical;
   }
-  
+
   if (style.marginHorizontal !== undefined) {
     cssStyle.marginLeft = style.marginHorizontal;
     cssStyle.marginRight = style.marginHorizontal;
     delete cssStyle.marginHorizontal;
   }
-  
+
   if (style.marginVertical !== undefined) {
     cssStyle.marginTop = style.marginVertical;
     cssStyle.marginBottom = style.marginVertical;
     delete cssStyle.marginVertical;
   }
-  
+
   // Handle text shadow properties
   if (style.textShadowColor || style.textShadowOffset || style.textShadowRadius) {
     const color = style.textShadowColor || 'rgba(0,0,0,0.3)';
@@ -57,7 +54,7 @@ const convertRNStyleToCSS = (style: any): React.CSSProperties => {
     delete cssStyle.textShadowOffset;
     delete cssStyle.textShadowRadius;
   }
-  
+
   // Handle shadow properties
   if (style.shadowColor || style.shadowOffset || style.shadowRadius || style.shadowOpacity) {
     const color = style.shadowColor || 'rgba(0,0,0,0.3)';
@@ -71,22 +68,22 @@ const convertRNStyleToCSS = (style: any): React.CSSProperties => {
     delete cssStyle.shadowRadius;
     delete cssStyle.shadowOpacity;
   }
-  
+
   // Handle elevation (Android)
   if (style.elevation !== undefined) {
     cssStyle.boxShadow = `0px ${style.elevation}px ${style.elevation * 2}px rgba(0,0,0,0.2)`;
     delete cssStyle.elevation;
   }
-  
+
   // Ensure color values are strings
   if (style.backgroundColor && typeof style.backgroundColor === 'object') {
     cssStyle.backgroundColor = String(style.backgroundColor);
   }
-  
+
   if (style.color && typeof style.color === 'object') {
     cssStyle.color = String(style.color);
   }
-  
+
   return cssStyle as React.CSSProperties;
 };
 
@@ -102,22 +99,34 @@ const processStyle = (style: any): React.CSSProperties => {
 const MockAnimated = {
   View: ({ style, children, ...props }: any) => {
     const processedStyle = processStyle(style);
-    return React.createElement('div', { 
-      style: processedStyle, 
-      ...props 
-    }, children);
+    return React.createElement(
+      'div',
+      {
+        style: processedStyle,
+        ...props,
+      },
+      children
+    );
   },
   Text: ({ style, children, ...props }: any) => {
     const processedStyle = processStyle(style);
-    return React.createElement('span', { 
-      style: processedStyle, 
-      ...props 
-    }, children);
+    return React.createElement(
+      'span',
+      {
+        style: processedStyle,
+        ...props,
+      },
+      children
+    );
   },
   Value: class MockValue {
     constructor(public value: number) {}
-    setValue(value: number) { this.value = value; }
-    addListener() { return 'mock-listener'; }
+    setValue(value: number) {
+      this.value = value;
+    }
+    addListener() {
+      return 'mock-listener';
+    }
     removeListener() {}
   },
   timing: () => ({ start: (callback?: () => void) => callback?.() }),
@@ -126,7 +135,9 @@ const MockAnimated = {
   sequence: (animations: any[]) => ({ start: (callback?: () => void) => callback?.() }),
   decay: () => ({ start: (callback?: () => void) => callback?.() }),
   parallel: (animations: any[]) => ({ start: (callback?: () => void) => callback?.() }),
-  stagger: (time: number, animations: any[]) => ({ start: (callback?: () => void) => callback?.() }),
+  stagger: (time: number, animations: any[]) => ({
+    start: (callback?: () => void) => callback?.(),
+  }),
   delay: (time: number) => ({ start: (callback?: () => void) => callback?.() }),
 };
 
@@ -135,17 +146,17 @@ const WebComponents = {
   View: ({ style, children, onPress, ...props }: any) => {
     const processedStyle = processStyle(style);
     const webProps: any = { style: processedStyle, ...props };
-    
+
     if (onPress) {
       webProps.onClick = onPress;
-      webProps.style = { 
-        ...processedStyle, 
+      webProps.style = {
+        ...processedStyle,
         cursor: 'pointer',
-        userSelect: 'none'
+        userSelect: 'none',
       };
       return React.createElement('button', webProps, children);
     }
-    
+
     return React.createElement('div', webProps, children);
   },
 
@@ -154,12 +165,20 @@ const WebComponents = {
     return React.createElement('span', { style: processedStyle, ...props }, children);
   },
 
-  TextInput: ({ style, value, onChangeText, placeholder, multiline, numberOfLines, ...props }: any) => {
+  TextInput: ({
+    style,
+    value,
+    onChangeText,
+    placeholder,
+    multiline,
+    numberOfLines,
+    ...props
+  }: any) => {
     const processedStyle = processStyle(style);
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       onChangeText?.(e.target.value);
     };
-    
+
     if (multiline) {
       return React.createElement('textarea', {
         style: { ...processedStyle, resize: 'vertical' },
@@ -167,79 +186,95 @@ const WebComponents = {
         onChange: handleChange,
         placeholder,
         rows: numberOfLines || 4,
-        ...props
+        ...props,
       });
     }
-    
+
     return React.createElement('input', {
       style: processedStyle,
       type: 'text',
       value,
       onChange: handleChange,
       placeholder,
-      ...props
+      ...props,
     });
   },
 
   TouchableOpacity: ({ style, children, onPress, disabled, ...props }: any) => {
     const processedStyle = processStyle(style);
-    return React.createElement('button', {
-      style: {
-        ...processedStyle,
-        cursor: disabled ? 'not-allowed' : 'pointer',
-        opacity: disabled ? 0.6 : 1,
-        border: 'none',
-        background: 'transparent',
-        padding: 0,
-        userSelect: 'none'
+    return React.createElement(
+      'button',
+      {
+        style: {
+          ...processedStyle,
+          cursor: disabled ? 'not-allowed' : 'pointer',
+          opacity: disabled ? 0.6 : 1,
+          border: 'none',
+          background: 'transparent',
+          padding: 0,
+          userSelect: 'none',
+        },
+        onClick: disabled ? undefined : onPress,
+        disabled,
+        ...props,
       },
-      onClick: disabled ? undefined : onPress,
-      disabled,
-      ...props
-    }, children);
+      children
+    );
   },
 
   Pressable: ({ style, onPress, children, disabled, ...props }: any) => {
     const processedStyle = processStyle(style);
-    return React.createElement('button', {
-      style: {
-        ...processedStyle,
-        cursor: disabled ? 'not-allowed' : 'pointer',
-        opacity: disabled ? 0.6 : 1,
-        background: 'transparent',
-        border: 'none',
+    return React.createElement(
+      'button',
+      {
+        style: {
+          ...processedStyle,
+          cursor: disabled ? 'not-allowed' : 'pointer',
+          opacity: disabled ? 0.6 : 1,
+          background: 'transparent',
+          border: 'none',
+        },
+        onClick: disabled ? undefined : onPress,
+        disabled,
+        ...props,
       },
-      onClick: disabled ? undefined : onPress,
-      disabled,
-      ...props,
-    }, children);
+      children
+    );
   },
 
   ScrollView: ({ style, children, horizontal, ...props }: any) => {
     const processedStyle = processStyle(style);
-    return React.createElement('div', {
-      style: {
-        ...processedStyle,
-        overflow: 'auto',
-        display: horizontal ? 'flex' : 'block',
-        flexDirection: horizontal ? 'row' : 'column'
+    return React.createElement(
+      'div',
+      {
+        style: {
+          ...processedStyle,
+          overflow: 'auto',
+          display: horizontal ? 'flex' : 'block',
+          flexDirection: horizontal ? 'row' : 'column',
+        },
+        ...props,
       },
-      ...props
-    }, children);
+      children
+    );
   },
-  
+
   SafeAreaView: ({ style, children, ...props }: any) => {
     const processedStyle = processStyle(style);
-    return React.createElement('div', {
-      style: {
-        ...processedStyle,
-        paddingTop: 'env(safe-area-inset-top)',
-        paddingBottom: 'env(safe-area-inset-bottom)',
-        paddingLeft: 'env(safe-area-inset-left)',
-        paddingRight: 'env(safe-area-inset-right)',
+    return React.createElement(
+      'div',
+      {
+        style: {
+          ...processedStyle,
+          paddingTop: 'env(safe-area-inset-top)',
+          paddingBottom: 'env(safe-area-inset-bottom)',
+          paddingLeft: 'env(safe-area-inset-left)',
+          paddingRight: 'env(safe-area-inset-right)',
+        },
+        ...props,
       },
-      ...props,
-    }, children);
+      children
+    );
   },
 
   Image: ({ style, source, ...props }: any) => {
@@ -271,47 +306,63 @@ const WebComponents = {
   Modal: ({ visible, transparent, animationType, onRequestClose, children, ...props }: any) => {
     if (PlatformInfo.isReactNative) {
       const RN = require('react-native');
-      return React.createElement(RN.Modal, { visible, transparent, animationType, onRequestClose, ...props }, children);
+      return React.createElement(
+        RN.Modal,
+        { visible, transparent, animationType, onRequestClose, ...props },
+        children
+      );
     }
-    
+
     if (!visible) return null;
-    
-    return React.createElement('div', {
-      style: {
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        backgroundColor: transparent ? 'transparent' : 'rgba(0,0,0,0.5)',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        zIndex: 1000
+
+    return React.createElement(
+      'div',
+      {
+        style: {
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: transparent ? 'transparent' : 'rgba(0,0,0,0.5)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 1000,
+        },
+        onClick: (e: React.MouseEvent) => {
+          if (e.target === e.currentTarget) {
+            onRequestClose?.();
+          }
+        },
+        ...props,
       },
-      onClick: (e: React.MouseEvent) => {
-        if (e.target === e.currentTarget) {
-          onRequestClose?.();
-        }
-      },
-      ...props
-    }, children);
+      children
+    );
   },
 
   Animated: {
     View: ({ style, children, ...props }: any) => {
       const processedStyle = processStyle(style);
-      return React.createElement('div', { 
-        style: processedStyle, 
-        ...props 
-      }, children);
+      return React.createElement(
+        'div',
+        {
+          style: processedStyle,
+          ...props,
+        },
+        children
+      );
     },
     Text: ({ style, children, ...props }: any) => {
       const processedStyle = processStyle(style);
-      return React.createElement('span', { 
-        style: processedStyle, 
-        ...props 
-      }, children);
+      return React.createElement(
+        'span',
+        {
+          style: processedStyle,
+          ...props,
+        },
+        children
+      );
     },
   },
 };
@@ -334,7 +385,7 @@ const WebAPIs = {
         return style.reduce((acc, s) => ({ ...acc, ...s }), {});
       }
       return style || {};
-    }
+    },
   },
   Platform: {
     OS: (() => {
@@ -350,7 +401,7 @@ const WebAPIs = {
     select: (options: { [key: string]: any }) => {
       const os = WebAPIs.Platform.OS;
       return options[os] || options.default;
-    }
+    },
   },
   Dimensions: {
     get: (dimension: 'window' | 'screen') => {
@@ -361,16 +412,16 @@ const WebAPIs = {
           return { width: 375, height: 667 };
         }
       }
-      
+
       if (typeof window !== 'undefined') {
         return {
           width: window.innerWidth,
-          height: window.innerHeight
+          height: window.innerHeight,
         };
       }
-      
+
       return { width: 375, height: 667 };
-    }
+    },
   },
 };
 
@@ -389,11 +440,7 @@ export const {
   Animated,
 } = WebComponents;
 
-export const {
-  StyleSheet,
-  Platform,
-  Dimensions,
-} = WebAPIs;
+export const { StyleSheet, Platform, Dimensions } = WebAPIs;
 
 // Export types - flexible style types that work with both RN and CSS
 export type ViewStyle = any;
@@ -418,4 +465,4 @@ if (typeof document !== 'undefined') {
     }
   `;
   document.head.appendChild(style);
-} 
+}

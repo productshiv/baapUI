@@ -59,7 +59,7 @@ const SkeletonLoader: React.FC<SkeletonLoaderProps> = ({
         customBackground: backgroundColor,
         customBorderRadius: borderRadius,
       });
-      
+
       baseStyles.push(...neumorphicStyles);
       baseStyles.push({
         backgroundColor,

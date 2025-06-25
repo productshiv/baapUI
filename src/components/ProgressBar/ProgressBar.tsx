@@ -39,7 +39,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
         customBackground: backgroundColor,
         customBorderRadius: height / 2,
       });
-      
+
       baseStyles.push(...neumorphicStyles);
       baseStyles.push({
         backgroundColor,
@@ -69,7 +69,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
         customBackground: progressColor,
         customBorderRadius: height / 2,
       });
-      
+
       baseStyles.push(...neumorphicStyles);
       baseStyles.push({
         backgroundColor: progressColor,

@@ -27,7 +27,7 @@ const TextArea: React.FC<TextAreaProps> = ({
         customBackground: backgroundColor,
         customBorderRadius: 8,
       });
-      
+
       baseStyles.push(...neumorphicStyles);
       baseStyles.push({
         backgroundColor,

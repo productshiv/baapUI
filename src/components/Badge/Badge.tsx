@@ -110,7 +110,7 @@ const Badge: React.FC<BadgeProps> = ({
         customBackground: bgColor,
         customBorderRadius: sizeStyle.container.borderRadius as number,
       });
-      
+
       baseStyles.push(...neumorphicStyles);
       baseStyles.push({
         ...sizeStyle.container,

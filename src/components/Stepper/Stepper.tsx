@@ -50,7 +50,7 @@ const Stepper: React.FC<StepperProps> = ({
         customBackground: backgroundColor,
         customBorderRadius: 8,
       });
-      
+
       baseStyles.push(...neumorphicStyles);
       baseStyles.push({
         backgroundColor,
@@ -74,7 +74,7 @@ const Stepper: React.FC<StepperProps> = ({
         customBackground: backgroundColor,
         customBorderRadius: 6,
       });
-      
+
       baseStyles.push(...neumorphicStyles);
       baseStyles.push({
         backgroundColor,

@@ -72,13 +72,33 @@ export const Neumorphic: Story = {
 
 export const NeumorphicVariants: Story = {
   render: () => (
-    <div style={{ display: 'flex', gap: '16px', backgroundColor: NEUMORPHIC_COLORS.background, padding: '16px', borderRadius: '8px' }}>
-      <Badge variant="primary" design="neumorphic">1</Badge>
-      <Badge variant="secondary" design="neumorphic">2</Badge>
-      <Badge variant="success" design="neumorphic">3</Badge>
-      <Badge variant="error" design="neumorphic">4</Badge>
-      <Badge variant="warning" design="neumorphic">5</Badge>
-      <Badge variant="info" design="neumorphic">6</Badge>
+    <div
+      style={{
+        display: 'flex',
+        gap: '16px',
+        backgroundColor: NEUMORPHIC_COLORS.background,
+        padding: '16px',
+        borderRadius: '8px',
+      }}
+    >
+      <Badge variant="primary" design="neumorphic">
+        1
+      </Badge>
+      <Badge variant="secondary" design="neumorphic">
+        2
+      </Badge>
+      <Badge variant="success" design="neumorphic">
+        3
+      </Badge>
+      <Badge variant="error" design="neumorphic">
+        4
+      </Badge>
+      <Badge variant="warning" design="neumorphic">
+        5
+      </Badge>
+      <Badge variant="info" design="neumorphic">
+        6
+      </Badge>
     </div>
   ),
 };

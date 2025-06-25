@@ -69,40 +69,17 @@ export const DisabledChecked: Story = {
 export const AllStates: Story = {
   render: () => (
     <View style={{ padding: 20, gap: 10 }}>
-      <Checkbox
-        label="Default Checkbox"
-        checked={false}
-        onChange={() => {}}
-      />
-      <Checkbox
-        label="Checked Checkbox"
-        checked={true}
-        onChange={() => {}}
-      />
+      <Checkbox label="Default Checkbox" checked={false} onChange={() => {}} />
+      <Checkbox label="Checked Checkbox" checked={true} onChange={() => {}} />
       <Checkbox
         label="Neumorphic Checkbox"
         design="neumorphic"
         checked={false}
         onChange={() => {}}
       />
-      <Checkbox
-        label="Neumorphic Checked"
-        design="neumorphic"
-        checked={true}
-        onChange={() => {}}
-      />
-      <Checkbox
-        label="Disabled Checkbox"
-        disabled
-        checked={false}
-        onChange={() => {}}
-      />
-      <Checkbox
-        label="Disabled Checked"
-        disabled
-        checked={true}
-        onChange={() => {}}
-      />
+      <Checkbox label="Neumorphic Checked" design="neumorphic" checked={true} onChange={() => {}} />
+      <Checkbox label="Disabled Checkbox" disabled checked={false} onChange={() => {}} />
+      <Checkbox label="Disabled Checked" disabled checked={true} onChange={() => {}} />
     </View>
   ),
 };

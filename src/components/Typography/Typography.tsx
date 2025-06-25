@@ -111,7 +111,10 @@ const Typography: React.FC<TypographyProps> = ({
   };
 
   const getTypographyStyles = (): StyleProp<TextStyle> => {
-    const baseStyles: StyleProp<TextStyle>[] = [variantStyles[variant], { color, textAlign: align }];
+    const baseStyles: StyleProp<TextStyle>[] = [
+      variantStyles[variant],
+      { color, textAlign: align },
+    ];
 
     if (design === 'neumorphic') {
       const neumorphicStyles = getNeumorphicStyles({

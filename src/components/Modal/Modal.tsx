@@ -1,5 +1,12 @@
 import React, { useState } from 'react';
-import { Modal as RNModal, View, Text, StyleSheet, TouchableOpacity, ViewStyle } from '../../platform';
+import {
+  Modal as RNModal,
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ViewStyle,
+} from '../../platform';
 import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
 
 interface ModalProps {
@@ -32,7 +39,7 @@ const Modal: React.FC<ModalProps> = ({
         customBackground: backgroundColor,
         customBorderRadius: 16,
       });
-      
+
       baseStyles.push(...neumorphicStyles);
     }
 
@@ -52,7 +59,7 @@ const Modal: React.FC<ModalProps> = ({
         customBackground: backgroundColor,
         customBorderRadius: 8,
       });
-      
+
       baseStyles.push(...neumorphicStyles);
     }
 
@@ -70,7 +77,7 @@ const Modal: React.FC<ModalProps> = ({
             onPressIn={() => setIsClosePressed(true)}
             onPressOut={() => setIsClosePressed(false)}
           >
-            <Text 
+            <Text
               style={[
                 styles.closeButtonText,
                 design === 'neumorphic' && {
@@ -78,7 +85,7 @@ const Modal: React.FC<ModalProps> = ({
                   textShadowColor: NEUMORPHIC_COLORS.lightShadow,
                   textShadowOffset: { width: 1, height: 1 },
                   textShadowRadius: 1,
-                }
+                },
               ]}
             >
               Close

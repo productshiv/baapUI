@@ -57,4 +57,4 @@ export { default as Label } from './components/Label/Label';
 export type { ButtonProps } from './components/Button/Button';
 
 // Platform utilities
-export { PlatformInfo } from './platform'; 
+export { PlatformInfo } from './platform';

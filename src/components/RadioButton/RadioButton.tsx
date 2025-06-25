@@ -44,7 +44,7 @@ const RadioButton: React.FC<RadioButtonProps> = ({
         customBackground: backgroundColor,
         customBorderRadius: 15,
       });
-      
+
       baseStyles.push(...neumorphicStyles);
       baseStyles.push({
         width: 28,
@@ -87,7 +87,7 @@ const RadioButton: React.FC<RadioButtonProps> = ({
       >
         {selected && <View style={getSelectedStyles()} />}
       </TouchableOpacity>
-      <Text 
+      <Text
         style={[
           styles.label,
           disabled && styles.disabledText,
@@ -96,7 +96,7 @@ const RadioButton: React.FC<RadioButtonProps> = ({
             textShadowColor: NEUMORPHIC_COLORS.lightShadow,
             textShadowOffset: { width: 1, height: 1 },
             textShadowRadius: 1,
-          }
+          },
         ]}
       >
         {label}

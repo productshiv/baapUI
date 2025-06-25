@@ -1,6 +1,6 @@
 {
   "name": "@productshiv/baapui",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "types": "dist/index.d.ts",
@@ -46,7 +46,6 @@
     "postversion": "git push && git push --tags",
     "generate-metadata": "npx ts-node scanner/metadata-generator.ts",
     "generate-metadata-report": "npx ts-node scanner/metadata-generator.ts --report",
-    
     "_expo:start": "expo start",
     "_expo:android": "expo start --android",
     "_expo:ios": "expo start --ios",

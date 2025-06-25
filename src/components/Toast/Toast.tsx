@@ -57,7 +57,7 @@ const Toast: React.FC<ToastProps> = ({
         customBackground: backgroundColor,
         customBorderRadius: 12,
       });
-      
+
       baseStyles.push(...neumorphicStyles);
       baseStyles.push({
         backgroundColor,

@@ -41,7 +41,7 @@ const CustomSlider: React.FC<SliderProps> = ({
         customBackground: backgroundColor,
         customBorderRadius: 8,
       });
-      
+
       baseStyles.push(...neumorphicStyles);
       baseStyles.push({
         backgroundColor,
@@ -64,7 +64,7 @@ const CustomSlider: React.FC<SliderProps> = ({
       max={maximumValue}
       value={value}
       step={step}
-      onChange={(e) => onValueChange(Number(e.target.value))}
+      onChange={e => onValueChange(Number(e.target.value))}
       style={{
         width,
         height: 20,

@@ -40,7 +40,7 @@ export const ListItem: React.FC<ListItemProps> = ({
         customBackground: backgroundColor,
         customBorderRadius: 8,
       });
-      
+
       baseStyles.push(...neumorphicStyles);
       baseStyles.push({
         backgroundColor,
@@ -56,11 +56,7 @@ export const ListItem: React.FC<ListItemProps> = ({
     return baseStyles;
   };
 
-  const content = (
-    <View style={getItemStyles()}>
-      {children}
-    </View>
-  );
+  const content = <View style={getItemStyles()}>{children}</View>;
 
   if (onPress) {
     return (
@@ -97,7 +93,7 @@ const List: React.FC<ListProps> = ({
         customBackground: backgroundColor,
         customBorderRadius: 12,
       });
-      
+
       baseStyles.push(...neumorphicStyles);
       baseStyles.push({
         backgroundColor,

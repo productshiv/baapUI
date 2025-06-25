@@ -87,29 +87,19 @@ export const Neumorphic: Story = {
 
 export const NeumorphicVariants: Story = {
   render: () => (
-    <div style={{ 
-      display: 'flex', 
-      gap: '32px', 
-      alignItems: 'center',
-      backgroundColor: NEUMORPHIC_COLORS.background,
-      padding: '32px',
-      borderRadius: '16px',
-    }}>
-      <Spinner 
-        variant="primary" 
-        design="neumorphic" 
-        label="Primary"
-      />
-      <Spinner 
-        variant="success" 
-        design="neumorphic" 
-        label="Success"
-      />
-      <Spinner 
-        variant="danger" 
-        design="neumorphic" 
-        label="Danger"
-      />
+    <div
+      style={{
+        display: 'flex',
+        gap: '32px',
+        alignItems: 'center',
+        backgroundColor: NEUMORPHIC_COLORS.background,
+        padding: '32px',
+        borderRadius: '16px',
+      }}
+    >
+      <Spinner variant="primary" design="neumorphic" label="Primary" />
+      <Spinner variant="success" design="neumorphic" label="Success" />
+      <Spinner variant="danger" design="neumorphic" label="Danger" />
     </div>
   ),
 };

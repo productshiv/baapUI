@@ -37,7 +37,7 @@ const Avatar: React.FC<AvatarProps> = ({
         customBackground: backgroundColor,
         customBorderRadius: size / 2,
       });
-      
+
       baseStyles.push(...neumorphicStyles);
       baseStyles.push({
         backgroundColor,

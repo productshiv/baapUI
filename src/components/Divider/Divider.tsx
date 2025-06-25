@@ -29,7 +29,7 @@ const Divider: React.FC<DividerProps> = ({
         customBackground: backgroundColor,
         customBorderRadius: thickness / 2,
       });
-      
+
       baseStyles.push(...neumorphicStyles);
       baseStyles.push({
         backgroundColor,

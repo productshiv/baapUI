@@ -44,7 +44,7 @@ const Checkbox: React.FC<CheckboxProps> = ({
         customBackground: backgroundColor,
         customBorderRadius: 6,
       });
-      
+
       baseStyles.push(...neumorphicStyles);
       baseStyles.push({
         width: 24,
@@ -87,16 +87,16 @@ const Checkbox: React.FC<CheckboxProps> = ({
       >
         {isChecked && <View style={getCheckMarkStyles()} />}
       </TouchableOpacity>
-      <Text 
+      <Text
         style={[
-          styles.label, 
+          styles.label,
           disabled && styles.disabledText,
           design === 'neumorphic' && {
             color: textColor,
             textShadowColor: NEUMORPHIC_COLORS.lightShadow,
             textShadowOffset: { width: 1, height: 1 },
             textShadowRadius: 1,
-          }
+          },
         ]}
       >
         {label}

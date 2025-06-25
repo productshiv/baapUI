@@ -65,39 +65,21 @@ export const Neumorphic: Story = {
 
 export const NeumorphicPlaceholders: Story = {
   render: () => (
-    <div style={{ 
-      display: 'flex', 
-      flexDirection: 'column', 
-      gap: '16px',
-      backgroundColor: NEUMORPHIC_COLORS.background,
-      padding: '24px',
-      borderRadius: '12px',
-      width: '300px',
-    }}>
-      <SkeletonLoader 
-        width={300} 
-        height={200} 
-        design="neumorphic" 
-        borderRadius={12}
-      />
-      <SkeletonLoader 
-        width={200} 
-        height={24} 
-        design="neumorphic" 
-        borderRadius={6}
-      />
-      <SkeletonLoader 
-        width={300} 
-        height={16} 
-        design="neumorphic" 
-        borderRadius={4}
-      />
-      <SkeletonLoader 
-        width={250} 
-        height={16} 
-        design="neumorphic" 
-        borderRadius={4}
-      />
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '16px',
+        backgroundColor: NEUMORPHIC_COLORS.background,
+        padding: '24px',
+        borderRadius: '12px',
+        width: '300px',
+      }}
+    >
+      <SkeletonLoader width={300} height={200} design="neumorphic" borderRadius={12} />
+      <SkeletonLoader width={200} height={24} design="neumorphic" borderRadius={6} />
+      <SkeletonLoader width={300} height={16} design="neumorphic" borderRadius={4} />
+      <SkeletonLoader width={250} height={16} design="neumorphic" borderRadius={4} />
     </div>
   ),
 };

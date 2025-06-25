@@ -47,7 +47,10 @@ const Card: React.FC<CardProps> = ({
 
   if (onPress) {
     return (
-      <Pressable style={({ pressed }: { pressed: boolean }) => getCardStyles(pressed)} onPress={onPress}>
+      <Pressable
+        style={({ pressed }: { pressed: boolean }) => getCardStyles(pressed)}
+        onPress={onPress}
+      >
         {content}
       </Pressable>
     );

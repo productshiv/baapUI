@@ -48,7 +48,7 @@ const Input: React.FC<InputProps> = ({
         customBackground: backgroundColor,
         customBorderRadius: 12,
       });
-      
+
       baseStyles.push(...neumorphicStyles);
       baseStyles.push({
         height: 40,
