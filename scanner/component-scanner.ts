@@ -29,7 +29,7 @@ export interface ExampleInfo {
 export class ComponentScanner {
   private componentsDir: string;
 
-  constructor(componentsDir: string = '../src/components') {
+  constructor(componentsDir = '../src/components') {
     this.componentsDir = path.resolve(__dirname, componentsDir);
   }
 
@@ -119,7 +119,7 @@ export class ComponentScanner {
 
     return `A ${this.componentNameToWords(
       componentContent.match(
-        /(?:export\s+(?:default\s+)?(?:const|function)\s+|interface\s+)(\w+)/
+        /export\s+(?:default\s+)?(?:const|function|class)\s+(\w+)/
       )?.[1] || 'Component'
     )} component`;
   }

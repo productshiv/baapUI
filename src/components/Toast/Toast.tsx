@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { View, StyleSheet, Animated, ViewStyle, TextStyle } from '../../platform';
 import Typography from '../Typography/Typography';
 import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
@@ -26,7 +26,7 @@ const Toast: React.FC<ToastProps> = ({
   textColor = NEUMORPHIC_COLORS.text,
   type = 'info',
 }) => {
-  const fadeAnim = new Animated.Value(0);
+  const fadeAnim = useMemo(() => new Animated.Value(0), []);
 
   useEffect(() => {
     if (visible) {

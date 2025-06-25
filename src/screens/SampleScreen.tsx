@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Platform, ScrollView, TouchableOpacity } from '../platform';
+import { View, Text, StyleSheet } from '../platform';
 import Button from '../components/Button/Button';
 import Input from '../components/Input/Input';
 import Checkbox from '../components/Checkbox/Checkbox';
@@ -275,8 +275,8 @@ const SampleScreen: React.FC = () => {
               <Avatar imageUrl="https://randomuser.me/api/portraits/men/1.jpg" size={50} />
               <Chip label="Example Chip" onPress={handleChipPress} />
               <List
-                items={listItems.map(item => (
-                  <Typography variant="body1">{item}</Typography>
+                items={listItems.map((item, index) => (
+                  <Typography key={index} variant="body1">{item}</Typography>
                 ))}
               />
               <Divider />

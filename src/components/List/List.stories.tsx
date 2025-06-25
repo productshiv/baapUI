@@ -3,8 +3,8 @@ import type { Meta, StoryObj } from '@storybook/react';
 import List, { ListItem } from './List';
 import { NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
 
-const sampleItems = ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5'].map(text => (
-  <div style={{ padding: 8 }}>{text}</div>
+const sampleItems = ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5'].map((text, index) => (
+  <div key={index} style={{ padding: 8 }}>{text}</div>
 ));
 
 const meta: Meta<typeof List> = {
@@ -46,8 +46,8 @@ const complexItems = [
     description: 'This is a description for the third item',
     icon: '🖥️',
   },
-].map(item => (
-  <div style={{ padding: 8, display: 'flex', alignItems: 'center', gap: 12 }}>
+].map((item, index) => (
+  <div key={index} style={{ padding: 8, display: 'flex', alignItems: 'center', gap: 12 }}>
     <div style={{ fontSize: 24 }}>{item.icon}</div>
     <div>
       <div style={{ fontWeight: 'bold' }}>{item.title}</div>
@@ -111,3 +111,5 @@ export const CustomStyles: Story = {
     },
   },
 };
+
+
