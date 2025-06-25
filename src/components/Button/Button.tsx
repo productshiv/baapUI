@@ -38,9 +38,16 @@ const Button: React.FC<ButtonProps> = ({
   backgroundColor,
   textColor,
 }) => {
-  const { theme } = useTheme();
+  let theme;
+  try {
+    const themeContext = useTheme();
+    theme = themeContext.theme;
+  } catch (error) {
+    // Fallback when theme context is not available
+    theme = null;
+  }
   const [isPressed, setIsPressed] = useState(false);
-  const activeDesign = design || theme.design;
+  const activeDesign = design || theme?.design || 'flat';
 
   const getVariantStyles = (): { container: ViewStyle; text: TextStyle } => {
     // If design is neumorphic, use neumorphic styles
@@ -60,7 +67,7 @@ const Button: React.FC<ButtonProps> = ({
         },
         text: {
           color: disabled ? '#9e9e9e' : textColor || '#2196f3',
-          ...theme.typography.button,
+          ...(theme?.typography?.button || { fontSize: 16, fontWeight: '600' }),
         },
       };
     }
@@ -167,6 +174,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
+    minHeight: 44, // Ensure minimum touch target
+    minWidth: 44,
   },
   primaryButton: {
     backgroundColor: '#2196f3',
