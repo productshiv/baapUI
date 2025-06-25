@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TouchableOpacity, StyleSheet, Text, ViewStyle, Animated } from 'react-native';
+import { View, TouchableOpacity, StyleSheet, Text, ViewStyle, Animated } from '../../platform';
 import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
 
 interface ToggleSwitchProps {
@@ -54,7 +54,7 @@ const ToggleSwitch: React.FC<ToggleSwitchProps> = ({
         customBackground: backgroundColor,
         customBorderRadius: 20,
       });
-      
+
       baseStyles.push(...neumorphicStyles);
       baseStyles.push({
         width: 56,
@@ -79,7 +79,7 @@ const ToggleSwitch: React.FC<ToggleSwitchProps> = ({
         customBackground: value ? activeColor : backgroundColor,
         customBorderRadius: 12,
       });
-      
+
       baseStyles.push(...knobNeumorphicStyles);
       baseStyles.push({
         width: 24,
@@ -93,7 +93,7 @@ const ToggleSwitch: React.FC<ToggleSwitchProps> = ({
 
   return (
     <View style={[styles.container, style]}>
-      <Text 
+      <Text
         style={[
           styles.label,
           disabled && styles.disabledText,
@@ -102,7 +102,7 @@ const ToggleSwitch: React.FC<ToggleSwitchProps> = ({
             textShadowColor: NEUMORPHIC_COLORS.lightShadow,
             textShadowOffset: { width: 1, height: 1 },
             textShadowRadius: 1,
-          }
+          },
         ]}
       >
         {label}

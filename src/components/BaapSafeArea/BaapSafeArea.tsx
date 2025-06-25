@@ -6,7 +6,7 @@ import {
   ViewStyle,
   ScrollView,
   ScrollViewProps,
-} from 'react-native';
+} from '../../platform';
 import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
 
 interface BaapSafeAreaProps extends ScrollViewProps {
@@ -36,7 +36,7 @@ const BaapSafeArea: React.FC<BaapSafeAreaProps> = ({
         customBackground: backgroundColor,
         customBorderRadius: 0,
       });
-      
+
       baseStyles.push(...neumorphicStyles);
       baseStyles.push({
         backgroundColor,
@@ -65,10 +65,7 @@ const BaapSafeArea: React.FC<BaapSafeAreaProps> = ({
       {disableScroll ? (
         children
       ) : (
-        <ScrollView
-          {...scrollViewProps}
-          contentContainerStyle={getScrollContainerStyles()}
-        >
+        <ScrollView {...scrollViewProps} contentContainerStyle={getScrollContainerStyles()}>
           {children}
         </ScrollView>
       )}

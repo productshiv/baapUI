@@ -48,24 +48,28 @@ export const Default: Story = {
 
 export const WithLongItems: Story = {
   render: () => (
-    <CarouselDemo items={[
-      'Dashboard',
-      'User Management',
-      'System Settings',
-      'Notifications',
-      'Account Details',
-      'Help & Support',
-    ]} />
+    <CarouselDemo
+      items={[
+        'Dashboard',
+        'User Management',
+        'System Settings',
+        'Notifications',
+        'Account Details',
+        'Help & Support',
+      ]}
+    />
   ),
 };
 
 export const Neumorphic: Story = {
   render: () => (
-    <div style={{ 
-      backgroundColor: NEUMORPHIC_COLORS.background,
-      padding: '24px',
-      borderRadius: '12px',
-    }}>
+    <div
+      style={{
+        backgroundColor: NEUMORPHIC_COLORS.background,
+        padding: '24px',
+        borderRadius: '12px',
+      }}
+    >
       <CarouselDemo design="neumorphic" />
     </div>
   ),
@@ -73,11 +77,13 @@ export const Neumorphic: Story = {
 
 export const NeumorphicWithCustomColors: Story = {
   render: () => (
-    <div style={{ 
-      backgroundColor: NEUMORPHIC_COLORS.background,
-      padding: '24px',
-      borderRadius: '12px',
-    }}>
+    <div
+      style={{
+        backgroundColor: NEUMORPHIC_COLORS.background,
+        padding: '24px',
+        borderRadius: '12px',
+      }}
+    >
       <Carousel
         items={sampleItems}
         currentIndex={0}

@@ -8,7 +8,7 @@ import {
   ViewStyle,
   TextStyle,
   ScrollView,
-} from 'react-native';
+} from '../../platform';
 import Typography from '../Typography/Typography';
 import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
 
@@ -82,7 +82,7 @@ const Dropdown: React.FC<DropdownProps> = ({
         customBackground: backgroundColor,
         customBorderRadius: 8,
       });
-      
+
       baseStyles.push(...neumorphicStyles);
       baseStyles.push({
         borderWidth: 0,
@@ -105,7 +105,7 @@ const Dropdown: React.FC<DropdownProps> = ({
         customBackground: backgroundColor,
         customBorderRadius: 8,
       });
-      
+
       baseStyles.push({
         shadowColor: neumorphicStyles[0].shadowColor,
         shadowOffset: { width: 2, height: 2 },
@@ -129,7 +129,7 @@ const Dropdown: React.FC<DropdownProps> = ({
         customBackground: backgroundColor,
         customBorderRadius: 6,
       });
-      
+
       if (pressedOption === option) {
         baseStyles.push({
           shadowColor: neumorphicStyles[0].shadowColor,
@@ -139,7 +139,7 @@ const Dropdown: React.FC<DropdownProps> = ({
           elevation: 2,
         });
       }
-      
+
       baseStyles.push({
         margin: 4,
       });
@@ -205,11 +205,7 @@ const Dropdown: React.FC<DropdownProps> = ({
           {label}
         </Typography>
       )}
-      <TouchableOpacity
-        onPress={toggleDropdown}
-        style={getDropdownStyles()}
-        activeOpacity={0.7}
-      >
+      <TouchableOpacity onPress={toggleDropdown} style={getDropdownStyles()} activeOpacity={0.7}>
         <Typography variant="body1" style={getTextStyles()}>
           {value || placeholder}
         </Typography>
@@ -232,7 +228,7 @@ const Dropdown: React.FC<DropdownProps> = ({
             style={styles.scrollView}
             contentContainerStyle={styles.scrollContent}
           >
-            {options.map((option) => (
+            {options.map(option => (
               <TouchableOpacity
                 key={option}
                 onPress={() => {

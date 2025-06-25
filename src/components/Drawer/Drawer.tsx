@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TouchableOpacity, StyleSheet, ViewStyle } from 'react-native';
+import { View, TouchableOpacity, StyleSheet, ViewStyle } from '../../platform';
 import Typography from '../Typography/Typography';
 import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
 
@@ -44,7 +44,7 @@ const Drawer: React.FC<DrawerProps> = ({
         customBackground: backgroundColor,
         customBorderRadius: 8,
       });
-      
+
       baseStyles.push(...neumorphicStyles);
       baseStyles.push({
         backgroundColor,
@@ -63,7 +63,7 @@ const Drawer: React.FC<DrawerProps> = ({
         customBackground: backgroundColor,
         customBorderRadius: 12,
       });
-      
+
       baseStyles.push(...neumorphicStyles);
       baseStyles.push({
         backgroundColor,
@@ -84,13 +84,13 @@ const Drawer: React.FC<DrawerProps> = ({
     if (design === 'neumorphic') {
       const isSelected = selectedItem === itemId;
       const isPressed = pressedItemId === itemId;
-      
+
       const neumorphicStyles = getNeumorphicStyles({
         isPressed: isPressed || isSelected,
         customBackground: backgroundColor,
         customBorderRadius: 8,
       });
-      
+
       baseStyles.push(...neumorphicStyles);
       baseStyles.push({
         margin: 8,
@@ -111,9 +111,15 @@ const Drawer: React.FC<DrawerProps> = ({
         onPressIn={() => setIsHamburgerPressed(true)}
         onPressOut={() => setIsHamburgerPressed(false)}
       >
-        <View style={[styles.hamburgerLine, design === 'neumorphic' && { backgroundColor: textColor }]} />
-        <View style={[styles.hamburgerLine, design === 'neumorphic' && { backgroundColor: textColor }]} />
-        <View style={[styles.hamburgerLine, design === 'neumorphic' && { backgroundColor: textColor }]} />
+        <View
+          style={[styles.hamburgerLine, design === 'neumorphic' && { backgroundColor: textColor }]}
+        />
+        <View
+          style={[styles.hamburgerLine, design === 'neumorphic' && { backgroundColor: textColor }]}
+        />
+        <View
+          style={[styles.hamburgerLine, design === 'neumorphic' && { backgroundColor: textColor }]}
+        />
       </TouchableOpacity>
       {isOpen && (
         <View style={getContainerStyles()}>
@@ -137,7 +143,7 @@ const Drawer: React.FC<DrawerProps> = ({
                       }
                     : selectedItem === item.id
                     ? styles.selectedLabel
-                    : styles.label
+                    : styles.label,
                 ]}
               >
                 {item.label}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Animated, ViewStyle, DimensionValue } from 'react-native';
+import { View, StyleSheet, Animated, ViewStyle, DimensionValue } from '../../platform';
 import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
 
 interface SkeletonLoaderProps {
@@ -59,7 +59,7 @@ const SkeletonLoader: React.FC<SkeletonLoaderProps> = ({
         customBackground: backgroundColor,
         customBorderRadius: borderRadius,
       });
-      
+
       baseStyles.push(...neumorphicStyles);
       baseStyles.push({
         backgroundColor,

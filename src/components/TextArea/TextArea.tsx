@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TextInput, StyleSheet, TextInputProps, ViewStyle } from 'react-native';
+import { TextInput, StyleSheet, TextInputProps, ViewStyle } from '../../platform';
 import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
 
 interface TextAreaProps extends TextInputProps {
@@ -27,7 +27,7 @@ const TextArea: React.FC<TextAreaProps> = ({
         customBackground: backgroundColor,
         customBorderRadius: 8,
       });
-      
+
       baseStyles.push(...neumorphicStyles);
       baseStyles.push({
         backgroundColor,

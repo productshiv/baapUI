@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Button, Text, TextInput } from 'react-native';
+import { View, Button, Text, TextInput } from '../../platform';
 import type { Meta, StoryObj } from '@storybook/react';
 import Modal from './Modal';
 import Typography from '../Typography/Typography';

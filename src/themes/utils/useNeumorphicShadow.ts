@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { ViewStyle, Platform } from 'react-native';
+import { ViewStyle, Platform } from '../../platform';
 import { useTheme } from '../ThemeContext';
 
 interface NeumorphicShadowOptions {

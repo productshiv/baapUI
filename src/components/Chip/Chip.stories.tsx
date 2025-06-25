@@ -34,10 +34,8 @@ const ChipGroupDemo = ({ design = 'flat' }: { design?: 'flat' | 'neumorphic' }) 
   const [selectedChips, setSelectedChips] = useState<string[]>([]);
 
   const toggleChip = (chipId: string) => {
-    setSelectedChips(prev => 
-      prev.includes(chipId) 
-        ? prev.filter(id => id !== chipId)
-        : [...prev, chipId]
+    setSelectedChips(prev =>
+      prev.includes(chipId) ? prev.filter(id => id !== chipId) : [...prev, chipId]
     );
   };
 
@@ -79,12 +77,14 @@ export const Neumorphic: Story = {
 
 export const NeumorphicGroup: Story = {
   render: () => (
-    <div style={{ 
-      backgroundColor: NEUMORPHIC_COLORS.background,
-      padding: '24px',
-      borderRadius: '12px',
-      minWidth: '400px',
-    }}>
+    <div
+      style={{
+        backgroundColor: NEUMORPHIC_COLORS.background,
+        padding: '24px',
+        borderRadius: '12px',
+        minWidth: '400px',
+      }}
+    >
       <ChipGroupDemo design="neumorphic" />
     </div>
   ),
@@ -93,30 +93,10 @@ export const NeumorphicGroup: Story = {
 export const ColorVariations: Story = {
   render: () => (
     <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-      <Chip
-        label="Primary"
-        onPress={() => {}}
-        backgroundColor="#2196f3"
-        textColor="#fff"
-      />
-      <Chip
-        label="Success"
-        onPress={() => {}}
-        backgroundColor="#4caf50"
-        textColor="#fff"
-      />
-      <Chip
-        label="Warning"
-        onPress={() => {}}
-        backgroundColor="#ff9800"
-        textColor="#fff"
-      />
-      <Chip
-        label="Error"
-        onPress={() => {}}
-        backgroundColor="#f44336"
-        textColor="#fff"
-      />
+      <Chip label="Primary" onPress={() => {}} backgroundColor="#2196f3" textColor="#fff" />
+      <Chip label="Success" onPress={() => {}} backgroundColor="#4caf50" textColor="#fff" />
+      <Chip label="Warning" onPress={() => {}} backgroundColor="#ff9800" textColor="#fff" />
+      <Chip label="Error" onPress={() => {}} backgroundColor="#f44336" textColor="#fff" />
     </div>
   ),
 };

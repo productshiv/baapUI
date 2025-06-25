@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, ViewStyle, TextStyle } from 'react-native';
+import { View, Text, StyleSheet, ViewStyle, TextStyle } from '../../platform';
 import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
 
 export interface BadgeProps {
@@ -110,7 +110,7 @@ const Badge: React.FC<BadgeProps> = ({
         customBackground: bgColor,
         customBorderRadius: sizeStyle.container.borderRadius as number,
       });
-      
+
       baseStyles.push(...neumorphicStyles);
       baseStyles.push({
         ...sizeStyle.container,

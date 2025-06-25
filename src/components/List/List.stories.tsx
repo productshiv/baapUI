@@ -3,13 +3,9 @@ import type { Meta, StoryObj } from '@storybook/react';
 import List, { ListItem } from './List';
 import { NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
 
-const sampleItems = [
-  'Item 1',
-  'Item 2',
-  'Item 3',
-  'Item 4',
-  'Item 5',
-].map(text => <div style={{ padding: 8 }}>{text}</div>);
+const sampleItems = ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5'].map(text => (
+  <div style={{ padding: 8 }}>{text}</div>
+));
 
 const meta: Meta<typeof List> = {
   title: 'Data Display/List',
@@ -63,7 +59,7 @@ const complexItems = [
 export const ComplexItems: Story = {
   args: {
     items: complexItems,
-    onItemPress: (index) => console.log(`Item ${index} clicked`),
+    onItemPress: index => console.log(`Item ${index} clicked`),
   },
 };
 
@@ -77,17 +73,19 @@ export const Neumorphic: Story = {
 
 export const NeumorphicComplex: Story = {
   render: () => (
-    <div style={{ 
-      backgroundColor: NEUMORPHIC_COLORS.background,
-      padding: 24,
-      borderRadius: 12,
-      width: 400,
-    }}>
+    <div
+      style={{
+        backgroundColor: NEUMORPHIC_COLORS.background,
+        padding: 24,
+        borderRadius: 12,
+        width: 400,
+      }}
+    >
       <List
         items={complexItems}
         design="neumorphic"
         backgroundColor={NEUMORPHIC_COLORS.background}
-        onItemPress={(index) => console.log(`Item ${index} clicked`)}
+        onItemPress={index => console.log(`Item ${index} clicked`)}
       />
     </div>
   ),

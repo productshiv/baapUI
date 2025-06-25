@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, StyleSheet, TextStyle, TextProps, Platform, StyleProp } from 'react-native';
+import { Text, StyleSheet, TextStyle, TextProps, Platform, StyleProp } from '../../platform';
 import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
 
 /**
@@ -111,7 +111,10 @@ const Typography: React.FC<TypographyProps> = ({
   };
 
   const getTypographyStyles = (): StyleProp<TextStyle> => {
-    const baseStyles: StyleProp<TextStyle>[] = [variantStyles[variant], { color, textAlign: align }];
+    const baseStyles: StyleProp<TextStyle>[] = [
+      variantStyles[variant],
+      { color, textAlign: align },
+    ];
 
     if (design === 'neumorphic') {
       const neumorphicStyles = getNeumorphicStyles({

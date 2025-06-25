@@ -6,7 +6,7 @@ import {
   ViewStyle,
   TextStyle,
   ActivityIndicator,
-} from 'react-native';
+} from '../../platform';
 import { useTheme } from '../../themes/ThemeContext';
 import { useNeumorphicShadow } from '../../themes/utils/useNeumorphicShadow';
 import { ThemeDesign } from '../../themes/types';
@@ -199,15 +199,14 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   disabledButton: {
-    backgroundColor: '#e0e0e0',
-    borderColor: '#e0e0e0',
+    opacity: 0.6,
   },
   disabledText: {
-    color: '#9e9e9e',
+    color: '#999999',
   },
   text: {
     fontSize: 16,
-    textAlign: 'center',
+    fontWeight: '600',
   },
 });
 

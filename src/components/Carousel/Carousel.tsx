@@ -1,5 +1,12 @@
 import React, { useState } from 'react';
-import { View, ScrollView, TouchableOpacity, StyleSheet, ViewStyle, TextStyle } from 'react-native';
+import {
+  View,
+  ScrollView,
+  TouchableOpacity,
+  StyleSheet,
+  ViewStyle,
+  TextStyle,
+} from '../../platform';
 import Typography from '../Typography/Typography';
 import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
 
@@ -43,7 +50,7 @@ const Carousel: React.FC<CarouselProps> = ({
         customBackground: backgroundColor,
         customBorderRadius: 12,
       });
-      
+
       baseStyles.push(...neumorphicStyles);
       baseStyles.push({
         backgroundColor,
@@ -68,7 +75,7 @@ const Carousel: React.FC<CarouselProps> = ({
         customBackground: backgroundColor,
         customBorderRadius: 8,
       });
-      
+
       baseStyles.push(...neumorphicStyles);
       baseStyles.push({
         backgroundColor,
@@ -138,10 +145,7 @@ const Carousel: React.FC<CarouselProps> = ({
             onPressOut={() => setPressedIndex(null)}
             style={getItemStyles(index)}
           >
-            <Typography
-              variant="body1"
-              style={getTextStyles(index)}
-            >
+            <Typography variant="body1" style={getTextStyles(index)}>
               {item}
             </Typography>
           </TouchableOpacity>

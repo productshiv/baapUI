@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View } from 'react-native';
+import { View } from '../../platform';
 import type { Meta, StoryObj } from '@storybook/react';
 import Pagination from './Pagination';
 import Typography from '../Typography/Typography';

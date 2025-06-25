@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text } from '../../platform';
 import type { Meta, StoryObj } from '@storybook/react';
 import TextArea from './TextArea';
 import { NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, ViewStyle, TextStyle } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, ViewStyle, TextStyle } from '../../platform';
 import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
 
 interface BreadcrumbItem {
@@ -41,7 +41,7 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
         customBackground: backgroundColor,
         customBorderRadius: 8,
       });
-      
+
       baseStyles.push(...neumorphicStyles);
       baseStyles.push({
         backgroundColor,
@@ -65,7 +65,7 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
         customBackground: backgroundColor,
         customBorderRadius: 6,
       });
-      
+
       baseStyles.push(...neumorphicStyles);
       baseStyles.push({
         backgroundColor,
@@ -107,9 +107,7 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
             disabled={item.id === currentItem}
             style={getItemStyles(item.id)}
           >
-            <Text style={getTextStyles(item.id === currentItem)}>
-              {item.label}
-            </Text>
+            <Text style={getTextStyles(item.id === currentItem)}>{item.label}</Text>
           </TouchableOpacity>
           {index < items.length - 1 && (
             <Text style={[styles.separator, { color: separatorColor }]}>/</Text>

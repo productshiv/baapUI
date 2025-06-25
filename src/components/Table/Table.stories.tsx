@@ -82,12 +82,14 @@ export const Neumorphic: Story = {
 
 export const NeumorphicCustom: Story = {
   render: () => (
-    <div style={{ 
-      backgroundColor: NEUMORPHIC_COLORS.background,
-      padding: 32,
-      borderRadius: 16,
-      width: 800,
-    }}>
+    <div
+      style={{
+        backgroundColor: NEUMORPHIC_COLORS.background,
+        padding: 32,
+        borderRadius: 16,
+        width: 800,
+      }}
+    >
       <Table
         columns={[
           { key: 'project', label: 'Project' },
@@ -96,7 +98,12 @@ export const NeumorphicCustom: Story = {
           { key: 'priority', label: 'Priority' },
         ]}
         data={[
-          { project: 'Website Redesign', progress: '75%', deadline: '2024-04-01', priority: 'High' },
+          {
+            project: 'Website Redesign',
+            progress: '75%',
+            deadline: '2024-04-01',
+            priority: 'High',
+          },
           { project: 'Mobile App', progress: '45%', deadline: '2024-05-15', priority: 'Medium' },
           { project: 'API Integration', progress: '90%', deadline: '2024-03-20', priority: 'High' },
           { project: 'Documentation', progress: '30%', deadline: '2024-04-30', priority: 'Low' },

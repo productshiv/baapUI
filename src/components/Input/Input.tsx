@@ -7,7 +7,7 @@ import {
   Text,
   ViewStyle,
   TextStyle,
-} from 'react-native';
+} from '../../platform';
 import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
 
 interface InputProps extends TextInputProps {
@@ -48,7 +48,7 @@ const Input: React.FC<InputProps> = ({
         customBackground: backgroundColor,
         customBorderRadius: 12,
       });
-      
+
       baseStyles.push(...neumorphicStyles);
       baseStyles.push({
         height: 40,

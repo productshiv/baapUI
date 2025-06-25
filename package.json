@@ -1,90 +1,127 @@
 {
-  "name": "@productshiv/baapuibeta",
-  "version": "1.0.3",
-  "main": "index.ts",
-  "description": "A multi-design UI framework built with Expo.",
+  "name": "@productshiv/baapui",
+  "version": "2.0.4",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "description": "A truly cross-platform multi-design UI framework that works with React, Next.js, React Native, and any React-based framework.",
   "repository": {
     "type": "git",
     "url": "https://github.com/productshiv/baapui.git"
   },
+  "keywords": [
+    "react",
+    "react-native",
+    "nextjs",
+    "ui-library",
+    "cross-platform",
+    "neumorphic",
+    "glassmorphic",
+    "design-system",
+    "typescript"
+  ],
   "author": "Shivam Srivastava <shivamsrivastava947@gmail.com>",
   "license": "MIT",
+  "files": [
+    "dist",
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
-    "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
-    "web": "expo start --web",
+    "dev": "npm run storybook",
+    "build": "npm run build:lib && npm run build:storybook && npm run generate-metadata",
+    "build:lib": "rollup -c",
+    "build:storybook": "npx storybook build -o public",
     "test": "jest --config jest.config.js",
+    "test:watch": "jest --config jest.config.js --watch",
     "storybook": "npx storybook dev -p 6006",
-    "build-storybook": "npx storybook build -o public",
-    "build": "npm run generate-metadata && npm run build-storybook && cp components-metadata.json public/components.json",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "typecheck": "tsc --noEmit",
-    "prepare": "npm run build",
-    "prepublishOnly": "echo 'Skipping tests temporarily'",
-    "preversion": "echo 'Skipping lint temporarily'",
+    "prepare": "npm run build:lib",
+    "_prepublishOnly": "npm run test && npm run lint && npm run build",
+    "_preversion": "npm run lint && npm run test",
     "version": "npm run format && git add -A src",
     "postversion": "git push && git push --tags",
     "generate-metadata": "npx ts-node scanner/metadata-generator.ts",
-    "generate-metadata-report": "npx ts-node scanner/metadata-generator.ts --report"
+    "generate-metadata-report": "npx ts-node scanner/metadata-generator.ts --report",
+    "_expo:start": "expo start",
+    "_expo:android": "expo start --android",
+    "_expo:ios": "expo start --ios",
+    "_expo:web": "expo start --web"
   },
-  "dependencies": {
-    "@expo/vector-icons": "^13.0.0",
-    "@react-native-community/slider": "4.4.2",
-    "@react-navigation/bottom-tabs": "^6.5.11",
-    "@react-navigation/native": "^6.1.9",
-    "@react-navigation/native-stack": "^6.9.17",
-    "@storybook/addon-essentials": "^8.0.0",
-    "@storybook/blocks": "^8.0.0",
-    "@storybook/react": "^8.0.0",
-    "@storybook/react-webpack5": "^8.0.0",
-    "@storybook/test": "^8.0.0",
-    "expo": "~50.0.8",
-    "expo-status-bar": "~1.11.1",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "react-native": "0.73.4",
-    "react-native-reanimated": "~3.6.2",
-    "react-native-safe-area-context": "4.8.2",
-    "react-native-screens": "~3.29.0",
-    "react-native-web": "~0.19.6",
-    "storybook": "^8.0.0"
+  "peerDependencies": {
+    "react": ">=16.8.0 <20.0.0",
+    "react-dom": ">=16.8.0 <20.0.0",
+    "react-native": ">=0.60.0"
+  },
+  "peerDependenciesMeta": {
+    "react-dom": {
+      "optional": true
+    },
+    "react-native": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
     "@babel/preset-env": "^7.20.0",
     "@babel/preset-react": "^7.18.6",
     "@babel/preset-typescript": "^7.21.0",
+    "@rollup/plugin-babel": "^6.0.0",
+    "@rollup/plugin-commonjs": "^25.0.0",
+    "@rollup/plugin-node-resolve": "^15.0.0",
+    "@rollup/plugin-typescript": "^11.0.0",
+    "@storybook/addon-essentials": "^8.0.0",
     "@storybook/addon-interactions": "^8.6.12",
     "@storybook/addon-links": "^8.6.12",
     "@storybook/addon-onboarding": "^8.0.0",
-    "@testing-library/jest-native": "^5.4.3",
-    "@testing-library/react-native": "^12.4.3",
+    "@storybook/blocks": "^8.0.0",
+    "@storybook/react": "^8.0.0",
+    "@storybook/react-webpack5": "^8.0.0",
+    "@storybook/test": "^8.0.0",
+    "@testing-library/jest-dom": "^6.0.0",
+    "@testing-library/react": "^14.0.0",
     "@types/jest": "^29.5.12",
     "@types/node": "^24.0.3",
     "@types/react": "~18.2.45",
+    "@types/react-dom": "^18.0.0",
     "@typescript-eslint/eslint-plugin": "^5.62.0",
     "@typescript-eslint/parser": "^5.62.0",
     "babel-jest": "^29.7.0",
     "babel-loader": "^8.3.0",
     "babel-plugin-module-resolver": "^5.0.0",
-    "babel-plugin-react-native-web": "^0.20.0",
     "eslint": "^8.57.1",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^4.6.2",
-    "eslint-plugin-react-native": "^4.1.0",
     "http-server": "^14.1.1",
     "jest": "^29.7.0",
-    "jest-expo": "~50.0.2",
+    "jest-environment-jsdom": "^29.7.0",
     "prettier": "^2.8.8",
-    "react-native-mock-render": "^0.1.9",
+    "rollup": "^4.0.0",
+    "rollup-plugin-dts": "^6.0.0",
+    "storybook": "^8.0.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.3.0"
   },
-  "private": false,
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
   "publishConfig": {
     "access": "public"
   }

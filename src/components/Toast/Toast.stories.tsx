@@ -41,7 +41,14 @@ const ToastDemo = ({ design = 'flat', type = 'info' }: ToastDemoProps) => {
   };
 
   return (
-    <div style={{ minHeight: '200px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+    <div
+      style={{
+        minHeight: '200px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
       <Button onPress={showToast}>Show Toast</Button>
       <Toast
         message={`This is a ${type} message`}
@@ -71,12 +78,14 @@ export const AllTypes: Story = {
 
 export const Neumorphic: Story = {
   render: () => (
-    <div style={{ 
-      backgroundColor: NEUMORPHIC_COLORS.background,
-      padding: '24px',
-      borderRadius: '12px',
-      minHeight: '200px',
-    }}>
+    <div
+      style={{
+        backgroundColor: NEUMORPHIC_COLORS.background,
+        padding: '24px',
+        borderRadius: '12px',
+        minHeight: '200px',
+      }}
+    >
       <ToastDemo design="neumorphic" />
     </div>
   ),
@@ -84,14 +93,16 @@ export const Neumorphic: Story = {
 
 export const NeumorphicTypes: Story = {
   render: () => (
-    <div style={{ 
-      backgroundColor: NEUMORPHIC_COLORS.background,
-      padding: '24px',
-      borderRadius: '12px',
-      display: 'flex',
-      gap: '16px',
-      flexDirection: 'column',
-    }}>
+    <div
+      style={{
+        backgroundColor: NEUMORPHIC_COLORS.background,
+        padding: '24px',
+        borderRadius: '12px',
+        display: 'flex',
+        gap: '16px',
+        flexDirection: 'column',
+      }}
+    >
       <ToastDemo type="info" design="neumorphic" />
       <ToastDemo type="success" design="neumorphic" />
       <ToastDemo type="warning" design="neumorphic" />

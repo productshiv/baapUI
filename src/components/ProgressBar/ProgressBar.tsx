@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, ViewStyle } from 'react-native';
+import { View, StyleSheet, ViewStyle } from '../../platform';
 import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
 
 interface ProgressBarProps {
@@ -39,7 +39,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
         customBackground: backgroundColor,
         customBorderRadius: height / 2,
       });
-      
+
       baseStyles.push(...neumorphicStyles);
       baseStyles.push({
         backgroundColor,
@@ -69,7 +69,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
         customBackground: progressColor,
         customBorderRadius: height / 2,
       });
-      
+
       baseStyles.push(...neumorphicStyles);
       baseStyles.push({
         backgroundColor: progressColor,

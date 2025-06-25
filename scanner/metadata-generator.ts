@@ -26,16 +26,16 @@ export class MetadataGenerator {
   async generateMetadata(): Promise<ComponentsMetadata> {
     console.log('🔍 Scanning components...');
     const components = await this.scanner.scanComponents();
-    
+
     console.log(`📊 Found ${components.length} components`);
-    
+
     const metadata: ComponentsMetadata = {
       version: this.getPackageVersion(),
       generatedAt: new Date().toISOString(),
       totalComponents: components.length,
       categories: this.groupByCategory(components),
       designSystems: this.extractAllDesignSystems(components),
-      components
+      components,
     };
 
     return metadata;
@@ -47,21 +47,20 @@ export class MetadataGenerator {
   async generateAndSave(): Promise<void> {
     try {
       const metadata = await this.generateMetadata();
-      
+
       console.log('💾 Saving metadata to:', this.outputPath);
       fs.writeFileSync(this.outputPath, JSON.stringify(metadata, null, 2), 'utf-8');
-      
+
       console.log('✅ Metadata generated successfully!');
       console.log(`📁 Output: ${this.outputPath}`);
       console.log(`📦 Components: ${metadata.totalComponents}`);
       console.log(`🎨 Categories: ${Object.keys(metadata.categories).length}`);
       console.log(`🎭 Design Systems: ${metadata.designSystems.length}`);
-      
+
       // Also save a minified version for production
       const minifiedPath = this.outputPath.replace('.json', '.min.json');
       fs.writeFileSync(minifiedPath, JSON.stringify(metadata), 'utf-8');
       console.log(`🗜️  Minified: ${minifiedPath}`);
-      
     } catch (error) {
       console.error('❌ Error generating metadata:', error);
       throw error;
@@ -87,7 +86,7 @@ export class MetadataGenerator {
    */
   private groupByCategory(components: ComponentInfo[]): Record<string, string[]> {
     const categories: Record<string, string[]> = {};
-    
+
     components.forEach(component => {
       if (!categories[component.category]) {
         categories[component.category] = [];
@@ -111,7 +110,7 @@ export class MetadataGenerator {
    */
   private extractAllDesignSystems(components: ComponentInfo[]): string[] {
     const designSystems = new Set<string>();
-    
+
     components.forEach(component => {
       component.designSystems.forEach(ds => designSystems.add(ds));
     });
@@ -132,8 +131,9 @@ export class MetadataGenerator {
       '',
       '## Categories',
       '',
-      ...Object.entries(metadata.categories).map(([category, components]) => 
-        `- **${category}** (${components.length}): ${components.join(', ')}`
+      ...Object.entries(metadata.categories).map(
+        ([category, components]) =>
+          `- **${category}** (${components.length}): ${components.join(', ')}`
       ),
       '',
       '## Design Systems',
@@ -142,14 +142,15 @@ export class MetadataGenerator {
       '',
       '## Components Overview',
       '',
-      ...metadata.components.map(component => 
-        `### ${component.name}\n` +
-        `- **Category:** ${component.category}\n` +
-        `- **Description:** ${component.description}\n` +
-        `- **Props:** ${component.props.length}\n` +
-        `- **Examples:** ${component.examples.length}\n` +
-        `- **Design Systems:** ${component.designSystems.join(', ')}\n`
-      )
+      ...metadata.components.map(
+        component =>
+          `### ${component.name}\n` +
+          `- **Category:** ${component.category}\n` +
+          `- **Description:** ${component.description}\n` +
+          `- **Props:** ${component.props.length}\n` +
+          `- **Examples:** ${component.examples.length}\n` +
+          `- **Design Systems:** ${component.designSystems.join(', ')}\n`
+      ),
     ];
 
     return report.join('\n');
@@ -161,7 +162,7 @@ export class MetadataGenerator {
   async saveSummaryReport(metadata: ComponentsMetadata): Promise<void> {
     const reportPath = this.outputPath.replace('.json', '-report.md');
     const report = this.generateSummaryReport(metadata);
-    
+
     fs.writeFileSync(reportPath, report, 'utf-8');
     console.log(`📄 Summary report: ${reportPath}`);
   }
@@ -176,15 +177,15 @@ if (require.main === module) {
     const includeReport = args.includes('--report');
 
     const generator = new MetadataGenerator(componentsDir, outputPath);
-    
+
     try {
       await generator.generateAndSave();
-      
+
       if (includeReport) {
         const metadata = await generator.generateMetadata();
         await generator.saveSummaryReport(metadata);
       }
-      
+
       console.log('🎉 All done!');
     } catch (error) {
       console.error('💥 Generation failed:', error);
@@ -193,4 +194,4 @@ if (require.main === module) {
   }
 
   main();
-} 
+}
