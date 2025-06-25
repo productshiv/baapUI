@@ -160,14 +160,21 @@ const WebComponents = {
     return React.createElement('div', webProps, children);
   },
 
-  Text: ({ style, children, numberOfLines, adjustsFontSizeToFit, minimumFontScale, ...props }: any) => {
+  Text: ({
+    style,
+    children,
+    numberOfLines,
+    adjustsFontSizeToFit,
+    minimumFontScale,
+    ...props
+  }: any) => {
     const processedStyle = processStyle(style);
     // Filter out React Native-specific props
     const webProps = { ...props };
     delete webProps.numberOfLines;
     delete webProps.adjustsFontSizeToFit;
     delete webProps.minimumFontScale;
-    
+
     return React.createElement('span', { style: processedStyle, ...webProps }, children);
   },
 
@@ -206,14 +213,23 @@ const WebComponents = {
     });
   },
 
-  TouchableOpacity: ({ style, children, onPress, disabled, onPressIn, onPressOut, activeOpacity, ...props }: any) => {
+  TouchableOpacity: ({
+    style,
+    children,
+    onPress,
+    disabled,
+    onPressIn,
+    onPressOut,
+    activeOpacity,
+    ...props
+  }: any) => {
     const processedStyle = processStyle(style);
     // Filter out React Native-specific props
     const webProps = { ...props };
     delete webProps.onPressIn;
     delete webProps.onPressOut;
     delete webProps.activeOpacity;
-    
+
     return React.createElement(
       'button',
       {
@@ -240,7 +256,7 @@ const WebComponents = {
     const webProps = { ...props };
     delete webProps.onPressIn;
     delete webProps.onPressOut;
-    
+
     return React.createElement(
       'button',
       {
