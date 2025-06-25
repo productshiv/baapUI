@@ -28,7 +28,7 @@ export interface ExampleInfo {
 
 export class ComponentScanner {
   private componentsDir: string;
-  
+
   constructor(componentsDir: string = '../src/components') {
     this.componentsDir = path.resolve(__dirname, componentsDir);
   }
@@ -38,9 +38,10 @@ export class ComponentScanner {
    */
   async scanComponents(): Promise<ComponentInfo[]> {
     const components: ComponentInfo[] = [];
-    
+
     try {
-      const componentDirs = fs.readdirSync(this.componentsDir, { withFileTypes: true })
+      const componentDirs = fs
+        .readdirSync(this.componentsDir, { withFileTypes: true })
         .filter(dirent => dirent.isDirectory())
         .filter(dirent => !dirent.name.startsWith('__')) // Skip __tests__ etc
         .map(dirent => dirent.name);
@@ -73,8 +74,8 @@ export class ComponentScanner {
 
     try {
       const componentContent = fs.readFileSync(componentFile, 'utf-8');
-      const storiesContent = fs.existsSync(storiesFile) 
-        ? fs.readFileSync(storiesFile, 'utf-8') 
+      const storiesContent = fs.existsSync(storiesFile)
+        ? fs.readFileSync(storiesFile, 'utf-8')
         : '';
 
       return {
@@ -84,7 +85,7 @@ export class ComponentScanner {
         props: this.extractProps(componentContent),
         examples: this.extractExamples(storiesContent, componentName),
         designSystems: this.extractDesignSystems(componentContent),
-        category: this.categorizeComponent(componentName)
+        category: this.categorizeComponent(componentName),
       };
     } catch (error) {
       console.error(`Error scanning component ${componentName}:`, error);
@@ -109,12 +110,18 @@ export class ComponentScanner {
     }
 
     // Try to find meta description
-    const metaDescMatch = storiesContent.match(/meta\s*=\s*{[\s\S]*?description:\s*['"`](.+?)['"`]/);
+    const metaDescMatch = storiesContent.match(
+      /meta\s*=\s*{[\s\S]*?description:\s*['"`](.+?)['"`]/
+    );
     if (metaDescMatch) {
       return metaDescMatch[1].trim();
     }
 
-    return `A ${this.componentNameToWords(componentContent.match(/(?:export\s+(?:default\s+)?(?:const|function)\s+|interface\s+)(\w+)/)?.[1] || 'Component')} component`;
+    return `A ${this.componentNameToWords(
+      componentContent.match(
+        /(?:export\s+(?:default\s+)?(?:const|function)\s+|interface\s+)(\w+)/
+      )?.[1] || 'Component'
+    )} component`;
   }
 
   /**
@@ -122,14 +129,14 @@ export class ComponentScanner {
    */
   private extractProps(componentContent: string): PropInfo[] {
     const props: PropInfo[] = [];
-    
+
     // Find interface definitions
     const interfaceMatches = componentContent.matchAll(/interface\s+(\w*Props?)\s*{([\s\S]*?)}/g);
-    
+
     for (const match of interfaceMatches) {
       const interfaceBody = match[2];
       const propMatches = interfaceBody.matchAll(/(\w+)(\??):\s*([^;]+);?(?:\s*\/\/\s*(.+))?/g);
-      
+
       for (const propMatch of propMatches) {
         const [, name, optional, type, comment] = propMatch;
         props.push({
@@ -137,7 +144,7 @@ export class ComponentScanner {
           type: type.trim(),
           required: !optional,
           description: comment?.trim() || `${name} property`,
-          defaultValue: this.extractDefaultValue(componentContent, name)
+          defaultValue: this.extractDefaultValue(componentContent, name),
         });
       }
     }
@@ -150,10 +157,8 @@ export class ComponentScanner {
    */
   private extractDefaultValue(componentContent: string, propName: string): string | undefined {
     // Look for default props or destructured defaults
-    const defaultMatch = componentContent.match(
-      new RegExp(`${propName}\\s*=\\s*([^,}]+)`, 'g')
-    );
-    
+    const defaultMatch = componentContent.match(new RegExp(`${propName}\\s*=\\s*([^,}]+)`, 'g'));
+
     if (defaultMatch) {
       return defaultMatch[0].split('=')[1].trim();
     }
@@ -166,33 +171,33 @@ export class ComponentScanner {
    */
   private extractExamples(storiesContent: string, componentName: string): ExampleInfo[] {
     const examples: ExampleInfo[] = [];
-    
+
     if (!storiesContent) {
       // Create a basic example if no stories exist
       examples.push({
         title: 'Basic Usage',
         description: `Basic ${componentName} component usage`,
-        code: `<${componentName} />`
+        code: `<${componentName} />`,
       });
       return examples;
     }
 
     // Extract story exports
     const storyMatches = storiesContent.matchAll(/export\s+const\s+(\w+)\s*=\s*{([\s\S]*?)};/g);
-    
+
     for (const match of storyMatches) {
       const [, storyName, storyBody] = match;
-      
+
       if (storyName === 'default') continue;
-      
+
       const args = this.extractStoryArgs(storyBody);
       const designSystem = this.extractDesignSystemFromStory(storyBody);
-      
+
       examples.push({
         title: this.storyNameToTitle(storyName),
         description: `${this.storyNameToTitle(storyName)} example`,
         code: this.generateExampleCode(componentName, args),
-        designSystem
+        designSystem,
       });
     }
 
@@ -204,18 +209,18 @@ export class ComponentScanner {
    */
   private extractStoryArgs(storyBody: string): Record<string, any> {
     const args: Record<string, any> = {};
-    
+
     const argsMatch = storyBody.match(/args:\s*{([\s\S]*?)}/);
     if (argsMatch) {
       const argsContent = argsMatch[1];
       const argMatches = argsContent.matchAll(/(\w+):\s*(.+?)(?:,|\n|$)/g);
-      
+
       for (const argMatch of argMatches) {
         const [, key, value] = argMatch;
         args[key] = value.trim().replace(/,$/, '');
       }
     }
-    
+
     return args;
   }
 
@@ -244,7 +249,7 @@ export class ComponentScanner {
    */
   private extractDesignSystems(componentContent: string): string[] {
     const designSystems = ['flat']; // Default
-    
+
     if (componentContent.includes('neumorphic') || componentContent.includes('Neumorphic')) {
       designSystems.push('neumorphic');
     }
@@ -257,7 +262,7 @@ export class ComponentScanner {
     if (componentContent.includes('retro') || componentContent.includes('Retro')) {
       designSystems.push('retro');
     }
-    
+
     return designSystems;
   }
 
@@ -277,8 +282,19 @@ export class ComponentScanner {
    */
   private categorizeComponent(componentName: string): string {
     const name = componentName.toLowerCase();
-    
-    if (['button', 'input', 'textarea', 'checkbox', 'radiobutton', 'toggleswitch', 'slider', 'dropdown'].includes(name)) {
+
+    if (
+      [
+        'button',
+        'input',
+        'textarea',
+        'checkbox',
+        'radiobutton',
+        'toggleswitch',
+        'slider',
+        'dropdown',
+      ].includes(name)
+    ) {
       return 'Form Controls';
     }
     if (['modal', 'drawer', 'tooltip', 'toast'].includes(name)) {
@@ -305,7 +321,7 @@ export class ComponentScanner {
     if (['typography'].includes(name)) {
       return 'Typography';
     }
-    
+
     return 'Other';
   }
 
@@ -313,7 +329,10 @@ export class ComponentScanner {
    * Convert component name to readable words
    */
   private componentNameToWords(name: string): string {
-    return name.replace(/([A-Z])/g, ' $1').trim().toLowerCase();
+    return name
+      .replace(/([A-Z])/g, ' $1')
+      .trim()
+      .toLowerCase();
   }
 
   /**
@@ -322,4 +341,4 @@ export class ComponentScanner {
   private storyNameToTitle(storyName: string): string {
     return storyName.replace(/([A-Z])/g, ' $1').trim();
   }
-} 
+}

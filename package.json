@@ -51,12 +51,9 @@
     "_expo:ios": "expo start --ios",
     "_expo:web": "expo start --web"
   },
-  "dependencies": {
-    "react": ">=16.8.0"
-  },
   "peerDependencies": {
-    "react": ">=16.8.0",
-    "react-dom": ">=16.8.0",
+    "react": ">=16.8.0 <20.0.0",
+    "react-dom": ">=16.8.0 <20.0.0",
     "react-native": ">=0.60.0"
   },
   "peerDependenciesMeta": {

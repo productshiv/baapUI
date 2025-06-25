@@ -160,9 +160,15 @@ const WebComponents = {
     return React.createElement('div', webProps, children);
   },
 
-  Text: ({ style, children, ...props }: any) => {
+  Text: ({ style, children, numberOfLines, adjustsFontSizeToFit, minimumFontScale, ...props }: any) => {
     const processedStyle = processStyle(style);
-    return React.createElement('span', { style: processedStyle, ...props }, children);
+    // Filter out React Native-specific props
+    const webProps = { ...props };
+    delete webProps.numberOfLines;
+    delete webProps.adjustsFontSizeToFit;
+    delete webProps.minimumFontScale;
+    
+    return React.createElement('span', { style: processedStyle, ...webProps }, children);
   },
 
   TextInput: ({
@@ -200,8 +206,14 @@ const WebComponents = {
     });
   },
 
-  TouchableOpacity: ({ style, children, onPress, disabled, ...props }: any) => {
+  TouchableOpacity: ({ style, children, onPress, disabled, onPressIn, onPressOut, activeOpacity, ...props }: any) => {
     const processedStyle = processStyle(style);
+    // Filter out React Native-specific props
+    const webProps = { ...props };
+    delete webProps.onPressIn;
+    delete webProps.onPressOut;
+    delete webProps.activeOpacity;
+    
     return React.createElement(
       'button',
       {
@@ -216,14 +228,19 @@ const WebComponents = {
         },
         onClick: disabled ? undefined : onPress,
         disabled,
-        ...props,
+        ...webProps,
       },
       children
     );
   },
 
-  Pressable: ({ style, onPress, children, disabled, ...props }: any) => {
+  Pressable: ({ style, onPress, children, disabled, onPressIn, onPressOut, ...props }: any) => {
     const processedStyle = processStyle(style);
+    // Filter out React Native-specific props
+    const webProps = { ...props };
+    delete webProps.onPressIn;
+    delete webProps.onPressOut;
+    
     return React.createElement(
       'button',
       {
@@ -236,7 +253,7 @@ const WebComponents = {
         },
         onClick: disabled ? undefined : onPress,
         disabled,
-        ...props,
+        ...webProps,
       },
       children
     );
@@ -305,12 +322,16 @@ const WebComponents = {
 
   Modal: ({ visible, transparent, animationType, onRequestClose, children, ...props }: any) => {
     if (PlatformInfo.isReactNative) {
-      const RN = require('react-native');
-      return React.createElement(
-        RN.Modal,
-        { visible, transparent, animationType, onRequestClose, ...props },
-        children
-      );
+      try {
+        const RN = eval('require')('react-native');
+        return React.createElement(
+          RN.Modal,
+          { visible, transparent, animationType, onRequestClose, ...props },
+          children
+        );
+      } catch (e) {
+        // Fallback to web modal
+      }
     }
 
     if (!visible) return null;
@@ -341,30 +362,7 @@ const WebComponents = {
     );
   },
 
-  Animated: {
-    View: ({ style, children, ...props }: any) => {
-      const processedStyle = processStyle(style);
-      return React.createElement(
-        'div',
-        {
-          style: processedStyle,
-          ...props,
-        },
-        children
-      );
-    },
-    Text: ({ style, children, ...props }: any) => {
-      const processedStyle = processStyle(style);
-      return React.createElement(
-        'span',
-        {
-          style: processedStyle,
-          ...props,
-        },
-        children
-      );
-    },
-  },
+  Animated: MockAnimated,
 };
 
 // Web-only APIs
@@ -373,7 +371,7 @@ const WebAPIs = {
     create: <T extends { [key: string]: any }>(styles: T): T => {
       if (PlatformInfo.isReactNative) {
         try {
-          return require('react-native').StyleSheet.create(styles);
+          return eval('require')('react-native').StyleSheet.create(styles);
         } catch (e) {
           return styles;
         }
@@ -391,7 +389,7 @@ const WebAPIs = {
     OS: (() => {
       if (PlatformInfo.isReactNative) {
         try {
-          return require('react-native').Platform.OS;
+          return eval('require')('react-native').Platform.OS;
         } catch (e) {
           return 'web';
         }
@@ -407,7 +405,7 @@ const WebAPIs = {
     get: (dimension: 'window' | 'screen') => {
       if (PlatformInfo.isReactNative) {
         try {
-          return require('react-native').Dimensions.get(dimension);
+          return eval('require')('react-native').Dimensions.get(dimension);
         } catch (e) {
           return { width: 375, height: 667 };
         }

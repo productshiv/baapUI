@@ -5,6 +5,7 @@
 **BaapUI** is a comprehensive multi-design UI component library for React Native/Expo that supports 5 different design systems with global branding capabilities.
 
 ### Core Goals
+
 - Build comprehensive UI components for all user needs
 - Support 5 design systems: **Flat**, **Neumorphic**, **Skeuomorphic**, **Glassmorphic**, **Retro**
 - Enable global branding with customizable colors and themes
@@ -12,6 +13,7 @@
 - Provide seamless cross-platform compatibility (iOS, Android, Web)
 
 ### Current Status (60% Complete)
+
 - ✅ **30+ components** implemented with flat design
 - ✅ **Storybook** setup for development and testing
 - ✅ **TypeScript** configuration and testing infrastructure
@@ -57,6 +59,7 @@ baapUI/
 ```
 
 ### Available Components (30+)
+
 - **Form Controls**: Button, Input, TextArea, Checkbox, RadioButton, ToggleSwitch, Slider
 - **Navigation**: Breadcrumbs, Tabs, Pagination, Stepper
 - **Layout**: Card, Grid, Divider, BaapSafeArea
@@ -72,6 +75,7 @@ baapUI/
 **Every AI working on BaapUI MUST follow this workflow:**
 
 #### For New Components:
+
 1. **Create Plane ticket FIRST** with component requirements
 2. **Get user approval** for design and API approach
 3. **Document progress** in ticket comments during development
@@ -79,18 +83,21 @@ baapUI/
 5. **Link to related design system tickets**
 
 #### For Design System Implementation:
+
 1. **Create design system ticket** with visual examples
 2. **Document color schemes** and styling approach
 3. **Test across all existing components**
 4. **Update theme documentation**
 
 #### For Bug Fixes:
+
 1. **Create bug ticket** with reproduction steps
 2. **Document investigation** and root cause
 3. **Test fix across all design systems**
 4. **Update relevant tests**
 
 #### Plane Project Details:
+
 - **Project ID**: `6be3c1e0-eda3-4570-8ebc-855f74f300d8`
 - **Project Name**: "BaapUI - Multi-Design UI Library"
 - **Component Label**: Tag component-related tickets appropriately
@@ -116,9 +123,9 @@ export const Component: React.FC<ComponentProps> = ({
   // Destructure props
 }) => {
   const theme = useTheme(); // Use theme context
-  
+
   // Component logic
-  
+
   return (
     // JSX with theme-based styling
   );
@@ -131,13 +138,15 @@ export type { ComponentProps };
 ## 🎨 Design System Implementation
 
 ### Priority Order:
+
 1. **Flat Design** ✅ (Complete)
 2. **Neumorphic** 🔄 (Partial - needs dark mode)
 3. **Glassmorphic** 🚧 (High priority)
-4. **Skeuomorphic** 🚧 (Medium priority)  
+4. **Skeuomorphic** 🚧 (Medium priority)
 5. **Retro** 🚧 (Low priority)
 
 ### Theme Structure:
+
 ```typescript
 interface Theme {
   colors: {
@@ -166,6 +175,7 @@ interface Theme {
 ```
 
 ### Adding New Design System:
+
 1. Create theme file in `src/themes/variants/`
 2. Define color palette and styling rules
 3. Implement shadow/gradient systems
@@ -176,6 +186,7 @@ interface Theme {
 ## 🚀 Getting Started (For New AI Assistants)
 
 ### 1. First Steps:
+
 ```bash
 # Navigate to BaapUI library
 cd baapUI
@@ -194,12 +205,14 @@ npm run build
 ```
 
 ### 2. Development Environment:
+
 - **Storybook**: Main development interface at `http://localhost:6006`
 - **Jest**: Testing framework with React Native Testing Library
 - **TypeScript**: Strict type checking enabled
 - **ESLint**: Code quality and consistency
 
 ### 3. Component Development Flow:
+
 1. Create component folder in `src/components/`
 2. Implement component with TypeScript
 3. Create comprehensive Storybook stories
@@ -210,6 +223,7 @@ npm run build
 ## 📋 Current TODOs (High Priority)
 
 ### Design Systems:
+
 1. **Complete neumorphic dark mode** - Finish the partial implementation
 2. **Implement glassmorphic design** - High user demand, modern aesthetic
 3. **Implement skeuomorphic design** - Rich, detailed textures
@@ -217,12 +231,14 @@ npm run build
 5. **Global branding system** - Allow runtime color customization
 
 ### Component Improvements:
+
 1. **Accessibility compliance** - WCAG 2.1 standards
 2. **Performance optimization** - Reduce bundle size
 3. **Animation improvements** - Smooth transitions
 4. **Cross-platform testing** - iOS, Android, Web compatibility
 
 ### Documentation:
+
 1. **Component API documentation** - Detailed prop descriptions
 2. **Design system guides** - Implementation and customization
 3. **Migration guides** - Between design systems
@@ -244,6 +260,7 @@ Before starting any work on BaapUI, every AI must:
 ## 📝 Important Notes
 
 ### For AI Assistants:
+
 - **ALWAYS** test components in Storybook first
 - **NEVER** break existing design system compatibility
 - **ALWAYS** follow the established component patterns
@@ -252,6 +269,7 @@ Before starting any work on BaapUI, every AI must:
 - **DOCUMENT** all props and usage examples
 
 ### Component Guidelines:
+
 - Use theme context for all styling
 - Support all implemented design systems
 - Include proper accessibility props
@@ -260,6 +278,7 @@ Before starting any work on BaapUI, every AI must:
 - Follow React Native best practices
 
 ### Testing Requirements:
+
 - Unit tests for component logic
 - Snapshot tests for visual consistency
 - Accessibility tests
@@ -267,7 +286,7 @@ Before starting any work on BaapUI, every AI must:
 
 ---
 
-*This document should be updated by every AI that works on the BaapUI library to reflect current state and learnings.*
+_This document should be updated by every AI that works on the BaapUI library to reflect current state and learnings._
 
 **Last Updated**: Initial creation - BaapUI library focus
-**Next Update Needed**: After glassmorphic design system implementation 
+**Next Update Needed**: After glassmorphic design system implementation

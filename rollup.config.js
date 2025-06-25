@@ -47,7 +47,7 @@ export default [
     external,
     plugins: commonPlugins,
   },
-  
+
   // CJS build
   {
     input: 'src/index.ts',
@@ -70,4 +70,4 @@ export default [
     external,
     plugins: [dts()],
   },
-]; 
+];

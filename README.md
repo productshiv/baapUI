@@ -14,7 +14,7 @@ A **truly cross-platform** multi-design UI component library that works seamless
 📱 **Platform Detection** - Automatically adapts to web, mobile, and desktop  
 🔧 **Zero Config** - No platform-specific setup required  
 ⚡ **Performance First** - Tree-shakeable with minimal bundle impact  
-🧩 **30+ Components** - Complete UI component ecosystem  
+🧩 **30+ Components** - Complete UI component ecosystem
 
 ---
 
@@ -55,6 +55,7 @@ function App() {
 ## 🌍 Platform Support
 
 ### ✅ React Web
+
 ```jsx
 import { Button, ThemeProvider } from '@productshiv/baapui';
 
@@ -68,6 +69,7 @@ function MyReactApp() {
 ```
 
 ### ✅ Next.js (with SSR)
+
 ```jsx
 // pages/index.tsx
 import { Button, Card, ThemeProvider } from '@productshiv/baapui';
@@ -84,6 +86,7 @@ export default function Home() {
 ```
 
 ### ✅ React Native
+
 ```jsx
 import { Button, View, ThemeProvider } from '@productshiv/baapui';
 
@@ -99,6 +102,7 @@ export default function App() {
 ```
 
 ### ✅ Expo
+
 ```jsx
 // Works with Expo out of the box
 import { Button, ThemeProvider } from '@productshiv/baapui';
@@ -119,27 +123,32 @@ export default function App() {
 BaapUI supports 5 different design systems that can be switched dynamically:
 
 ### 1. Flat Design (Default)
+
 ```jsx
 <Button design="flat">Flat Button</Button>
 ```
 
 ### 2. Neumorphic
+
 ```jsx
 <Button design="neumorphic">Soft UI Button</Button>
 <Input design="neumorphic" placeholder="Soft input" />
 ```
 
-### 3. Glassmorphic *(Coming Soon)*
+### 3. Glassmorphic _(Coming Soon)_
+
 ```jsx
 <Button design="glassmorphic">Glass Button</Button>
 ```
 
-### 4. Skeuomorphic *(Coming Soon)*
+### 4. Skeuomorphic _(Coming Soon)_
+
 ```jsx
 <Button design="skeuomorphic">Realistic Button</Button>
 ```
 
-### 5. Retro *(Coming Soon)*
+### 5. Retro _(Coming Soon)_
+
 ```jsx
 <Button design="retro">Vintage Button</Button>
 ```
@@ -149,6 +158,7 @@ BaapUI supports 5 different design systems that can be switched dynamically:
 ## 🧩 Components
 
 ### Form Controls
+
 - **Button** - Primary, secondary, outline, text variants
 - **Input** - Text input with validation
 - **TextArea** - Multi-line text input
@@ -160,6 +170,7 @@ BaapUI supports 5 different design systems that can be switched dynamically:
 - **Stepper** - Increment/decrement values
 
 ### Navigation
+
 - **Breadcrumbs** - Navigation hierarchy
 - **Tabs** - Tab navigation
 - **Pagination** - Page navigation
@@ -167,12 +178,14 @@ BaapUI supports 5 different design systems that can be switched dynamically:
 - **Accordion** - Expandable sections
 
 ### Layout
+
 - **Card** - Content container
 - **Grid** - Layout system
 - **Divider** - Section separator
 - **BaapSafeArea** - Safe area wrapper
 
 ### Feedback
+
 - **Toast** - Temporary notifications
 - **Modal** - Overlay dialogs
 - **Tooltip** - Contextual help
@@ -181,6 +194,7 @@ BaapUI supports 5 different design systems that can be switched dynamically:
 - **SkeletonLoader** - Loading placeholder
 
 ### Data Display
+
 - **Table** - Data tables
 - **List** - Item lists
 - **Badge** - Status indicators
@@ -202,7 +216,7 @@ import { ThemeProvider } from '@productshiv/baapui';
 
 <ThemeProvider>
   <YourApp />
-</ThemeProvider>
+</ThemeProvider>;
 ```
 
 ### Platform Detection
@@ -223,9 +237,9 @@ console.log(PlatformInfo);
 All components support standard props plus design system variants:
 
 ```jsx
-<Button 
-  variant="primary" 
-  size="medium" 
+<Button
+  variant="primary"
+  size="medium"
   design="neumorphic"
   disabled={false}
   loading={false}
@@ -240,18 +254,21 @@ All components support standard props plus design system variants:
 ## 🎯 Framework-Specific Setup
 
 ### React
+
 No additional setup required! Just install and use.
 
 ### Next.js
+
 Works with SSR out of the box. For better performance, add to `next.config.js`:
 
 ```js
 module.exports = {
   transpilePackages: ['@productshiv/baapui'],
-}
+};
 ```
 
 ### React Native
+
 For React Native projects, ensure you have these peer dependencies:
 
 ```bash
@@ -259,6 +276,7 @@ npm install react-native react-native-svg
 ```
 
 ### Expo
+
 Works directly with Expo. No additional setup needed.
 
 ---
@@ -279,12 +297,12 @@ const customTheme = createTheme({
     sm: 8,
     md: 16,
     lg: 24,
-  }
+  },
 });
 
 <ThemeProvider theme={customTheme}>
   <YourApp />
-</ThemeProvider>
+</ThemeProvider>;
 ```
 
 ### Dynamic Design Switching
@@ -294,7 +312,7 @@ import { useTheme } from '@productshiv/baapui';
 
 function ThemeSwitcher() {
   const { setDesign } = useTheme();
-  
+
   return (
     <div>
       <button onClick={() => setDesign('flat')}>Flat</button>

@@ -44,9 +44,9 @@ console.warn = (...args) => {
   // Suppress specific React Native warnings during tests
   const message = args[0];
   if (
-    typeof message === 'string' && 
+    typeof message === 'string' &&
     (message.includes('React Native not available') ||
-     message.includes('componentWillReceiveProps'))
+      message.includes('componentWillReceiveProps'))
   ) {
     return;
   }

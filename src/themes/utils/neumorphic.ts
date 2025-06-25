@@ -1,4 +1,4 @@
-import { ViewStyle } from 'react-native';
+import { ViewStyle } from '../../platform';
 
 export const NEUMORPHIC_COLORS = {
   background: '#fff',

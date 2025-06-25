@@ -25,10 +25,7 @@
     "typeRoots": ["node_modules/@types"],
     "types": ["jest", "node"]
   },
-  "include": [
-    "src/**/*",
-    "**/*.d.ts"
-  ],
+  "include": ["src/**/*", "**/*.d.ts"],
   "exclude": [
     "node_modules",
     "dist",
