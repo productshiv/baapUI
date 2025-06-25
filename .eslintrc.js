@@ -36,15 +36,21 @@ module.exports = {
     'react/react-in-jsx-scope': 'off',
     '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
     // Allow empty functions in stories (they're placeholders for examples)
-    '@typescript-eslint/no-empty-function': ['error', { 
-      allow: ['methods', 'arrowFunctions'] 
-    }],
+    '@typescript-eslint/no-empty-function': [
+      'error',
+      {
+        allow: ['methods', 'arrowFunctions'],
+      },
+    ],
     // Allow any types in platform abstraction layer
     '@typescript-eslint/no-explicit-any': ['warn'],
     // Allow console warnings and errors, but warn on regular console.log
-    'no-console': ['warn', { 
-      allow: ['warn', 'error'] 
-    }],
+    'no-console': [
+      'warn',
+      {
+        allow: ['warn', 'error'],
+      },
+    ],
   },
   overrides: [
     {

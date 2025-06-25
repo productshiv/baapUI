@@ -118,9 +118,8 @@ export class ComponentScanner {
     }
 
     return `A ${this.componentNameToWords(
-      componentContent.match(
-        /export\s+(?:default\s+)?(?:const|function|class)\s+(\w+)/
-      )?.[1] || 'Component'
+      componentContent.match(/export\s+(?:default\s+)?(?:const|function|class)\s+(\w+)/)?.[1] ||
+        'Component'
     )} component`;
   }
 

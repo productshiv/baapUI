@@ -95,12 +95,12 @@ BaapUI now features a sophisticated platform abstraction layer (`src/platform/in
 
 ### Supported Environments
 
-| Platform | Status | Notes |
-|----------|--------|-------|
-| **React Web Apps** | ✅ | Full support with automatic style conversion |
-| **Next.js** | ✅ | SSR compatible with runtime detection |
-| **React Native** | ✅ | Native React Native components |
-| **Expo** | ✅ | Full Expo compatibility |
+| Platform           | Status | Notes                                        |
+| ------------------ | ------ | -------------------------------------------- |
+| **React Web Apps** | ✅     | Full support with automatic style conversion |
+| **Next.js**        | ✅     | SSR compatible with runtime detection        |
+| **React Native**   | ✅     | Native React Native components               |
+| **Expo**           | ✅     | Full Expo compatibility                      |
 
 ### Installation & Usage
 
@@ -118,9 +118,7 @@ function App() {
     <ThemeProvider>
       <Card>
         <Typography variant="h1">Cross-Platform!</Typography>
-        <Button onPress={() => alert('Works everywhere!')}>
-          Click Me
-        </Button>
+        <Button onPress={() => alert('Works everywhere!')}>Click Me</Button>
       </Card>
     </ThemeProvider>
   );
@@ -362,6 +360,7 @@ _This document should be updated by every AI that works on the BaapUI library to
 ## 🏆 Recent Major Achievements (v2.0.4)
 
 ### Cross-Platform Migration (December 2024)
+
 - ✅ **Resolved React Native import issues** using eval-wrapped requires
 - ✅ **Fixed multiple React instances problem** with proper peer dependencies
 - ✅ **Eliminated React Native prop warnings** with intelligent filtering

@@ -26,11 +26,5 @@
     "types": ["jest", "node"]
   },
   "include": ["src/**/*", "**/*.d.ts"],
-  "exclude": [
-    "node_modules",
-    "dist",
-    "public",
-    "examples",
-    "**/*.stories.tsx"
-  ]
+  "exclude": ["node_modules", "dist", "public", "examples", "**/*.stories.tsx"]
 }

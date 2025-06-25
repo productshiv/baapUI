@@ -14,7 +14,11 @@ const meta: Meta<typeof Card> = {
     design: {
       control: 'radio',
       options: ['flat', 'neumorphic'],
+      defaultValue: 'flat',
     },
+  },
+  args: {
+    design: 'flat',
   },
 };
 
@@ -23,6 +27,7 @@ type Story = StoryObj<typeof Card>;
 
 export const Default: Story = {
   args: {
+    design: 'flat',
     children: (
       <View style={{ padding: 16 }}>
         <Typography variant="h5">Card Title</Typography>

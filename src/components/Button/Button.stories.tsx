@@ -24,14 +24,17 @@ const meta: Meta<typeof Button> = {
     variant: {
       control: 'select',
       options: ['primary', 'secondary', 'outline', 'text'],
+      defaultValue: 'primary',
     },
     size: {
       control: 'select',
       options: ['small', 'medium', 'large'],
+      defaultValue: 'medium',
     },
     design: {
       control: 'select',
       options: ['flat', 'neumorphic'],
+      defaultValue: 'flat',
     },
     backgroundColor: {
       control: 'color',
@@ -43,40 +46,63 @@ const meta: Meta<typeof Button> = {
     },
     disabled: {
       control: 'boolean',
+      defaultValue: false,
     },
     loading: {
       control: 'boolean',
+      defaultValue: false,
     },
+  },
+  args: {
+    children: 'Button',
+    variant: 'primary',
+    size: 'medium',
+    design: 'flat',
+    disabled: false,
+    loading: false,
   },
 };
 
 export default meta;
 type Story = StoryObj<typeof Button>;
 
+// Default Story
+export const Default: Story = {
+  args: {
+    children: 'Default Button',
+  },
+};
+
 // Size Variations
 export const Small: Story = {
   args: {
     children: 'Small Button',
+    variant: 'primary',
     size: 'small',
+    design: 'flat',
   },
 };
 
 export const Medium: Story = {
   args: {
     children: 'Medium Button',
+    variant: 'primary',
     size: 'medium',
+    design: 'flat',
   },
 };
 
 export const Large: Story = {
   args: {
     children: 'Large Button',
+    variant: 'primary',
     size: 'large',
+    design: 'flat',
   },
 };
 
-// Design Variations
-export const FlatPrimary: Story = {
+// Variant Variations
+export const Primary: Story = {
   args: {
     children: 'Primary Button',
     variant: 'primary',
@@ -84,7 +110,7 @@ export const FlatPrimary: Story = {
   },
 };
 
-export const FlatSecondary: Story = {
+export const Secondary: Story = {
   args: {
     children: 'Secondary Button',
     variant: 'secondary',
@@ -92,7 +118,7 @@ export const FlatSecondary: Story = {
   },
 };
 
-export const FlatOutline: Story = {
+export const Outline: Story = {
   args: {
     children: 'Outline Button',
     variant: 'outline',
@@ -100,9 +126,20 @@ export const FlatOutline: Story = {
   },
 };
 
-export const NeumorphicDefault: Story = {
+export const Text: Story = {
+  args: {
+    children: 'Text Button',
+    variant: 'text',
+    design: 'flat',
+  },
+};
+
+// Design Variations
+export const Neumorphic: Story = {
   args: {
     children: 'Neumorphic Button',
+    variant: 'primary',
+    size: 'medium',
     design: 'neumorphic',
   },
 };
@@ -111,6 +148,9 @@ export const NeumorphicDefault: Story = {
 export const CustomColors: Story = {
   args: {
     children: 'Custom Colors',
+    variant: 'primary',
+    size: 'medium',
+    design: 'flat',
     backgroundColor: '#FF6B6B',
     textColor: '#FFFFFF',
   },
@@ -119,6 +159,8 @@ export const CustomColors: Story = {
 export const NeumorphicCustom: Story = {
   args: {
     children: 'Custom Neumorphic',
+    variant: 'primary',
+    size: 'medium',
     design: 'neumorphic',
     backgroundColor: '#e8e8e8',
     textColor: '#FF6B6B',
@@ -129,6 +171,9 @@ export const NeumorphicCustom: Story = {
 export const Disabled: Story = {
   args: {
     children: 'Disabled Button',
+    variant: 'primary',
+    size: 'medium',
+    design: 'flat',
     disabled: true,
   },
 };
@@ -136,6 +181,9 @@ export const Disabled: Story = {
 export const Loading: Story = {
   args: {
     children: 'Loading Button',
+    variant: 'primary',
+    size: 'medium',
+    design: 'flat',
     loading: true,
   },
 };

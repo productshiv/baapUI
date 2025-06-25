@@ -12,10 +12,22 @@ const meta: Meta<typeof Input> = {
     design: {
       control: 'radio',
       options: ['flat', 'neumorphic'],
+      defaultValue: 'flat',
     },
-    placeholder: { control: 'text' },
-    disabled: { control: 'boolean' },
+    placeholder: { 
+      control: 'text',
+      defaultValue: 'Enter text...',
+    },
+    disabled: { 
+      control: 'boolean',
+      defaultValue: false,
+    },
     error: { control: 'text' },
+  },
+  args: {
+    placeholder: 'Enter text...',
+    design: 'flat',
+    disabled: false,
   },
 };
 
@@ -25,6 +37,7 @@ type Story = StoryObj<typeof Input>;
 export const Default: Story = {
   args: {
     placeholder: 'Enter text...',
+    design: 'flat',
   },
 };
 
@@ -39,6 +52,7 @@ export const Neumorphic: Story = {
 export const WithError: Story = {
   args: {
     placeholder: 'Error Input',
+    design: 'flat',
     error: 'This field is required',
   },
 };
@@ -46,6 +60,7 @@ export const WithError: Story = {
 export const Disabled: Story = {
   args: {
     placeholder: 'Disabled Input',
+    design: 'flat',
     disabled: true,
   },
 };
