@@ -31,8 +31,6 @@
     "dist",
     "public",
     "examples",
-    "**/*.stories.tsx",
-    "**/*.test.tsx",
-    "**/*.spec.tsx"
+    "**/*.stories.tsx"
   ]
 }

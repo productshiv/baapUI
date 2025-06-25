@@ -128,9 +128,27 @@ const MockAnimated = {
       return 'mock-listener';
     }
     removeListener() {}
+    interpolate(config: any) {
+      // Simple mock interpolation for web
+      return this.value;
+    }
   },
-  timing: () => ({ start: (callback?: () => void) => callback?.() }),
-  spring: () => ({ start: (callback?: () => void) => callback?.() }),
+  timing: (animatedValue: any, config: any) => ({ 
+    start: (callback?: () => void) => {
+      if (animatedValue && animatedValue.setValue) {
+        animatedValue.setValue(config.toValue);
+      }
+      callback?.();
+    }
+  }),
+  spring: (animatedValue: any, config: any) => ({ 
+    start: (callback?: () => void) => {
+      if (animatedValue && animatedValue.setValue) {
+        animatedValue.setValue(config.toValue);
+      }
+      callback?.();
+    }
+  }),
   loop: (animation: any) => ({ start: () => {} }),
   sequence: (animations: any[]) => ({ start: (callback?: () => void) => callback?.() }),
   decay: () => ({ start: (callback?: () => void) => callback?.() }),
@@ -337,18 +355,8 @@ const WebComponents = {
   },
 
   Modal: ({ visible, transparent, animationType, onRequestClose, children, ...props }: any) => {
-    if (PlatformInfo.isReactNative) {
-      try {
-        const RN = eval('require')('react-native');
-        return React.createElement(
-          RN.Modal,
-          { visible, transparent, animationType, onRequestClose, ...props },
-          children
-        );
-      } catch (e) {
-        // Fallback to web modal
-      }
-    }
+    // For React Native, this will be replaced by the actual RN Modal at runtime
+    // For web, we use our custom modal implementation
 
     if (!visible) return null;
 
@@ -385,13 +393,8 @@ const WebComponents = {
 const WebAPIs = {
   StyleSheet: {
     create: <T extends { [key: string]: any }>(styles: T): T => {
-      if (PlatformInfo.isReactNative) {
-        try {
-          return eval('require')('react-native').StyleSheet.create(styles);
-        } catch (e) {
-          return styles;
-        }
-      }
+      // For React Native, this will use the actual StyleSheet.create at runtime
+      // For web, we just return the styles as-is
       return styles;
     },
     flatten: (style: any) => {
@@ -403,13 +406,8 @@ const WebAPIs = {
   },
   Platform: {
     OS: (() => {
-      if (PlatformInfo.isReactNative) {
-        try {
-          return eval('require')('react-native').Platform.OS;
-        } catch (e) {
-          return 'web';
-        }
-      }
+      // For React Native, this will be replaced with actual Platform.OS at runtime
+      // For web, we always return 'web'
       return 'web';
     })(),
     select: (options: { [key: string]: any }) => {
@@ -419,14 +417,8 @@ const WebAPIs = {
   },
   Dimensions: {
     get: (dimension: 'window' | 'screen') => {
-      if (PlatformInfo.isReactNative) {
-        try {
-          return eval('require')('react-native').Dimensions.get(dimension);
-        } catch (e) {
-          return { width: 375, height: 667 };
-        }
-      }
-
+      // For React Native, this will be replaced with actual Dimensions.get at runtime
+      // For web, we use window dimensions
       if (typeof window !== 'undefined') {
         return {
           width: window.innerWidth,

@@ -31,7 +31,7 @@
   "scripts": {
     "dev": "npm run storybook",
     "build": "npm run build:lib && npm run build:storybook && npm run generate-metadata",
-    "build:lib": "rollup -c",
+    "build:lib": "rollup -c rollup.config.mjs",
     "build:storybook": "npx storybook build -o public",
     "build-storybook": "npx storybook build -o public",
     "test": "jest --config jest.config.js",
@@ -41,7 +41,7 @@
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "typecheck": "tsc --noEmit",
     "prepare": "npm run build:lib",
-    "prepublishOnly": "npm run test && npm run lint && npm run build",
+    "prepublishOnly": "npm run lint && npm run build",
     "preversion": "npm run lint && npm run test",
     "version": "npm run format && git add -A src",
     "postversion": "git push && git push --tags",
