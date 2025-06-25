@@ -1,6 +1,6 @@
 import React from 'react';
 import { View } from '../../platform';
-import { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react-webpack5';
 import RadioButton from './RadioButton';
 import { NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
 

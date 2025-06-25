@@ -107,9 +107,11 @@ const RadioButton: React.FC<RadioButtonProps> = ({
 
 const styles = StyleSheet.create({
   container: {
+    display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    marginVertical: 5,
+    marginVertical: 2,
+    flexWrap: 'nowrap',
   },
   radio: {
     width: 20,
@@ -117,9 +119,15 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 1,
     borderColor: '#000',
+    borderStyle: 'solid',
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 10,
+    backgroundColor: '#fff',
+    // Ensure visibility and prevent line breaks
+    display: 'flex',
+    opacity: 1,
+    flexShrink: 0,
   },
   selected: {
     width: 12,
@@ -129,6 +137,8 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 16,
+    flex: 1,
+    display: 'inline',
   },
   disabled: {
     backgroundColor: '#ccc',

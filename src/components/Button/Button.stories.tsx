@@ -1,19 +1,16 @@
 import React from 'react';
 import { View } from '../../platform';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import Button from './Button';
-import { ThemeProvider } from '../../themes/ThemeContext';
 
 const meta: Meta<typeof Button> = {
   title: 'Core UI/Button',
   component: Button,
   decorators: [
     Story => (
-      <ThemeProvider>
-        <View style={{ padding: 20 }}>
-          <Story />
-        </View>
-      </ThemeProvider>
+      <View style={{ padding: 20 }}>
+        <Story />
+      </View>
     ),
   ],
   parameters: {

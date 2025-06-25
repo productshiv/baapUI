@@ -1,6 +1,6 @@
 import React from 'react';
 import { View } from '../../platform';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import Divider from './Divider';
 import Typography from '../Typography/Typography';
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View } from '../../platform';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import ProgressBar from './ProgressBar';
 import Typography from '../Typography/Typography';
 import { NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';

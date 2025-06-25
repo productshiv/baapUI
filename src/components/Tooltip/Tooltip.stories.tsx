@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from '../../platform';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import Tooltip from './Tooltip';
 
 const meta: Meta<typeof Tooltip> = {

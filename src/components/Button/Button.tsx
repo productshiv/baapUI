@@ -7,8 +7,7 @@ import {
   TextStyle,
   ActivityIndicator,
 } from '../../platform';
-import { useTheme } from '../../themes/ThemeContext';
-import { useNeumorphicShadow } from '../../themes/utils/useNeumorphicShadow';
+
 import { ThemeDesign } from '../../themes/types';
 
 export interface ButtonProps {
@@ -29,25 +28,18 @@ const Button: React.FC<ButtonProps> = ({
   children,
   variant = 'primary',
   size = 'medium',
-  design,
-  disabled,
-  loading,
+  design = 'flat', // Add explicit default
+  disabled = false,
+  loading = false,
   onPress,
   style,
   textStyle,
   backgroundColor,
   textColor,
 }) => {
-  let theme;
-  try {
-    const themeContext = useTheme();
-    theme = themeContext.theme;
-  } catch (error) {
-    // Fallback when theme context is not available
-    theme = null;
-  }
   const [isPressed, setIsPressed] = useState(false);
-  const activeDesign = design || theme?.design || 'flat';
+  // Remove theme dependency - use explicit design prop only
+  const activeDesign = design;
 
   const getVariantStyles = (): { container: ViewStyle; text: TextStyle } => {
     // If design is neumorphic, use neumorphic styles
@@ -67,7 +59,8 @@ const Button: React.FC<ButtonProps> = ({
         },
         text: {
           color: disabled ? '#9e9e9e' : textColor || '#2196f3',
-          ...(theme?.typography?.button || { fontSize: 16, fontWeight: '600' }),
+          fontSize: 16,
+          fontWeight: '600',
         },
       };
     }
@@ -143,15 +136,32 @@ const Button: React.FC<ButtonProps> = ({
   const variantStyles = getVariantStyles();
   const sizeStyles = getSizeStyles();
 
+  // Combine all styles
+  const combinedStyles = [
+    styles.button,
+    variantStyles.container,
+    sizeStyles,
+    disabled && styles.disabledButton,
+    style,
+  ];
+
+  // Debug logging (remove in production)
+  if (process.env.NODE_ENV === 'development') {
+    console.log('Button render:', { 
+      variant, 
+      size, 
+      activeDesign, 
+      variantStyles, 
+      sizeStyles,
+      combinedStyles,
+      disabled,
+      loading
+    });
+  }
+
   return (
     <TouchableOpacity
-      style={[
-        styles.button,
-        variantStyles.container,
-        sizeStyles,
-        disabled && styles.disabledButton,
-        style,
-      ]}
+      style={combinedStyles}
       onPress={onPress}
       onPressIn={() => setIsPressed(true)}
       onPressOut={() => setIsPressed(false)}
@@ -161,7 +171,14 @@ const Button: React.FC<ButtonProps> = ({
       {loading ? (
         <ActivityIndicator color={variant === 'primary' ? 'white' : '#666666'} />
       ) : (
-        <Text style={[styles.text, variantStyles.text, disabled && styles.disabledText, textStyle]}>
+        <Text style={[
+          styles.text, 
+          variantStyles.text, 
+          disabled && styles.disabledText, 
+          textStyle,
+          // Force text visibility
+          { opacity: 1, display: 'flex' }
+        ]}>
           {children}
         </Text>
       )}
@@ -176,13 +193,24 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     minHeight: 44, // Ensure minimum touch target
     minWidth: 44,
+    // Add fallback padding in case size styles don't apply
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderRadius: 16,
+    // Force visibility
+    display: 'flex',
+    opacity: 1,
   },
   primaryButton: {
     backgroundColor: '#2196f3',
+    // Ensure button is always visible
+    minHeight: 44,
+    minWidth: 100,
   },
   primaryText: {
     color: 'white',
     fontWeight: '600',
+    fontSize: 16, // Add fallback font size
   },
   secondaryButton: {
     backgroundColor: '#f50057',

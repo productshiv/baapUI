@@ -252,13 +252,15 @@ const WebComponents = {
       'button',
       {
         style: {
-          ...processedStyle,
-          cursor: disabled ? 'not-allowed' : 'pointer',
-          opacity: disabled ? 0.6 : 1,
-          border: 'none',
+          // Base button reset styles - be more specific about what we reset
+          outline: 'none',
           background: 'transparent',
           padding: 0,
           userSelect: 'none',
+          cursor: disabled ? 'not-allowed' : 'pointer',
+          opacity: disabled ? 0.6 : 1,
+          // Component styles override base styles
+          ...processedStyle,
         },
         onClick: disabled ? undefined : onPress,
         disabled,

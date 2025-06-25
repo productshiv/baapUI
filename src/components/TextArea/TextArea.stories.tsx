@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text } from '../../platform';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import TextArea from './TextArea';
 import { NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
 

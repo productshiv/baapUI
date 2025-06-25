@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View } from '../../platform';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import Pagination from './Pagination';
 import Typography from '../Typography/Typography';
 import { NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';

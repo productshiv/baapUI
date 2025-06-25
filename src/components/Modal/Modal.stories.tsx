@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { View, Button, Text, TextInput } from '../../platform';
-import type { Meta, StoryObj } from '@storybook/react';
+import { View, Text, TextInput } from '../../platform';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import Modal from './Modal';
 import Typography from '../Typography/Typography';
+import Button from '../Button/Button';
 
 const meta: Meta<typeof Modal> = {
   title: 'Feedback/Modal',
@@ -21,7 +22,7 @@ const BasicModalExample = () => {
 
   return (
     <View>
-      <Button title="Open Modal" onPress={() => setVisible(true)} />
+      <Button onPress={() => setVisible(true)}>Open Modal</Button>
       <Modal visible={visible} onClose={() => setVisible(false)}>
         <Typography variant="h6">Modal Title</Typography>
         <Typography style={{ marginVertical: 20 }}>
@@ -48,7 +49,7 @@ const ConfirmationModalExample = () => {
 
   return (
     <View style={{ gap: 20, alignItems: 'center' }}>
-      <Button title="Delete Item" onPress={() => setVisible(true)} />
+      <Button onPress={() => setVisible(true)}>Delete Item</Button>
       {result && <Typography style={{ color: '#4CAF50' }}>{result}</Typography>}
       <Modal visible={visible} onClose={() => setVisible(false)}>
         <Typography variant="h6">Confirm Delete</Typography>
@@ -56,8 +57,8 @@ const ConfirmationModalExample = () => {
           Are you sure you want to delete this item?
         </Typography>
         <View style={{ flexDirection: 'row', gap: 10 }}>
-          <Button title="Cancel" onPress={() => setVisible(false)} />
-          <Button title="Delete" onPress={handleConfirm} />
+          <Button variant="outline" onPress={() => setVisible(false)}>Cancel</Button>
+          <Button variant="secondary" onPress={handleConfirm}>Delete</Button>
         </View>
       </Modal>
     </View>
@@ -74,7 +75,7 @@ const FormModalExample = () => {
 
   return (
     <View>
-      <Button title="Edit Profile" onPress={() => setVisible(true)} />
+      <Button onPress={() => setVisible(true)}>Edit Profile</Button>
       <Modal visible={visible} onClose={() => setVisible(false)} style={{ width: 400 }}>
         <Typography variant="h6">Edit Profile</Typography>
         <View style={{ width: '100%', gap: 10, marginVertical: 20 }}>
@@ -103,7 +104,7 @@ const FormModalExample = () => {
             />
           </View>
         </View>
-        <Button title="Save Changes" onPress={() => setVisible(false)} />
+        <Button onPress={() => setVisible(false)}>Save Changes</Button>
       </Modal>
     </View>
   );

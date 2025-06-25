@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import Carousel from './Carousel';
 import { NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
 
