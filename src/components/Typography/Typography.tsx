@@ -110,23 +110,36 @@ const Typography: React.FC<TypographyProps> = ({
     overline: { fontSize: 10, fontWeight: '400', lineHeight: 16, textTransform: 'uppercase' },
   };
 
-  const getTypographyStyles = (): StyleProp<TextStyle> => {
-    const baseStyles: StyleProp<TextStyle>[] = [
-      variantStyles[variant],
-      { color, textAlign: align },
-    ];
+  const getTypographyStyles = (): TextStyle => {
+    const baseStyles: TextStyle = {
+      ...variantStyles[variant],
+      color,
+      textAlign: align,
+    };
 
     if (design === 'neumorphic') {
       const neumorphicStyles = getNeumorphicStyles({
         customBackground: backgroundColor,
         customBorderRadius: 8,
       });
-      baseStyles.push(...neumorphicStyles);
-      baseStyles.push({ padding: 8 });
+      
+      // Flatten and merge neumorphic styles
+      neumorphicStyles.forEach(neumorphicStyle => {
+        Object.assign(baseStyles, neumorphicStyle);
+      });
+      
+      Object.assign(baseStyles, { padding: 8 });
     }
 
     if (style) {
-      baseStyles.push(style);
+      // Handle both single style and array of styles
+      if (Array.isArray(style)) {
+        style.forEach(s => {
+          if (s) Object.assign(baseStyles, s);
+        });
+      } else if (style) {
+        Object.assign(baseStyles, style);
+      }
     }
 
     return baseStyles;

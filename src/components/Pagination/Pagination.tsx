@@ -87,11 +87,13 @@ const Pagination: React.FC<PaginationProps> = ({
     return baseStyles;
   };
 
-  const getTextStyles = (isButton: boolean): TextStyle[] => {
-    const baseStyles: TextStyle[] = [isButton ? styles.buttonText : styles.pageInfo];
+  const getTextStyles = (isButton: boolean): TextStyle => {
+    const baseStyles: TextStyle = {
+      ...(isButton ? styles.buttonText : styles.pageInfo),
+    };
 
     if (design === 'neumorphic') {
-      baseStyles.push({
+      Object.assign(baseStyles, {
         color: textColor,
         fontSize: isButton ? 14 : 16,
         fontWeight: '600',

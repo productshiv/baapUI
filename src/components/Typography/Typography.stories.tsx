@@ -8,6 +8,13 @@ const meta: Meta<typeof Typography> = {
   title: 'Utility/Typography',
   component: Typography,
   tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component: 'A component for displaying text with consistent styling across the app. Implements Material Design typography scale with responsive sizing.',
+      },
+    },
+  },
   argTypes: {
     variant: {
       control: 'select',
@@ -25,15 +32,25 @@ const meta: Meta<typeof Typography> = {
         'caption',
         'overline',
       ],
+      description: 'The typography variant to use',
     },
     design: {
       control: 'radio',
       options: ['flat', 'neumorphic'],
+      description: 'Design style - flat or neumorphic',
     },
-    color: { control: 'color' },
+    color: { 
+      control: 'color',
+      description: 'Text color',
+    },
     align: {
       control: 'select',
       options: ['left', 'center', 'right'],
+      description: 'Text alignment',
+    },
+    children: {
+      control: 'text',
+      description: 'The content to display',
     },
   },
 };
@@ -45,6 +62,16 @@ export const Default: Story = {
   args: {
     children: 'Hello World',
     variant: 'body1',
+    color: '#000000',
+    align: 'left',
+    design: 'flat',
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Basic usage of the Typography component with default styling.',
+      },
+    },
   },
 };
 
@@ -54,6 +81,13 @@ export const Neumorphic: Story = {
     variant: 'h1',
     design: 'neumorphic',
     backgroundColor: NEUMORPHIC_COLORS.background,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Typography with neumorphic design styling that creates a soft, embossed effect.',
+      },
+    },
   },
 };
 
@@ -74,6 +108,13 @@ export const AllVariants: Story = {
       <Typography variant="overline">Overline Text</Typography>
     </View>
   ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'Showcase of all available typography variants following Material Design typography scale.',
+      },
+    },
+  },
 };
 
 export const Alignments: Story = {
@@ -84,6 +125,13 @@ export const Alignments: Story = {
       <Typography align="right">Right Aligned</Typography>
     </View>
   ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'Different text alignment options: left, center, and right.',
+      },
+    },
+  },
 };
 
 export const Colors: Story = {
@@ -96,4 +144,11 @@ export const Colors: Story = {
       <Typography color={NEUMORPHIC_COLORS.info}>Info Color</Typography>
     </View>
   ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'Typography with different semantic colors from the theme palette.',
+      },
+    },
+  },
 };

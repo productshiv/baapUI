@@ -127,12 +127,14 @@ const Badge: React.FC<BadgeProps> = ({
     return baseStyles;
   };
 
-  const getTextStyles = (): TextStyle[] => {
-    const baseStyles: TextStyle[] = [styles.text];
+  const getTextStyles = (): TextStyle => {
+    const baseStyles: TextStyle = {
+      ...styles.text,
+    };
     const sizeStyle = getSizeStyle();
 
     if (design === 'neumorphic') {
-      baseStyles.push({
+      Object.assign(baseStyles, {
         color: textColor,
         fontSize: sizeStyle.text.fontSize,
         fontWeight: '600',
@@ -144,29 +146,29 @@ const Badge: React.FC<BadgeProps> = ({
       // Add variant-specific text colors for neumorphic design
       switch (variant) {
         case 'secondary':
-          baseStyles.push({ color: '#C2185B' });
+          Object.assign(baseStyles, { color: '#C2185B' });
           break;
         case 'success':
-          baseStyles.push({ color: '#2E7D32' });
+          Object.assign(baseStyles, { color: '#2E7D32' });
           break;
         case 'error':
-          baseStyles.push({ color: '#C62828' });
+          Object.assign(baseStyles, { color: '#C62828' });
           break;
         case 'warning':
-          baseStyles.push({ color: '#F57C00' });
+          Object.assign(baseStyles, { color: '#F57C00' });
           break;
         case 'info':
-          baseStyles.push({ color: '#1976D2' });
+          Object.assign(baseStyles, { color: '#1976D2' });
           break;
         default:
-          baseStyles.push({ color: '#4527A0' });
+          Object.assign(baseStyles, { color: '#4527A0' });
       }
     } else {
-      baseStyles.push(sizeStyle.text);
+      Object.assign(baseStyles, sizeStyle.text);
     }
 
     if (textStyle) {
-      baseStyles.push(textStyle);
+      Object.assign(baseStyles, textStyle);
     }
 
     return baseStyles;

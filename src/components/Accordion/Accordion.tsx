@@ -96,11 +96,13 @@ const Accordion: React.FC<AccordionProps> = ({
     return baseStyles;
   };
 
-  const getTextStyles = (isTitle: boolean): TextStyle[] => {
-    const baseStyles: TextStyle[] = [isTitle ? styles.title : styles.content];
+  const getTextStyles = (isTitle: boolean): TextStyle => {
+    const baseStyles: TextStyle = {
+      ...(isTitle ? styles.title : styles.content),
+    };
 
     if (design === 'neumorphic') {
-      baseStyles.push({
+      Object.assign(baseStyles, {
         color: textColor,
         textShadowColor: NEUMORPHIC_COLORS.lightShadow,
         textShadowOffset: { width: 1, height: 1 },

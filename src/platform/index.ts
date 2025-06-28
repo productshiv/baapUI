@@ -16,7 +16,49 @@ const PlatformInfo = {
 const convertRNStyleToCSS = (style: any): React.CSSProperties => {
   if (!style) return {};
 
-  const cssStyle: any = { ...style };
+  const cssStyle: any = {};
+  
+  // Handle transform array FIRST before copying other properties
+  if (style.transform && Array.isArray(style.transform)) {
+    const transforms = style.transform.map((transform: any) => {
+      const key = Object.keys(transform)[0];
+      let value = transform[key];
+      
+      // Convert Animated.Value to number if needed
+      if (value && typeof value.valueOf === 'function') {
+        value = value.valueOf();
+      }
+      
+      // Handle different transform types
+      if (key === 'translateX' || key === 'translateY') {
+        return `${key}(${value}px)`;
+      } else if (key === 'scale' || key === 'scaleX' || key === 'scaleY') {
+        return `${key}(${value})`;
+      } else if (key === 'rotate') {
+        return `${key}(${value}deg)`;
+      }
+      return `${key}(${value})`;
+    });
+    cssStyle.transform = transforms.join(' ');
+  }
+  
+  // Copy only valid CSS properties (excluding transform which we handled above)
+  Object.keys(style).forEach(key => {
+    if (key === 'transform') return; // Skip transform, we handled it above
+    
+    const value = style[key];
+    // Skip undefined, null, or function values
+    if (value === undefined || value === null || typeof value === 'function') {
+      return;
+    }
+    
+    // Skip array values that aren't transform (they shouldn't be in CSS)
+    if (Array.isArray(value)) {
+      return;
+    }
+    
+    cssStyle[key] = value;
+  });
 
   // Handle React Native specific properties
   if (style.paddingHorizontal !== undefined) {
@@ -75,23 +117,104 @@ const convertRNStyleToCSS = (style: any): React.CSSProperties => {
     delete cssStyle.elevation;
   }
 
+
+
+  // Remove React Native-specific properties that don't exist in CSS
+  const rnOnlyProps = [
+    'includeFontPadding',
+    'textAlignVertical',
+    'fontVariant',
+    'letterSpacing', // CSS has letter-spacing but RN uses letterSpacing
+    'lineHeight', // Can cause issues if not a number
+    'textDecorationColor',
+    'textDecorationStyle',
+    'writingDirection',
+    'backfaceVisibility',
+    'borderBottomEndRadius',
+    'borderBottomStartRadius',
+    'borderTopEndRadius',
+    'borderTopStartRadius',
+    'borderEndColor',
+    'borderStartColor',
+    'borderEndWidth',
+    'borderStartWidth',
+    'end',
+    'start',
+    'marginEnd',
+    'marginStart',
+    'paddingEnd',
+    'paddingStart',
+    'overlayColor',
+    'resizeMode',
+    'tintColor',
+  ];
+  
+  rnOnlyProps.forEach(prop => {
+    delete cssStyle[prop];
+  });
+
   // Ensure color values are strings
-  if (style.backgroundColor && typeof style.backgroundColor === 'object') {
-    cssStyle.backgroundColor = String(style.backgroundColor);
+  if (cssStyle.backgroundColor && typeof cssStyle.backgroundColor === 'object') {
+    cssStyle.backgroundColor = String(cssStyle.backgroundColor);
   }
 
-  if (style.color && typeof style.color === 'object') {
-    cssStyle.color = String(style.color);
+  if (cssStyle.color && typeof cssStyle.color === 'object') {
+    cssStyle.color = String(cssStyle.color);
   }
 
-  return cssStyle as React.CSSProperties;
+  // Ensure numeric values that should be strings with units
+  if (typeof cssStyle.fontSize === 'number') {
+    cssStyle.fontSize = `${cssStyle.fontSize}px`;
+  }
+  
+  if (typeof cssStyle.lineHeight === 'number') {
+    cssStyle.lineHeight = cssStyle.lineHeight;
+  }
+
+  // Final cleanup - remove any remaining invalid properties
+  const cleanedStyle: any = {};
+  Object.keys(cssStyle).forEach(key => {
+    const value = cssStyle[key];
+    
+    // Debug logging for problematic values
+    if (process.env.NODE_ENV === 'development' && (Array.isArray(value) || (typeof value === 'object' && value !== null && typeof value.valueOf === 'function'))) {
+      console.warn(`Skipping invalid CSS property ${key}:`, value);
+    }
+    
+    // Only keep primitive values and valid objects
+    if (
+      typeof value === 'string' ||
+      typeof value === 'number' ||
+      typeof value === 'boolean' ||
+      value === null
+    ) {
+      cleanedStyle[key] = value;
+    } else if (
+      typeof value === 'object' &&
+      value !== null &&
+      !Array.isArray(value) &&
+      typeof value.valueOf !== 'function' // Skip Animated.Value objects
+    ) {
+      // Allow plain objects (like shadowOffset)
+      cleanedStyle[key] = value;
+    }
+    // Skip everything else (arrays, functions, Animated.Value, etc.)
+  });
+
+  return cleanedStyle as React.CSSProperties;
 };
 
 // Style processing helper
 const processStyle = (style: any): React.CSSProperties => {
+  if (!style) return {};
+  
   if (Array.isArray(style)) {
-    return style.reduce((acc, s) => ({ ...acc, ...convertRNStyleToCSS(s) }), {});
+    // Filter out falsy values and process each style
+    return style
+      .filter(s => s) // Remove null, undefined, false values
+      .reduce((acc, s) => ({ ...acc, ...convertRNStyleToCSS(s) }), {});
   }
+  
   return convertRNStyleToCSS(style);
 };
 
@@ -131,6 +254,13 @@ const MockAnimated = {
     interpolate(config: any) {
       // Simple mock interpolation for web
       return this.value;
+    }
+    // Add valueOf to make it work with CSS transforms
+    valueOf() {
+      return this.value;
+    }
+    toString() {
+      return this.value.toString();
     }
   },
   timing: (animatedValue: any, config: any) => ({

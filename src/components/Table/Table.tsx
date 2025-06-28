@@ -107,11 +107,13 @@ const Table: React.FC<TableProps> = ({
     return baseStyles;
   };
 
-  const getHeaderCellStyles = (): TextStyle[] => {
-    const baseStyles: TextStyle[] = [styles.headerCell];
+  const getHeaderCellStyles = (): TextStyle => {
+    const baseStyles: TextStyle = {
+      ...styles.headerCell,
+    };
 
     if (design === 'neumorphic') {
-      baseStyles.push({
+      Object.assign(baseStyles, {
         color: textColor,
         fontWeight: '700',
         textShadowColor: NEUMORPHIC_COLORS.lightShadow,
@@ -121,17 +123,19 @@ const Table: React.FC<TableProps> = ({
     }
 
     if (headerCellStyle) {
-      baseStyles.push(headerCellStyle);
+      Object.assign(baseStyles, headerCellStyle);
     }
 
     return baseStyles;
   };
 
-  const getCellStyles = (): TextStyle[] => {
-    const baseStyles: TextStyle[] = [styles.cell];
+  const getCellStyles = (): TextStyle => {
+    const baseStyles: TextStyle = {
+      ...styles.cell,
+    };
 
     if (design === 'neumorphic') {
-      baseStyles.push({
+      Object.assign(baseStyles, {
         color: textColor,
         textShadowColor: NEUMORPHIC_COLORS.lightShadow,
         textShadowOffset: { width: 1, height: 1 },
@@ -140,7 +144,7 @@ const Table: React.FC<TableProps> = ({
     }
 
     if (cellStyle) {
-      baseStyles.push(cellStyle);
+      Object.assign(baseStyles, cellStyle);
     }
 
     return baseStyles;

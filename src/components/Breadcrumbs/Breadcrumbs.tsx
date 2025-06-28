@@ -77,11 +77,13 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
     return baseStyles;
   };
 
-  const getTextStyles = (isCurrentItem: boolean): TextStyle[] => {
-    const baseStyles: TextStyle[] = [styles.item];
+  const getTextStyles = (isCurrentItem: boolean): TextStyle => {
+    const baseStyles: TextStyle = {
+      ...styles.item,
+    };
 
     if (design === 'neumorphic') {
-      baseStyles.push({
+      Object.assign(baseStyles, {
         color: isCurrentItem ? activeTextColor : textColor,
         textShadowColor: NEUMORPHIC_COLORS.lightShadow,
         textShadowOffset: { width: 1, height: 1 },
@@ -90,7 +92,7 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
     }
 
     if (isCurrentItem) {
-      baseStyles.push(styles.currentItem);
+      Object.assign(baseStyles, styles.currentItem);
     }
 
     return baseStyles;

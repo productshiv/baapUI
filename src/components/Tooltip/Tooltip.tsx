@@ -57,11 +57,13 @@ const Tooltip: React.FC<TooltipProps> = ({
     return baseStyles;
   };
 
-  const getTextStyles = (): TextStyle[] => {
-    const baseStyles: TextStyle[] = [styles.tooltipText];
+  const getTextStyles = (): TextStyle => {
+    const baseStyles: TextStyle = {
+      ...styles.tooltipText,
+    };
 
     if (design === 'neumorphic') {
-      baseStyles.push({
+      Object.assign(baseStyles, {
         color: textColor,
         fontSize: 14,
         textShadowColor: NEUMORPHIC_COLORS.lightShadow,

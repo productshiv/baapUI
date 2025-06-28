@@ -65,11 +65,13 @@ const Input: React.FC<InputProps> = ({
     return baseStyles;
   };
 
-  const getLabelStyles = (): TextStyle[] => {
-    const labelStyles: TextStyle[] = [styles.label];
+  const getLabelStyles = (): TextStyle => {
+    const labelStyles: TextStyle = {
+      ...styles.label,
+    };
 
     if (design === 'neumorphic') {
-      labelStyles.push({
+      Object.assign(labelStyles, {
         color: textColor,
         fontSize: 14,
         fontWeight: '500',

@@ -48,11 +48,13 @@ const Chip: React.FC<ChipProps> = ({
     return baseStyles;
   };
 
-  const getLabelStyles = (): TextStyle[] => {
-    const baseStyles: TextStyle[] = [styles.label];
+  const getLabelStyles = (): TextStyle => {
+    const baseStyles: TextStyle = {
+      ...styles.label,
+    };
 
     if (design === 'neumorphic') {
-      baseStyles.push({
+      Object.assign(baseStyles, {
         color: textColor,
         textShadowColor: NEUMORPHIC_COLORS.lightShadow,
         textShadowOffset: { width: 1, height: 1 },
@@ -61,7 +63,7 @@ const Chip: React.FC<ChipProps> = ({
     }
 
     if (labelStyle) {
-      baseStyles.push(labelStyle);
+      Object.assign(baseStyles, labelStyle);
     }
 
     return baseStyles;

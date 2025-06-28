@@ -77,11 +77,13 @@ const Tabs: React.FC<TabsProps> = ({
     return baseStyles;
   };
 
-  const getTextStyles = (tabId: string): TextStyle[] => {
-    const baseStyles: TextStyle[] = [styles.label];
+  const getTextStyles = (tabId: string): TextStyle => {
+    const baseStyles: TextStyle = {
+      ...styles.label,
+    };
 
     if (design === 'neumorphic') {
-      baseStyles.push({
+      Object.assign(baseStyles, {
         color: textColor,
         fontSize: 14,
         fontWeight: '600',

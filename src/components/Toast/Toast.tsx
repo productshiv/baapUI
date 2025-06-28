@@ -116,11 +116,13 @@ const Toast: React.FC<ToastProps> = ({
     return baseStyles;
   };
 
-  const getTextStyles = (): TextStyle[] => {
-    const baseStyles: TextStyle[] = [styles.message];
+  const getTextStyles = (): TextStyle => {
+    const baseStyles: TextStyle = {
+      ...styles.message,
+    };
 
     if (design === 'neumorphic') {
-      baseStyles.push({
+      Object.assign(baseStyles, {
         color: textColor,
         fontSize: 14,
         fontWeight: '600',
@@ -132,16 +134,16 @@ const Toast: React.FC<ToastProps> = ({
       // Add type-specific text styles for neumorphic design
       switch (type) {
         case 'success':
-          baseStyles.push({ color: '#2E7D32' });
+          Object.assign(baseStyles, { color: '#2E7D32' });
           break;
         case 'warning':
-          baseStyles.push({ color: '#F57C00' });
+          Object.assign(baseStyles, { color: '#F57C00' });
           break;
         case 'error':
-          baseStyles.push({ color: '#C62828' });
+          Object.assign(baseStyles, { color: '#C62828' });
           break;
         default:
-          baseStyles.push({ color: '#1976D2' });
+          Object.assign(baseStyles, { color: '#1976D2' });
       }
     }
 

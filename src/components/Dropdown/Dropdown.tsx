@@ -152,11 +152,13 @@ const Dropdown: React.FC<DropdownProps> = ({
     return baseStyles;
   };
 
-  const getTextStyles = (): TextStyle[] => {
-    const baseStyles: TextStyle[] = [styles.text];
+  const getTextStyles = (): TextStyle => {
+    const baseStyles: TextStyle = {
+      ...styles.text,
+    };
 
     if (design === 'neumorphic') {
-      baseStyles.push({
+      Object.assign(baseStyles, {
         color: textColor,
         textShadowColor: NEUMORPHIC_COLORS.lightShadow,
         textShadowOffset: { width: 1, height: 1 },
@@ -166,20 +168,24 @@ const Dropdown: React.FC<DropdownProps> = ({
 
     if (textStyle) {
       if (Array.isArray(textStyle)) {
-        baseStyles.push(...textStyle);
+        textStyle.forEach(style => {
+          if (style) Object.assign(baseStyles, style);
+        });
       } else {
-        baseStyles.push(textStyle);
+        Object.assign(baseStyles, textStyle);
       }
     }
 
     return baseStyles;
   };
 
-  const getLabelStyles = (): TextStyle[] => {
-    const baseStyles: TextStyle[] = [styles.label];
+  const getLabelStyles = (): TextStyle => {
+    const baseStyles: TextStyle = {
+      ...styles.label,
+    };
 
     if (design === 'neumorphic') {
-      baseStyles.push({
+      Object.assign(baseStyles, {
         color: textColor,
         textShadowColor: NEUMORPHIC_COLORS.lightShadow,
         textShadowOffset: { width: 1, height: 1 },
@@ -189,9 +195,11 @@ const Dropdown: React.FC<DropdownProps> = ({
 
     if (labelStyle) {
       if (Array.isArray(labelStyle)) {
-        baseStyles.push(...labelStyle);
+        labelStyle.forEach(style => {
+          if (style) Object.assign(baseStyles, style);
+        });
       } else {
-        baseStyles.push(labelStyle);
+        Object.assign(baseStyles, labelStyle);
       }
     }
 
@@ -211,11 +219,11 @@ const Dropdown: React.FC<DropdownProps> = ({
         </Typography>
         <Typography
           variant="body1"
-          style={[
-            styles.arrow,
-            isOpen ? styles.arrowUp : undefined,
-            design === 'neumorphic' && { color: textColor },
-          ]}
+          style={{
+            ...styles.arrow,
+            ...(isOpen ? styles.arrowUp : {}),
+            ...(design === 'neumorphic' ? { color: textColor } : {}),
+          }}
         >
           ▼
         </Typography>

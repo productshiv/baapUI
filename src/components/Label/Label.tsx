@@ -17,11 +17,13 @@ const Label: React.FC<LabelProps> = ({
   design = 'flat',
   textColor = NEUMORPHIC_COLORS.text,
 }) => {
-  const getLabelStyles = (): TextStyle[] => {
-    const baseStyles: TextStyle[] = [styles.label];
+  const getLabelStyles = (): TextStyle => {
+    const baseStyles: TextStyle = {
+      ...styles.label,
+    };
 
     if (design === 'neumorphic') {
-      baseStyles.push({
+      Object.assign(baseStyles, {
         color: textColor,
         textShadowColor: NEUMORPHIC_COLORS.lightShadow,
         textShadowOffset: { width: 1, height: 1 },
@@ -30,7 +32,7 @@ const Label: React.FC<LabelProps> = ({
     }
 
     if (style) {
-      baseStyles.push(style);
+      Object.assign(baseStyles, style);
     }
 
     return baseStyles;
