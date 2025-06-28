@@ -7,9 +7,8 @@ set -e  # Exit on any error
 
 echo "🚀 Starting BaapUI build process..."
 
-# Install dependencies
-echo "📦 Installing dependencies..."
-npm ci
+# Note: Dependencies already installed in Docker build step
+echo "📦 Dependencies already installed, proceeding with build..."
 
 # Generate metadata
 echo "📊 Generating component metadata..."
