@@ -3,13 +3,13 @@ description:
 globs: 
 alwaysApply: true
 ---
-
 # You did these mistakes so often, stop repeating same
 
 - You add grey background to componenets unnecessarily when we are making componenets neumorphic version.
 - When modularizing server.ts, remember to build TypeScript files first before testing - `npm run build` is required after creating new .ts files
 - Always check that import paths use .js extensions for compiled output, not .ts extensions in import statements
 - When creating MCP tools, ensure helper functions are passed correctly to modular implementations
-
-
 - Don't forget to create types.ts file first when modularizing to avoid import errors
+
+
+- **CRITICAL**: Outdated dependencies in package.json cause horrible user experience with deprecation warnings and security vulnerabilities during `npm install`. Always keep dependencies updated and audit regularly to maintain professional library reputation.

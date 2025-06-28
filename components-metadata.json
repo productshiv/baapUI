@@ -1,6 +1,6 @@
 {
-  "version": "2.0.5",
-  "generatedAt": "2025-06-28T07:57:51.468Z",
+  "version": "2.0.6",
+  "generatedAt": "2025-06-28T10:49:50.302Z",
   "totalComponents": 32,
   "categories": {
     "Data Display": [
@@ -2000,7 +2000,7 @@
   ],
   "package": {
     "name": "@productshiv/baapui",
-    "version": "2.0.5",
+    "version": "2.0.6",
     "description": "A truly cross-platform multi-design UI framework that works with React, Next.js, React Native, and any React-based framework.",
     "keywords": [
       "react",
