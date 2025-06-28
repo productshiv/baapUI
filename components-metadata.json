@@ -1,6 +1,6 @@
 {
   "version": "2.0.5",
-  "generatedAt": "2025-06-25T20:04:32.323Z",
+  "generatedAt": "2025-06-28T07:07:21.411Z",
   "totalComponents": 32,
   "categories": {
     "Data Display": [
@@ -351,20 +351,22 @@
           "name": "design",
           "type": "ThemeDesign",
           "required": false,
-          "description": "design property"
+          "description": "design property",
+          "defaultValue": "'flat'"
         },
         {
           "name": "disabled",
           "type": "boolean",
           "required": false,
           "description": "disabled property",
-          "defaultValue": "{disabled || loading"
+          "defaultValue": "false"
         },
         {
           "name": "loading",
           "type": "boolean",
           "required": false,
-          "description": "loading property"
+          "description": "loading property",
+          "defaultValue": "false"
         },
         {
           "name": "children",
@@ -384,7 +386,7 @@
           "type": "ViewStyle",
           "required": false,
           "description": "style property",
-          "defaultValue": "{[\n        styles.button"
+          "defaultValue": "{combinedStyles"
         },
         {
           "name": "textStyle",
@@ -828,7 +830,7 @@
           "type": "ViewStyle",
           "required": false,
           "description": "style property",
-          "defaultValue": "{getContainerStyles()"
+          "defaultValue": "> {\r\n          if (style) Object.assign(baseStyles"
         },
         {
           "name": "dropdownStyle",
@@ -1440,7 +1442,7 @@
           "type": "ViewStyle",
           "required": false,
           "description": "style property",
-          "defaultValue": "{{\n        width"
+          "defaultValue": "{{\r\n        width"
         },
         {
           "name": "design",
