@@ -28,6 +28,7 @@ if [ $? -eq 0 ]; then
   
   # Invalidate MCP cache
   echo "🗑️ Invalidating MCP cache..."
+  echo "🔍 Debug: Environment variables containing 'CACHE': $(env | grep -i cache || echo 'none found')"
   
   if [ -z "$CACHE_INVALIDATION_KEY" ]; then
     echo "⚠️ CACHE_INVALIDATION_KEY not set, skipping cache invalidation"
