@@ -2,6 +2,19 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { ComponentScanner, ComponentInfo } from './component-scanner';
 
+export interface PackageInfo {
+  name: string;
+  version: string;
+  description: string;
+  keywords: string[];
+  author: string;
+  license: string;
+  repository?: {
+    type: string;
+    url: string;
+  };
+}
+
 export interface ComponentsMetadata {
   version: string;
   generatedAt: string;
@@ -9,6 +22,7 @@ export interface ComponentsMetadata {
   categories: Record<string, string[]>;
   designSystems: string[];
   components: ComponentInfo[];
+  package: PackageInfo;
 }
 
 export class MetadataGenerator {
@@ -29,13 +43,15 @@ export class MetadataGenerator {
 
     console.log(`📊 Found ${components.length} components`);
 
+    const packageInfo = this.getPackageInfo();
     const metadata: ComponentsMetadata = {
-      version: this.getPackageVersion(),
+      version: packageInfo.version,
       generatedAt: new Date().toISOString(),
       totalComponents: components.length,
       categories: this.groupByCategory(components),
       designSystems: this.extractAllDesignSystems(components),
       components,
+      package: packageInfo,
     };
 
     return metadata;
@@ -68,16 +84,32 @@ export class MetadataGenerator {
   }
 
   /**
-   * Get package version from package.json
+   * Get package information from package.json
    */
-  private getPackageVersion(): string {
+  private getPackageInfo(): PackageInfo {
     try {
       const packagePath = path.resolve(__dirname, '../package.json');
       const packageJson = JSON.parse(fs.readFileSync(packagePath, 'utf-8'));
-      return packageJson.version || '1.0.0';
+      
+      return {
+        name: packageJson.name || '@productshiv/baapui',
+        version: packageJson.version || '1.0.0',
+        description: packageJson.description || 'A cross-platform UI library',
+        keywords: packageJson.keywords || [],
+        author: packageJson.author || '',
+        license: packageJson.license || 'MIT',
+        repository: packageJson.repository
+      };
     } catch (error) {
-      console.warn('Warning: Could not read package version, using 1.0.0');
-      return '1.0.0';
+      console.warn('Warning: Could not read package.json, using defaults');
+      return {
+        name: '@productshiv/baapui',
+        version: '1.0.0',
+        description: 'A cross-platform UI library',
+        keywords: [],
+        author: '',
+        license: 'MIT'
+      };
     }
   }
 

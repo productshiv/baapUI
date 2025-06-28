@@ -1,6 +1,6 @@
 {
   "version": "2.0.5",
-  "generatedAt": "2025-06-28T07:07:21.411Z",
+  "generatedAt": "2025-06-28T07:57:51.468Z",
   "totalComponents": 32,
   "categories": {
     "Data Display": [
@@ -1997,5 +1997,27 @@
       ],
       "category": "Typography"
     }
-  ]
+  ],
+  "package": {
+    "name": "@productshiv/baapui",
+    "version": "2.0.5",
+    "description": "A truly cross-platform multi-design UI framework that works with React, Next.js, React Native, and any React-based framework.",
+    "keywords": [
+      "react",
+      "react-native",
+      "nextjs",
+      "ui-library",
+      "cross-platform",
+      "neumorphic",
+      "glassmorphic",
+      "design-system",
+      "typescript"
+    ],
+    "author": "Shivam Srivastava <shivamsrivastava947@gmail.com>",
+    "license": "MIT",
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/productshiv/baapui.git"
+    }
+  }
 }
