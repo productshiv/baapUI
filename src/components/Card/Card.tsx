@@ -9,6 +9,12 @@ export interface CardProps {
   design?: 'flat' | 'neumorphic';
   backgroundColor?: string;
   fullWidth?: boolean;
+  /** Center the card horizontally */
+  centered?: boolean;
+  /** Maximum width for larger screens */
+  maxWidth?: number | string;
+  /** Enable responsive behavior */
+  responsive?: boolean;
 }
 
 const Card: React.FC<CardProps> = ({
@@ -18,12 +24,29 @@ const Card: React.FC<CardProps> = ({
   design = 'flat',
   backgroundColor = NEUMORPHIC_COLORS.background,
   fullWidth = false,
+  centered = true,
+  maxWidth = 400,
+  responsive = true,
 }) => {
   const getCardStyles = (pressed?: boolean): ViewStyle[] => {
-    const baseStyles: ViewStyle[] = [
-      styles.container,
-      !fullWidth && styles.responsive
-    ];
+    const baseStyles: ViewStyle[] = [styles.container];
+
+    // Apply responsive and centering styles
+    if (!fullWidth && responsive) {
+      const responsiveStyle: ViewStyle = {
+        width: '100%',
+        maxWidth: typeof maxWidth === 'number' ? maxWidth : maxWidth,
+      };
+      
+      if (centered) {
+        responsiveStyle.alignSelf = 'center';
+        responsiveStyle.marginHorizontal = 'auto';
+      }
+      
+      baseStyles.push(responsiveStyle);
+    } else if (fullWidth) {
+      baseStyles.push({ width: '100%' });
+    }
 
     if (design === 'neumorphic') {
       baseStyles.push(
@@ -71,18 +94,6 @@ const styles = StyleSheet.create({
     padding: 16,
     borderWidth: 1,
     borderColor: '#E5E5E5',
-  } as ViewStyle,
-  responsive: {
-    maxWidth: 400,
-    width: '100%',
-    marginHorizontal: 'auto',
-    alignSelf: 'center',
-    '@media (min-width: 768px)': {
-      maxWidth: 600,
-    },
-    '@media (min-width: 1024px)': {
-      maxWidth: 800,
-    },
   } as ViewStyle,
   text: {
     fontSize: 16,

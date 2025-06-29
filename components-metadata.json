@@ -1,7 +1,7 @@
 {
   "version": "2.0.6",
-  "generatedAt": "2025-06-29T08:06:22.449Z",
-  "totalComponents": 33,
+  "generatedAt": "2025-06-29T11:44:47.326Z",
+  "totalComponents": 39,
   "categories": {
     "Data Display": [
       "Breadcrumbs",
@@ -43,7 +43,13 @@
       "Stepper"
     ],
     "Other": [
-      "Form"
+      "Container",
+      "Footer",
+      "Form",
+      "Hero",
+      "Navbar",
+      "Section",
+      "TwoColumn"
     ],
     "Overlays": [
       "Drawer",
@@ -57,7 +63,8 @@
   },
   "designSystems": [
     "flat",
-    "neumorphic"
+    "neumorphic",
+    "skeuomorphic"
   ],
   "components": [
     {
@@ -463,6 +470,27 @@
           "required": false,
           "description": "fullWidth property",
           "defaultValue": "false"
+        },
+        {
+          "name": "centered",
+          "type": "boolean",
+          "required": false,
+          "description": "centered property",
+          "defaultValue": "true"
+        },
+        {
+          "name": "maxWidth",
+          "type": "number | string",
+          "required": false,
+          "description": "maxWidth property",
+          "defaultValue": "400"
+        },
+        {
+          "name": "responsive",
+          "type": "boolean",
+          "required": false,
+          "description": "responsive property",
+          "defaultValue": "true"
         }
       ],
       "examples": [],
@@ -698,6 +726,52 @@
       "category": "Display"
     },
     {
+      "name": "Container",
+      "path": "src/components/Container/Container.tsx",
+      "description": "A component component",
+      "props": [
+        {
+          "name": "children",
+          "type": "React.ReactNode",
+          "required": true,
+          "description": "children property"
+        },
+        {
+          "name": "style",
+          "type": "ViewStyle",
+          "required": false,
+          "description": "style property",
+          "defaultValue": "{getContainerStyles()"
+        },
+        {
+          "name": "maxWidth",
+          "type": "'sm' | 'md' | 'lg' | 'xl' | 'full' | number",
+          "required": false,
+          "description": "maxWidth property",
+          "defaultValue": "'lg'"
+        },
+        {
+          "name": "padding",
+          "type": "'none' | 'small' | 'medium' | 'large'",
+          "required": false,
+          "description": "padding property",
+          "defaultValue": "'medium'"
+        },
+        {
+          "name": "center",
+          "type": "boolean",
+          "required": false,
+          "description": "center property",
+          "defaultValue": "true"
+        }
+      ],
+      "examples": [],
+      "designSystems": [
+        "flat"
+      ],
+      "category": "Other"
+    },
+    {
       "name": "Divider",
       "path": "src/components/Divider/Divider.tsx",
       "description": "A component component",
@@ -896,6 +970,77 @@
       "category": "Form Controls"
     },
     {
+      "name": "Footer",
+      "path": "src/components/Footer/Footer.tsx",
+      "description": "A component component",
+      "props": [
+        {
+          "name": "sections",
+          "type": "FooterSection[]",
+          "required": false,
+          "description": "sections property",
+          "defaultValue": "[]"
+        },
+        {
+          "name": "copyright",
+          "type": "string",
+          "required": false,
+          "description": "copyright property"
+        },
+        {
+          "name": "logo",
+          "type": "React.ReactNode",
+          "required": false,
+          "description": "logo property"
+        },
+        {
+          "name": "logoText",
+          "type": "string",
+          "required": false,
+          "description": "logoText property"
+        },
+        {
+          "name": "socialLinks",
+          "type": "React.ReactNode",
+          "required": false,
+          "description": "socialLinks property"
+        },
+        {
+          "name": "style",
+          "type": "ViewStyle",
+          "required": false,
+          "description": "style property",
+          "defaultValue": "{getFooterStyles()"
+        },
+        {
+          "name": "design",
+          "type": "ThemeDesign",
+          "required": false,
+          "description": "design property",
+          "defaultValue": "'flat'"
+        },
+        {
+          "name": "backgroundColor",
+          "type": "string",
+          "required": false,
+          "description": "backgroundColor property"
+        },
+        {
+          "name": "maxWidth",
+          "type": "'sm' | 'md' | 'lg' | 'xl' | 'full'",
+          "required": false,
+          "description": "maxWidth property",
+          "defaultValue": "'xl'"
+        }
+      ],
+      "examples": [],
+      "designSystems": [
+        "flat",
+        "neumorphic"
+      ],
+      "category": "Other"
+    },
+    {
       "name": "Form",
       "path": "src/components/Form/Form.tsx",
       "description": "A component component",
@@ -980,6 +1125,105 @@
         "neumorphic"
       ],
       "category": "Layout"
+    },
+    {
+      "name": "Hero",
+      "path": "src/components/Hero/Hero.tsx",
+      "description": "Build beautiful, responsive applications with our comprehensive UI component library.",
+      "props": [
+        {
+          "name": "title",
+          "type": "string",
+          "required": true,
+          "description": "title property"
+        },
+        {
+          "name": "subtitle",
+          "type": "string",
+          "required": false,
+          "description": "subtitle property"
+        },
+        {
+          "name": "description",
+          "type": "string",
+          "required": false,
+          "description": "description property"
+        },
+        {
+          "name": "actions",
+          "type": "HeroAction[]",
+          "required": false,
+          "description": "actions property",
+          "defaultValue": "[]"
+        },
+        {
+          "name": "style",
+          "type": "ViewStyle",
+          "required": false,
+          "description": "style property",
+          "defaultValue": "{getHeroStyles()"
+        },
+        {
+          "name": "design",
+          "type": "ThemeDesign",
+          "required": false,
+          "description": "design property",
+          "defaultValue": "'flat'"
+        },
+        {
+          "name": "alignment",
+          "type": "'left' | 'center' | 'right'",
+          "required": false,
+          "description": "alignment property",
+          "defaultValue": "'center'"
+        },
+        {
+          "name": "backgroundColor",
+          "type": "string",
+          "required": false,
+          "description": "backgroundColor property"
+        },
+        {
+          "name": "backgroundImage",
+          "type": "string",
+          "required": false,
+          "description": "backgroundImage property"
+        },
+        {
+          "name": "overlay",
+          "type": "boolean",
+          "required": false,
+          "description": "overlay property",
+          "defaultValue": "false"
+        },
+        {
+          "name": "overlayOpacity",
+          "type": "number",
+          "required": false,
+          "description": "overlayOpacity property",
+          "defaultValue": "0.5"
+        },
+        {
+          "name": "minHeight",
+          "type": "number | string",
+          "required": false,
+          "description": "minHeight property",
+          "defaultValue": "400"
+        },
+        {
+          "name": "maxWidth",
+          "type": "'sm' | 'md' | 'lg' | 'xl' | 'full'",
+          "required": false,
+          "description": "maxWidth property",
+          "defaultValue": "'lg'"
+        }
+      ],
+      "examples": [],
+      "designSystems": [
+        "flat",
+        "neumorphic"
+      ],
+      "category": "Other"
     },
     {
       "name": "Input",
@@ -1199,6 +1443,85 @@
       "category": "Overlays"
     },
     {
+      "name": "Navbar",
+      "path": "src/components/Navbar/Navbar.tsx",
+      "description": "A component component",
+      "props": [
+        {
+          "name": "logo",
+          "type": "React.ReactNode",
+          "required": false,
+          "description": "logo property"
+        },
+        {
+          "name": "logoText",
+          "type": "string",
+          "required": false,
+          "description": "logoText property"
+        },
+        {
+          "name": "items",
+          "type": "NavItem[]",
+          "required": false,
+          "description": "items property",
+          "defaultValue": "[]"
+        },
+        {
+          "name": "actions",
+          "type": "React.ReactNode",
+          "required": false,
+          "description": "actions property"
+        },
+        {
+          "name": "style",
+          "type": "ViewStyle",
+          "required": false,
+          "description": "style property",
+          "defaultValue": "{getNavbarStyles()"
+        },
+        {
+          "name": "design",
+          "type": "ThemeDesign",
+          "required": false,
+          "description": "design property",
+          "defaultValue": "'flat'"
+        },
+        {
+          "name": "backgroundColor",
+          "type": "string",
+          "required": false,
+          "description": "backgroundColor property"
+        },
+        {
+          "name": "position",
+          "type": "'static' | 'fixed' | 'sticky'",
+          "required": false,
+          "description": "position property",
+          "defaultValue": "'static'"
+        },
+        {
+          "name": "shadow",
+          "type": "boolean",
+          "required": false,
+          "description": "shadow property",
+          "defaultValue": "true"
+        },
+        {
+          "name": "maxWidth",
+          "type": "'sm' | 'md' | 'lg' | 'xl' | 'full'",
+          "required": false,
+          "description": "maxWidth property",
+          "defaultValue": "'xl'"
+        }
+      ],
+      "examples": [],
+      "designSystems": [
+        "flat",
+        "neumorphic"
+      ],
+      "category": "Other"
+    },
+    {
       "name": "Pagination",
       "path": "src/components/Pagination/Pagination.tsx",
       "description": "A component component",
@@ -1386,6 +1709,59 @@
         "neumorphic"
       ],
       "category": "Form Controls"
+    },
+    {
+      "name": "Section",
+      "path": "src/components/Section/Section.tsx",
+      "description": "A component component",
+      "props": [
+        {
+          "name": "children",
+          "type": "React.ReactNode",
+          "required": true,
+          "description": "children property"
+        },
+        {
+          "name": "style",
+          "type": "ViewStyle",
+          "required": false,
+          "description": "style property",
+          "defaultValue": "{getSectionStyles()"
+        },
+        {
+          "name": "design",
+          "type": "ThemeDesign",
+          "required": false,
+          "description": "design property",
+          "defaultValue": "'flat'"
+        },
+        {
+          "name": "padding",
+          "type": "'none' | 'small' | 'medium' | 'large'",
+          "required": false,
+          "description": "padding property",
+          "defaultValue": "'medium'"
+        },
+        {
+          "name": "backgroundColor",
+          "type": "string",
+          "required": false,
+          "description": "backgroundColor property"
+        },
+        {
+          "name": "fullHeight",
+          "type": "boolean",
+          "required": false,
+          "description": "fullHeight property",
+          "defaultValue": "false"
+        }
+      ],
+      "examples": [],
+      "designSystems": [
+        "flat",
+        "neumorphic"
+      ],
+      "category": "Other"
     },
     {
       "name": "SkeletonLoader",
@@ -2042,6 +2418,79 @@
       "category": "Overlays"
     },
     {
+      "name": "TwoColumn",
+      "path": "src/components/TwoColumn/TwoColumn.tsx",
+      "description": "A component component",
+      "props": [
+        {
+          "name": "left",
+          "type": "React.ReactNode",
+          "required": true,
+          "description": "left property"
+        },
+        {
+          "name": "right",
+          "type": "React.ReactNode",
+          "required": true,
+          "description": "right property"
+        },
+        {
+          "name": "style",
+          "type": "ViewStyle",
+          "required": false,
+          "description": "style property",
+          "defaultValue": "{containerStyles"
+        },
+        {
+          "name": "design",
+          "type": "ThemeDesign",
+          "required": false,
+          "description": "design property",
+          "defaultValue": "'flat'"
+        },
+        {
+          "name": "gap",
+          "type": "'none' | 'small' | 'medium' | 'large'",
+          "required": false,
+          "description": "gap property",
+          "defaultValue": "'medium'"
+        },
+        {
+          "name": "ratio",
+          "type": "'1:1' | '1:2' | '2:1' | '1:3' | '3:1'",
+          "required": false,
+          "description": "ratio property",
+          "defaultValue": "'1:1'"
+        },
+        {
+          "name": "stackOnMobile",
+          "type": "boolean",
+          "required": false,
+          "description": "stackOnMobile property",
+          "defaultValue": "true"
+        },
+        {
+          "name": "reverseOnMobile",
+          "type": "boolean",
+          "required": false,
+          "description": "reverseOnMobile property",
+          "defaultValue": "false"
+        },
+        {
+          "name": "alignment",
+          "type": "'top' | 'center' | 'bottom' | 'stretch'",
+          "required": false,
+          "description": "alignment property",
+          "defaultValue": "'top'"
+        }
+      ],
+      "examples": [],
+      "designSystems": [
+        "flat"
+      ],
+      "category": "Other"
+    },
+    {
       "name": "Typography",
       "path": "src/components/Typography/Typography.tsx",
       "description": "Available typography variants following Material Design typography scale",
@@ -2049,7 +2498,8 @@
       "examples": [],
       "designSystems": [
         "flat",
-        "neumorphic"
+        "neumorphic",
+        "skeuomorphic"
       ],
       "category": "Typography"
     }

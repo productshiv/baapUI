@@ -1,6 +1,6 @@
 import React from 'react';
 import { View } from '../../platform';
-import { Meta, StoryObj } from '@storybook/react-webpack5';
+import type { Meta, StoryObj } from '@storybook/react';
 import Card from './Card';
 import Typography from '../Typography/Typography';
 import Button from '../Button/Button';
@@ -91,6 +91,68 @@ export const WithShadow: Story = {
         <Typography variant="h5">Card with Shadow</Typography>
         <Typography variant="body1" style={{ marginTop: 8 }}>
           This card has custom shadow styling.
+        </Typography>
+      </View>
+    ),
+  },
+};
+
+export const ResponsiveCard: Story = {
+  args: {
+    centered: true,
+    maxWidth: 500,
+    responsive: true,
+    children: (
+      <View style={{ padding: 16 }}>
+        <Typography variant="h5">Responsive Card</Typography>
+        <Typography variant="body1" style={{ marginTop: 8 }}>
+          This card is centered and has a maximum width of 500px. It will be responsive and centered on larger screens.
+        </Typography>
+      </View>
+    ),
+  },
+};
+
+export const FullWidthCard: Story = {
+  args: {
+    fullWidth: true,
+    children: (
+      <View style={{ padding: 16 }}>
+        <Typography variant="h5">Full Width Card</Typography>
+        <Typography variant="body1" style={{ marginTop: 8 }}>
+          This card takes the full width of its container.
+        </Typography>
+      </View>
+    ),
+  },
+};
+
+export const CustomMaxWidth: Story = {
+  args: {
+    centered: true,
+    maxWidth: 300,
+    responsive: true,
+    children: (
+      <View style={{ padding: 16 }}>
+        <Typography variant="h5">Custom Width</Typography>
+        <Typography variant="body1" style={{ marginTop: 8 }}>
+          This card has a custom max width of 300px.
+        </Typography>
+      </View>
+    ),
+  },
+};
+
+export const LeftAligned: Story = {
+  args: {
+    centered: false,
+    maxWidth: 400,
+    responsive: true,
+    children: (
+      <View style={{ padding: 16 }}>
+        <Typography variant="h5">Left Aligned Card</Typography>
+        <Typography variant="body1" style={{ marginTop: 8 }}>
+          This card is not centered and aligns to the left.
         </Typography>
       </View>
     ),

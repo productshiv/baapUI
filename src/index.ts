@@ -26,6 +26,8 @@ export { default as Tabs } from './components/Tabs/Tabs';
 export { default as Pagination } from './components/Pagination/Pagination';
 export { default as Drawer } from './components/Drawer/Drawer';
 export { default as Accordion } from './components/Accordion/Accordion';
+export { default as Navbar } from './components/Navbar/Navbar';
+export { default as Footer } from './components/Footer/Footer';
 
 // Components - Layout
 export { default as Card } from './components/Card/Card';
@@ -33,6 +35,10 @@ export { default as Grid } from './components/Grid/Grid';
 export { default as Divider } from './components/Divider/Divider';
 export { default as BaapSafeArea } from './components/BaapSafeArea/BaapSafeArea';
 export { default as Form } from './components/Form/Form';
+export { default as Section } from './components/Section/Section';
+export { default as Container } from './components/Container/Container';
+export { default as TwoColumn } from './components/TwoColumn/TwoColumn';
+export { default as Hero } from './components/Hero/Hero';
 
 // Components - Feedback
 export { default as Toast } from './components/Toast/Toast';

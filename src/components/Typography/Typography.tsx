@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, StyleSheet, TextStyle, TextProps, Platform, StyleProp } from '../../platform';
 import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
+import { ThemeDesign } from '../../themes/types';
 
 /**
  * Available typography variants following Material Design typography scale
@@ -40,8 +41,8 @@ interface TypographyProps extends TextProps {
   adjustsFontSizeToFit?: boolean;
   /** Minimum scale factor for font size adjustment */
   minimumFontScale?: number;
-  /** Design style - flat or neumorphic */
-  design?: 'flat' | 'neumorphic';
+  /** Design style - supports all theme designs */
+  design?: ThemeDesign;
   /** Background color for neumorphic effect */
   backgroundColor?: string;
 }
@@ -117,18 +118,30 @@ const Typography: React.FC<TypographyProps> = ({
       textAlign: align,
     };
 
-    if (design === 'neumorphic') {
-      const neumorphicStyles = getNeumorphicStyles({
-        customBackground: backgroundColor,
-        customBorderRadius: 8,
-      });
+    // Apply design-specific styles
+    switch (design) {
+      case 'neumorphic':
+        const neumorphicStyles = getNeumorphicStyles({
+          customBackground: backgroundColor,
+          customBorderRadius: 8,
+        });
+        
+        // Flatten and merge neumorphic styles
+        neumorphicStyles.forEach(neumorphicStyle => {
+          Object.assign(baseStyles, neumorphicStyle);
+        });
+        
+        Object.assign(baseStyles, { padding: 8 });
+        break;
       
-      // Flatten and merge neumorphic styles
-      neumorphicStyles.forEach(neumorphicStyle => {
-        Object.assign(baseStyles, neumorphicStyle);
-      });
-      
-      Object.assign(baseStyles, { padding: 8 });
+      case 'flat':
+      case 'skeuomorphic':
+      case 'material':
+      case 'simplistic':
+      default:
+        // Use flat design for unsupported designs
+        // No additional styling needed for flat design
+        break;
     }
 
     if (style) {
