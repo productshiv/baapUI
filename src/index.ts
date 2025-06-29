@@ -32,6 +32,7 @@ export { default as Card } from './components/Card/Card';
 export { default as Grid } from './components/Grid/Grid';
 export { default as Divider } from './components/Divider/Divider';
 export { default as BaapSafeArea } from './components/BaapSafeArea/BaapSafeArea';
+export { default as Form } from './components/Form/Form';
 
 // Components - Feedback
 export { default as Toast } from './components/Toast/Toast';

@@ -247,4 +247,7 @@ const styles = StyleSheet.create({
   },
 });
 
+// Add displayName for easier debugging
+Button.displayName = 'Button';
+
 export default Button;

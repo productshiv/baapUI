@@ -1,7 +1,7 @@
 {
   "version": "2.0.6",
-  "generatedAt": "2025-06-28T10:49:50.302Z",
-  "totalComponents": 32,
+  "generatedAt": "2025-06-29T08:06:22.449Z",
+  "totalComponents": 33,
   "categories": {
     "Data Display": [
       "Breadcrumbs",
@@ -41,6 +41,9 @@
     ],
     "Navigation": [
       "Stepper"
+    ],
+    "Other": [
+      "Form"
     ],
     "Overlays": [
       "Drawer",
@@ -453,6 +456,13 @@
           "required": false,
           "description": "backgroundColor property",
           "defaultValue": "NEUMORPHIC_COLORS.background"
+        },
+        {
+          "name": "fullWidth",
+          "type": "boolean",
+          "required": false,
+          "description": "fullWidth property",
+          "defaultValue": "false"
         }
       ],
       "examples": [],
@@ -884,6 +894,52 @@
         "neumorphic"
       ],
       "category": "Form Controls"
+    },
+    {
+      "name": "Form",
+      "path": "src/components/Form/Form.tsx",
+      "description": "A component component",
+      "props": [
+        {
+          "name": "children",
+          "type": "React.ReactNode",
+          "required": true,
+          "description": "children property"
+        },
+        {
+          "name": "style",
+          "type": "ViewStyle",
+          "required": false,
+          "description": "style property",
+          "defaultValue": "{[styles.container"
+        },
+        {
+          "name": "design",
+          "type": "ThemeDesign",
+          "required": false,
+          "description": "design property",
+          "defaultValue": "'flat'"
+        },
+        {
+          "name": "spacing",
+          "type": "'compact' | 'normal' | 'relaxed'",
+          "required": false,
+          "description": "spacing property",
+          "defaultValue": "'normal'"
+        },
+        {
+          "name": "fullWidthButtons",
+          "type": "boolean",
+          "required": false,
+          "description": "Make buttons full width by default",
+          "defaultValue": "true"
+        }
+      ],
+      "examples": [],
+      "designSystems": [
+        "flat"
+      ],
+      "category": "Other"
     },
     {
       "name": "Grid",

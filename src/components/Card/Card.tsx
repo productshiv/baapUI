@@ -8,6 +8,7 @@ export interface CardProps {
   onPress?: () => void;
   design?: 'flat' | 'neumorphic';
   backgroundColor?: string;
+  fullWidth?: boolean;
 }
 
 const Card: React.FC<CardProps> = ({
@@ -16,9 +17,13 @@ const Card: React.FC<CardProps> = ({
   onPress,
   design = 'flat',
   backgroundColor = NEUMORPHIC_COLORS.background,
+  fullWidth = false,
 }) => {
   const getCardStyles = (pressed?: boolean): ViewStyle[] => {
-    const baseStyles: ViewStyle[] = [styles.container];
+    const baseStyles: ViewStyle[] = [
+      styles.container,
+      !fullWidth && styles.responsive
+    ];
 
     if (design === 'neumorphic') {
       baseStyles.push(
@@ -66,6 +71,18 @@ const styles = StyleSheet.create({
     padding: 16,
     borderWidth: 1,
     borderColor: '#E5E5E5',
+  } as ViewStyle,
+  responsive: {
+    maxWidth: 400,
+    width: '100%',
+    marginHorizontal: 'auto',
+    alignSelf: 'center',
+    '@media (min-width: 768px)': {
+      maxWidth: 600,
+    },
+    '@media (min-width: 1024px)': {
+      maxWidth: 800,
+    },
   } as ViewStyle,
   text: {
     fontSize: 16,
