@@ -9,10 +9,16 @@ import {
 } from '../../platform';
 
 import { ThemeDesign } from '../../themes/types';
+import { useThemeSafe } from '../../themes/ThemeContext';
+import { getSkeuomorphicButtonStyles } from '../../themes/utils/skeuomorphic';
 
 export interface ButtonProps {
   variant?: 'primary' | 'secondary' | 'outline' | 'text';
   size?: 'small' | 'medium' | 'large';
+  /**
+   * Design system to use. If not provided, will use the current theme from ThemeProvider.
+   * @deprecated Use ThemeProvider to set design system globally instead of passing to each component
+   */
   design?: ThemeDesign;
   disabled?: boolean;
   loading?: boolean;
@@ -28,7 +34,7 @@ const Button: React.FC<ButtonProps> = ({
   children,
   variant = 'primary',
   size = 'medium',
-  design = 'flat', // Add explicit default
+  design, // Now optional - will use theme context if not provided
   disabled = false,
   loading = false,
   onPress,
@@ -38,15 +44,32 @@ const Button: React.FC<ButtonProps> = ({
   textColor,
 }) => {
   const [isPressed, setIsPressed] = useState(false);
-  // Remove theme dependency - use explicit design prop only
-  const activeDesign = design;
+  const themeContext = useThemeSafe();
+  
+  // Use design prop if provided, otherwise use theme context, otherwise default to 'flat'
+  const activeDesign = design || themeContext?.design || 'flat';
 
   const getVariantStyles = (): { container: ViewStyle; text: TextStyle } => {
+    // If design is skeuomorphic, use skeuomorphic styles
+    if (activeDesign === 'skeuomorphic') {
+      const skeuomorphicStyles = getSkeuomorphicButtonStyles(variant, size, isPressed, disabled);
+      return {
+        container: {
+          ...skeuomorphicStyles.container,
+          ...(backgroundColor && { backgroundColor }),
+        },
+        text: {
+          ...skeuomorphicStyles.text,
+          ...(textColor && { color: textColor }),
+        },
+      };
+    }
+
     // If design is neumorphic, use neumorphic styles
     if (activeDesign === 'neumorphic') {
       return {
         container: {
-          backgroundColor: backgroundColor || '#fff',
+          backgroundColor: backgroundColor || themeContext?.theme.colors.surface || '#fff',
           borderRadius: 22,
           ...(isPressed
             ? {
@@ -58,20 +81,24 @@ const Button: React.FC<ButtonProps> = ({
           opacity: disabled ? 0.6 : 1,
         },
         text: {
-          color: disabled ? '#9e9e9e' : textColor || '#2196f3',
+          color: disabled ? '#9e9e9e' : textColor || themeContext?.theme.colors.primary || '#2196f3',
           fontSize: 16,
           fontWeight: '600',
         },
       };
     }
 
-    // For other designs, use the standard flat styles with custom colors
+    // For other designs, use the standard flat styles with theme colors
+    const primaryColor = backgroundColor || themeContext?.theme.colors.primary || '#2196f3';
+    const secondaryColor = backgroundColor || themeContext?.theme.colors.secondary || '#f50057';
+    const textColorPrimary = textColor || themeContext?.theme.colors.text || '#000000';
+    
     switch (variant) {
       case 'secondary':
         return {
           container: {
             ...styles.secondaryButton,
-            backgroundColor: backgroundColor || '#f50057',
+            backgroundColor: secondaryColor,
           },
           text: {
             ...styles.secondaryText,
@@ -82,11 +109,11 @@ const Button: React.FC<ButtonProps> = ({
         return {
           container: {
             ...styles.outlineButton,
-            borderColor: backgroundColor || '#2196f3',
+            borderColor: primaryColor,
           },
           text: {
             ...styles.outlineText,
-            color: textColor || backgroundColor || '#2196f3',
+            color: textColor || primaryColor,
           },
         };
       case 'text':
@@ -94,14 +121,14 @@ const Button: React.FC<ButtonProps> = ({
           container: styles.textButton,
           text: {
             ...styles.textButtonText,
-            color: textColor || '#2196f3',
+            color: textColor || primaryColor,
           },
         };
       default:
         return {
           container: {
             ...styles.primaryButton,
-            backgroundColor: backgroundColor || '#2196f3',
+            backgroundColor: primaryColor,
           },
           text: {
             ...styles.primaryText,
@@ -151,6 +178,8 @@ const Button: React.FC<ButtonProps> = ({
       variant, 
       size, 
       activeDesign, 
+      themeFromContext: themeContext?.design,
+      designProp: design,
       variantStyles, 
       sizeStyles,
       combinedStyles,

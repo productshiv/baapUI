@@ -1,6 +1,6 @@
 {
   "version": "2.0.6",
-  "generatedAt": "2025-06-29T11:44:47.326Z",
+  "generatedAt": "2025-06-29T13:34:18.519Z",
   "totalComponents": 39,
   "categories": {
     "Data Display": [
@@ -63,6 +63,7 @@
   },
   "designSystems": [
     "flat",
+    "glassmorphic",
     "neumorphic",
     "skeuomorphic"
   ],
@@ -202,7 +203,7 @@
     {
       "name": "Badge",
       "path": "src/components/Badge/Badge.tsx",
-      "description": "A component component",
+      "description": "Color variant of the badge",
       "props": [
         {
           "name": "variant",
@@ -361,8 +362,7 @@
           "name": "design",
           "type": "ThemeDesign",
           "required": false,
-          "description": "design property",
-          "defaultValue": "'flat'"
+          "description": "design property"
         },
         {
           "name": "disabled",
@@ -420,14 +420,15 @@
       "examples": [],
       "designSystems": [
         "flat",
-        "neumorphic"
+        "neumorphic",
+        "skeuomorphic"
       ],
       "category": "Form Controls"
     },
     {
       "name": "Card",
       "path": "src/components/Card/Card.tsx",
-      "description": "A component component",
+      "description": "Custom background color for the card",
       "props": [
         {
           "name": "children",
@@ -441,7 +442,7 @@
           "type": "ViewStyle",
           "required": false,
           "description": "style property",
-          "defaultValue": "{[styles.text"
+          "defaultValue": "{[\r\n        styles.text"
         },
         {
           "name": "onPress",
@@ -452,17 +453,15 @@
         },
         {
           "name": "design",
-          "type": "'flat' | 'neumorphic'",
+          "type": "ThemeDesign",
           "required": false,
-          "description": "design property",
-          "defaultValue": "'flat'"
+          "description": "design property"
         },
         {
           "name": "backgroundColor",
           "type": "string",
           "required": false,
-          "description": "backgroundColor property",
-          "defaultValue": "NEUMORPHIC_COLORS.background"
+          "description": "backgroundColor property"
         },
         {
           "name": "fullWidth",
@@ -496,7 +495,8 @@
       "examples": [],
       "designSystems": [
         "flat",
-        "neumorphic"
+        "neumorphic",
+        "skeuomorphic"
       ],
       "category": "Layout"
     },
@@ -593,7 +593,7 @@
     {
       "name": "Checkbox",
       "path": "src/components/Checkbox/Checkbox.tsx",
-      "description": "A component component",
+      "description": "Whether the checkbox is checked",
       "props": [
         {
           "name": "checked",
@@ -631,30 +631,28 @@
         },
         {
           "name": "design",
-          "type": "'flat' | 'neumorphic'",
+          "type": "ThemeDesign",
           "required": false,
-          "description": "design property",
-          "defaultValue": "'flat'"
+          "description": "design property"
         },
         {
           "name": "backgroundColor",
           "type": "string",
           "required": false,
-          "description": "backgroundColor property",
-          "defaultValue": "NEUMORPHIC_COLORS.background"
+          "description": "backgroundColor property"
         },
         {
           "name": "textColor",
           "type": "string",
           "required": false,
-          "description": "textColor property",
-          "defaultValue": "NEUMORPHIC_COLORS.text"
+          "description": "textColor property"
         }
       ],
       "examples": [],
       "designSystems": [
         "flat",
-        "neumorphic"
+        "neumorphic",
+        "skeuomorphic"
       ],
       "category": "Form Controls"
     },
@@ -875,7 +873,7 @@
     {
       "name": "Dropdown",
       "path": "src/components/Dropdown/Dropdown.tsx",
-      "description": "A component component",
+      "description": "Label text for the dropdown",
       "props": [
         {
           "name": "options",
@@ -1228,12 +1226,13 @@
     {
       "name": "Input",
       "path": "src/components/Input/Input.tsx",
-      "description": "A component component",
+      "description": "Label text for the input field",
       "props": [],
       "examples": [],
       "designSystems": [
         "flat",
-        "neumorphic"
+        "neumorphic",
+        "skeuomorphic"
       ],
       "category": "Form Controls"
     },
@@ -1385,7 +1384,7 @@
     {
       "name": "Modal",
       "path": "src/components/Modal/Modal.tsx",
-      "description": "A component component",
+      "description": "Whether the modal is visible",
       "props": [
         {
           "name": "visible",
@@ -1584,7 +1583,7 @@
     {
       "name": "ProgressBar",
       "path": "src/components/ProgressBar/ProgressBar.tsx",
-      "description": "A component component",
+      "description": "Progress value between 0 and 1",
       "props": [
         {
           "name": "progress",
@@ -1645,7 +1644,7 @@
     {
       "name": "RadioButton",
       "path": "src/components/RadioButton/RadioButton.tsx",
-      "description": "A component component",
+      "description": "Whether the radio button is initially selected",
       "props": [
         {
           "name": "initialSelected",
@@ -1819,7 +1818,7 @@
     {
       "name": "Slider",
       "path": "src/components/Slider/Slider.tsx",
-      "description": "A component component",
+      "description": "Current value of the slider",
       "props": [
         {
           "name": "value",
@@ -2200,7 +2199,7 @@
     {
       "name": "TextArea",
       "path": "src/components/TextArea/TextArea.tsx",
-      "description": "A component component",
+      "description": "Placeholder text for the textarea",
       "props": [],
       "examples": [],
       "designSystems": [
@@ -2212,7 +2211,7 @@
     {
       "name": "Toast",
       "path": "src/components/Toast/Toast.tsx",
-      "description": "A component component",
+      "description": "Type of toast message",
       "props": [
         {
           "name": "message",
@@ -2285,7 +2284,7 @@
     {
       "name": "ToggleSwitch",
       "path": "src/components/ToggleSwitch/ToggleSwitch.tsx",
-      "description": "A component component",
+      "description": "Initial state of the toggle switch",
       "props": [
         {
           "name": "initialValue",
@@ -2499,6 +2498,7 @@
       "designSystems": [
         "flat",
         "neumorphic",
+        "glassmorphic",
         "skeuomorphic"
       ],
       "category": "Typography"

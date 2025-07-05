@@ -1,6 +1,6 @@
 import React from 'react';
 import { View } from '../../platform';
-import type { Meta, StoryObj } from '@storybook/react-webpack5';
+import type { Meta, StoryObj } from '@storybook/react';
 import Button from './Button';
 
 const meta: Meta<typeof Button> = {
@@ -30,7 +30,7 @@ const meta: Meta<typeof Button> = {
     },
     design: {
       control: 'select',
-      options: ['flat', 'neumorphic'],
+      options: ['flat', 'neumorphic', 'skeuomorphic'],
       defaultValue: 'flat',
     },
     backgroundColor: {
@@ -141,6 +141,33 @@ export const Neumorphic: Story = {
     variant: 'primary',
     size: 'medium',
     design: 'neumorphic',
+  },
+};
+
+export const Skeuomorphic: Story = {
+  args: {
+    children: 'Skeuomorphic Button',
+    variant: 'primary',
+    size: 'medium',
+    design: 'skeuomorphic',
+  },
+};
+
+export const SkeuomorphicSecondary: Story = {
+  args: {
+    children: 'Secondary',
+    variant: 'secondary',
+    size: 'medium',
+    design: 'skeuomorphic',
+  },
+};
+
+export const SkeuomorphicOutline: Story = {
+  args: {
+    children: 'Outline',
+    variant: 'outline',
+    size: 'medium',
+    design: 'skeuomorphic',
   },
 };
 

@@ -2,6 +2,7 @@ import React from 'react';
 import { Text, StyleSheet, TextStyle, TextProps, Platform, StyleProp } from '../../platform';
 import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
 import { ThemeDesign } from '../../themes/types';
+import { useThemeSafe } from '../../themes/ThemeContext';
 
 /**
  * Available typography variants following Material Design typography scale
@@ -26,7 +27,7 @@ type TypographyVariant =
  */
 interface TypographyProps extends TextProps {
   /** The typography variant to use */
-  variant?: TypographyVariant;
+  variant?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'body' | 'body2' | 'caption' | 'button' | 'overline';
   /** The content to display */
   children: React.ReactNode;
   /** Additional styles to apply */
@@ -34,7 +35,7 @@ interface TypographyProps extends TextProps {
   /** Text color */
   color?: string;
   /** Text alignment */
-  align?: 'left' | 'center' | 'right';
+  align?: 'left' | 'center' | 'right' | 'justify';
   /** Maximum number of lines before truncating */
   numberOfLines?: number;
   /** Whether the font size should adjust to fit container */
@@ -84,84 +85,93 @@ interface TypographyProps extends TextProps {
  * ```
  */
 const Typography: React.FC<TypographyProps> = ({
-  variant = 'body1',
+  variant = 'body',
   children,
   style,
-  color = '#000000',
+  color,
   align = 'left',
   numberOfLines,
   adjustsFontSizeToFit = true,
   minimumFontScale = 0.7,
-  design = 'flat',
+  design,
   backgroundColor = NEUMORPHIC_COLORS.background,
   ...props
 }) => {
-  const variantStyles: Record<TypographyVariant, TextStyle> = {
-    h1: { fontSize: 32, fontWeight: '700', lineHeight: 40 },
-    h2: { fontSize: 28, fontWeight: '700', lineHeight: 36 },
-    h3: { fontSize: 24, fontWeight: '600', lineHeight: 32 },
-    h4: { fontSize: 20, fontWeight: '600', lineHeight: 28 },
-    h5: { fontSize: 18, fontWeight: '500', lineHeight: 26 },
-    h6: { fontSize: 16, fontWeight: '500', lineHeight: 24 },
-    subtitle1: { fontSize: 16, fontWeight: '400', lineHeight: 24 },
-    subtitle2: { fontSize: 14, fontWeight: '400', lineHeight: 22 },
-    body1: { fontSize: 16, fontWeight: '400', lineHeight: 24 },
-    body2: { fontSize: 14, fontWeight: '400', lineHeight: 22 },
-    caption: { fontSize: 12, fontWeight: '400', lineHeight: 20 },
-    overline: { fontSize: 10, fontWeight: '400', lineHeight: 16, textTransform: 'uppercase' },
+  const themeContext = useThemeSafe();
+  
+  // Use design prop if provided, otherwise use theme context, otherwise default to 'flat'
+  const activeDesign = design || themeContext?.design || 'flat';
+  
+  const getVariantStyles = (): TextStyle => {
+    // Use theme typography if available, otherwise use default styles
+    const themeTypography = themeContext?.theme.typography;
+    
+    switch (variant) {
+      case 'h1':
+        return themeTypography?.h1 || styles.h1;
+      case 'h2':
+        return themeTypography?.h2 || styles.h2;
+      case 'h3':
+        return themeTypography?.h3 || styles.h3;
+      case 'h4':
+        return styles.h4;
+      case 'h5':
+        return styles.h5;
+      case 'h6':
+        return styles.h6;
+      case 'body2':
+        return styles.body2;
+      case 'caption':
+        return themeTypography?.caption || styles.caption;
+      case 'button':
+        return themeTypography?.button || styles.button;
+      case 'overline':
+        return styles.overline;
+      default:
+        return themeTypography?.body || styles.body;
+    }
   };
 
-  const getTypographyStyles = (): TextStyle => {
-    const baseStyles: TextStyle = {
-      ...variantStyles[variant],
-      color,
-      textAlign: align,
-    };
-
-    // Apply design-specific styles
-    switch (design) {
+  const getDesignStyles = (): TextStyle => {
+    const baseColor = color || themeContext?.theme.colors.text || '#000000';
+    
+    switch (activeDesign) {
       case 'neumorphic':
-        const neumorphicStyles = getNeumorphicStyles({
-          customBackground: backgroundColor,
-          customBorderRadius: 8,
-        });
-        
-        // Flatten and merge neumorphic styles
-        neumorphicStyles.forEach(neumorphicStyle => {
-          Object.assign(baseStyles, neumorphicStyle);
-        });
-        
-        Object.assign(baseStyles, { padding: 8 });
-        break;
-      
-      case 'flat':
+        return {
+          color: baseColor,
+          textShadow: '1px 1px 2px rgba(255, 255, 255, 0.8), -1px -1px 2px rgba(0, 0, 0, 0.1)',
+        };
       case 'skeuomorphic':
-      case 'material':
-      case 'simplistic':
+        return {
+          color: baseColor,
+          textShadow: '0px 1px 2px rgba(0, 0, 0, 0.3)',
+        };
+      case 'glassmorphic':
+        return {
+          color: baseColor,
+          textShadow: '0px 0px 10px rgba(255, 255, 255, 0.5)',
+        };
       default:
-        // Use flat design for unsupported designs
-        // No additional styling needed for flat design
-        break;
+        return {
+          color: baseColor,
+        };
     }
+  };
 
-    if (style) {
-      // Handle both single style and array of styles
-      if (Array.isArray(style)) {
-        style.forEach(s => {
-          if (s) Object.assign(baseStyles, s);
-        });
-      } else if (style) {
-        Object.assign(baseStyles, style);
-      }
-    }
-
-    return baseStyles;
+  const variantStyles = getVariantStyles();
+  const designStyles = getDesignStyles();
+  
+  const combinedStyles: TextStyle = {
+    ...variantStyles,
+    ...designStyles,
+    textAlign: align,
+    ...(style || {}),
   };
 
   return (
     <Text
       {...props}
-      style={getTypographyStyles()}
+      style={combinedStyles}
       numberOfLines={numberOfLines}
       adjustsFontSizeToFit={adjustsFontSizeToFit}
       minimumFontScale={minimumFontScale}
@@ -181,81 +191,72 @@ const styles = StyleSheet.create({
   },
   h1: {
     fontSize: 32,
-    fontWeight: '700',
+    fontWeight: 'bold',
     lineHeight: 40,
-    letterSpacing: -0.5,
-    marginBottom: 8,
-  },
+    marginBottom: 16,
+  } as TextStyle,
   h2: {
     fontSize: 28,
-    fontWeight: '700',
+    fontWeight: 'bold',
     lineHeight: 36,
-    letterSpacing: -0.5,
-    marginBottom: 8,
-  },
+    marginBottom: 14,
+  } as TextStyle,
   h3: {
     fontSize: 24,
-    fontWeight: '600',
+    fontWeight: 'bold',
     lineHeight: 32,
-    marginBottom: 8,
-  },
+    marginBottom: 12,
+  } as TextStyle,
   h4: {
     fontSize: 20,
     fontWeight: '600',
     lineHeight: 28,
-    marginBottom: 8,
-  },
+    marginBottom: 10,
+  } as TextStyle,
   h5: {
     fontSize: 18,
     fontWeight: '600',
     lineHeight: 26,
     marginBottom: 8,
-  },
+  } as TextStyle,
   h6: {
     fontSize: 16,
     fontWeight: '600',
     lineHeight: 24,
+    marginBottom: 6,
+  } as TextStyle,
+  body: {
+    fontSize: 16,
+    fontWeight: 'normal',
+    lineHeight: 24,
     marginBottom: 8,
-  },
-  subtitle1: {
-    fontSize: 16,
-    fontWeight: '500',
-    lineHeight: 24,
-    letterSpacing: 0.15,
-    marginBottom: 4,
-  },
-  subtitle2: {
-    fontSize: 14,
-    fontWeight: '500',
-    lineHeight: 22,
-    letterSpacing: 0.1,
-    marginBottom: 4,
-  },
-  body1: {
-    fontSize: 16,
-    fontWeight: '400',
-    lineHeight: 24,
-    letterSpacing: 0.15,
-  },
+  } as TextStyle,
   body2: {
     fontSize: 14,
-    fontWeight: '400',
-    lineHeight: 22,
-    letterSpacing: 0.15,
-  },
+    fontWeight: 'normal',
+    lineHeight: 20,
+    marginBottom: 6,
+  } as TextStyle,
   caption: {
     fontSize: 12,
-    fontWeight: '400',
-    lineHeight: 18,
-    letterSpacing: 0.4,
-  },
+    fontWeight: 'normal',
+    lineHeight: 16,
+    marginBottom: 4,
+  } as TextStyle,
+  button: {
+    fontSize: 14,
+    fontWeight: '600',
+    lineHeight: 20,
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
+  } as TextStyle,
   overline: {
     fontSize: 10,
-    fontWeight: '500',
+    fontWeight: '600',
     lineHeight: 16,
-    letterSpacing: 1.5,
     textTransform: 'uppercase',
-  },
+    letterSpacing: 1,
+  } as TextStyle,
 });
 
 export default Typography;

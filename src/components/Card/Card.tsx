@@ -1,12 +1,19 @@
 import React from 'react';
 import { View, StyleSheet, Pressable, ViewStyle, Text } from '../../platform';
 import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
+import { getSkeuomorphicCardStyles } from '../../themes/utils/skeuomorphic';
+import { useThemeSafe } from '../../themes/ThemeContext';
+import { ThemeDesign } from '../../themes/types';
 
 export interface CardProps {
   children: React.ReactNode | string;
   style?: ViewStyle;
   onPress?: () => void;
-  design?: 'flat' | 'neumorphic';
+  /**
+   * Design system to use. If not provided, will use the current theme from ThemeProvider.
+   * @deprecated Use ThemeProvider to set design system globally instead of passing to each component
+   */
+  design?: ThemeDesign;
   backgroundColor?: string;
   fullWidth?: boolean;
   /** Center the card horizontally */
@@ -21,13 +28,19 @@ const Card: React.FC<CardProps> = ({
   children,
   style,
   onPress,
-  design = 'flat',
-  backgroundColor = NEUMORPHIC_COLORS.background,
+  design, // Now optional - will use theme context if not provided
+  backgroundColor,
   fullWidth = false,
   centered = true,
   maxWidth = 400,
   responsive = true,
 }) => {
+  const themeContext = useThemeSafe();
+  
+  // Use design prop if provided, otherwise use theme context, otherwise default to 'flat'
+  const activeDesign = design || themeContext?.design || 'flat';
+  const defaultBackgroundColor = backgroundColor || themeContext?.theme.colors.surface || NEUMORPHIC_COLORS.background;
+
   const getCardStyles = (pressed?: boolean): ViewStyle[] => {
     const baseStyles: ViewStyle[] = [styles.container];
 
@@ -48,13 +61,25 @@ const Card: React.FC<CardProps> = ({
       baseStyles.push({ width: '100%' });
     }
 
-    if (design === 'neumorphic') {
+    if (activeDesign === 'skeuomorphic') {
+      const skeuomorphicStyles = getSkeuomorphicCardStyles(true);
+      baseStyles.push({
+        ...skeuomorphicStyles,
+        ...(backgroundColor && { backgroundColor }),
+      });
+    } else if (activeDesign === 'neumorphic') {
       baseStyles.push(
         ...getNeumorphicStyles({
           isPressed: pressed,
-          customBackground: backgroundColor,
+          customBackground: defaultBackgroundColor,
         })
       );
+    } else {
+      // Apply theme colors for other design systems
+      baseStyles.push({
+        backgroundColor: defaultBackgroundColor,
+        borderColor: themeContext?.theme.colors.border || '#E5E5E5',
+      });
     }
 
     if (style) {
@@ -66,7 +91,11 @@ const Card: React.FC<CardProps> = ({
 
   const content =
     typeof children === 'string' ? (
-      <Text style={[styles.text, design === 'neumorphic' && styles.neumorphicText]}>
+      <Text style={[
+        styles.text, 
+        activeDesign === 'neumorphic' && styles.neumorphicText,
+        { color: themeContext?.theme.colors.text || '#000000' }
+      ]}>
         {children}
       </Text>
     ) : (

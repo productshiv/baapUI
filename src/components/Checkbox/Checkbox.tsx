@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { View, TouchableOpacity, Text, StyleSheet, ViewStyle } from '../../platform';
 import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
+import { getSkeuomorphicCheckboxStyles, SKEUOMORPHIC_COLORS } from '../../themes/utils/skeuomorphic';
+import { useThemeSafe } from '../../themes/ThemeContext';
+import { ThemeDesign } from '../../themes/types';
 
 interface CheckboxProps {
   checked?: boolean;
@@ -8,7 +11,11 @@ interface CheckboxProps {
   label?: string;
   style?: ViewStyle;
   disabled?: boolean;
-  design?: 'flat' | 'neumorphic';
+  /**
+   * Design system to use. If not provided, will use the current theme from ThemeProvider.
+   * @deprecated Use ThemeProvider to set design system globally instead of passing to each component
+   */
+  design?: ThemeDesign;
   backgroundColor?: string;
   textColor?: string;
 }
@@ -19,12 +26,18 @@ const Checkbox: React.FC<CheckboxProps> = ({
   label = 'Checkbox',
   style,
   disabled = false,
-  design = 'flat',
-  backgroundColor = NEUMORPHIC_COLORS.background,
-  textColor = NEUMORPHIC_COLORS.text,
+  design, // Now optional - will use theme context if not provided
+  backgroundColor,
+  textColor,
 }) => {
   const [isChecked, setIsChecked] = useState(checked);
   const [isPressed, setIsPressed] = useState(false);
+  const themeContext = useThemeSafe();
+  
+  // Use design prop if provided, otherwise use theme context, otherwise default to 'flat'
+  const activeDesign = design || themeContext?.design || 'flat';
+  const defaultBackgroundColor = backgroundColor || themeContext?.theme.colors.surface || NEUMORPHIC_COLORS.background;
+  const defaultTextColor = textColor || themeContext?.theme.colors.text || NEUMORPHIC_COLORS.text;
 
   const toggleCheckbox = () => {
     if (disabled) return;
@@ -38,10 +51,13 @@ const Checkbox: React.FC<CheckboxProps> = ({
   const getCheckboxStyles = (): ViewStyle[] => {
     const baseStyles: ViewStyle[] = [styles.checkbox];
 
-    if (design === 'neumorphic') {
+    if (activeDesign === 'skeuomorphic') {
+      const skeuomorphicStyles = getSkeuomorphicCheckboxStyles(isChecked, disabled);
+      baseStyles.push(skeuomorphicStyles.container);
+    } else if (activeDesign === 'neumorphic') {
       const neumorphicStyles = getNeumorphicStyles({
         isPressed: isPressed || isChecked,
-        customBackground: backgroundColor,
+        customBackground: defaultBackgroundColor,
         customBorderRadius: 6,
       });
 
@@ -51,6 +67,12 @@ const Checkbox: React.FC<CheckboxProps> = ({
         height: 24,
         borderWidth: 0,
         padding: 0,
+      });
+    } else {
+      // Default flat design with theme colors
+      baseStyles.push({
+        backgroundColor: isChecked ? themeContext?.theme.colors.primary || '#2196f3' : defaultBackgroundColor,
+        borderColor: themeContext?.theme.colors.border || '#000',
       });
     }
 
@@ -64,11 +86,14 @@ const Checkbox: React.FC<CheckboxProps> = ({
   const getCheckMarkStyles = (): ViewStyle[] => {
     const baseStyles: ViewStyle[] = [styles.checked];
 
-    if (design === 'neumorphic') {
+    if (activeDesign === 'skeuomorphic') {
+      // For skeuomorphic, we'll use a checkmark symbol instead of a filled square
+      return []; // The checkmark will be rendered as Text
+    } else if (activeDesign === 'neumorphic') {
       baseStyles.push({
         width: 14,
         height: 14,
-        backgroundColor: textColor,
+        backgroundColor: defaultTextColor,
         borderRadius: 3,
       });
     }
@@ -85,14 +110,26 @@ const Checkbox: React.FC<CheckboxProps> = ({
         onPressIn={() => setIsPressed(true)}
         onPressOut={() => setIsPressed(false)}
       >
-        {isChecked && <View style={getCheckMarkStyles()} />}
+        {isChecked && (
+          activeDesign === 'skeuomorphic' ? (
+            <Text style={getSkeuomorphicCheckboxStyles(isChecked, disabled).checkmark}>✓</Text>
+          ) : (
+            <View style={getCheckMarkStyles()} />
+          )
+        )}
       </TouchableOpacity>
       <Text
         style={[
           styles.label,
           disabled && styles.disabledText,
-          design === 'neumorphic' && {
-            color: textColor,
+          activeDesign === 'skeuomorphic' && {
+            color: defaultTextColor,
+            textShadowColor: SKEUOMORPHIC_COLORS.shadowLight,
+            textShadowOffset: { width: 0, height: 1 },
+            textShadowRadius: 1,
+          },
+          activeDesign === 'neumorphic' && {
+            color: defaultTextColor,
             textShadowColor: NEUMORPHIC_COLORS.lightShadow,
             textShadowOffset: { width: 1, height: 1 },
             textShadowRadius: 1,

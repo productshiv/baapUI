@@ -1,154 +1,148 @@
 import React from 'react';
 import { View } from '../../platform';
-import { Meta, StoryObj } from '@storybook/react-webpack5';
+import type { Meta, StoryObj } from '@storybook/react';
 import Typography from './Typography';
 import { NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
+import { ThemeProvider } from '../../themes/ThemeContext';
 
 const meta: Meta<typeof Typography> = {
-  title: 'Utility/Typography',
+  title: 'Typography/Typography',
   component: Typography,
-  tags: ['autodocs'],
   parameters: {
-    docs: {
-      description: {
-        component: 'A component for displaying text with consistent styling across the app. Implements Material Design typography scale with responsive sizing.',
-      },
-    },
+    layout: 'centered',
   },
+  tags: ['autodocs'],
   argTypes: {
     variant: {
-      control: 'select',
-      options: [
-        'h1',
-        'h2',
-        'h3',
-        'h4',
-        'h5',
-        'h6',
-        'subtitle1',
-        'subtitle2',
-        'body1',
-        'body2',
-        'caption',
-        'overline',
-      ],
-      description: 'The typography variant to use',
-    },
-    design: {
-      control: 'radio',
-      options: ['flat', 'neumorphic'],
-      description: 'Design style - flat or neumorphic',
-    },
-    color: { 
-      control: 'color',
-      description: 'Text color',
+      control: { type: 'select' },
+      options: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'body', 'body2', 'caption', 'button', 'overline'],
     },
     align: {
-      control: 'select',
-      options: ['left', 'center', 'right'],
-      description: 'Text alignment',
+      control: { type: 'select' },
+      options: ['left', 'center', 'right', 'justify'],
     },
-    children: {
-      control: 'text',
-      description: 'The content to display',
+    design: {
+      control: { type: 'select' },
+      options: ['flat', 'neumorphic', 'skeuomorphic', 'glassmorphic', 'retro'],
     },
   },
 };
 
 export default meta;
-type Story = StoryObj<typeof Typography>;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    children: 'Hello World',
-    variant: 'body1',
-    color: '#000000',
-    align: 'left',
-    design: 'flat',
-  },
-  parameters: {
-    docs: {
-      description: {
-        story: 'Basic usage of the Typography component with default styling.',
-      },
-    },
-  },
-};
-
-export const Neumorphic: Story = {
-  args: {
-    children: 'Neumorphic Text',
-    variant: 'h1',
-    design: 'neumorphic',
-    backgroundColor: NEUMORPHIC_COLORS.background,
-  },
-  parameters: {
-    docs: {
-      description: {
-        story: 'Typography with neumorphic design styling that creates a soft, embossed effect.',
-      },
-    },
+    children: 'The quick brown fox jumps over the lazy dog',
+    variant: 'body',
   },
 };
 
 export const AllVariants: Story = {
   render: () => (
-    <View style={{ padding: 20, gap: 10 }}>
-      <Typography variant="h1">Heading 1</Typography>
-      <Typography variant="h2">Heading 2</Typography>
-      <Typography variant="h3">Heading 3</Typography>
-      <Typography variant="h4">Heading 4</Typography>
-      <Typography variant="h5">Heading 5</Typography>
-      <Typography variant="h6">Heading 6</Typography>
-      <Typography variant="subtitle1">Subtitle 1</Typography>
-      <Typography variant="subtitle2">Subtitle 2</Typography>
-      <Typography variant="body1">Body 1</Typography>
-      <Typography variant="body2">Body 2</Typography>
-      <Typography variant="caption">Caption Text</Typography>
+    <View style={{ padding: 20, maxWidth: 600 }}>
+      <Typography variant="h1">Heading 1 - Main Title</Typography>
+      <Typography variant="h2">Heading 2 - Section Title</Typography>
+      <Typography variant="h3">Heading 3 - Subsection</Typography>
+      <Typography variant="h4">Heading 4 - Component Title</Typography>
+      <Typography variant="h5">Heading 5 - Small Title</Typography>
+      <Typography variant="h6">Heading 6 - Micro Title</Typography>
+      <Typography variant="body">Body text - This is the main body text for paragraphs and content.</Typography>
+      <Typography variant="body2">Body 2 - Smaller body text for secondary content.</Typography>
+      <Typography variant="caption">Caption - Small text for captions and labels.</Typography>
+      <Typography variant="button">Button Text</Typography>
       <Typography variant="overline">Overline Text</Typography>
     </View>
   ),
-  parameters: {
-    docs: {
-      description: {
-        story: 'Showcase of all available typography variants following Material Design typography scale.',
-      },
-    },
-  },
 };
 
-export const Alignments: Story = {
+export const WithThemeProvider: Story = {
   render: () => (
-    <View style={{ padding: 20, gap: 10 }}>
-      <Typography align="left">Left Aligned</Typography>
-      <Typography align="center">Center Aligned</Typography>
-      <Typography align="right">Right Aligned</Typography>
-    </View>
+    <ThemeProvider initialDesign="flat">
+      <View style={{ padding: 20, maxWidth: 600 }}>
+        <Typography variant="h2">Using ThemeProvider (Flat Design)</Typography>
+        <Typography variant="body">
+          This text automatically uses the flat design system from ThemeProvider.
+          No need to pass design prop to each component!
+        </Typography>
+        <Typography variant="caption">Theme is managed globally</Typography>
+      </View>
+    </ThemeProvider>
   ),
-  parameters: {
-    docs: {
-      description: {
-        story: 'Different text alignment options: left, center, and right.',
-      },
-    },
-  },
 };
 
-export const Colors: Story = {
+export const WithNeumorphicTheme: Story = {
   render: () => (
-    <View style={{ padding: 20, gap: 10 }}>
-      <Typography color={NEUMORPHIC_COLORS.primary}>Primary Color</Typography>
-      <Typography color={NEUMORPHIC_COLORS.success}>Success Color</Typography>
-      <Typography color={NEUMORPHIC_COLORS.danger}>Danger Color</Typography>
-      <Typography color={NEUMORPHIC_COLORS.warning}>Warning Color</Typography>
-      <Typography color={NEUMORPHIC_COLORS.info}>Info Color</Typography>
+    <ThemeProvider initialDesign="neumorphic">
+      <View style={{ padding: 20, maxWidth: 600, backgroundColor: '#f0f0f0' }}>
+        <Typography variant="h2">Using ThemeProvider (Neumorphic Design)</Typography>
+        <Typography variant="body">
+          This text automatically uses the neumorphic design system from ThemeProvider.
+          Notice the subtle text shadows that give depth to the text.
+        </Typography>
+        <Typography variant="caption">Theme inheritance in action</Typography>
+      </View>
+    </ThemeProvider>
+  ),
+};
+
+export const DesignComparison: Story = {
+  render: () => (
+    <View style={{ padding: 20, display: 'flex', gap: 20 }}>
+      <View style={{ padding: 15, backgroundColor: '#ffffff', borderRadius: 8 }}>
+        <Typography variant="h3" design="flat">Flat Design</Typography>
+        <Typography variant="body" design="flat">Clean, minimal text without effects</Typography>
+      </View>
+      
+      <View style={{ padding: 15, backgroundColor: '#f0f0f0', borderRadius: 8 }}>
+        <Typography variant="h3" design="neumorphic">Neumorphic Design</Typography>
+        <Typography variant="body" design="neumorphic">Soft, subtle shadows for depth</Typography>
+      </View>
+      
+      <View style={{ padding: 15, backgroundColor: '#e8e8e8', borderRadius: 8 }}>
+        <Typography variant="h3" design="skeuomorphic">Skeuomorphic Design</Typography>
+        <Typography variant="body" design="skeuomorphic">Realistic text with depth shadows</Typography>
+      </View>
+      
+      <View style={{ padding: 15, backgroundColor: '#f5f5f5', borderRadius: 8 }}>
+        <Typography variant="h3" design="glassmorphic">Glassmorphic Design</Typography>
+        <Typography variant="body" design="glassmorphic">Glassy, translucent text effects</Typography>
+      </View>
     </View>
   ),
-  parameters: {
-    docs: {
-      description: {
-        story: 'Typography with different semantic colors from the theme palette.',
-      },
-    },
+};
+
+export const ThemeProviderDemo: Story = {
+  render: () => {
+    const DemoSection = ({ design, title }: { design: any; title: string }) => (
+      <ThemeProvider initialDesign={design}>
+        <View style={{ 
+          padding: 20, 
+          margin: 10, 
+          backgroundColor: design === 'neumorphic' ? '#f0f0f0' : '#ffffff',
+          borderRadius: 12,
+          borderWidth: 1,
+          borderColor: '#e0e0e0'
+        }}>
+          <Typography variant="h3">{title}</Typography>
+          <Typography variant="body">
+            All components automatically inherit the {design} design system.
+          </Typography>
+          <Typography variant="caption">
+            No need to pass design props to individual components!
+          </Typography>
+        </View>
+      </ThemeProvider>
+    );
+
+    return (
+      <View style={{ padding: 10 }}>
+        <Typography variant="h2" align="center" style={{ marginBottom: 20 }}>
+          🎨 ThemeProvider Demo
+        </Typography>
+        <DemoSection design="flat" title="Flat Theme Section" />
+        <DemoSection design="neumorphic" title="Neumorphic Theme Section" />
+      </View>
+    );
   },
 };

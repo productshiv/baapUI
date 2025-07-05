@@ -1,7 +1,7 @@
 import { ViewStyle, TextStyle } from '../platform';
 
 export type ThemeMode = 'light' | 'dark';
-export type ThemeDesign = 'flat' | 'neumorphic' | 'skeuomorphic' | 'material' | 'simplistic';
+export type ThemeDesign = 'flat' | 'neumorphic' | 'skeuomorphic' | 'material' | 'simplistic' | 'glassmorphic' | 'retro';
 
 export interface ThemeColors {
   primary: string;
