@@ -151,7 +151,7 @@ const Hero: React.FC<HeroProps> = ({
 
           {description && (
             <Typography
-              variant="body1"
+              variant="body"
               style={[styles.description, { textAlign }]}
               design={design}
             >
@@ -223,4 +223,4 @@ const styles = StyleSheet.create({
   } as ViewStyle,
 });
 
-export default Hero; 
+export default Hero;

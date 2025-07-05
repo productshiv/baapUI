@@ -1,5 +1,5 @@
 import React from 'react';
-import type { Meta, StoryObj } from '@storybook/react-webpack5';
+import type { Meta, StoryObj } from '@storybook/react';
 import Table from './Table';
 import { NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
 
@@ -26,7 +26,7 @@ const meta: Meta<typeof Table> = {
   argTypes: {
     design: {
       control: 'radio',
-      options: ['flat', 'neumorphic'],
+      options: ['flat', 'neumorphic', 'skeuomorphic'],
     },
   },
 };
@@ -115,6 +115,48 @@ export const NeumorphicCustom: Story = {
           color: NEUMORPHIC_COLORS.primary,
           fontSize: 16,
         }}
+      />
+    </div>
+  ),
+};
+
+export const Skeuomorphic: Story = {
+  args: {
+    columns,
+    data: sampleData,
+    design: 'skeuomorphic',
+  },
+};
+
+export const SkeuomorphicCustom: Story = {
+  render: () => (
+    <div
+      style={{
+        backgroundColor: '#f0f0f0',
+        padding: 32,
+        borderRadius: 16,
+        width: 800,
+      }}
+    >
+      <Table
+        columns={[
+          { key: 'project', label: 'Project' },
+          { key: 'progress', label: 'Progress' },
+          { key: 'deadline', label: 'Deadline' },
+          { key: 'priority', label: 'Priority' },
+        ]}
+        data={[
+          {
+            project: 'Website Redesign',
+            progress: '75%',
+            deadline: '2024-04-01',
+            priority: 'High',
+          },
+          { project: 'Mobile App', progress: '45%', deadline: '2024-05-15', priority: 'Medium' },
+          { project: 'API Integration', progress: '90%', deadline: '2024-03-20', priority: 'High' },
+          { project: 'Documentation', progress: '30%', deadline: '2024-04-30', priority: 'Low' },
+        ]}
+        design="skeuomorphic"
       />
     </div>
   ),

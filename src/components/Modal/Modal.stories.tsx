@@ -27,7 +27,7 @@ const meta: Meta<typeof Modal> = {
     },
     design: {
       control: 'select',
-      options: ['flat', 'neumorphic'],
+      options: ['flat', 'neumorphic', 'skeuomorphic', 'glassmorphic'],
       defaultValue: 'flat',
       description: 'Design system variant',
     },
@@ -98,6 +98,90 @@ export const Neumorphic: Story = {
           This modal uses the neumorphic design system.
         </Typography>
         <Button onPress={() => {}}>Close</Button>
+      </View>
+    ),
+  },
+};
+
+export const Skeuomorphic: Story = {
+  args: {
+    visible: true,
+    design: 'skeuomorphic',
+    children: (
+      <View>
+        <Typography variant="h6">Skeuomorphic Design Modal</Typography>
+        <Typography style={{ marginVertical: 20 }}>
+          This modal uses the skeuomorphic design system.
+        </Typography>
+        <Button onPress={() => {}}>Close</Button>
+      </View>
+    ),
+  },
+};
+
+export const Glassmorphic: Story = {
+  args: {
+    visible: true,
+    design: 'glassmorphic',
+    children: (
+      <View>
+        <Typography variant="h6">Glassmorphic Design Modal</Typography>
+        <Typography style={{ marginVertical: 20 }}>
+          This modal uses the glassmorphic design system with glass-like transparency and blur effects.
+        </Typography>
+        <Button onPress={() => {}}>Close</Button>
+      </View>
+    ),
+  },
+};
+
+// Glassmorphic Design Stories
+export const GlassmorphicAlert: Story = {
+  args: {
+    visible: true,
+    design: 'glassmorphic',
+    children: (
+      <View style={{ alignItems: 'center' }}>
+        <Typography variant="h6" style={{ textAlign: 'center', marginBottom: 16 }}>⚠️ Glass Alert</Typography>
+        <Typography style={{ textAlign: 'center', marginBottom: 20 }}>
+          This is a glassmorphic alert modal with beautiful transparency effects.
+        </Typography>
+        <View style={{ flexDirection: 'row', gap: 12 }}>
+          <Button variant="outline" onPress={() => {}}>Cancel</Button>
+          <Button design="glassmorphic" onPress={() => {}}>Confirm</Button>
+        </View>
+      </View>
+    ),
+  },
+};
+
+export const GlassmorphicSuccess: Story = {
+  args: {
+    visible: true,
+    design: 'glassmorphic',
+    children: (
+      <View style={{ alignItems: 'center' }}>
+        <Typography variant="h6" style={{ textAlign: 'center', marginBottom: 16 }}>✨ Glass Success</Typography>
+        <Typography style={{ textAlign: 'center', marginBottom: 20 }}>
+          Your action completed successfully with elegant glass styling!
+        </Typography>
+        <Button design="glassmorphic" onPress={() => {}}>Perfect!</Button>
+      </View>
+    ),
+  },
+};
+
+export const GlassmorphicPlayground: Story = {
+  args: {
+    visible: true,
+    design: 'glassmorphic',
+    children: (
+      <View>
+        <Typography variant="h6">Interactive Glass Modal</Typography>
+        <Typography style={{ marginVertical: 20 }}>
+          Customize this glassmorphic modal using the controls panel.
+        </Typography>
+        <Button design="glassmorphic" onPress={() => {}}>Glass Button</Button>
       </View>
     ),
   },
@@ -437,6 +521,68 @@ const MultiStepModalExample = () => {
 
 export const MultiStep: Story = {
   render: () => <MultiStepModalExample />,
+};
+
+// All Designs Showcase
+export const AllDesigns: Story = {
+  render: () => {
+    const [activeDesign, setActiveDesign] = useState<string | null>(null);
+
+    return (
+      <View style={{ padding: 20, gap: 12, alignItems: 'center' }}>
+        <Typography variant="h6" style={{ marginBottom: 16 }}>Design Systems</Typography>
+        
+        <Button onPress={() => setActiveDesign('flat')}>Flat Design</Button>
+        <Button onPress={() => setActiveDesign('neumorphic')}>Neumorphic Design</Button>
+        <Button onPress={() => setActiveDesign('skeuomorphic')}>Skeuomorphic Design</Button>
+        <Button onPress={() => setActiveDesign('glassmorphic')}>Glassmorphic Design</Button>
+
+        {/* Flat Modal */}
+        <Modal visible={activeDesign === 'flat'} design="flat" onClose={() => setActiveDesign(null)}>
+          <View>
+            <Typography variant="h6">Flat Design Modal</Typography>
+            <Typography style={{ marginVertical: 20 }}>
+              This modal demonstrates the flat design system with clean, minimalist styling.
+            </Typography>
+            <Button onPress={() => setActiveDesign(null)}>Close</Button>
+          </View>
+        </Modal>
+
+        {/* Neumorphic Modal */}
+        <Modal visible={activeDesign === 'neumorphic'} design="neumorphic" onClose={() => setActiveDesign(null)}>
+          <View>
+            <Typography variant="h6">Neumorphic Design Modal</Typography>
+            <Typography style={{ marginVertical: 20 }}>
+              This modal demonstrates the neumorphic design system with soft, extruded styling.
+            </Typography>
+            <Button onPress={() => setActiveDesign(null)}>Close</Button>
+          </View>
+        </Modal>
+
+        {/* Skeuomorphic Modal */}
+        <Modal visible={activeDesign === 'skeuomorphic'} design="skeuomorphic" onClose={() => setActiveDesign(null)}>
+          <View>
+            <Typography variant="h6">Skeuomorphic Design Modal</Typography>
+            <Typography style={{ marginVertical: 20 }}>
+              This modal demonstrates the skeuomorphic design system with realistic, textured styling.
+            </Typography>
+            <Button onPress={() => setActiveDesign(null)}>Close</Button>
+          </View>
+        </Modal>
+
+        {/* Glassmorphic Modal */}
+        <Modal visible={activeDesign === 'glassmorphic'} design="glassmorphic" onClose={() => setActiveDesign(null)}>
+          <View>
+            <Typography variant="h6">Glassmorphic Design Modal</Typography>
+            <Typography style={{ marginVertical: 20 }}>
+              This modal demonstrates the glassmorphic design system with glass-like transparency and blur effects.
+            </Typography>
+            <Button onPress={() => setActiveDesign(null)}>Close</Button>
+          </View>
+        </Modal>
+      </View>
+    );
+  },
 };
 
 // Modal Showcase

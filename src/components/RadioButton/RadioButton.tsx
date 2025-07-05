@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, TouchableOpacity, Text, StyleSheet, ViewStyle } from '../../platform';
 import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
+import { getSkeuomorphicRadioStyles, SKEUOMORPHIC_COLORS } from '../../themes/utils/skeuomorphic';
 
 interface RadioButtonProps {
   initialSelected?: boolean;
@@ -8,7 +9,7 @@ interface RadioButtonProps {
   label?: string;
   style?: ViewStyle;
   disabled?: boolean;
-  design?: 'flat' | 'neumorphic';
+  design?: 'flat' | 'neumorphic' | 'skeuomorphic';
   backgroundColor?: string;
   textColor?: string;
 }
@@ -54,6 +55,11 @@ const RadioButton: React.FC<RadioButtonProps> = ({
       });
     }
 
+    if (design === 'skeuomorphic') {
+      const skeuomorphicStyles = getSkeuomorphicRadioStyles(selected, disabled);
+      baseStyles.push(skeuomorphicStyles.container);
+    }
+
     if (disabled) {
       baseStyles.push(styles.disabled);
     }
@@ -71,6 +77,11 @@ const RadioButton: React.FC<RadioButtonProps> = ({
         backgroundColor: textColor,
         borderRadius: 7,
       });
+    }
+
+    if (design === 'skeuomorphic') {
+      const skeuomorphicStyles = getSkeuomorphicRadioStyles(selected, disabled);
+      baseStyles.push(skeuomorphicStyles.innerCircle);
     }
 
     return baseStyles;
@@ -93,9 +104,9 @@ const RadioButton: React.FC<RadioButtonProps> = ({
           disabled && styles.disabledText,
           design === 'neumorphic' && {
             color: textColor,
-            textShadowColor: NEUMORPHIC_COLORS.lightShadow,
-            textShadowOffset: { width: 1, height: 1 },
-            textShadowRadius: 1,
+          },
+          design === 'skeuomorphic' && {
+            color: textColor,
           },
         ]}
       >

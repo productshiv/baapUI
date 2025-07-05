@@ -20,7 +20,7 @@ const meta: Meta<typeof ToggleSwitch> = {
   argTypes: {
     design: {
       control: 'select',
-      options: ['flat', 'neumorphic'],
+      options: ['flat', 'neumorphic', 'skeuomorphic'],
       defaultValue: 'flat',
     },
     initialValue: {
@@ -88,7 +88,28 @@ export const Neumorphic: Story = {
   },
 };
 
-// Skeuomorphic design not supported by ToggleSwitch component
+export const Skeuomorphic: Story = {
+  args: {
+    label: 'Skeuomorphic Design Toggle',
+    design: 'skeuomorphic',
+  },
+};
+
+export const SkeuomorphicEnabled: Story = {
+  args: {
+    label: 'Skeuomorphic Enabled',
+    design: 'skeuomorphic',
+    initialValue: true,
+  },
+};
+
+export const SkeuomorphicDisabled: Story = {
+  args: {
+    label: 'Skeuomorphic Disabled',
+    design: 'skeuomorphic',
+    disabled: true,
+  },
+};
 
 // State Variations
 export const Enabled: Story = {
@@ -237,6 +258,14 @@ export const AllDesigns: Story = {
           onToggle={() => {}}
         />
       </View>
+      <View>
+        <ToggleSwitch
+          label="Skeuomorphic Design"
+          design="skeuomorphic"
+          initialValue={false}
+          onToggle={() => {}}
+        />
+      </View>
     </View>
   ),
 };
@@ -257,6 +286,14 @@ export const AllDesignsEnabled: Story = {
         <ToggleSwitch
           label="Neumorphic Design (Enabled)"
           design="neumorphic"
+          initialValue={true}
+          onToggle={() => {}}
+        />
+      </View>
+      <View>
+        <ToggleSwitch
+          label="Skeuomorphic Design (Enabled)"
+          design="skeuomorphic"
           initialValue={true}
           onToggle={() => {}}
         />

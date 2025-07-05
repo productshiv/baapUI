@@ -1,5 +1,5 @@
 import React from 'react';
-import type { Meta, StoryObj } from '@storybook/react-webpack5';
+import type { Meta, StoryObj } from '@storybook/react';
 import List, { ListItem } from './List';
 import { NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
 
@@ -18,7 +18,7 @@ const meta: Meta<typeof List> = {
   argTypes: {
     design: {
       control: 'radio',
-      options: ['flat', 'neumorphic'],
+      options: ['flat', 'neumorphic', 'skeuomorphic'],
     },
   },
 };
@@ -112,4 +112,30 @@ export const CustomStyles: Story = {
       shadowRadius: 4,
     },
   },
+};
+
+export const Skeuomorphic: Story = {
+  args: {
+    items: sampleItems,
+    design: 'skeuomorphic',
+  },
+};
+
+export const SkeuomorphicComplex: Story = {
+  render: () => (
+    <div
+      style={{
+        backgroundColor: '#f0f0f0',
+        padding: 24,
+        borderRadius: 12,
+        width: 400,
+      }}
+    >
+      <List
+        items={complexItems}
+        design="skeuomorphic"
+        onItemPress={index => console.log(`Item ${index} clicked`)}
+      />
+    </div>
+  ),
 };

@@ -1,0 +1,193 @@
+import { Theme } from '../types';
+
+export const glassmorphicLightTheme: Theme = {
+  mode: 'light',
+  design: 'glassmorphic',
+  colors: {
+    primary: '#007AFF',
+    secondary: '#5856D6',
+    background: 'rgba(255, 255, 255, 0.1)',
+    surface: 'rgba(255, 255, 255, 0.2)',
+    text: '#1D1D1F',
+    textSecondary: 'rgba(29, 29, 31, 0.7)',
+    border: 'rgba(255, 255, 255, 0.3)',
+    error: '#FF3B30',
+    success: '#34C759',
+    warning: '#FF9500',
+    info: '#5856D6',
+    lightShadow: 'rgba(255, 255, 255, 0.8)',
+    darkShadow: 'rgba(0, 0, 0, 0.1)',
+  },
+  shadows: {
+    small: {
+      shadowColor: 'rgba(0, 0, 0, 0.1)',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.1,
+      shadowRadius: 8,
+      elevation: 2,
+    },
+    medium: {
+      shadowColor: 'rgba(0, 0, 0, 0.15)',
+      shadowOffset: { width: 0, height: 4 },
+      shadowOpacity: 0.15,
+      shadowRadius: 16,
+      elevation: 4,
+    },
+    large: {
+      shadowColor: 'rgba(0, 0, 0, 0.2)',
+      shadowOffset: { width: 0, height: 8 },
+      shadowOpacity: 0.2,
+      shadowRadius: 24,
+      elevation: 8,
+    },
+  },
+  spacing: {
+    xs: 4,
+    sm: 8,
+    md: 16,
+    lg: 24,
+    xl: 32,
+  },
+  typography: {
+    h1: {
+      fontSize: 34,
+      fontWeight: 'bold',
+      letterSpacing: 0.37,
+      color: 'rgba(29, 29, 31, 0.9)',
+    },
+    h2: {
+      fontSize: 28,
+      fontWeight: '600',
+      letterSpacing: 0.35,
+      color: 'rgba(29, 29, 31, 0.9)',
+    },
+    h3: {
+      fontSize: 22,
+      fontWeight: '600',
+      letterSpacing: 0.35,
+      color: 'rgba(29, 29, 31, 0.9)',
+    },
+    body: {
+      fontSize: 17,
+      fontWeight: 'normal',
+      letterSpacing: -0.41,
+      color: 'rgba(29, 29, 31, 0.8)',
+    },
+    button: {
+      fontSize: 17,
+      fontWeight: '600',
+      letterSpacing: -0.41,
+      color: 'rgba(29, 29, 31, 0.9)',
+    },
+    caption: {
+      fontSize: 12,
+      fontWeight: 'normal',
+      letterSpacing: 0,
+      color: 'rgba(29, 29, 31, 0.6)',
+    },
+  },
+  shape: {
+    borderRadius: {
+      sm: 8,
+      md: 12,
+      lg: 16,
+      full: 9999,
+    },
+  },
+};
+
+export const glassmorphicDarkTheme: Theme = {
+  mode: 'dark',
+  design: 'glassmorphic',
+  colors: {
+    primary: '#0A84FF',
+    secondary: '#5E5CE6',
+    background: 'rgba(0, 0, 0, 0.1)',
+    surface: 'rgba(255, 255, 255, 0.1)',
+    text: '#FFFFFF',
+    textSecondary: 'rgba(255, 255, 255, 0.7)',
+    border: 'rgba(255, 255, 255, 0.2)',
+    error: '#FF453A',
+    success: '#32D74B',
+    warning: '#FF9F0A',
+    info: '#5E5CE6',
+    lightShadow: 'rgba(255, 255, 255, 0.1)',
+    darkShadow: 'rgba(0, 0, 0, 0.3)',
+  },
+  shadows: {
+    small: {
+      shadowColor: 'rgba(0, 0, 0, 0.3)',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.3,
+      shadowRadius: 8,
+      elevation: 2,
+    },
+    medium: {
+      shadowColor: 'rgba(0, 0, 0, 0.4)',
+      shadowOffset: { width: 0, height: 4 },
+      shadowOpacity: 0.4,
+      shadowRadius: 16,
+      elevation: 4,
+    },
+    large: {
+      shadowColor: 'rgba(0, 0, 0, 0.5)',
+      shadowOffset: { width: 0, height: 8 },
+      shadowOpacity: 0.5,
+      shadowRadius: 24,
+      elevation: 8,
+    },
+  },
+  spacing: {
+    xs: 4,
+    sm: 8,
+    md: 16,
+    lg: 24,
+    xl: 32,
+  },
+  typography: {
+    h1: {
+      fontSize: 34,
+      fontWeight: 'bold',
+      letterSpacing: 0.37,
+      color: 'rgba(255, 255, 255, 0.95)',
+    },
+    h2: {
+      fontSize: 28,
+      fontWeight: '600',
+      letterSpacing: 0.35,
+      color: 'rgba(255, 255, 255, 0.95)',
+    },
+    h3: {
+      fontSize: 22,
+      fontWeight: '600',
+      letterSpacing: 0.35,
+      color: 'rgba(255, 255, 255, 0.95)',
+    },
+    body: {
+      fontSize: 17,
+      fontWeight: 'normal',
+      letterSpacing: -0.41,
+      color: 'rgba(255, 255, 255, 0.85)',
+    },
+    button: {
+      fontSize: 17,
+      fontWeight: '600',
+      letterSpacing: -0.41,
+      color: 'rgba(255, 255, 255, 0.95)',
+    },
+    caption: {
+      fontSize: 12,
+      fontWeight: 'normal',
+      letterSpacing: 0,
+      color: 'rgba(255, 255, 255, 0.6)',
+    },
+  },
+  shape: {
+    borderRadius: {
+      sm: 8,
+      md: 12,
+      lg: 16,
+      full: 9999,
+    },
+  },
+};

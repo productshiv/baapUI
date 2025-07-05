@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, StyleSheet, ViewStyle, Pressable, Text } from '../../platform';
 import { ThemeDesign } from '../../themes/types';
 import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
+import { getSkeuomorphicCardStyles, SKEUOMORPHIC_COLORS } from '../../themes/utils/skeuomorphic';
 import Typography from '../Typography/Typography';
 import Button from '../Button/Button';
 import Container from '../Container/Container';
@@ -64,6 +65,12 @@ const Navbar: React.FC<NavbarProps> = ({
           customBackground: backgroundColor || NEUMORPHIC_COLORS.background,
         })
       );
+    } else if (design === 'skeuomorphic') {
+      const skeuomorphicStyles = getSkeuomorphicCardStyles(false);
+      baseStyles.push(skeuomorphicStyles);
+      if (backgroundColor) {
+        baseStyles.push({ backgroundColor });
+      }
     }
 
     if (style) {
@@ -104,7 +111,7 @@ const Navbar: React.FC<NavbarProps> = ({
                 ]}
               >
                 <Typography
-                  variant="body1"
+                  variant="body"
                   style={[
                     styles.navItemText,
                     item.active && styles.activeNavItemText,
@@ -151,7 +158,7 @@ const Navbar: React.FC<NavbarProps> = ({
                 ]}
               >
                 <Typography
-                  variant="body1"
+                  variant="body"
                   style={[
                     styles.mobileNavItemText,
                     item.active && styles.activeMobileNavItemText,
@@ -282,4 +289,4 @@ const styles = StyleSheet.create({
   } as ViewStyle,
 });
 
-export default Navbar; 
+export default Navbar;

@@ -2,6 +2,7 @@ import React from 'react';
 import { View } from '../../platform';
 import type { Meta, StoryObj } from '@storybook/react';
 import RadioButton from './RadioButton';
+import Typography from '../Typography/Typography';
 
 const meta: Meta<typeof RadioButton> = {
   title: 'Core UI/RadioButton',
@@ -20,7 +21,7 @@ const meta: Meta<typeof RadioButton> = {
   argTypes: {
     design: {
       control: 'select',
-      options: ['flat', 'neumorphic'],
+      options: ['flat', 'neumorphic', 'skeuomorphic'],
       defaultValue: 'flat',
     },
     initialSelected: {
@@ -88,7 +89,28 @@ export const Neumorphic: Story = {
   },
 };
 
-// Skeuomorphic design not supported by RadioButton component
+export const Skeuomorphic: Story = {
+  args: {
+    label: 'Skeuomorphic Design Radio',
+    design: 'skeuomorphic',
+  },
+};
+
+export const SkeuomorphicSelected: Story = {
+  args: {
+    label: 'Skeuomorphic Selected',
+    design: 'skeuomorphic',
+    initialSelected: true,
+  },
+};
+
+export const SkeuomorphicDisabled: Story = {
+  args: {
+    label: 'Skeuomorphic Disabled',
+    design: 'skeuomorphic',
+    disabled: true,
+  },
+};
 
 // State Variations
 export const Selected: Story = {
@@ -251,7 +273,37 @@ export const NeumorphicGroup: Story = {
   },
 };
 
-// SkeuomorphicGroup removed - design not supported
+const SkeuomorphicGroup = () => {
+  const [selectedOption, setSelectedOption] = React.useState('option1');
+
+  return (
+    <View style={{ padding: 20 }}>
+      <Typography variant="h6" style={{ marginBottom: 10 }}>Skeuomorphic Radio Group</Typography>
+      <RadioButton
+        label="Option 1"
+        design="skeuomorphic"
+        initialSelected={selectedOption === 'option1'}
+        onToggle={() => setSelectedOption('option1')}
+      />
+      <RadioButton
+        label="Option 2"
+        design="skeuomorphic"
+        initialSelected={selectedOption === 'option2'}
+        onToggle={() => setSelectedOption('option2')}
+      />
+      <RadioButton
+        label="Option 3"
+        design="skeuomorphic"
+        initialSelected={selectedOption === 'option3'}
+        onToggle={() => setSelectedOption('option3')}
+      />
+    </View>
+  );
+};
+
+export const SkeuomorphicGroupStory: Story = {
+  render: () => <SkeuomorphicGroup />,
+};
 
 // All Design Systems Showcase
 export const AllDesigns: Story = {

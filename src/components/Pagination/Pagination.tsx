@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ViewStyle, TextStyle } from '../../platform';
 import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
+import { convertShadowToStyle, convertGradientToStyle } from '../../themes/utils/skeuomorphic';
+import { SKEUOMORPHIC_COLORS, SKEUOMORPHIC_SHADOWS, SKEUOMORPHIC_GRADIENTS, SKEUOMORPHIC_BORDER_RADIUS, SKEUOMORPHIC_BORDER_WIDTHS } from '../../themes/variants/skeuomorphic';
 
 interface PaginationProps {
   totalPages: number;
   currentPage: number;
   onPageChange: (page: number) => void;
   style?: ViewStyle;
-  design?: 'flat' | 'neumorphic';
+  design?: 'flat' | 'neumorphic' | 'skeuomorphic';
   backgroundColor?: string;
   textColor?: string;
 }
@@ -50,6 +52,17 @@ const Pagination: React.FC<PaginationProps> = ({
         backgroundColor,
         padding: 12,
       });
+    } else if (design === 'skeuomorphic') {
+      const skeuomorphicStyle: ViewStyle = {
+        backgroundColor: SKEUOMORPHIC_COLORS.background,
+        padding: 16,
+        borderRadius: SKEUOMORPHIC_BORDER_RADIUS.lg,
+        borderWidth: SKEUOMORPHIC_BORDER_WIDTHS.thin,
+        borderColor: SKEUOMORPHIC_COLORS.borderLight,
+        ...convertGradientToStyle(SKEUOMORPHIC_GRADIENTS.card),
+        ...convertShadowToStyle(SKEUOMORPHIC_SHADOWS.card),
+      };
+      baseStyles.push(skeuomorphicStyle);
     }
 
     if (style) {
@@ -78,6 +91,19 @@ const Pagination: React.FC<PaginationProps> = ({
         padding: 12,
         minWidth: 100,
       });
+    } else if (design === 'skeuomorphic') {
+      const skeuomorphicStyle: ViewStyle = {
+        padding: 12,
+        minWidth: 100,
+        borderRadius: SKEUOMORPHIC_BORDER_RADIUS.md,
+        borderWidth: SKEUOMORPHIC_BORDER_WIDTHS.thin,
+        borderColor: isDisabled ? SKEUOMORPHIC_COLORS.borderLight : SKEUOMORPHIC_COLORS.primary,
+        backgroundColor: isDisabled ? SKEUOMORPHIC_COLORS.surface : SKEUOMORPHIC_COLORS.primary,
+        opacity: isDisabled ? 0.6 : 1,
+        ...convertGradientToStyle(isDisabled ? SKEUOMORPHIC_GRADIENTS.button.secondary : SKEUOMORPHIC_GRADIENTS.button.primary),
+        ...convertShadowToStyle(isPressed ? SKEUOMORPHIC_SHADOWS.button.pressed : SKEUOMORPHIC_SHADOWS.button.default),
+      };
+      baseStyles.push(skeuomorphicStyle);
     } else {
       if (isDisabled) {
         baseStyles.push({ opacity: 0.5 });
@@ -99,6 +125,15 @@ const Pagination: React.FC<PaginationProps> = ({
         fontWeight: '600',
         textShadowColor: NEUMORPHIC_COLORS.lightShadow,
         textShadowOffset: { width: 1, height: 1 },
+        textShadowRadius: 1,
+      });
+    } else if (design === 'skeuomorphic') {
+      Object.assign(baseStyles, {
+        color: isButton ? SKEUOMORPHIC_COLORS.onPrimary : SKEUOMORPHIC_COLORS.onSurface,
+        fontSize: isButton ? 14 : 16,
+        fontWeight: '700',
+        textShadowColor: SKEUOMORPHIC_COLORS.shadowMedium,
+        textShadowOffset: { width: 0, height: 1 },
         textShadowRadius: 1,
       });
     }

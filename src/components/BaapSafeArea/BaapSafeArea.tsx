@@ -7,7 +7,7 @@ interface BaapSafeAreaProps extends ScrollViewProps {
   style?: ViewStyle;
   contentContainerStyle?: ViewStyle;
   disableScroll?: boolean;
-  design?: 'flat' | 'neumorphic';
+  design?: 'flat' | 'neumorphic' | 'skeuomorphic';
   backgroundColor?: string;
 }
 

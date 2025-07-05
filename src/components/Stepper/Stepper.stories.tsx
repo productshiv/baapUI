@@ -22,7 +22,7 @@ const meta: Meta<typeof Stepper> = {
   argTypes: {
     design: {
       control: 'select',
-      options: ['flat', 'neumorphic'],
+      options: ['flat', 'neumorphic', 'skeuomorphic'],
       defaultValue: 'flat',
       description: 'Design system variant',
     },
@@ -93,6 +93,14 @@ export const Neumorphic: Story = {
   args: {
     value: 7,
     design: 'neumorphic',
+    onValueChange: () => {},
+  },
+};
+
+export const Skeuomorphic: Story = {
+  args: {
+    value: 5,
+    design: 'skeuomorphic',
     onValueChange: () => {},
   },
 };
@@ -443,6 +451,17 @@ export const AllDesigns: Story = {
             minimumValue={0}
             maximumValue={10}
             design="neumorphic"
+          />
+        </View>
+        <View style={{ gap: 8 }}>
+          <Typography variant="body2" style={{ fontWeight: 'bold' }}>Skeuomorphic Design</Typography>
+          <Stepper
+            value={5}
+            onValueChange={() => {}}
+            step={1}
+            minimumValue={0}
+            maximumValue={10}
+            design="skeuomorphic"
           />
         </View>
       </View>

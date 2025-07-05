@@ -13,7 +13,7 @@ const meta: Meta<typeof Footer> = {
   argTypes: {
     design: {
       control: { type: 'select' },
-      options: ['flat', 'neumorphic'],
+      options: ['flat', 'neumorphic', 'skeuomorphic'],
     },
     maxWidth: {
       control: { type: 'select' },
@@ -134,4 +134,4 @@ export const CompanyFooter: Story = {
     design: 'flat',
     backgroundColor: '#f8f9fa',
   },
-}; 
+};

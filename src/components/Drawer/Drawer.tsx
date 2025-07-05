@@ -2,6 +2,16 @@ import React, { useState } from 'react';
 import { View, TouchableOpacity, StyleSheet, ViewStyle } from '../../platform';
 import Typography from '../Typography/Typography';
 import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
+import {
+  convertShadowToStyle,
+  convertGradientToStyle,
+} from '../../themes/utils/skeuomorphic';
+import {
+  SKEUOMORPHIC_COLORS,
+  SKEUOMORPHIC_SHADOWS,
+  SKEUOMORPHIC_GRADIENTS,
+  SKEUOMORPHIC_BORDER_WIDTHS,
+} from '../../themes/variants/skeuomorphic';
 
 interface DrawerItem {
   id: string;
@@ -13,7 +23,7 @@ interface DrawerProps {
   selectedItem: string;
   onSelect: (id: string) => void;
   style?: ViewStyle;
-  design?: 'flat' | 'neumorphic';
+  design?: 'flat' | 'neumorphic' | 'skeuomorphic';
   backgroundColor?: string;
   textColor?: string;
 }
@@ -49,6 +59,15 @@ const Drawer: React.FC<DrawerProps> = ({
       baseStyles.push({
         backgroundColor,
       });
+    } else if (design === 'skeuomorphic') {
+      baseStyles.push({
+        borderRadius: 8,
+        borderWidth: SKEUOMORPHIC_BORDER_WIDTHS.thin,
+        borderColor: SKEUOMORPHIC_COLORS.borderLight,
+        backgroundColor: SKEUOMORPHIC_COLORS.surface,
+        ...convertGradientToStyle(SKEUOMORPHIC_GRADIENTS.button.primary),
+        ...convertShadowToStyle(isHamburgerPressed ? SKEUOMORPHIC_SHADOWS.button.pressed : SKEUOMORPHIC_SHADOWS.button.default),
+      });
     }
 
     return baseStyles;
@@ -68,6 +87,16 @@ const Drawer: React.FC<DrawerProps> = ({
       baseStyles.push({
         backgroundColor,
         borderWidth: 0,
+      });
+    } else if (design === 'skeuomorphic') {
+      baseStyles.push({
+        backgroundColor: SKEUOMORPHIC_COLORS.background,
+        padding: 8,
+        borderRadius: 12,
+        borderWidth: SKEUOMORPHIC_BORDER_WIDTHS.thin,
+        borderColor: SKEUOMORPHIC_COLORS.borderLight,
+        ...convertGradientToStyle(SKEUOMORPHIC_GRADIENTS.card),
+        ...convertShadowToStyle(SKEUOMORPHIC_SHADOWS.card),
       });
     }
 
@@ -96,6 +125,20 @@ const Drawer: React.FC<DrawerProps> = ({
         margin: 8,
         borderBottomWidth: 0,
       });
+    } else if (design === 'skeuomorphic') {
+      const isSelected = selectedItem === itemId;
+      const isPressed = pressedItemId === itemId;
+
+      baseStyles.push({
+        margin: 8,
+        borderRadius: 8,
+        borderWidth: SKEUOMORPHIC_BORDER_WIDTHS.thin,
+        borderColor: isSelected ? SKEUOMORPHIC_COLORS.primary : SKEUOMORPHIC_COLORS.borderLight,
+         backgroundColor: isSelected ? SKEUOMORPHIC_COLORS.primaryLight : SKEUOMORPHIC_COLORS.surface,
+        ...convertGradientToStyle(isSelected ? SKEUOMORPHIC_GRADIENTS.button.primary : SKEUOMORPHIC_GRADIENTS.button.secondary),
+        ...convertShadowToStyle(isPressed || isSelected ? SKEUOMORPHIC_SHADOWS.button.pressed : SKEUOMORPHIC_SHADOWS.button.default),
+        borderBottomWidth: 0,
+      });
     } else if (selectedItem === itemId) {
       baseStyles.push(styles.selectedItem);
     }
@@ -112,13 +155,25 @@ const Drawer: React.FC<DrawerProps> = ({
         onPressOut={() => setIsHamburgerPressed(false)}
       >
         <View
-          style={[styles.hamburgerLine, design === 'neumorphic' && { backgroundColor: textColor }]}
+          style={[
+            styles.hamburgerLine,
+            design === 'neumorphic' && { backgroundColor: textColor },
+            design === 'skeuomorphic' && { backgroundColor: SKEUOMORPHIC_COLORS.onPrimary }
+          ]}
         />
         <View
-          style={[styles.hamburgerLine, design === 'neumorphic' && { backgroundColor: textColor }]}
+          style={[
+            styles.hamburgerLine,
+            design === 'neumorphic' && { backgroundColor: textColor },
+            design === 'skeuomorphic' && { backgroundColor: SKEUOMORPHIC_COLORS.onPrimary }
+          ]}
         />
         <View
-          style={[styles.hamburgerLine, design === 'neumorphic' && { backgroundColor: textColor }]}
+          style={[
+            styles.hamburgerLine,
+            design === 'neumorphic' && { backgroundColor: textColor },
+            design === 'skeuomorphic' && { backgroundColor: SKEUOMORPHIC_COLORS.onPrimary }
+          ]}
         />
       </TouchableOpacity>
       {isOpen && (
@@ -132,7 +187,7 @@ const Drawer: React.FC<DrawerProps> = ({
               style={getItemStyles(item.id)}
             >
               <Typography
-                variant="body1"
+                variant="body"
                 style={[
                   design === 'neumorphic'
                     ? {
@@ -140,6 +195,15 @@ const Drawer: React.FC<DrawerProps> = ({
                         textShadowColor: NEUMORPHIC_COLORS.lightShadow,
                         textShadowOffset: { width: 1, height: 1 },
                         textShadowRadius: 1,
+                      }
+                    : design === 'skeuomorphic'
+                    ? {
+                        color: selectedItem === item.id ? SKEUOMORPHIC_COLORS.onPrimary : SKEUOMORPHIC_COLORS.onSurface,
+                        fontSize: 16,
+                        fontWeight: '600',
+                        textShadowColor: SKEUOMORPHIC_COLORS.shadowMedium,
+                        textShadowOffset: { width: 1, height: 1 },
+                        textShadowRadius: 2,
                       }
                     : selectedItem === item.id
                     ? styles.selectedLabel

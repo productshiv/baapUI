@@ -276,7 +276,7 @@ const SampleScreen: React.FC = () => {
               <Chip label="Example Chip" onPress={handleChipPress} />
               <List
                 items={listItems.map((item, index) => (
-                  <Typography key={index} variant="body1">
+                  <Typography key={index} variant="body">
                     {item}
                   </Typography>
                 ))}
@@ -302,8 +302,8 @@ const SampleScreen: React.FC = () => {
                 <View style={styles.typographyDemo}>
                   <Typography variant="h1">Heading 1</Typography>
                   <Typography variant="h2">Heading 2</Typography>
-                  <Typography variant="subtitle1">Subtitle 1</Typography>
-                  <Typography variant="body1">Body Text 1</Typography>
+                  <Typography variant="body2">Subtitle 1</Typography>
+                  <Typography variant="body">Body Text 1</Typography>
                   <Typography variant="caption">Caption Text</Typography>
                 </View>
               </Card>
@@ -329,7 +329,7 @@ const SampleScreen: React.FC = () => {
                     <Grid.Col key={num} size={6}>
                       <Card style={styles.gridCard}>
                         <Typography
-                          variant="body1"
+                          variant="body"
                           adjustsFontSizeToFit
                           numberOfLines={1}
                           style={styles.gridText}
@@ -347,7 +347,7 @@ const SampleScreen: React.FC = () => {
                     <Grid.Col key={num} size={4}>
                       <Card style={styles.gridCard}>
                         <Typography
-                          variant="body1"
+                          variant="body"
                           adjustsFontSizeToFit
                           numberOfLines={1}
                           style={styles.gridText}

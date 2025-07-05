@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ViewStyle, TextStyle } from '../../platform';
 import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
+import { convertShadowToStyle, convertGradientToStyle } from '../../themes/utils/skeuomorphic';
+import { SKEUOMORPHIC_COLORS, SKEUOMORPHIC_SHADOWS, SKEUOMORPHIC_GRADIENTS, SKEUOMORPHIC_BORDER_RADIUS, SKEUOMORPHIC_BORDER_WIDTHS } from '../../themes/variants/skeuomorphic';
 
 interface Tab {
   id: string;
@@ -12,7 +14,7 @@ interface TabsProps {
   selectedTab: string;
   onSelect: (id: string) => void;
   style?: ViewStyle;
-  design?: 'flat' | 'neumorphic';
+  design?: 'flat' | 'neumorphic' | 'skeuomorphic';
   backgroundColor?: string;
   textColor?: string;
 }
@@ -43,6 +45,17 @@ const Tabs: React.FC<TabsProps> = ({
         backgroundColor,
         padding: 8,
       });
+    } else if (design === 'skeuomorphic') {
+      const skeuomorphicStyle: ViewStyle = {
+        backgroundColor: SKEUOMORPHIC_COLORS.background,
+        padding: 12,
+        borderRadius: SKEUOMORPHIC_BORDER_RADIUS.lg,
+        borderWidth: SKEUOMORPHIC_BORDER_WIDTHS.thin,
+        borderColor: SKEUOMORPHIC_COLORS.borderLight,
+        ...convertGradientToStyle(SKEUOMORPHIC_GRADIENTS.card),
+        ...convertShadowToStyle(SKEUOMORPHIC_SHADOWS.card),
+      };
+      baseStyles.push(skeuomorphicStyle);
     }
 
     if (style) {
@@ -70,6 +83,18 @@ const Tabs: React.FC<TabsProps> = ({
         marginHorizontal: 8,
         padding: 12,
       });
+    } else if (design === 'skeuomorphic') {
+      const skeuomorphicStyle: ViewStyle = {
+        marginHorizontal: 6,
+        padding: 12,
+        borderRadius: SKEUOMORPHIC_BORDER_RADIUS.md,
+        borderWidth: SKEUOMORPHIC_BORDER_WIDTHS.thin,
+        borderColor: isSelected ? SKEUOMORPHIC_COLORS.primary : SKEUOMORPHIC_COLORS.borderLight,
+        backgroundColor: isSelected ? SKEUOMORPHIC_COLORS.primary : SKEUOMORPHIC_COLORS.surface,
+        ...convertGradientToStyle(isSelected ? SKEUOMORPHIC_GRADIENTS.button.primary : SKEUOMORPHIC_GRADIENTS.button.secondary),
+        ...convertShadowToStyle(isPressed || isSelected ? SKEUOMORPHIC_SHADOWS.button.pressed : SKEUOMORPHIC_SHADOWS.button.default),
+      };
+      baseStyles.push(skeuomorphicStyle);
     } else if (isSelected) {
       baseStyles.push(styles.selectedTab);
     }
@@ -81,6 +106,7 @@ const Tabs: React.FC<TabsProps> = ({
     const baseStyles: TextStyle = {
       ...styles.label,
     };
+    const isSelected = selectedTab === tabId;
 
     if (design === 'neumorphic') {
       Object.assign(baseStyles, {
@@ -89,6 +115,15 @@ const Tabs: React.FC<TabsProps> = ({
         fontWeight: '600',
         textShadowColor: NEUMORPHIC_COLORS.lightShadow,
         textShadowOffset: { width: 1, height: 1 },
+        textShadowRadius: 1,
+      });
+    } else if (design === 'skeuomorphic') {
+      Object.assign(baseStyles, {
+        color: isSelected ? SKEUOMORPHIC_COLORS.onPrimary : SKEUOMORPHIC_COLORS.onSurface,
+        fontSize: 14,
+        fontWeight: '700',
+        textShadowColor: SKEUOMORPHIC_COLORS.shadowMedium,
+        textShadowOffset: { width: 0, height: 1 },
         textShadowRadius: 1,
       });
     }

@@ -1,6 +1,6 @@
 import React from 'react';
 import { View } from '../../platform';
-import type { Meta, StoryObj } from '@storybook/react-webpack5';
+import type { Meta, StoryObj } from '@storybook/react';
 import Tabs from './Tabs';
 import { NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
 
@@ -19,7 +19,7 @@ const meta: Meta<typeof Tabs> = {
   argTypes: {
     design: {
       control: 'radio',
-      options: ['flat', 'neumorphic'],
+      options: ['flat', 'neumorphic', 'skeuomorphic'],
     },
   },
 };
@@ -55,6 +55,29 @@ export const Neumorphic: Story = {
     design: 'neumorphic',
     backgroundColor: NEUMORPHIC_COLORS.background,
     textColor: NEUMORPHIC_COLORS.text,
+    onSelect: () => {},
+  },
+};
+
+export const Skeuomorphic: Story = {
+  args: {
+    tabs: sampleTabs,
+    selectedTab: 'home',
+    design: 'skeuomorphic',
+    onSelect: () => {},
+  },
+};
+
+export const SkeuomorphicManyTabs: Story = {
+  args: {
+    tabs: [
+      ...sampleTabs,
+      { id: 'notifications', label: 'Notifications' },
+      { id: 'messages', label: 'Messages' },
+      { id: 'bookmarks', label: 'Bookmarks' },
+    ],
+    selectedTab: 'notifications',
+    design: 'skeuomorphic',
     onSelect: () => {},
   },
 };

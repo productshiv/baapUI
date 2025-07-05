@@ -2,6 +2,7 @@ import React from 'react';
 import { View, StyleSheet, Pressable, ViewStyle, Text } from '../../platform';
 import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
 import { getSkeuomorphicCardStyles } from '../../themes/utils/skeuomorphic';
+import { getGlassmorphicCardStyles, GLASSMORPHIC_COLORS } from '../../themes/utils/glassmorphic';
 import { useThemeSafe } from '../../themes/ThemeContext';
 import { ThemeDesign } from '../../themes/types';
 
@@ -74,6 +75,12 @@ const Card: React.FC<CardProps> = ({
           customBackground: defaultBackgroundColor,
         })
       );
+    } else if (activeDesign === 'glassmorphic') {
+      const glassmorphicStyles = getGlassmorphicCardStyles({
+        theme: themeContext?.theme?.mode as 'light' | 'dark',
+        customBackground: backgroundColor,
+      });
+      baseStyles.push(glassmorphicStyles);
     } else {
       // Apply theme colors for other design systems
       baseStyles.push({
@@ -94,6 +101,7 @@ const Card: React.FC<CardProps> = ({
       <Text style={[
         styles.text, 
         activeDesign === 'neumorphic' && styles.neumorphicText,
+        activeDesign === 'glassmorphic' && styles.glassmorphicText,
         { color: themeContext?.theme.colors.text || '#000000' }
       ]}>
         {children}
@@ -131,6 +139,10 @@ const styles = StyleSheet.create({
   },
   neumorphicText: {
     color: NEUMORPHIC_COLORS.text,
+  },
+  glassmorphicText: {
+    color: GLASSMORPHIC_COLORS.light.text,
+    fontWeight: '500',
   },
 });
 

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ViewStyle, TextStyle } from '../../platform';
 import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
+import { getSkeuomorphicCardStyles, SKEUOMORPHIC_COLORS } from '../../themes/utils/skeuomorphic';
 
 interface Section {
   id: string;
@@ -13,7 +14,7 @@ interface AccordionProps {
   expandedSection: string | null;
   onToggle: (id: string) => void;
   style?: ViewStyle;
-  design?: 'flat' | 'neumorphic';
+  design?: 'flat' | 'neumorphic' | 'skeuomorphic';
   backgroundColor?: string;
   textColor?: string;
 }
@@ -46,6 +47,14 @@ const Accordion: React.FC<AccordionProps> = ({
       });
     }
 
+    if (design === 'skeuomorphic') {
+      const skeuomorphicStyles = getSkeuomorphicCardStyles(true);
+      baseStyles.push(skeuomorphicStyles);
+      baseStyles.push({
+        padding: 12,
+      });
+    }
+
     if (style) {
       baseStyles.push(style);
     }
@@ -72,6 +81,14 @@ const Accordion: React.FC<AccordionProps> = ({
       });
     }
 
+    if (design === 'skeuomorphic') {
+      const skeuomorphicStyles = getSkeuomorphicCardStyles(!isExpanded);
+      baseStyles.push(skeuomorphicStyles);
+      baseStyles.push({
+        padding: 16,
+      });
+    }
+
     return baseStyles;
   };
 
@@ -93,6 +110,15 @@ const Accordion: React.FC<AccordionProps> = ({
       });
     }
 
+    if (design === 'skeuomorphic') {
+      const skeuomorphicStyles = getSkeuomorphicCardStyles(false);
+      baseStyles.push(skeuomorphicStyles);
+      baseStyles.push({
+        marginTop: 8,
+        padding: 16,
+      });
+    }
+
     return baseStyles;
   };
 
@@ -105,6 +131,15 @@ const Accordion: React.FC<AccordionProps> = ({
       Object.assign(baseStyles, {
         color: textColor,
         textShadowColor: NEUMORPHIC_COLORS.lightShadow,
+        textShadowOffset: { width: 1, height: 1 },
+        textShadowRadius: 1,
+      });
+    }
+
+    if (design === 'skeuomorphic') {
+      Object.assign(baseStyles, {
+        color: textColor,
+        textShadowColor: SKEUOMORPHIC_COLORS.shadowLight,
         textShadowOffset: { width: 1, height: 1 },
         textShadowRadius: 1,
       });

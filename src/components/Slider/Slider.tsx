@@ -11,7 +11,7 @@ interface SliderProps {
   maximumTrackTintColor?: string;
   thumbTintColor?: string;
   style?: ViewStyle;
-  design?: 'flat' | 'neumorphic';
+  design?: 'flat' | 'neumorphic' | 'skeuomorphic';
   backgroundColor?: string;
   width?: number;
   step?: number;

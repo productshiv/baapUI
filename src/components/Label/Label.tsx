@@ -6,7 +6,7 @@ interface LabelProps {
   text: string;
   style?: TextStyle;
   htmlFor?: string;
-  design?: 'flat' | 'neumorphic';
+  design?: 'flat' | 'neumorphic' | 'skeuomorphic';
   textColor?: string;
 }
 

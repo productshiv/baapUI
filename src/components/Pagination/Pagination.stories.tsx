@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View } from '../../platform';
-import type { Meta, StoryObj } from '@storybook/react-webpack5';
+import type { Meta, StoryObj } from '@storybook/react';
 import Pagination from './Pagination';
 import Typography from '../Typography/Typography';
 import { NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
@@ -14,7 +14,7 @@ const meta: Meta<typeof Pagination> = {
   argTypes: {
     design: {
       control: 'radio',
-      options: ['flat', 'neumorphic'],
+      options: ['flat', 'neumorphic', 'skeuomorphic'],
     },
   },
 };
@@ -40,12 +40,39 @@ export const WithLargeRange: Story = {
 
 export const Neumorphic: Story = {
   args: {
-    currentPage: 1,
-    totalPages: 10,
+    totalPages: 5,
+    currentPage: 3,
     design: 'neumorphic',
     backgroundColor: NEUMORPHIC_COLORS.background,
     textColor: NEUMORPHIC_COLORS.text,
-    onPageChange: () => {},
+    onPageChange: () => {}
+  },
+};
+
+export const Skeuomorphic: Story = {
+  args: {
+    totalPages: 5,
+    currentPage: 3,
+    design: 'skeuomorphic',
+    onPageChange: () => {}
+  },
+};
+
+export const SkeuomorphicFirstPage: Story = {
+  args: {
+    totalPages: 10,
+    currentPage: 1,
+    design: 'skeuomorphic',
+    onPageChange: () => {}
+  },
+};
+
+export const SkeuomorphicLastPage: Story = {
+  args: {
+    totalPages: 10,
+    currentPage: 10,
+    design: 'skeuomorphic',
+    onPageChange: () => {}
   },
 };
 

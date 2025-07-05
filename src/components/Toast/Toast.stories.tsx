@@ -22,7 +22,7 @@ const meta: Meta<typeof Toast> = {
   argTypes: {
     design: {
       control: 'select',
-      options: ['flat', 'neumorphic'],
+      options: ['flat', 'neumorphic', 'skeuomorphic', 'glassmorphic'],
       defaultValue: 'flat',
     },
     type: {
@@ -88,6 +88,114 @@ export const Neumorphic: Story = {
     type: 'info',
     design: 'neumorphic',
   },
+};
+
+export const Skeuomorphic: Story = {
+  args: {
+    visible: true,
+    message: 'Skeuomorphic design toast message',
+    type: 'info',
+    design: 'skeuomorphic',
+  },
+};
+
+export const Glassmorphic: Story = {
+  args: {
+    visible: true,
+    message: 'Glassmorphic design toast message',
+    type: 'info',
+    design: 'glassmorphic',
+  },
+};
+
+export const GlassmorphicTypes: Story = {
+  render: () => (
+    <View style={{ gap: 16, minWidth: 300 }}>
+      <Typography variant="h6" style={{ textAlign: 'center' }}>Glassmorphic Toast Types</Typography>
+      <ToastDemo design="glassmorphic" type="info" message="Information message" />
+      <ToastDemo design="glassmorphic" type="success" message="Success message" />
+      <ToastDemo design="glassmorphic" type="warning" message="Warning message" />
+      <ToastDemo design="glassmorphic" type="error" message="Error message" />
+    </View>
+  ),
+};
+
+export const GlassmorphicDarkMode: Story = {
+  parameters: {
+    backgrounds: { default: 'dark' },
+  },
+  args: {
+    visible: true,
+    message: 'Glassmorphic toast in dark mode',
+    type: 'success',
+    design: 'glassmorphic',
+  },
+};
+
+export const GlassmorphicPlayground: Story = {
+  args: {
+    visible: true,
+    message: 'Interactive glassmorphic toast',
+    type: 'info',
+    design: 'glassmorphic',
+    duration: 5000,
+  },
+  argTypes: {
+    type: {
+      control: 'select',
+      options: ['info', 'success', 'warning', 'error'],
+    },
+    duration: {
+      control: { type: 'range', min: 1000, max: 10000, step: 500 },
+    },
+    message: {
+      control: 'text',
+    },
+  },
+};
+
+export const GlassmorphicInteractive: Story = {
+  render: () => <ToastDemo design="glassmorphic" type="success" message="Interactive glassmorphic toast" />,
+};
+
+export const GlassmorphicColoredGlass: Story = {
+  render: () => (
+    <View style={{ gap: 20, padding: 20 }}>
+      <Typography variant="h6" style={{ textAlign: 'center' }}>Colored Glass Effects</Typography>
+      <View style={{ backgroundColor: 'rgba(33, 150, 243, 0.1)', backdropFilter: 'blur(8px)', padding: '16px', borderRadius: '12px', border: '1px solid rgba(33, 150, 243, 0.2)' }}>
+        <ToastDemo design="glassmorphic" type="info" message="Blue tinted glass toast" />
+      </View>
+      <View style={{ backgroundColor: 'rgba(156, 39, 176, 0.1)', backdropFilter: 'blur(8px)', padding: '16px', borderRadius: '12px', border: '1px solid rgba(156, 39, 176, 0.2)' }}>
+        <ToastDemo design="glassmorphic" type="warning" message="Purple tinted glass toast" />
+      </View>
+      <View style={{ backgroundColor: 'rgba(76, 175, 80, 0.1)', backdropFilter: 'blur(8px)', padding: '16px', borderRadius: '12px', border: '1px solid rgba(76, 175, 80, 0.2)' }}>
+        <ToastDemo design="glassmorphic" type="success" message="Green tinted glass toast" />
+      </View>
+    </View>
+  ),
+};
+
+export const GlassmorphicMinimalGlass: Story = {
+  args: {
+    visible: true,
+    message: 'Minimal glass effect toast',
+    type: 'info',
+    design: 'glassmorphic',
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+  },
+};
+
+export const GlassmorphicLayeredGlass: Story = {
+  render: () => (
+    <View style={{ display: 'flex', flexDirection: 'column', gap: '20px', padding: '20px' }}>
+      <Typography variant="h6" style={{ textAlign: 'center' }}>Layered Glass Effects</Typography>
+      <View style={{ backgroundColor: 'rgba(255, 255, 255, 0.05)', backdropFilter: 'blur(4px)', padding: '20px', borderRadius: '16px', border: '1px solid rgba(255, 255, 255, 0.1)' }}>
+        <View style={{ backgroundColor: 'rgba(255, 255, 255, 0.1)', backdropFilter: 'blur(8px)', padding: '16px', borderRadius: '12px', border: '1px solid rgba(255, 255, 255, 0.2)' }}>
+          <ToastDemo design="glassmorphic" type="success" message="Layered glass toast effect" />
+        </View>
+      </View>
+    </View>
+  ),
 };
 
 // Type Variations
@@ -215,7 +323,7 @@ export const LongToast: Story = {
 
 // Interactive Examples
 interface ToastDemoProps {
-  design?: 'flat' | 'neumorphic';
+  design?: 'flat' | 'neumorphic' | 'skeuomorphic' | 'glassmorphic';
   type?: 'info' | 'success' | 'warning' | 'error';
   message?: string;
   duration?: number;
@@ -278,6 +386,14 @@ export const AllDesigns: Story = {
         <View style={{ gap: 8 }}>
           <Typography variant="body2" style={{ fontWeight: 'bold' }}>Neumorphic Design</Typography>
           <ToastDemo design="neumorphic" type="success" message="Neumorphic design toast" />
+        </View>
+        <View style={{ gap: 8 }}>
+          <Typography variant="body2" style={{ fontWeight: 'bold' }}>Skeuomorphic Design</Typography>
+          <ToastDemo design="skeuomorphic" type="success" message="Skeuomorphic design toast" />
+        </View>
+        <View style={{ gap: 8 }}>
+          <Typography variant="body2" style={{ fontWeight: 'bold' }}>Glassmorphic Design</Typography>
+          <ToastDemo design="glassmorphic" type="success" message="Glassmorphic design toast" />
         </View>
       </View>
     </View>

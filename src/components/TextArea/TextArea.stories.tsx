@@ -20,7 +20,7 @@ const meta: Meta<typeof TextArea> = {
   argTypes: {
     design: {
       control: 'select',
-      options: ['flat', 'neumorphic'],
+      options: ['flat', 'neumorphic', 'skeuomorphic'],
       defaultValue: 'flat',
     },
     placeholder: {
@@ -71,6 +71,13 @@ export const Neumorphic: Story = {
   args: {
     placeholder: 'Neumorphic design textarea - soft and tactile',
     design: 'neumorphic',
+  },
+};
+
+export const Skeuomorphic: Story = {
+  args: {
+    placeholder: 'Skeuomorphic design textarea - realistic and textured',
+    design: 'skeuomorphic',
   },
 };
 
@@ -202,6 +209,13 @@ export const AllDesigns: Story = {
         <TextArea
           placeholder="Neumorphic design textarea"
           design="neumorphic"
+        />
+      </View>
+      <View>
+        <Text style={{ marginBottom: 8, fontWeight: 'bold' }}>Skeuomorphic Design</Text>
+        <TextArea
+          placeholder="Skeuomorphic design textarea"
+          design="skeuomorphic"
         />
       </View>
     </View>

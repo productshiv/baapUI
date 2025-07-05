@@ -1,6 +1,9 @@
 import React from 'react';
 import { View, Text, StyleSheet, ViewStyle, TextStyle } from '../../platform';
 import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
+import { convertShadowToStyle, convertGradientToStyle } from '../../themes/utils/skeuomorphic';
+import { SKEUOMORPHIC_COLORS, SKEUOMORPHIC_SHADOWS, SKEUOMORPHIC_GRADIENTS, SKEUOMORPHIC_BORDER_RADIUS, SKEUOMORPHIC_BORDER_WIDTHS } from '../../themes/variants/skeuomorphic';
+import { getGlassmorphicStyles, GLASSMORPHIC_COLORS } from '../../themes/utils/glassmorphic';
 
 export interface BadgeProps {
   variant?: 'primary' | 'secondary' | 'success' | 'error' | 'warning' | 'info';
@@ -8,7 +11,7 @@ export interface BadgeProps {
   children: React.ReactNode;
   style?: ViewStyle;
   textStyle?: TextStyle;
-  design?: 'flat' | 'neumorphic';
+  design?: 'flat' | 'neumorphic' | 'skeuomorphic' | 'glassmorphic';
   backgroundColor?: string;
   textColor?: string;
 }
@@ -38,6 +41,40 @@ const Badge: React.FC<BadgeProps> = ({
           return { backgroundColor: '#E3F2FD' };
         default:
           return { backgroundColor: '#EDE7F6' };
+      }
+    }
+
+    if (design === 'skeuomorphic') {
+      switch (variant) {
+        case 'secondary':
+          return { backgroundColor: SKEUOMORPHIC_COLORS.secondary };
+        case 'success':
+          return { backgroundColor: SKEUOMORPHIC_COLORS.success };
+        case 'error':
+          return { backgroundColor: SKEUOMORPHIC_COLORS.error };
+        case 'warning':
+          return { backgroundColor: SKEUOMORPHIC_COLORS.warning };
+        case 'info':
+          return { backgroundColor: SKEUOMORPHIC_COLORS.info };
+        default:
+          return { backgroundColor: SKEUOMORPHIC_COLORS.primary };
+      }
+    }
+
+    if (design === 'glassmorphic') {
+      switch (variant) {
+        case 'secondary':
+          return { backgroundColor: 'rgba(245, 0, 87, 0.2)' };
+        case 'success':
+          return { backgroundColor: 'rgba(76, 175, 80, 0.2)' };
+        case 'error':
+          return { backgroundColor: 'rgba(244, 67, 54, 0.2)' };
+        case 'warning':
+          return { backgroundColor: 'rgba(255, 152, 0, 0.2)' };
+        case 'info':
+          return { backgroundColor: 'rgba(33, 150, 243, 0.2)' };
+        default:
+          return { backgroundColor: 'rgba(98, 0, 238, 0.2)' };
       }
     }
 
@@ -116,6 +153,28 @@ const Badge: React.FC<BadgeProps> = ({
         ...sizeStyle.container,
         backgroundColor: bgColor,
       });
+    } else if (design === 'skeuomorphic') {
+      const skeuomorphicStyle: ViewStyle = {
+        ...sizeStyle.container,
+        backgroundColor: bgColor,
+        borderWidth: SKEUOMORPHIC_BORDER_WIDTHS.thin,
+        borderColor: SKEUOMORPHIC_COLORS.borderLight,
+        ...convertGradientToStyle(SKEUOMORPHIC_GRADIENTS.button.primary),
+        ...convertShadowToStyle(SKEUOMORPHIC_SHADOWS.button.default),
+      };
+      baseStyles.push(skeuomorphicStyle);
+    } else if (design === 'glassmorphic') {
+      const glassmorphicStyle = getGlassmorphicStyles({
+        intensity: 'medium',
+        blur: 'light',
+        theme: 'light',
+        customBackground: bgColor,
+        customBorderRadius: sizeStyle.container.borderRadius as number,
+      });
+      baseStyles.push({
+        ...glassmorphicStyle,
+        ...sizeStyle.container,
+      });
     } else {
       baseStyles.push(variantStyle, sizeStyle.container);
     }
@@ -162,6 +221,42 @@ const Badge: React.FC<BadgeProps> = ({
           break;
         default:
           Object.assign(baseStyles, { color: '#4527A0' });
+      }
+    } else if (design === 'skeuomorphic') {
+      Object.assign(baseStyles, {
+        color: SKEUOMORPHIC_COLORS.onPrimary,
+        fontSize: sizeStyle.text.fontSize,
+        fontWeight: '700',
+        textShadowColor: SKEUOMORPHIC_COLORS.shadowMedium,
+        textShadowOffset: { width: 0, height: 1 },
+        textShadowRadius: 2,
+      });
+    } else if (design === 'glassmorphic') {
+      Object.assign(baseStyles, {
+        color: textColor || GLASSMORPHIC_COLORS.light.text,
+        fontSize: sizeStyle.text.fontSize,
+        fontWeight: '600',
+      });
+
+      // Add variant-specific text colors for glassmorphic design
+      switch (variant) {
+        case 'secondary':
+          Object.assign(baseStyles, { color: '#f50057' });
+          break;
+        case 'success':
+          Object.assign(baseStyles, { color: '#4caf50' });
+          break;
+        case 'error':
+          Object.assign(baseStyles, { color: '#f44336' });
+          break;
+        case 'warning':
+          Object.assign(baseStyles, { color: '#ff9800' });
+          break;
+        case 'info':
+          Object.assign(baseStyles, { color: '#2196f3' });
+          break;
+        default:
+          Object.assign(baseStyles, { color: '#6200ee' });
       }
     } else {
       Object.assign(baseStyles, sizeStyle.text);

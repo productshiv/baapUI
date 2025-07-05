@@ -9,6 +9,8 @@ import {
 } from '../../platform';
 import Typography from '../Typography/Typography';
 import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
+import { convertShadowToStyle, convertGradientToStyle } from '../../themes/utils/skeuomorphic';
+import { SKEUOMORPHIC_COLORS, SKEUOMORPHIC_SHADOWS, SKEUOMORPHIC_GRADIENTS, SKEUOMORPHIC_BORDER_RADIUS, SKEUOMORPHIC_BORDER_WIDTHS } from '../../themes/variants/skeuomorphic';
 
 interface CarouselProps {
   items: string[];
@@ -19,7 +21,7 @@ interface CarouselProps {
   activeItemStyle?: ViewStyle;
   textStyle?: TextStyle;
   activeTextStyle?: TextStyle;
-  design?: 'flat' | 'neumorphic';
+  design?: 'flat' | 'neumorphic' | 'skeuomorphic';
   backgroundColor?: string;
   textColor?: string;
   activeTextColor?: string;
@@ -56,6 +58,16 @@ const Carousel: React.FC<CarouselProps> = ({
         backgroundColor,
         padding: 12,
       });
+    } else if (design === 'skeuomorphic') {
+      baseStyles.push({
+        backgroundColor: SKEUOMORPHIC_COLORS.surface,
+        borderRadius: SKEUOMORPHIC_BORDER_RADIUS.lg,
+        borderWidth: SKEUOMORPHIC_BORDER_WIDTHS.thin,
+        borderColor: SKEUOMORPHIC_COLORS.borderLight,
+        padding: 12,
+        ...convertShadowToStyle(SKEUOMORPHIC_SHADOWS.card),
+        ...convertGradientToStyle(SKEUOMORPHIC_GRADIENTS.card),
+      });
     }
 
     if (style) {
@@ -81,13 +93,22 @@ const Carousel: React.FC<CarouselProps> = ({
         backgroundColor,
         borderWidth: 0,
       });
+    } else if (design === 'skeuomorphic') {
+      baseStyles.push({
+        backgroundColor: isActive ? SKEUOMORPHIC_COLORS.primary : SKEUOMORPHIC_COLORS.surface,
+        borderRadius: SKEUOMORPHIC_BORDER_RADIUS.md,
+        borderWidth: SKEUOMORPHIC_BORDER_WIDTHS.thin,
+        borderColor: isActive ? SKEUOMORPHIC_COLORS.primaryDark : SKEUOMORPHIC_COLORS.border,
+        ...convertShadowToStyle(isActive ? SKEUOMORPHIC_SHADOWS.button.pressed : SKEUOMORPHIC_SHADOWS.button.default),
+        ...convertGradientToStyle(isActive ? SKEUOMORPHIC_GRADIENTS.button.primary : SKEUOMORPHIC_GRADIENTS.button.secondary),
+      });
     }
 
     if (itemStyle) {
       baseStyles.push(itemStyle);
     }
 
-    if (isActive) {
+    if (isActive && design !== 'skeuomorphic') {
       if (design === 'neumorphic') {
         baseStyles.push({
           backgroundColor: NEUMORPHIC_COLORS.primary,
@@ -114,13 +135,18 @@ const Carousel: React.FC<CarouselProps> = ({
       baseStyle.textShadowColor = NEUMORPHIC_COLORS.lightShadow;
       baseStyle.textShadowOffset = { width: 1, height: 1 };
       baseStyle.textShadowRadius = 1;
+    } else if (design === 'skeuomorphic') {
+      baseStyle.color = isActive ? SKEUOMORPHIC_COLORS.onPrimary : SKEUOMORPHIC_COLORS.onSurface;
+      baseStyle.textShadowColor = isActive ? 'rgba(0, 0, 0, 0.3)' : 'rgba(255, 255, 255, 0.8)';
+      baseStyle.textShadowOffset = { width: 0, height: 1 };
+      baseStyle.textShadowRadius = 1;
     }
 
     if (textStyle) {
       Object.assign(baseStyle, textStyle);
     }
 
-    if (isActive) {
+    if (isActive && design !== 'skeuomorphic') {
       Object.assign(baseStyle, styles.activeText);
       if (activeTextStyle) {
         Object.assign(baseStyle, activeTextStyle);
@@ -145,7 +171,7 @@ const Carousel: React.FC<CarouselProps> = ({
             onPressOut={() => setPressedIndex(null)}
             style={getItemStyles(index)}
           >
-            <Typography variant="body1" style={getTextStyles(index)}>
+            <Typography variant="body" style={getTextStyles(index)}>
               {item}
             </Typography>
           </TouchableOpacity>

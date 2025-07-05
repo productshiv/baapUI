@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, TouchableOpacity, StyleSheet, Text, ViewStyle, Animated } from '../../platform';
 import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
+import { getSkeuomorphicToggleStyles, SKEUOMORPHIC_COLORS } from '../../themes/utils/skeuomorphic';
 
 interface ToggleSwitchProps {
   initialValue?: boolean;
@@ -8,7 +9,7 @@ interface ToggleSwitchProps {
   label?: string;
   style?: ViewStyle;
   disabled?: boolean;
-  design?: 'flat' | 'neumorphic';
+  design?: 'flat' | 'neumorphic' | 'skeuomorphic';
   backgroundColor?: string;
   textColor?: string;
   activeColor?: string;
@@ -63,6 +64,11 @@ const ToggleSwitch: React.FC<ToggleSwitchProps> = ({
       });
     }
 
+    if (design === 'skeuomorphic') {
+      const skeuomorphicStyles = getSkeuomorphicToggleStyles(value, disabled);
+      baseStyles.push(skeuomorphicStyles.track);
+    }
+
     if (disabled) {
       baseStyles.push(styles.disabled);
     }
@@ -88,6 +94,11 @@ const ToggleSwitch: React.FC<ToggleSwitchProps> = ({
       });
     }
 
+    if (design === 'skeuomorphic') {
+      const skeuomorphicStyles = getSkeuomorphicToggleStyles(value, disabled);
+      baseStyles.push(skeuomorphicStyles.thumb);
+    }
+
     return baseStyles;
   };
 
@@ -100,6 +111,12 @@ const ToggleSwitch: React.FC<ToggleSwitchProps> = ({
           design === 'neumorphic' && {
             color: textColor,
             textShadowColor: NEUMORPHIC_COLORS.lightShadow,
+            textShadowOffset: { width: 1, height: 1 },
+            textShadowRadius: 1,
+          },
+          design === 'skeuomorphic' && {
+            color: textColor,
+            textShadowColor: SKEUOMORPHIC_COLORS.shadowLight,
             textShadowOffset: { width: 1, height: 1 },
             textShadowRadius: 1,
           },

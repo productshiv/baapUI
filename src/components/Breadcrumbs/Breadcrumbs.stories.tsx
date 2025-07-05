@@ -1,7 +1,8 @@
 import React from 'react';
 import { View } from '../../platform';
-import type { Meta, StoryObj } from '@storybook/react-webpack5';
+import type { Meta, StoryObj } from '@storybook/react';
 import Breadcrumbs from './Breadcrumbs';
+import Typography from '../Typography/Typography';
 import { NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
 
 const meta: Meta<typeof Breadcrumbs> = {
@@ -13,7 +14,7 @@ const meta: Meta<typeof Breadcrumbs> = {
   argTypes: {
     design: {
       control: 'radio',
-      options: ['flat', 'neumorphic'],
+      options: ['flat', 'neumorphic', 'skeuomorphic'],
     },
   },
 };
@@ -73,4 +74,47 @@ export const Neumorphic: Story = {
     backgroundColor: NEUMORPHIC_COLORS.background,
     textColor: NEUMORPHIC_COLORS.text,
   },
+};
+
+export const Skeuomorphic: Story = {
+  args: {
+    items: items,
+    currentItem: 'phones',
+    design: 'skeuomorphic',
+    onSelect: () => {},
+  },
+};
+
+export const AllDesigns: Story = {
+  render: () => (
+    <View style={{ padding: 20, gap: 20, maxWidth: 600 }}>
+      <View style={{ gap: 8 }}>
+        <Typography variant="body2" style={{ fontWeight: 'bold' }}>Flat Design</Typography>
+        <Breadcrumbs
+          items={items}
+          currentItem="phones"
+          design="flat"
+          onSelect={() => {}}
+        />
+      </View>
+      <View style={{ gap: 8 }}>
+        <Typography variant="body2" style={{ fontWeight: 'bold' }}>Neumorphic Design</Typography>
+        <Breadcrumbs
+          items={items}
+          currentItem="phones"
+          design="neumorphic"
+          onSelect={() => {}}
+        />
+      </View>
+      <View style={{ gap: 8 }}>
+        <Typography variant="body2" style={{ fontWeight: 'bold' }}>Skeuomorphic Design</Typography>
+        <Breadcrumbs
+          items={items}
+          currentItem="phones"
+          design="skeuomorphic"
+          onSelect={() => {}}
+        />
+      </View>
+    </View>
+  ),
 };

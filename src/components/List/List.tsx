@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ViewStyle, TextStyle, TouchableOpacity } from '../../platform';
 import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
+import { convertShadowToStyle, convertGradientToStyle } from '../../themes/utils/skeuomorphic';
+import { SKEUOMORPHIC_COLORS, SKEUOMORPHIC_SHADOWS, SKEUOMORPHIC_GRADIENTS, SKEUOMORPHIC_BORDER_RADIUS, SKEUOMORPHIC_BORDER_WIDTHS } from '../../themes/variants/skeuomorphic';
 
 interface ListItemProps {
   children: React.ReactNode;
   style?: ViewStyle;
-  design?: 'flat' | 'neumorphic';
+  design?: 'flat' | 'neumorphic' | 'skeuomorphic';
   backgroundColor?: string;
   onPress?: () => void;
   isPressed?: boolean;
@@ -16,7 +18,7 @@ interface ListProps {
   style?: ViewStyle;
   itemStyle?: ViewStyle;
   containerStyle?: ViewStyle;
-  design?: 'flat' | 'neumorphic';
+  design?: 'flat' | 'neumorphic' | 'skeuomorphic';
   backgroundColor?: string;
   onItemPress?: (index: number) => void;
 }
@@ -46,6 +48,17 @@ export const ListItem: React.FC<ListItemProps> = ({
         backgroundColor,
         marginVertical: 8,
         padding: 16,
+      });
+    } else if (design === 'skeuomorphic') {
+      baseStyles.push({
+        backgroundColor: isPressed || isPressedState ? SKEUOMORPHIC_COLORS.surface : SKEUOMORPHIC_COLORS.background,
+        borderRadius: SKEUOMORPHIC_BORDER_RADIUS.md,
+        borderWidth: SKEUOMORPHIC_BORDER_WIDTHS.thin,
+        borderColor: SKEUOMORPHIC_COLORS.border,
+        marginVertical: 8,
+        padding: 16,
+        ...convertShadowToStyle(isPressed || isPressedState ? SKEUOMORPHIC_SHADOWS.button.pressed : SKEUOMORPHIC_SHADOWS.card),
+        ...convertGradientToStyle(SKEUOMORPHIC_GRADIENTS.card),
       });
     }
 
@@ -98,6 +111,16 @@ const List: React.FC<ListProps> = ({
       baseStyles.push({
         backgroundColor,
         padding: 12,
+      });
+    } else if (design === 'skeuomorphic') {
+      baseStyles.push({
+        backgroundColor: SKEUOMORPHIC_COLORS.surface,
+        borderRadius: SKEUOMORPHIC_BORDER_RADIUS.lg,
+        borderWidth: SKEUOMORPHIC_BORDER_WIDTHS.thin,
+        borderColor: SKEUOMORPHIC_COLORS.borderLight,
+        padding: 12,
+        ...convertShadowToStyle(SKEUOMORPHIC_SHADOWS.card),
+        ...convertGradientToStyle(SKEUOMORPHIC_GRADIENTS.surface),
       });
     }
 

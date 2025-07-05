@@ -1,11 +1,14 @@
 import React from 'react';
 import { View, StyleSheet, ViewStyle } from '../../platform';
 import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
+import { getSkeuomorphicProgressStyles } from '../../themes/utils/skeuomorphic';
+import { getGlassmorphicStyles, GLASSMORPHIC_COLORS } from '../../themes/utils/glassmorphic';
+import { useThemeSafe } from '../../themes/ThemeContext';
 
 interface ProgressBarProps {
   progress: number; // Value between 0 and 1
   style?: ViewStyle;
-  design?: 'flat' | 'neumorphic';
+  design?: 'flat' | 'neumorphic' | 'skeuomorphic' | 'glassmorphic';
   backgroundColor?: string;
   progressColor?: string;
   height?: number;
@@ -21,6 +24,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
   height = 12,
   width = 300,
 }) => {
+  const themeContext = useThemeSafe();
   // Ensure progress is between 0 and 1
   const normalizedProgress = Math.max(0, Math.min(progress || 0, 1));
 
@@ -43,6 +47,27 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
       baseStyles.push(...neumorphicStyles);
       baseStyles.push({
         backgroundColor,
+        borderRadius: height / 2,
+      });
+    }
+
+    if (design === 'skeuomorphic') {
+      const skeuomorphicStyles = getSkeuomorphicProgressStyles(normalizedProgress, 'primary');
+      baseStyles.push(skeuomorphicStyles.track);
+    } else if (design === 'glassmorphic') {
+      const themeMode = themeContext?.theme?.mode || 'light';
+      const glassmorphicStyles = getGlassmorphicStyles({
+        theme: themeMode as 'light' | 'dark',
+        intensity: 'subtle',
+        blur: 'light',
+        customBackground: backgroundColor,
+        customBorderRadius: height / 2,
+      });
+
+      baseStyles.push(glassmorphicStyles);
+      baseStyles.push({
+        backgroundColor: GLASSMORPHIC_COLORS[themeMode].surface,
+        borderColor: GLASSMORPHIC_COLORS[themeMode].border,
         borderRadius: height / 2,
       });
     }
@@ -73,6 +98,24 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
       baseStyles.push(...neumorphicStyles);
       baseStyles.push({
         backgroundColor: progressColor,
+      });
+    } else if (design === 'skeuomorphic') {
+      const skeuomorphicStyles = getSkeuomorphicProgressStyles(normalizedProgress, 'primary');
+      baseStyles.push(skeuomorphicStyles.fill);
+    } else if (design === 'glassmorphic') {
+      const themeMode = themeContext?.theme?.mode || 'light';
+      const glassmorphicStyles = getGlassmorphicStyles({
+        theme: themeMode as 'light' | 'dark',
+        intensity: 'medium',
+        blur: 'medium',
+        customBackground: progressColor,
+        customBorderRadius: height / 2,
+      });
+
+      baseStyles.push(glassmorphicStyles);
+      baseStyles.push({
+        backgroundColor: progressColor,
+        borderColor: GLASSMORPHIC_COLORS[themeMode].border,
       });
     } else {
       baseStyles.push({

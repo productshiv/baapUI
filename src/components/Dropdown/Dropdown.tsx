@@ -11,6 +11,7 @@ import {
 } from '../../platform';
 import Typography from '../Typography/Typography';
 import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
+import { getSkeuomorphicCardStyles, SKEUOMORPHIC_COLORS } from '../../themes/utils/skeuomorphic';
 
 interface DropdownProps {
   options: string[];
@@ -23,7 +24,7 @@ interface DropdownProps {
   optionStyle?: ViewStyle;
   labelStyle?: TextStyle | TextStyle[];
   textStyle?: TextStyle | TextStyle[];
-  design?: 'flat' | 'neumorphic';
+  design?: 'flat' | 'neumorphic' | 'skeuomorphic';
   backgroundColor?: string;
   textColor?: string;
 }
@@ -40,8 +41,8 @@ const Dropdown: React.FC<DropdownProps> = ({
   labelStyle,
   textStyle,
   design = 'flat',
-  backgroundColor = NEUMORPHIC_COLORS.background,
-  textColor = NEUMORPHIC_COLORS.text,
+  backgroundColor,
+  textColor,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [animation] = useState(new Animated.Value(0));
@@ -79,7 +80,7 @@ const Dropdown: React.FC<DropdownProps> = ({
     if (design === 'neumorphic') {
       const neumorphicStyles = getNeumorphicStyles({
         isPressed: isOpen,
-        customBackground: backgroundColor,
+        customBackground: backgroundColor || NEUMORPHIC_COLORS.background,
         customBorderRadius: 8,
       });
 
@@ -87,6 +88,12 @@ const Dropdown: React.FC<DropdownProps> = ({
       baseStyles.push({
         borderWidth: 0,
       });
+    } else if (design === 'skeuomorphic') {
+      const skeuomorphicStyles = getSkeuomorphicCardStyles(!isOpen);
+      baseStyles.push(skeuomorphicStyles);
+      if (backgroundColor) {
+        baseStyles.push({ backgroundColor });
+      }
     }
 
     if (dropdownStyle) {
@@ -102,7 +109,7 @@ const Dropdown: React.FC<DropdownProps> = ({
     if (design === 'neumorphic') {
       const neumorphicStyles = getNeumorphicStyles({
         isPressed: true,
-        customBackground: backgroundColor,
+        customBackground: backgroundColor || NEUMORPHIC_COLORS.background,
         customBorderRadius: 8,
       });
 
@@ -115,6 +122,15 @@ const Dropdown: React.FC<DropdownProps> = ({
         borderWidth: 0,
         marginTop: 8,
       });
+    } else if (design === 'skeuomorphic') {
+      const skeuomorphicStyles = getSkeuomorphicCardStyles(true);
+      baseStyles.push({
+        ...skeuomorphicStyles,
+        marginTop: 8,
+      });
+      if (backgroundColor) {
+        baseStyles.push({ backgroundColor });
+      }
     }
 
     return baseStyles;
@@ -126,7 +142,7 @@ const Dropdown: React.FC<DropdownProps> = ({
     if (design === 'neumorphic') {
       const neumorphicStyles = getNeumorphicStyles({
         isPressed: pressedOption === option,
-        customBackground: backgroundColor,
+        customBackground: backgroundColor || NEUMORPHIC_COLORS.background,
         customBorderRadius: 6,
       });
 
@@ -143,6 +159,15 @@ const Dropdown: React.FC<DropdownProps> = ({
       baseStyles.push({
         margin: 4,
       });
+    } else if (design === 'skeuomorphic') {
+      const skeuomorphicStyles = getSkeuomorphicCardStyles(pressedOption === option);
+      baseStyles.push(skeuomorphicStyles);
+      baseStyles.push({
+        margin: 4,
+      });
+      if (backgroundColor) {
+        baseStyles.push({ backgroundColor });
+      }
     }
 
     if (optionStyle) {
@@ -159,10 +184,11 @@ const Dropdown: React.FC<DropdownProps> = ({
 
     if (design === 'neumorphic') {
       Object.assign(baseStyles, {
-        color: textColor,
-        textShadowColor: NEUMORPHIC_COLORS.lightShadow,
-        textShadowOffset: { width: 1, height: 1 },
-        textShadowRadius: 1,
+        color: textColor || NEUMORPHIC_COLORS.text,
+      });
+    } else if (design === 'skeuomorphic') {
+      Object.assign(baseStyles, {
+        color: textColor || SKEUOMORPHIC_COLORS.onSurface,
       });
     }
 
@@ -186,10 +212,11 @@ const Dropdown: React.FC<DropdownProps> = ({
 
     if (design === 'neumorphic') {
       Object.assign(baseStyles, {
-        color: textColor,
-        textShadowColor: NEUMORPHIC_COLORS.lightShadow,
-        textShadowOffset: { width: 1, height: 1 },
-        textShadowRadius: 1,
+        color: textColor || NEUMORPHIC_COLORS.text,
+      });
+    } else if (design === 'skeuomorphic') {
+      Object.assign(baseStyles, {
+        color: textColor || SKEUOMORPHIC_COLORS.onSurface,
       });
     }
 
@@ -209,20 +236,21 @@ const Dropdown: React.FC<DropdownProps> = ({
   return (
     <View style={getContainerStyles()}>
       {label && (
-        <Typography variant="subtitle2" style={getLabelStyles()}>
+        <Typography variant="body2" style={getLabelStyles()}>
           {label}
         </Typography>
       )}
       <TouchableOpacity onPress={toggleDropdown} style={getDropdownStyles()} activeOpacity={0.7}>
-        <Typography variant="body1" style={getTextStyles()}>
+        <Typography variant="body" style={getTextStyles()}>
           {value || placeholder}
         </Typography>
         <Typography
-          variant="body1"
+          variant="body"
           style={{
             ...styles.arrow,
             ...(isOpen ? styles.arrowUp : {}),
-            ...(design === 'neumorphic' ? { color: textColor } : {}),
+            ...(design === 'neumorphic' ? { color: textColor || NEUMORPHIC_COLORS.text } : {}),
+            ...(design === 'skeuomorphic' ? { color: textColor || SKEUOMORPHIC_COLORS.onSurface } : {}),
           }}
         >
           ▼
@@ -247,7 +275,7 @@ const Dropdown: React.FC<DropdownProps> = ({
                 onPressOut={() => setPressedOption(null)}
                 style={getOptionStyles(option)}
               >
-                <Typography variant="body1" style={getTextStyles()}>
+                <Typography variant="body" style={getTextStyles()}>
                   {option}
                 </Typography>
               </TouchableOpacity>

@@ -5,7 +5,7 @@ import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumo
 interface GridProps {
   children: React.ReactNode;
   style?: ViewStyle;
-  design?: 'flat' | 'neumorphic';
+  design?: 'flat' | 'neumorphic' | 'skeuomorphic';
   backgroundColor?: string;
 }
 

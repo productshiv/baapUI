@@ -1,6 +1,8 @@
 import React from 'react';
 import { View, Text, StyleSheet, ViewStyle, TextStyle } from '../../platform';
 import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
+import { convertShadowToStyle, convertGradientToStyle } from '../../themes/utils/skeuomorphic';
+import { SKEUOMORPHIC_COLORS, SKEUOMORPHIC_SHADOWS, SKEUOMORPHIC_GRADIENTS, SKEUOMORPHIC_BORDER_RADIUS, SKEUOMORPHIC_BORDER_WIDTHS } from '../../themes/variants/skeuomorphic';
 
 interface Column {
   key: string;
@@ -15,7 +17,7 @@ interface TableProps {
   rowStyle?: ViewStyle;
   cellStyle?: TextStyle;
   headerCellStyle?: TextStyle;
-  design?: 'flat' | 'neumorphic';
+  design?: 'flat' | 'neumorphic' | 'skeuomorphic';
   backgroundColor?: string;
   textColor?: string;
 }
@@ -48,6 +50,16 @@ const Table: React.FC<TableProps> = ({
         borderWidth: 0,
         padding: 12,
       });
+    } else if (design === 'skeuomorphic') {
+      baseStyles.push({
+        backgroundColor: SKEUOMORPHIC_COLORS.surface,
+        borderRadius: SKEUOMORPHIC_BORDER_RADIUS.lg,
+        borderWidth: SKEUOMORPHIC_BORDER_WIDTHS.thin,
+        borderColor: SKEUOMORPHIC_COLORS.borderLight,
+        padding: 12,
+        ...convertShadowToStyle(SKEUOMORPHIC_SHADOWS.card),
+        ...convertGradientToStyle(SKEUOMORPHIC_GRADIENTS.card),
+      });
     }
 
     if (style) {
@@ -72,6 +84,16 @@ const Table: React.FC<TableProps> = ({
         backgroundColor,
         borderBottomWidth: 0,
         marginBottom: 8,
+      });
+    } else if (design === 'skeuomorphic') {
+      baseStyles.push({
+        backgroundColor: SKEUOMORPHIC_COLORS.primary,
+        borderRadius: SKEUOMORPHIC_BORDER_RADIUS.md,
+        borderWidth: SKEUOMORPHIC_BORDER_WIDTHS.thin,
+        borderColor: SKEUOMORPHIC_COLORS.borderDark,
+        marginBottom: 8,
+        ...convertShadowToStyle(SKEUOMORPHIC_SHADOWS.button.default),
+        ...convertGradientToStyle(SKEUOMORPHIC_GRADIENTS.button.primary),
       });
     }
 
@@ -98,6 +120,15 @@ const Table: React.FC<TableProps> = ({
         borderBottomWidth: 0,
         marginBottom: isLast ? 0 : 8,
       });
+    } else if (design === 'skeuomorphic') {
+      baseStyles.push({
+        backgroundColor: SKEUOMORPHIC_COLORS.background,
+        borderRadius: SKEUOMORPHIC_BORDER_RADIUS.sm,
+        borderWidth: SKEUOMORPHIC_BORDER_WIDTHS.thin,
+        borderColor: SKEUOMORPHIC_COLORS.border,
+        marginBottom: isLast ? 0 : 8,
+        ...convertShadowToStyle(SKEUOMORPHIC_SHADOWS.input.default),
+      });
     }
 
     if (rowStyle) {
@@ -120,6 +151,14 @@ const Table: React.FC<TableProps> = ({
         textShadowOffset: { width: 1, height: 1 },
         textShadowRadius: 1,
       });
+    } else if (design === 'skeuomorphic') {
+      Object.assign(baseStyles, {
+        color: SKEUOMORPHIC_COLORS.onPrimary,
+        fontWeight: '600',
+        textShadowColor: SKEUOMORPHIC_COLORS.shadowMedium,
+        textShadowOffset: { width: 1, height: 1 },
+        textShadowRadius: 2,
+      });
     }
 
     if (headerCellStyle) {
@@ -139,6 +178,13 @@ const Table: React.FC<TableProps> = ({
         color: textColor,
         textShadowColor: NEUMORPHIC_COLORS.lightShadow,
         textShadowOffset: { width: 1, height: 1 },
+        textShadowRadius: 1,
+      });
+    } else if (design === 'skeuomorphic') {
+      Object.assign(baseStyles, {
+        color: SKEUOMORPHIC_COLORS.onSurface,
+        textShadowColor: SKEUOMORPHIC_COLORS.highlight,
+        textShadowOffset: { width: 0.5, height: 0.5 },
         textShadowRadius: 1,
       });
     }

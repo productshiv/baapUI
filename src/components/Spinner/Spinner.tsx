@@ -2,6 +2,10 @@ import React from 'react';
 import { ActivityIndicator, View, StyleSheet, ViewStyle, TextStyle } from '../../platform';
 import Typography from '../Typography/Typography';
 import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
+import { convertShadowToStyle, convertGradientToStyle } from '../../themes/utils/skeuomorphic';
+import { SKEUOMORPHIC_COLORS, SKEUOMORPHIC_SHADOWS, SKEUOMORPHIC_GRADIENTS, SKEUOMORPHIC_BORDER_RADIUS, SKEUOMORPHIC_BORDER_WIDTHS } from '../../themes/variants/skeuomorphic';
+import { getGlassmorphicStyles, GLASSMORPHIC_COLORS } from '../../themes/utils/glassmorphic';
+import { useThemeSafe } from '../../themes/ThemeContext';
 
 type SpinnerSize = 'small' | 'medium' | 'large';
 type SpinnerVariant = 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info';
@@ -12,7 +16,7 @@ interface SpinnerProps {
   color?: string;
   label?: string;
   style?: ViewStyle;
-  design?: 'flat' | 'neumorphic';
+  design?: 'flat' | 'neumorphic' | 'skeuomorphic' | 'glassmorphic';
   backgroundColor?: string;
   textColor?: string;
 }
@@ -59,6 +63,7 @@ const Spinner: React.FC<SpinnerProps> = ({
   backgroundColor = NEUMORPHIC_COLORS.background,
   textColor,
 }) => {
+  const themeContext = useThemeSafe();
   const spinnerColor = color || getSpinnerColor(variant);
   const labelColor = textColor || spinnerColor;
 
@@ -76,6 +81,32 @@ const Spinner: React.FC<SpinnerProps> = ({
       baseStyles.push({
         backgroundColor,
         padding: 16,
+      });
+    } else if (design === 'skeuomorphic') {
+      baseStyles.push({
+        backgroundColor: SKEUOMORPHIC_COLORS.surface,
+        borderRadius: SKEUOMORPHIC_BORDER_RADIUS.md,
+        borderWidth: SKEUOMORPHIC_BORDER_WIDTHS.thin,
+        borderColor: SKEUOMORPHIC_COLORS.borderLight,
+        padding: 16,
+        ...convertShadowToStyle(SKEUOMORPHIC_SHADOWS.card),
+        ...convertGradientToStyle(SKEUOMORPHIC_GRADIENTS.card),
+      });
+    } else if (design === 'glassmorphic') {
+      const themeMode = themeContext?.theme?.mode || 'light';
+      const glassmorphicStyles = getGlassmorphicStyles({
+        theme: themeMode as 'light' | 'dark',
+        intensity: 'medium',
+        blur: 'medium',
+        customBackground: backgroundColor,
+        customBorderRadius: 12,
+      });
+
+      baseStyles.push(glassmorphicStyles);
+      baseStyles.push({
+        padding: 16,
+        borderWidth: 1,
+        borderColor: GLASSMORPHIC_COLORS[themeMode].border,
       });
     }
 
@@ -96,6 +127,15 @@ const Spinner: React.FC<SpinnerProps> = ({
       baseStyle.textShadowColor = NEUMORPHIC_COLORS.lightShadow;
       baseStyle.textShadowOffset = { width: 1, height: 1 };
       baseStyle.textShadowRadius = 1;
+    } else if (design === 'skeuomorphic') {
+      baseStyle.color = SKEUOMORPHIC_COLORS.onSurface;
+      baseStyle.textShadowColor = 'rgba(255, 255, 255, 0.8)';
+      baseStyle.textShadowOffset = { width: 0, height: 1 };
+      baseStyle.textShadowRadius = 1;
+    } else if (design === 'glassmorphic') {
+      const themeMode = themeContext?.theme?.mode || 'light';
+      baseStyle.color = GLASSMORPHIC_COLORS[themeMode].text;
+      baseStyle.fontWeight = '600';
     }
 
     return baseStyle;

@@ -21,7 +21,7 @@ const meta: Meta<typeof Dropdown> = {
   argTypes: {
     design: {
       control: 'select',
-      options: ['flat', 'neumorphic'],
+      options: ['flat', 'neumorphic', 'skeuomorphic'],
       defaultValue: 'flat',
     },
     label: {
@@ -91,6 +91,16 @@ export const Neumorphic: Story = {
   },
 };
 
+export const Skeuomorphic: Story = {
+  args: {
+    options: sampleOptions,
+    label: 'Skeuomorphic Design Dropdown',
+    placeholder: 'Select option...',
+    design: 'skeuomorphic',
+    onSelect: () => {},
+  },
+};
+
 // State Variations
 export const WithValue: Story = {
   args: {
@@ -113,6 +123,17 @@ export const NeumorphicWithValue: Story = {
     label: 'Neumorphic with Value',
     placeholder: 'Select framework...',
     design: 'neumorphic',
+    onSelect: () => {},
+  },
+};
+
+export const SkeuomorphicWithValue: Story = {
+  args: {
+    options: frameworkOptions,
+    value: 'Vue',
+    label: 'Skeuomorphic with Value',
+    placeholder: 'Select framework...',
+    design: 'skeuomorphic',
     onSelect: () => {},
   },
 };
@@ -140,6 +161,18 @@ export const NeumorphicCustomColors: Story = {
     backgroundColor: '#fdf6e3',
     textColor: '#8b4513',
     design: 'neumorphic',
+    onSelect: () => {},
+  },
+};
+
+export const SkeuomorphicCustomColors: Story = {
+  args: {
+    options: colorOptions,
+    label: 'Custom Skeuomorphic Colors',
+    placeholder: 'Select color...',
+    backgroundColor: '#f5f5dc',
+    textColor: '#654321',
+    design: 'skeuomorphic',
     onSelect: () => {},
   },
 };
@@ -227,6 +260,15 @@ export const AllDesigns: Story = {
           label="Neumorphic Design"
           placeholder="Select option..."
           design="neumorphic"
+          onSelect={() => {}}
+        />
+      </View>
+      <View>
+        <Dropdown
+          options={sampleOptions}
+          label="Skeuomorphic Design"
+          placeholder="Select option..."
+          design="skeuomorphic"
           onSelect={() => {}}
         />
       </View>

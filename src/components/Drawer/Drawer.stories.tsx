@@ -1,7 +1,8 @@
 import React from 'react';
-import type { Meta, StoryObj } from '@storybook/react-webpack5';
+import type { Meta, StoryObj } from '@storybook/react';
 import Drawer from './Drawer';
 import { NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
+import { SKEUOMORPHIC_COLORS } from '../../themes/utils/skeuomorphic';
 
 const meta: Meta<typeof Drawer> = {
   title: 'Navigation/Drawer',
@@ -12,7 +13,7 @@ const meta: Meta<typeof Drawer> = {
   argTypes: {
     design: {
       control: 'radio',
-      options: ['flat', 'neumorphic'],
+      options: ['flat', 'neumorphic', 'skeuomorphic'],
     },
   },
 };
@@ -50,6 +51,33 @@ export const Neumorphic: Story = {
     design: 'neumorphic',
     backgroundColor: NEUMORPHIC_COLORS.background,
     textColor: NEUMORPHIC_COLORS.text,
+    onSelect: () => {},
+  },
+};
+
+export const Skeuomorphic: Story = {
+  args: {
+    items: sampleItems,
+    selectedItem: 'home',
+    design: 'skeuomorphic',
+    onSelect: () => {},
+  },
+};
+
+export const SkeuomorphicWithSelectedProfile: Story = {
+  args: {
+    items: sampleItems,
+    selectedItem: 'profile',
+    design: 'skeuomorphic',
+    onSelect: () => {},
+  },
+};
+
+export const SkeuomorphicWithSelectedSettings: Story = {
+  args: {
+    items: sampleItems,
+    selectedItem: 'settings',
+    design: 'skeuomorphic',
     onSelect: () => {},
   },
 };

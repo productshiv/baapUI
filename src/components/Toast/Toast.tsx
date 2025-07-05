@@ -2,6 +2,9 @@ import React, { useEffect, useMemo } from 'react';
 import { View, StyleSheet, Animated, ViewStyle, TextStyle } from '../../platform';
 import Typography from '../Typography/Typography';
 import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
+import { getSkeuomorphicToastStyles, SKEUOMORPHIC_COLORS } from '../../themes/utils/skeuomorphic';
+import { getGlassmorphicStyles, GLASSMORPHIC_COLORS } from '../../themes/utils/glassmorphic';
+import { useThemeSafe } from '../../themes/ThemeContext';
 
 interface ToastProps {
   message: string;
@@ -9,7 +12,7 @@ interface ToastProps {
   onClose: () => void;
   duration?: number;
   style?: ViewStyle;
-  design?: 'flat' | 'neumorphic';
+  design?: 'flat' | 'neumorphic' | 'skeuomorphic' | 'glassmorphic';
   backgroundColor?: string;
   textColor?: string;
   type?: 'info' | 'success' | 'warning' | 'error';
@@ -26,6 +29,7 @@ const Toast: React.FC<ToastProps> = ({
   textColor = NEUMORPHIC_COLORS.text,
   type = 'info',
 }) => {
+  const themeContext = useThemeSafe();
   const fadeAnim = useMemo(() => new Animated.Value(0), []);
 
   useEffect(() => {
@@ -92,6 +96,53 @@ const Toast: React.FC<ToastProps> = ({
             borderColor: '#64B5F6',
           });
       }
+    } else if (design === 'skeuomorphic') {
+      const skeuomorphicStyles = getSkeuomorphicToastStyles(type);
+      baseStyles.push(skeuomorphicStyles);
+    } else if (design === 'glassmorphic') {
+      const themeMode = themeContext?.theme?.mode || 'light';
+      const glassmorphicStyles = getGlassmorphicStyles({
+        intensity: 'medium',
+        blur: 'medium',
+        customBackground: backgroundColor,
+        customBorderRadius: 12,
+      });
+
+      baseStyles.push(glassmorphicStyles);
+      baseStyles.push({
+        backgroundColor: GLASSMORPHIC_COLORS[themeMode].background,
+        borderColor: GLASSMORPHIC_COLORS[themeMode].border,
+        paddingVertical: 16,
+        paddingHorizontal: 32,
+        borderRadius: 12,
+      });
+
+      // Add type-specific styles for glassmorphic design
+      switch (type) {
+        case 'success':
+          baseStyles.push({
+            backgroundColor: 'rgba(76, 175, 80, 0.2)',
+            borderColor: 'rgba(76, 175, 80, 0.3)',
+          });
+          break;
+        case 'warning':
+          baseStyles.push({
+            backgroundColor: 'rgba(255, 152, 0, 0.2)',
+            borderColor: 'rgba(255, 152, 0, 0.3)',
+          });
+          break;
+        case 'error':
+          baseStyles.push({
+            backgroundColor: 'rgba(244, 67, 54, 0.2)',
+            borderColor: 'rgba(244, 67, 54, 0.3)',
+          });
+          break;
+        default:
+          baseStyles.push({
+            backgroundColor: 'rgba(33, 150, 243, 0.2)',
+            borderColor: 'rgba(33, 150, 243, 0.3)',
+          });
+      }
     } else {
       // Add type-specific styles for flat design
       switch (type) {
@@ -132,6 +183,37 @@ const Toast: React.FC<ToastProps> = ({
       });
 
       // Add type-specific text styles for neumorphic design
+      switch (type) {
+        case 'success':
+          Object.assign(baseStyles, { color: '#2E7D32' });
+          break;
+        case 'warning':
+          Object.assign(baseStyles, { color: '#F57C00' });
+          break;
+        case 'error':
+          Object.assign(baseStyles, { color: '#C62828' });
+          break;
+        default:
+          Object.assign(baseStyles, { color: '#1976D2' });
+      }
+    } else if (design === 'skeuomorphic') {
+      Object.assign(baseStyles, {
+        color: '#fff',
+        fontSize: 14,
+        fontWeight: '600',
+        textShadowColor: SKEUOMORPHIC_COLORS.shadowLight,
+        textShadowOffset: { width: 1, height: 1 },
+        textShadowRadius: 1,
+      });
+    } else if (design === 'glassmorphic') {
+      const themeMode = themeContext?.theme?.mode || 'light';
+      Object.assign(baseStyles, {
+        color: GLASSMORPHIC_COLORS[themeMode].text,
+        fontSize: 14,
+        fontWeight: '600',
+      });
+
+      // Add type-specific text styles for glassmorphic design
       switch (type) {
         case 'success':
           Object.assign(baseStyles, { color: '#2E7D32' });

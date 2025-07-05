@@ -2,6 +2,7 @@ import React from 'react';
 import { View, StyleSheet, ViewStyle, Pressable } from '../../platform';
 import { ThemeDesign } from '../../themes/types';
 import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
+import { getSkeuomorphicCardStyles, SKEUOMORPHIC_COLORS } from '../../themes/utils/skeuomorphic';
 import Typography from '../Typography/Typography';
 import Container from '../Container/Container';
 
@@ -60,6 +61,12 @@ const Footer: React.FC<FooterProps> = ({
           customBackground: backgroundColor || NEUMORPHIC_COLORS.background,
         })
       );
+    } else if (design === 'skeuomorphic') {
+      const skeuomorphicStyles = getSkeuomorphicCardStyles(false);
+      baseStyles.push(skeuomorphicStyles);
+      if (backgroundColor) {
+        baseStyles.push({ backgroundColor });
+      }
     }
 
     if (style) {
@@ -102,7 +109,7 @@ const Footer: React.FC<FooterProps> = ({
                 {sections.map((section, sectionIndex) => (
                   <View key={sectionIndex} style={styles.linkSection}>
                     <Typography
-                      variant="subtitle2"
+                      variant="body2"
                       style={styles.sectionTitle}
                       design={design}
                     >
@@ -224,4 +231,4 @@ const styles = StyleSheet.create({
   } as ViewStyle,
 });
 
-export default Footer; 
+export default Footer;

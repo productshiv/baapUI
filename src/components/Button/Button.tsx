@@ -11,6 +11,7 @@ import {
 import { ThemeDesign } from '../../themes/types';
 import { useThemeSafe } from '../../themes/ThemeContext';
 import { getSkeuomorphicButtonStyles } from '../../themes/utils/skeuomorphic';
+import { getGlassmorphicButtonStyles } from '../../themes/utils/glassmorphic';
 
 export interface ButtonProps {
   variant?: 'primary' | 'secondary' | 'outline' | 'text';
@@ -61,6 +62,44 @@ const Button: React.FC<ButtonProps> = ({
         text: {
           ...skeuomorphicStyles.text,
           ...(textColor && { color: textColor }),
+        },
+      };
+    }
+
+    // If design is glassmorphic, use glassmorphic styles
+    if (activeDesign === 'glassmorphic') {
+      const glassmorphicStyles = getGlassmorphicButtonStyles({
+        theme: themeContext?.theme.mode || 'light',
+        intensity: variant === 'primary' ? 'strong' : 'medium',
+        customBackground: backgroundColor,
+      });
+      
+      const textColorForVariant = (() => {
+        if (textColor) return textColor;
+        if (disabled) return themeContext?.theme.mode === 'dark' ? 'rgba(255, 255, 255, 0.3)' : 'rgba(0, 0, 0, 0.3)';
+        
+        switch (variant) {
+          case 'primary':
+            return themeContext?.theme.mode === 'dark' ? 'rgba(255, 255, 255, 0.95)' : 'rgba(29, 29, 31, 0.9)';
+          case 'secondary':
+            return themeContext?.theme.colors.secondary || '#5856D6';
+          case 'outline':
+          case 'text':
+            return themeContext?.theme.colors.primary || '#007AFF';
+          default:
+            return themeContext?.theme.colors.text || '#000000';
+        }
+      })();
+
+      return {
+        container: {
+          ...glassmorphicStyles,
+          opacity: disabled ? 0.6 : 1,
+        },
+        text: {
+          color: textColorForVariant,
+          fontSize: 16,
+          fontWeight: '600',
         },
       };
     }

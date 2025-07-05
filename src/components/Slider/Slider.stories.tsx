@@ -21,7 +21,7 @@ const meta: Meta<typeof Slider> = {
   argTypes: {
     design: {
       control: 'select',
-      options: ['flat', 'neumorphic'],
+      options: ['flat', 'neumorphic', 'skeuomorphic'],
       defaultValue: 'flat',
     },
     value: {
@@ -100,6 +100,16 @@ export const Neumorphic: Story = {
     minimumValue: 0,
     maximumValue: 100,
     design: 'neumorphic',
+    onValueChange: () => {},
+  },
+};
+
+export const Skeuomorphic: Story = {
+  args: {
+    value: 70,
+    minimumValue: 0,
+    maximumValue: 100,
+    design: 'skeuomorphic',
     onValueChange: () => {},
   },
 };
@@ -358,6 +368,16 @@ export const AllDesigns: Story = {
           minimumValue={0}
           maximumValue={100}
           design="neumorphic"
+          onValueChange={() => {}}
+        />
+      </View>
+      <View style={{ gap: 8 }}>
+        <Typography variant="body2" style={{ fontWeight: 'bold' }}>Skeuomorphic Design</Typography>
+        <Slider
+          value={70}
+          minimumValue={0}
+          maximumValue={100}
+          design="skeuomorphic"
           onValueChange={() => {}}
         />
       </View>

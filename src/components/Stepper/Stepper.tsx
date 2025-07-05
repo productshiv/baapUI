@@ -9,7 +9,7 @@ interface StepperProps {
   minimumValue?: number;
   maximumValue?: number;
   style?: ViewStyle;
-  design?: 'flat' | 'neumorphic';
+  design?: 'flat' | 'neumorphic' | 'skeuomorphic';
   backgroundColor?: string;
   textColor?: string;
   buttonColor?: string;

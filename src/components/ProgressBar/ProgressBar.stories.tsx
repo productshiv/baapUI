@@ -22,7 +22,7 @@ const meta: Meta<typeof ProgressBar> = {
   argTypes: {
     design: {
       control: 'select',
-      options: ['flat', 'neumorphic'],
+      options: ['flat', 'neumorphic', 'skeuomorphic', 'glassmorphic'],
       defaultValue: 'flat',
     },
     progress: {
@@ -87,6 +87,153 @@ export const Neumorphic: Story = {
     height: 12,
     width: 300,
   },
+};
+
+export const Skeuomorphic: Story = {
+  args: {
+    progress: 0.6,
+    design: 'skeuomorphic',
+    height: 12,
+    width: 300,
+  },
+};
+
+export const Glassmorphic: Story = {
+  args: {
+    progress: 0.6,
+    design: 'glassmorphic',
+    height: 12,
+    width: 300,
+  },
+};
+
+export const GlassmorphicSizes: Story = {
+  render: () => (
+    <View style={{ gap: 16, minWidth: 350 }}>
+      <Typography variant="h6" style={{ textAlign: 'center' }}>Glassmorphic Size Variations</Typography>
+      <View style={{ gap: 12 }}>
+        <View style={{ gap: 4 }}>
+          <Typography variant="caption">Thin (6px height)</Typography>
+          <ProgressBar progress={0.6} height={6} width={300} design="glassmorphic" />
+        </View>
+        <View style={{ gap: 4 }}>
+          <Typography variant="caption">Medium (12px height)</Typography>
+          <ProgressBar progress={0.6} height={12} width={300} design="glassmorphic" />
+        </View>
+        <View style={{ gap: 4 }}>
+          <Typography variant="caption">Large (20px height)</Typography>
+          <ProgressBar progress={0.6} height={20} width={300} design="glassmorphic" />
+        </View>
+      </View>
+    </View>
+  ),
+};
+
+export const GlassmorphicDarkMode: Story = {
+  parameters: {
+    backgrounds: { default: 'dark' },
+  },
+  args: {
+    progress: 0.7,
+    design: 'glassmorphic',
+    height: 14,
+    width: 300,
+  },
+};
+
+export const GlassmorphicPlayground: Story = {
+  args: {
+    progress: 0.65,
+    design: 'glassmorphic',
+    height: 16,
+    width: 350,
+    progressColor: '#4CAF50',
+  },
+  argTypes: {
+    progress: {
+      control: { type: 'range', min: 0, max: 1, step: 0.05 },
+    },
+    height: {
+      control: { type: 'range', min: 6, max: 32, step: 2 },
+    },
+    width: {
+      control: { type: 'range', min: 150, max: 500, step: 25 },
+    },
+    progressColor: {
+      control: 'color',
+    },
+  },
+};
+
+export const GlassmorphicProgress: Story = {
+  render: () => (
+    <View style={{ gap: 16, minWidth: 350 }}>
+      <Typography variant="h6" style={{ textAlign: 'center' }}>Glassmorphic Progress Levels</Typography>
+      <View style={{ gap: 12 }}>
+        <View style={{ gap: 4 }}>
+          <Typography variant="caption">Low (25%)</Typography>
+          <ProgressBar progress={0.25} width={300} height={12} design="glassmorphic" progressColor="#f44336" />
+        </View>
+        <View style={{ gap: 4 }}>
+          <Typography variant="caption">Medium (50%)</Typography>
+          <ProgressBar progress={0.5} width={300} height={12} design="glassmorphic" progressColor="#ff9800" />
+        </View>
+        <View style={{ gap: 4 }}>
+          <Typography variant="caption">High (75%)</Typography>
+          <ProgressBar progress={0.75} width={300} height={12} design="glassmorphic" progressColor="#4CAF50" />
+        </View>
+        <View style={{ gap: 4 }}>
+          <Typography variant="caption">Complete (100%)</Typography>
+          <ProgressBar progress={1} width={300} height={12} design="glassmorphic" progressColor="#2196F3" />
+        </View>
+      </View>
+    </View>
+  ),
+};
+
+export const GlassmorphicColoredGlass: Story = {
+  render: () => (
+    <View style={{ gap: 16, minWidth: 350 }}>
+      <Typography variant="h6" style={{ textAlign: 'center' }}>Glassmorphic Colored Progress</Typography>
+      <View style={{ gap: 12 }}>
+        <View style={{ gap: 4 }}>
+          <Typography variant="caption">Blue Glass</Typography>
+          <ProgressBar progress={0.7} width={300} height={14} design="glassmorphic" progressColor="rgba(33, 150, 243, 0.8)" />
+        </View>
+        <View style={{ gap: 4 }}>
+          <Typography variant="caption">Purple Glass</Typography>
+          <ProgressBar progress={0.6} width={300} height={14} design="glassmorphic" progressColor="rgba(156, 39, 176, 0.8)" />
+        </View>
+        <View style={{ gap: 4 }}>
+          <Typography variant="caption">Green Glass</Typography>
+          <ProgressBar progress={0.8} width={300} height={14} design="glassmorphic" progressColor="rgba(76, 175, 80, 0.8)" />
+        </View>
+      </View>
+    </View>
+  ),
+};
+
+export const GlassmorphicMinimalGlass: Story = {
+  args: {
+    progress: 0.6,
+    design: 'glassmorphic',
+    height: 8,
+    width: 280,
+    progressColor: 'rgba(255, 255, 255, 0.6)',
+  },
+};
+
+export const GlassmorphicLayeredGlass: Story = {
+  render: () => (
+    <View style={{ gap: 20, minWidth: 350, padding: 20, backgroundColor: 'rgba(0, 0, 0, 0.1)', borderRadius: 12 }}>
+      <Typography variant="h6" style={{ textAlign: 'center' }}>Layered Glass Progress</Typography>
+      <View style={{ gap: 16 }}>
+        <ProgressBar progress={0.3} width={300} height={16} design="glassmorphic" progressColor="rgba(255, 193, 7, 0.7)" />
+        <ProgressBar progress={0.6} width={280} height={14} design="glassmorphic" progressColor="rgba(33, 150, 243, 0.7)" />
+        <ProgressBar progress={0.9} width={260} height={12} design="glassmorphic" progressColor="rgba(76, 175, 80, 0.7)" />
+      </View>
+    </View>
+  ),
 };
 
 // Progress Level Variations
@@ -418,6 +565,14 @@ export const AllDesigns: Story = {
         <View style={{ gap: 8 }}>
           <Typography variant="body2" style={{ fontWeight: 'bold' }}>Neumorphic Design</Typography>
           <ProgressBar progress={0.6} design="neumorphic" width={300} height={12} />
+        </View>
+        <View style={{ gap: 8 }}>
+          <Typography variant="body2" style={{ fontWeight: 'bold' }}>Skeuomorphic Design</Typography>
+          <ProgressBar progress={0.6} design="skeuomorphic" width={300} height={12} />
+        </View>
+        <View style={{ gap: 8 }}>
+          <Typography variant="body2" style={{ fontWeight: 'bold' }}>Glassmorphic Design</Typography>
+          <ProgressBar progress={0.6} design="glassmorphic" width={300} height={12} />
         </View>
       </View>
     </View>

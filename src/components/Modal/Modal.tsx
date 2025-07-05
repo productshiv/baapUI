@@ -8,13 +8,16 @@ import {
   ViewStyle,
 } from '../../platform';
 import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
+import { getSkeuomorphicModalStyles, SKEUOMORPHIC_COLORS } from '../../themes/utils/skeuomorphic';
+import { getGlassmorphicStyles, GLASSMORPHIC_COLORS } from '../../themes/utils/glassmorphic';
+import { useThemeSafe } from '../../themes/ThemeContext';
 
 interface ModalProps {
   visible: boolean;
   onClose: () => void;
   children: React.ReactNode;
   style?: ViewStyle;
-  design?: 'flat' | 'neumorphic';
+  design?: 'flat' | 'neumorphic' | 'skeuomorphic' | 'glassmorphic';
   backgroundColor?: string;
   textColor?: string;
 }
@@ -28,6 +31,7 @@ const Modal: React.FC<ModalProps> = ({
   backgroundColor = NEUMORPHIC_COLORS.background,
   textColor = NEUMORPHIC_COLORS.text,
 }) => {
+  const themeContext = useThemeSafe();
   const [isClosePressed, setIsClosePressed] = useState(false);
 
   const getModalStyles = (): ViewStyle[] => {
@@ -41,6 +45,28 @@ const Modal: React.FC<ModalProps> = ({
       });
 
       baseStyles.push(...neumorphicStyles);
+    }
+
+    if (design === 'skeuomorphic') {
+      const skeuomorphicStyles = getSkeuomorphicModalStyles();
+      baseStyles.push(skeuomorphicStyles.container);
+    }
+
+    if (design === 'glassmorphic') {
+      const themeMode = themeContext?.theme?.mode || 'light';
+      const glassmorphicStyles = getGlassmorphicStyles({
+        intensity: 'strong',
+        blur: 'heavy',
+        customBackground: backgroundColor,
+        customBorderRadius: 16,
+      });
+
+      baseStyles.push(glassmorphicStyles);
+      baseStyles.push({
+        backgroundColor: GLASSMORPHIC_COLORS[themeMode].background,
+        borderColor: GLASSMORPHIC_COLORS[themeMode].border,
+        borderWidth: 1,
+      });
     }
 
     if (style) {
@@ -61,6 +87,37 @@ const Modal: React.FC<ModalProps> = ({
       });
 
       baseStyles.push(...neumorphicStyles);
+    }
+
+    if (design === 'skeuomorphic') {
+      // Use button styles for the close button in skeuomorphic design
+      baseStyles.push({
+        backgroundColor: SKEUOMORPHIC_COLORS.primary,
+        borderColor: SKEUOMORPHIC_COLORS.primaryDark,
+        borderWidth: 1,
+        shadowColor: SKEUOMORPHIC_COLORS.shadowMedium,
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.3,
+        shadowRadius: 4,
+        elevation: 4,
+      });
+    }
+
+    if (design === 'glassmorphic') {
+      const themeMode = themeContext?.theme?.mode || 'light';
+      const glassmorphicStyles = getGlassmorphicStyles({
+        intensity: 'medium',
+        blur: 'medium',
+        customBackground: backgroundColor,
+        customBorderRadius: 8,
+      });
+
+      baseStyles.push(glassmorphicStyles);
+      baseStyles.push({
+        backgroundColor: GLASSMORPHIC_COLORS[themeMode].background,
+        borderColor: GLASSMORPHIC_COLORS[themeMode].border,
+        borderWidth: 1,
+      });
     }
 
     return baseStyles;
@@ -85,6 +142,16 @@ const Modal: React.FC<ModalProps> = ({
                   textShadowColor: NEUMORPHIC_COLORS.lightShadow,
                   textShadowOffset: { width: 1, height: 1 },
                   textShadowRadius: 1,
+                },
+                design === 'skeuomorphic' && {
+                  color: '#fff',
+                  textShadowColor: SKEUOMORPHIC_COLORS.shadowLight,
+                  textShadowOffset: { width: 1, height: 1 },
+                  textShadowRadius: 1,
+                },
+                design === 'glassmorphic' && {
+                  color: GLASSMORPHIC_COLORS[themeContext?.theme?.mode || 'light'].text,
+                  fontWeight: '600',
                 },
               ]}
             >

@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Pressable, Platform, ViewStyle, TextStyle } from '../../platform';
 import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
+import { getGlassmorphicStyles, GLASSMORPHIC_COLORS } from '../../themes/utils/glassmorphic';
+import { useThemeSafe } from '../../themes/ThemeContext';
 
 interface TooltipProps {
   content: string;
   children: React.ReactNode;
   position?: 'top' | 'bottom' | 'left' | 'right';
   style?: ViewStyle;
-  design?: 'flat' | 'neumorphic';
+  design?: 'flat' | 'neumorphic' | 'skeuomorphic' | 'glassmorphic';
   backgroundColor?: string;
   textColor?: string;
 }
@@ -21,6 +23,7 @@ const Tooltip: React.FC<TooltipProps> = ({
   backgroundColor = NEUMORPHIC_COLORS.background,
   textColor = NEUMORPHIC_COLORS.text,
 }) => {
+  const themeContext = useThemeSafe();
   const [visible, setVisible] = useState(false);
 
   const getPositionStyle = (): ViewStyle => {
@@ -52,6 +55,22 @@ const Tooltip: React.FC<TooltipProps> = ({
         borderWidth: 0,
         padding: 12,
       });
+    } else if (design === 'glassmorphic') {
+      const themeMode = themeContext?.theme?.mode || 'light';
+      const glassmorphicStyles = getGlassmorphicStyles({
+        intensity: 'medium',
+        blur: 'medium',
+        customBackground: backgroundColor,
+        customBorderRadius: 8,
+      });
+
+      baseStyles.push(glassmorphicStyles);
+      baseStyles.push({
+        backgroundColor: GLASSMORPHIC_COLORS[themeMode].background,
+        borderColor: GLASSMORPHIC_COLORS[themeMode].border,
+        borderWidth: 1,
+        padding: 12,
+      });
     }
 
     return baseStyles;
@@ -69,6 +88,13 @@ const Tooltip: React.FC<TooltipProps> = ({
         textShadowColor: NEUMORPHIC_COLORS.lightShadow,
         textShadowOffset: { width: 1, height: 1 },
         textShadowRadius: 1,
+      });
+    } else if (design === 'glassmorphic') {
+      const themeMode = themeContext?.theme?.mode || 'light';
+      Object.assign(baseStyles, {
+        color: GLASSMORPHIC_COLORS[themeMode].text,
+        fontSize: 14,
+        fontWeight: '600',
       });
     }
 

@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ViewStyle, TextStyle } from '../../platform';
 import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
+import { convertShadowToStyle, convertGradientToStyle } from '../../themes/utils/skeuomorphic';
+import { SKEUOMORPHIC_COLORS, SKEUOMORPHIC_SHADOWS, SKEUOMORPHIC_GRADIENTS, SKEUOMORPHIC_BORDER_RADIUS, SKEUOMORPHIC_BORDER_WIDTHS } from '../../themes/variants/skeuomorphic';
 
 interface BreadcrumbItem {
   id: string;
@@ -12,11 +14,12 @@ interface BreadcrumbsProps {
   currentItem: string;
   onSelect: (id: string) => void;
   style?: ViewStyle;
-  design?: 'flat' | 'neumorphic';
+  design?: 'flat' | 'neumorphic' | 'skeuomorphic';
   backgroundColor?: string;
   textColor?: string;
   activeTextColor?: string;
   separatorColor?: string;
+  separator?: string;
 }
 
 const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
@@ -29,6 +32,7 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
   textColor = NEUMORPHIC_COLORS.text,
   activeTextColor = NEUMORPHIC_COLORS.primary,
   separatorColor = NEUMORPHIC_COLORS.text,
+  separator = '/',
 }) => {
   const [pressedId, setPressedId] = useState<string | null>(null);
 
@@ -47,6 +51,16 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
         backgroundColor,
         padding: 12,
       });
+    } else if (design === 'skeuomorphic') {
+      baseStyles.push({
+        backgroundColor: SKEUOMORPHIC_COLORS.surface,
+        borderRadius: SKEUOMORPHIC_BORDER_RADIUS.md,
+        borderWidth: SKEUOMORPHIC_BORDER_WIDTHS.thin,
+        borderColor: SKEUOMORPHIC_COLORS.borderLight,
+        padding: 12,
+        ...convertShadowToStyle(SKEUOMORPHIC_SHADOWS.card),
+        ...convertGradientToStyle(SKEUOMORPHIC_GRADIENTS.card),
+      });
     }
 
     if (style) {
@@ -58,10 +72,11 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
 
   const getItemStyles = (itemId: string): ViewStyle[] => {
     const baseStyles: ViewStyle[] = [styles.itemContainer];
+    const isPressed = pressedId === itemId;
 
     if (design === 'neumorphic') {
       const neumorphicStyles = getNeumorphicStyles({
-        isPressed: pressedId === itemId,
+        isPressed,
         customBackground: backgroundColor,
         customBorderRadius: 6,
       });
@@ -71,6 +86,17 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
         backgroundColor,
         padding: 6,
         marginHorizontal: 2,
+      });
+    } else if (design === 'skeuomorphic') {
+      baseStyles.push({
+        backgroundColor: SKEUOMORPHIC_COLORS.surface,
+        borderRadius: SKEUOMORPHIC_BORDER_RADIUS.sm,
+        borderWidth: SKEUOMORPHIC_BORDER_WIDTHS.thin,
+        borderColor: SKEUOMORPHIC_COLORS.border,
+        padding: 6,
+        marginHorizontal: 2,
+        ...convertShadowToStyle(isPressed ? SKEUOMORPHIC_SHADOWS.button.pressed : SKEUOMORPHIC_SHADOWS.button.default),
+        ...convertGradientToStyle(SKEUOMORPHIC_GRADIENTS.button.secondary),
       });
     }
 
@@ -87,6 +113,13 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
         color: isCurrentItem ? activeTextColor : textColor,
         textShadowColor: NEUMORPHIC_COLORS.lightShadow,
         textShadowOffset: { width: 1, height: 1 },
+        textShadowRadius: 1,
+      });
+    } else if (design === 'skeuomorphic') {
+      Object.assign(baseStyles, {
+        color: isCurrentItem ? SKEUOMORPHIC_COLORS.primary : SKEUOMORPHIC_COLORS.onSurface,
+        textShadowColor: 'rgba(255, 255, 255, 0.8)',
+        textShadowOffset: { width: 0, height: 1 },
         textShadowRadius: 1,
       });
     }
@@ -112,7 +145,7 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
             <Text style={getTextStyles(item.id === currentItem)}>{item.label}</Text>
           </TouchableOpacity>
           {index < items.length - 1 && (
-            <Text style={[styles.separator, { color: separatorColor }]}>/</Text>
+            <Text style={[styles.separator, { color: separatorColor }]}>{separator}</Text>
           )}
         </View>
       ))}

@@ -2,6 +2,7 @@ import React from 'react';
 import { View } from '../../platform';
 import type { Meta, StoryObj } from '@storybook/react';
 import Button from './Button';
+import Typography from '../Typography/Typography';
 
 const meta: Meta<typeof Button> = {
   title: 'Core UI/Button',
@@ -30,7 +31,7 @@ const meta: Meta<typeof Button> = {
     },
     design: {
       control: 'select',
-      options: ['flat', 'neumorphic', 'skeuomorphic'],
+      options: ['flat', 'neumorphic', 'skeuomorphic', 'glassmorphic'],
       defaultValue: 'flat',
     },
     backgroundColor: {
@@ -171,6 +172,218 @@ export const SkeuomorphicOutline: Story = {
   },
 };
 
+// Glassmorphic Design Stories
+export const Glassmorphic: Story = {
+  args: {
+    children: 'Glassmorphic Button',
+    variant: 'primary',
+    size: 'medium',
+    design: 'glassmorphic',
+  },
+};
+
+export const GlassmorphicSecondary: Story = {
+  args: {
+    children: 'Secondary',
+    variant: 'secondary',
+    size: 'medium',
+    design: 'glassmorphic',
+  },
+};
+
+export const GlassmorphicOutline: Story = {
+  args: {
+    children: 'Outline',
+    variant: 'outline',
+    size: 'medium',
+    design: 'glassmorphic',
+  },
+};
+
+export const GlassmorphicText: Story = {
+  args: {
+    children: 'Text',
+    variant: 'text',
+    size: 'medium',
+    design: 'glassmorphic',
+  },
+};
+
+// Glassmorphic Story Variations (as per BAAPUI-8 requirements)
+export const GlassmorphicInteractive: Story = {
+  render: () => {
+    const [isPressed, setIsPressed] = React.useState(false);
+    return (
+      <View style={{ gap: 16, alignItems: 'center' }}>
+        <Typography variant="h6">Interactive Glassmorphic Button</Typography>
+        <Button 
+          design="glassmorphic" 
+          variant="primary"
+          onPress={() => setIsPressed(!isPressed)}
+        >
+          {isPressed ? 'Pressed!' : 'Click Me'}
+        </Button>
+        <Typography variant="caption">Click to see interaction</Typography>
+      </View>
+    );
+  },
+};
+
+export const GlassmorphicDarkMode: Story = {
+  decorators: [
+    Story => (
+      <View style={{ padding: 20, backgroundColor: '#1a1a1a', minHeight: 200 }}>
+        <Story />
+      </View>
+    ),
+  ],
+  args: {
+    children: 'Dark Mode Glass',
+    variant: 'primary',
+    size: 'medium',
+    design: 'glassmorphic',
+  },
+};
+
+export const GlassmorphicPlayground: Story = {
+  argTypes: {
+    variant: {
+      control: 'select',
+      options: ['primary', 'secondary', 'outline', 'text'],
+    },
+    size: {
+      control: 'select',
+      options: ['small', 'medium', 'large'],
+    },
+    backgroundColor: {
+      control: 'color',
+    },
+    textColor: {
+      control: 'color',
+    },
+    disabled: {
+      control: 'boolean',
+    },
+    loading: {
+      control: 'boolean',
+    },
+  },
+  args: {
+    children: 'Playground Button',
+    variant: 'primary',
+    size: 'medium',
+    design: 'glassmorphic',
+    disabled: false,
+    loading: false,
+  },
+};
+
+export const GlassmorphicLightGlass: Story = {
+  decorators: [
+    Story => (
+      <View style={{ padding: 20, backgroundColor: '#f0f0f0' }}>
+        <Story />
+      </View>
+    ),
+  ],
+  args: {
+    children: 'Light Glass',
+    variant: 'primary',
+    size: 'medium',
+    design: 'glassmorphic',
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+  },
+};
+
+export const GlassmorphicDarkGlass: Story = {
+  decorators: [
+    Story => (
+      <View style={{ padding: 20, backgroundColor: '#2a2a2a' }}>
+        <Story />
+      </View>
+    ),
+  ],
+  args: {
+    children: 'Dark Glass',
+    variant: 'primary',
+    size: 'medium',
+    design: 'glassmorphic',
+    backgroundColor: 'rgba(0, 0, 0, 0.2)',
+  },
+};
+
+export const GlassmorphicColoredGlass: Story = {
+  render: () => (
+    <View style={{ gap: 16, alignItems: 'center', padding: 20 }}>
+      <Typography variant="h6">Colored Glass Variations</Typography>
+      <View style={{ flexDirection: 'row', gap: 12, flexWrap: 'wrap', justifyContent: 'center' }}>
+        <Button design="glassmorphic" backgroundColor="rgba(0, 122, 255, 0.2)">Blue Glass</Button>
+        <Button design="glassmorphic" backgroundColor="rgba(88, 86, 214, 0.2)">Purple Glass</Button>
+        <Button design="glassmorphic" backgroundColor="rgba(52, 199, 89, 0.2)">Green Glass</Button>
+      </View>
+    </View>
+  ),
+};
+
+export const GlassmorphicHighBlur: Story = {
+  decorators: [
+    Story => (
+      <View style={{ 
+        padding: 20, 
+        backgroundImage: 'linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1)',
+        backgroundColor: '#ff6b6b' // fallback
+      }}>
+        <Story />
+      </View>
+    ),
+  ],
+  args: {
+    children: 'High Blur Effect',
+    variant: 'primary',
+    size: 'medium',
+    design: 'glassmorphic',
+  },
+};
+
+export const GlassmorphicMinimalGlass: Story = {
+  args: {
+    children: 'Minimal Glass',
+    variant: 'outline',
+    size: 'medium',
+    design: 'glassmorphic',
+    backgroundColor: 'rgba(255, 255, 255, 0.05)',
+  },
+};
+
+export const GlassmorphicLayeredGlass: Story = {
+  render: () => (
+    <View style={{ gap: 16, alignItems: 'center', padding: 20 }}>
+      <Typography variant="h6">Layered Glass Elements</Typography>
+      <View style={{ 
+        position: 'relative',
+        padding: 30,
+        backgroundColor: 'rgba(255, 255, 255, 0.1)',
+        borderRadius: 16,
+        borderWidth: 1,
+        borderColor: 'rgba(255, 255, 255, 0.2)'
+      }}>
+        <View style={{
+          position: 'absolute',
+          top: 10,
+          left: 10,
+          right: 10,
+          bottom: 10,
+          backgroundColor: 'rgba(255, 255, 255, 0.05)',
+          borderRadius: 12,
+          borderWidth: 1,
+          borderColor: 'rgba(255, 255, 255, 0.1)'
+        }} />
+        <Button design="glassmorphic" variant="primary">Layered Button</Button>
+      </View>
+    </View>
+  ),
+};
+
 // Color Variations
 export const CustomColors: Story = {
   args: {
@@ -213,4 +426,47 @@ export const Loading: Story = {
     design: 'flat',
     loading: true,
   },
+};
+
+// All Designs Showcase
+export const AllDesigns: Story = {
+  render: () => (
+    <View style={{ gap: 20, minWidth: 300, alignItems: 'center' }}>
+      <Typography variant="h6" style={{ textAlign: 'center' }}>Design Systems</Typography>
+      <View style={{ gap: 12, alignItems: 'center' }}>
+        <View style={{ gap: 8, alignItems: 'center' }}>
+          <Typography variant="body2" style={{ fontWeight: 'bold' }}>Flat Design</Typography>
+          <View style={{ flexDirection: 'row', gap: 8 }}>
+            <Button design="flat" variant="primary">Primary</Button>
+            <Button design="flat" variant="secondary">Secondary</Button>
+            <Button design="flat" variant="outline">Outline</Button>
+          </View>
+        </View>
+        <View style={{ gap: 8, alignItems: 'center' }}>
+          <Typography variant="body2" style={{ fontWeight: 'bold' }}>Neumorphic Design</Typography>
+          <View style={{ flexDirection: 'row', gap: 8 }}>
+            <Button design="neumorphic" variant="primary">Primary</Button>
+            <Button design="neumorphic" variant="secondary">Secondary</Button>
+            <Button design="neumorphic" variant="outline">Outline</Button>
+          </View>
+        </View>
+        <View style={{ gap: 8, alignItems: 'center' }}>
+          <Typography variant="body2" style={{ fontWeight: 'bold' }}>Skeuomorphic Design</Typography>
+          <View style={{ flexDirection: 'row', gap: 8 }}>
+            <Button design="skeuomorphic" variant="primary">Primary</Button>
+            <Button design="skeuomorphic" variant="secondary">Secondary</Button>
+            <Button design="skeuomorphic" variant="outline">Outline</Button>
+          </View>
+        </View>
+        <View style={{ gap: 8, alignItems: 'center' }}>
+          <Typography variant="body2" style={{ fontWeight: 'bold' }}>Glassmorphic Design</Typography>
+          <View style={{ flexDirection: 'row', gap: 8 }}>
+            <Button design="glassmorphic" variant="primary">Primary</Button>
+            <Button design="glassmorphic" variant="secondary">Secondary</Button>
+            <Button design="glassmorphic" variant="outline">Outline</Button>
+          </View>
+        </View>
+      </View>
+    </View>
+  ),
 };

@@ -21,7 +21,7 @@ const meta: Meta<typeof Accordion> = {
   argTypes: {
     design: {
       control: 'select',
-      options: ['flat', 'neumorphic'],
+      options: ['flat', 'neumorphic', 'skeuomorphic'],
       defaultValue: 'flat',
       description: 'Design system variant',
     },
@@ -162,6 +162,14 @@ export const Neumorphic: Story = {
   args: {
     sections: basicSections,
     design: 'neumorphic',
+    expandedSection: '2',
+  },
+};
+
+export const Skeuomorphic: Story = {
+  args: {
+    sections: basicSections,
+    design: 'skeuomorphic',
     expandedSection: '2',
   },
 };
@@ -445,6 +453,16 @@ export const AllDesigns: Story = {
           expandedSection="2"
           onToggle={() => {}}
           design="neumorphic"
+        />
+      </View>
+
+      <View style={{ gap: 16 }}>
+        <Typography variant="body2" style={{ fontWeight: 'bold' }}>Skeuomorphic Design</Typography>
+        <Accordion
+          sections={basicSections.slice(0, 2)}
+          expandedSection="1"
+          onToggle={() => {}}
+          design="skeuomorphic"
         />
       </View>
     </View>

@@ -13,7 +13,7 @@ const meta: Meta<typeof Navbar> = {
   argTypes: {
     design: {
       control: { type: 'select' },
-      options: ['flat', 'neumorphic'],
+      options: ['flat', 'neumorphic', 'skeuomorphic'],
     },
     position: {
       control: { type: 'select' },
@@ -106,4 +106,4 @@ export const WithCustomActions: Story = {
     shadow: true,
     backgroundColor: '#f8f9fa',
   },
-}; 
+};
