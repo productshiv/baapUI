@@ -22,7 +22,7 @@ const meta: Meta<typeof Badge> = {
   argTypes: {
     design: {
       control: 'select',
-      options: ['flat', 'neumorphic', 'skeuomorphic', 'glassmorphic'],
+      options: ['flat', 'neumorphic', 'skeuomorphic', 'glassmorphic', 'retro'],
       defaultValue: 'flat',
     },
     variant: {
@@ -49,6 +49,48 @@ const meta: Meta<typeof Badge> = {
     textColor: {
       control: 'color',
       description: 'Custom text color',
+    },
+    // Retro-specific controls
+    retroEra: {
+      control: 'select',
+      options: ['neon80s', 'pastel90s', 'grunge90s', 'vintage70s', 'pixelArt', 'terminal'],
+      defaultValue: 'neon80s',
+      description: 'Retro era style',
+      if: { arg: 'design', eq: 'retro' },
+    },
+    retroColorScheme: {
+      control: 'select',
+      options: ['bright', 'muted', 'monochrome', 'rainbow'],
+      defaultValue: 'bright',
+      description: 'Retro color scheme',
+      if: { arg: 'design', eq: 'retro' },
+    },
+    retroBorderThickness: {
+      control: 'select',
+      options: ['thin', 'medium', 'thick', 'ultra'],
+      defaultValue: 'medium',
+      description: 'Retro border thickness',
+      if: { arg: 'design', eq: 'retro' },
+    },
+    retroCornerRadius: {
+      control: 'select',
+      options: ['sharp', 'slight', 'rounded', 'pill'],
+      defaultValue: 'slight',
+      description: 'Retro corner radius',
+      if: { arg: 'design', eq: 'retro' },
+    },
+    retroShadowStyle: {
+      control: 'select',
+      options: ['none', 'drop', 'neon', 'deep', 'box'],
+      defaultValue: 'drop',
+      description: 'Retro shadow style',
+      if: { arg: 'design', eq: 'retro' },
+    },
+    retroGlowEffect: {
+      control: 'boolean',
+      defaultValue: false,
+      description: 'Enable retro glow effect',
+      if: { arg: 'design', eq: 'retro' },
     },
   },
   args: {
@@ -809,6 +851,353 @@ export const SizeComparison: Story = {
             <Badge size="medium" variant="secondary">BETA</Badge>
             <Badge size="large" variant="warning">PREMIUM</Badge>
           </View>
+        </View>
+      </View>
+    </View>
+  ),
+};
+
+// Retro Design Stories
+export const Retro: Story = {
+  args: {
+    children: '1',
+    variant: 'primary',
+    size: 'medium',
+    design: 'retro',
+    retroEra: 'neon80s',
+    retroGlowEffect: true,
+  },
+};
+
+export const RetroAllVariants: Story = {
+  render: () => (
+    <View style={{ gap: 16, alignItems: 'center' }}>
+      <Typography variant="h6">Retro Badge Variants</Typography>
+      <View style={{ flexDirection: 'row', gap: 12, flexWrap: 'wrap', justifyContent: 'center' }}>
+        <Badge variant="primary" design="retro" retroEra="neon80s" retroGlowEffect={true}>1</Badge>
+        <Badge variant="secondary" design="retro" retroEra="neon80s" retroGlowEffect={true}>2</Badge>
+        <Badge variant="success" design="retro" retroEra="neon80s" retroGlowEffect={true}>3</Badge>
+        <Badge variant="error" design="retro" retroEra="neon80s" retroGlowEffect={true}>4</Badge>
+        <Badge variant="warning" design="retro" retroEra="neon80s" retroGlowEffect={true}>5</Badge>
+        <Badge variant="info" design="retro" retroEra="neon80s" retroGlowEffect={true}>6</Badge>
+      </View>
+    </View>
+  ),
+};
+
+export const RetroInteractive: Story = {
+  render: () => {
+    const [count, setCount] = useState(0);
+    const [era, setEra] = useState<'neon80s' | 'pastel90s' | 'grunge90s' | 'vintage70s' | 'pixelArt' | 'terminal'>('neon80s');
+
+    const getVariant = (count: number) => {
+      if (count === 0) return 'secondary';
+      if (count < 5) return 'info';
+      if (count < 10) return 'warning';
+      return 'error';
+    };
+
+    return (
+      <View style={{ gap: 16, alignItems: 'center' }}>
+        <Typography variant="h6">Interactive Retro Badge</Typography>
+        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
+          <Typography variant="body2">Notifications:</Typography>
+          <Badge 
+            variant={getVariant(count)} 
+            design="retro" 
+            retroEra={era}
+            retroGlowEffect={era === 'neon80s' || era === 'terminal'}
+          >
+            {count > 99 ? '99+' : count.toString()}
+          </Badge>
+        </View>
+        <View style={{ flexDirection: 'row', gap: 8, flexWrap: 'wrap', justifyContent: 'center' }}>
+          <Button onPress={() => setCount(Math.max(0, count - 1))} disabled={count === 0}>-1</Button>
+          <Button onPress={() => setCount(count + 1)}>+1</Button>
+          <Button onPress={() => setCount(0)} variant="outline">Reset</Button>
+        </View>
+        <View style={{ flexDirection: 'row', gap: 8, flexWrap: 'wrap', justifyContent: 'center' }}>
+          <Button onPress={() => setEra('neon80s')} variant={era === 'neon80s' ? 'primary' : 'outline'}>80s Neon</Button>
+          <Button onPress={() => setEra('pastel90s')} variant={era === 'pastel90s' ? 'primary' : 'outline'}>90s Pastel</Button>
+          <Button onPress={() => setEra('grunge90s')} variant={era === 'grunge90s' ? 'primary' : 'outline'}>90s Grunge</Button>
+          <Button onPress={() => setEra('vintage70s')} variant={era === 'vintage70s' ? 'primary' : 'outline'}>70s Vintage</Button>
+          <Button onPress={() => setEra('pixelArt')} variant={era === 'pixelArt' ? 'primary' : 'outline'}>Pixel Art</Button>
+          <Button onPress={() => setEra('terminal')} variant={era === 'terminal' ? 'primary' : 'outline'}>Terminal</Button>
+        </View>
+      </View>
+    );
+  },
+};
+
+export const RetroDarkMode: Story = {
+  decorators: [
+    Story => (
+      <View style={{ padding: 20, backgroundColor: '#0a0a0a', minHeight: 200 }}>
+        <Story />
+      </View>
+    ),
+  ],
+  args: {
+    children: 'DARK',
+    variant: 'primary',
+    size: 'medium',
+    design: 'retro',
+    retroEra: 'terminal',
+    retroGlowEffect: true,
+  },
+};
+
+export const RetroPlayground: Story = {
+  argTypes: {
+    variant: {
+      control: 'select',
+      options: ['primary', 'secondary', 'success', 'error', 'warning', 'info'],
+    },
+    size: {
+      control: 'select',
+      options: ['small', 'medium', 'large'],
+    },
+    retroEra: {
+      control: 'select',
+      options: ['neon80s', 'pastel90s', 'grunge90s', 'vintage70s', 'pixelArt', 'terminal'],
+    },
+    retroColorScheme: {
+      control: 'select',
+      options: ['bright', 'muted', 'monochrome', 'rainbow'],
+    },
+    retroBorderThickness: {
+      control: 'select',
+      options: ['thin', 'medium', 'thick', 'ultra'],
+    },
+    retroCornerRadius: {
+      control: 'select',
+      options: ['sharp', 'slight', 'rounded', 'pill'],
+    },
+    retroShadowStyle: {
+      control: 'select',
+      options: ['none', 'drop', 'neon', 'deep', 'box'],
+    },
+    retroGlowEffect: {
+      control: 'boolean',
+    },
+  },
+  args: {
+    children: 'PLAY',
+    variant: 'primary',
+    size: 'medium',
+    design: 'retro',
+    retroEra: 'neon80s',
+    retroColorScheme: 'bright',
+    retroBorderThickness: 'medium',
+    retroCornerRadius: 'slight',
+    retroShadowStyle: 'neon',
+    retroGlowEffect: true,
+  },
+};
+
+export const RetroNeon80s: Story = {
+  decorators: [
+    Story => (
+      <View style={{ padding: 20, backgroundColor: '#0a0a0a' }}>
+        <Story />
+      </View>
+    ),
+  ],
+  args: {
+    children: 'NEON',
+    variant: 'primary',
+    size: 'medium',
+    design: 'retro',
+    retroEra: 'neon80s',
+    retroColorScheme: 'bright',
+    retroShadowStyle: 'neon',
+    retroGlowEffect: true,
+  },
+};
+
+export const RetroPastel90s: Story = {
+  decorators: [
+    Story => (
+      <View style={{ padding: 20, backgroundColor: '#f5f5f5' }}>
+        <Story />
+      </View>
+    ),
+  ],
+  args: {
+    children: 'PASTEL',
+    variant: 'primary',
+    size: 'medium',
+    design: 'retro',
+    retroEra: 'pastel90s',
+    retroColorScheme: 'muted',
+    retroCornerRadius: 'rounded',
+    retroShadowStyle: 'drop',
+  },
+};
+
+export const RetroGrunge90s: Story = {
+  decorators: [
+    Story => (
+      <View style={{ padding: 20, backgroundColor: '#2a2a2a' }}>
+        <Story />
+      </View>
+    ),
+  ],
+  args: {
+    children: 'GRUNGE',
+    variant: 'error',
+    size: 'medium',
+    design: 'retro',
+    retroEra: 'grunge90s',
+    retroColorScheme: 'muted',
+    retroBorderThickness: 'thick',
+    retroCornerRadius: 'sharp',
+    retroShadowStyle: 'deep',
+  },
+};
+
+export const RetroVintage70s: Story = {
+  decorators: [
+    Story => (
+      <View style={{ padding: 20, backgroundColor: '#f4f1e8' }}>
+        <Story />
+      </View>
+    ),
+  ],
+  args: {
+    children: 'VINTAGE',
+    variant: 'warning',
+    size: 'medium',
+    design: 'retro',
+    retroEra: 'vintage70s',
+    retroColorScheme: 'muted',
+    retroCornerRadius: 'rounded',
+    retroShadowStyle: 'box',
+  },
+};
+
+export const RetroPixelArt: Story = {
+  decorators: [
+    Story => (
+      <View style={{ padding: 20, backgroundColor: '#1a1a1a' }}>
+        <Story />
+      </View>
+    ),
+  ],
+  args: {
+    children: 'PIXEL',
+    variant: 'info',
+    size: 'medium',
+    design: 'retro',
+    retroEra: 'pixelArt',
+    retroColorScheme: 'bright',
+    retroCornerRadius: 'sharp',
+    retroBorderThickness: 'medium',
+    retroShadowStyle: 'box',
+  },
+};
+
+export const RetroVintageTerminal: Story = {
+  decorators: [
+    Story => (
+      <View style={{ padding: 20, backgroundColor: '#000000' }}>
+        <Story />
+      </View>
+    ),
+  ],
+  args: {
+    children: 'TERM',
+    variant: 'success',
+    size: 'medium',
+    design: 'retro',
+    retroEra: 'terminal',
+    retroColorScheme: 'monochrome',
+    retroCornerRadius: 'sharp',
+    retroShadowStyle: 'neon',
+    retroGlowEffect: true,
+  },
+};
+
+export const RetroAllEras: Story = {
+  render: () => (
+    <View style={{ gap: 20, alignItems: 'center' }}>
+      <Typography variant="h6">Retro Era Showcase</Typography>
+      <View style={{ gap: 16 }}>
+        <View style={{ gap: 8, alignItems: 'center' }}>
+          <Typography variant="body2" style={{ fontWeight: 'bold' }}>80s Neon</Typography>
+          <View style={{ flexDirection: 'row', gap: 8 }}>
+            <Badge variant="primary" design="retro" retroEra="neon80s" retroGlowEffect={true}>1</Badge>
+            <Badge variant="success" design="retro" retroEra="neon80s" retroGlowEffect={true}>2</Badge>
+            <Badge variant="error" design="retro" retroEra="neon80s" retroGlowEffect={true}>3</Badge>
+            <Badge variant="warning" design="retro" retroEra="neon80s" retroGlowEffect={true}>4</Badge>
+          </View>
+        </View>
+        <View style={{ gap: 8, alignItems: 'center' }}>
+          <Typography variant="body2" style={{ fontWeight: 'bold' }}>90s Pastel</Typography>
+          <View style={{ flexDirection: 'row', gap: 8 }}>
+            <Badge variant="primary" design="retro" retroEra="pastel90s">1</Badge>
+            <Badge variant="success" design="retro" retroEra="pastel90s">2</Badge>
+            <Badge variant="error" design="retro" retroEra="pastel90s">3</Badge>
+            <Badge variant="warning" design="retro" retroEra="pastel90s">4</Badge>
+          </View>
+        </View>
+        <View style={{ gap: 8, alignItems: 'center' }}>
+          <Typography variant="body2" style={{ fontWeight: 'bold' }}>90s Grunge</Typography>
+          <View style={{ flexDirection: 'row', gap: 8 }}>
+            <Badge variant="primary" design="retro" retroEra="grunge90s">1</Badge>
+            <Badge variant="success" design="retro" retroEra="grunge90s">2</Badge>
+            <Badge variant="error" design="retro" retroEra="grunge90s">3</Badge>
+            <Badge variant="warning" design="retro" retroEra="grunge90s">4</Badge>
+          </View>
+        </View>
+        <View style={{ gap: 8, alignItems: 'center' }}>
+          <Typography variant="body2" style={{ fontWeight: 'bold' }}>70s Vintage</Typography>
+          <View style={{ flexDirection: 'row', gap: 8 }}>
+            <Badge variant="primary" design="retro" retroEra="vintage70s">1</Badge>
+            <Badge variant="success" design="retro" retroEra="vintage70s">2</Badge>
+            <Badge variant="error" design="retro" retroEra="vintage70s">3</Badge>
+            <Badge variant="warning" design="retro" retroEra="vintage70s">4</Badge>
+          </View>
+        </View>
+        <View style={{ gap: 8, alignItems: 'center' }}>
+          <Typography variant="body2" style={{ fontWeight: 'bold' }}>Pixel Art</Typography>
+          <View style={{ flexDirection: 'row', gap: 8 }}>
+            <Badge variant="primary" design="retro" retroEra="pixelArt">1</Badge>
+            <Badge variant="success" design="retro" retroEra="pixelArt">2</Badge>
+            <Badge variant="error" design="retro" retroEra="pixelArt">3</Badge>
+            <Badge variant="warning" design="retro" retroEra="pixelArt">4</Badge>
+          </View>
+        </View>
+        <View style={{ gap: 8, alignItems: 'center' }}>
+          <Typography variant="body2" style={{ fontWeight: 'bold' }}>Terminal</Typography>
+          <View style={{ flexDirection: 'row', gap: 8 }}>
+            <Badge variant="primary" design="retro" retroEra="terminal" retroGlowEffect={true}>1</Badge>
+            <Badge variant="success" design="retro" retroEra="terminal" retroGlowEffect={true}>2</Badge>
+            <Badge variant="error" design="retro" retroEra="terminal" retroGlowEffect={true}>3</Badge>
+            <Badge variant="warning" design="retro" retroEra="terminal" retroGlowEffect={true}>4</Badge>
+          </View>
+        </View>
+      </View>
+    </View>
+  ),
+};
+
+export const RetroAllSizes: Story = {
+  render: () => (
+    <View style={{ gap: 16, alignItems: 'center' }}>
+      <Typography variant="h6">Retro Badge Sizes</Typography>
+      <View style={{ flexDirection: 'row', gap: 16, alignItems: 'center' }}>
+        <View style={{ alignItems: 'center', gap: 4 }}>
+          <Badge size="small" design="retro" retroEra="neon80s" retroGlowEffect={true}>S</Badge>
+          <Typography variant="caption">Small</Typography>
+        </View>
+        <View style={{ alignItems: 'center', gap: 4 }}>
+          <Badge size="medium" design="retro" retroEra="neon80s" retroGlowEffect={true}>M</Badge>
+          <Typography variant="caption">Medium</Typography>
+        </View>
+        <View style={{ alignItems: 'center', gap: 4 }}>
+          <Badge size="large" design="retro" retroEra="neon80s" retroGlowEffect={true}>L</Badge>
+          <Typography variant="caption">Large</Typography>
         </View>
       </View>
     </View>

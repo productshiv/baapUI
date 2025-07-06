@@ -4,6 +4,7 @@ import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumo
 import { convertShadowToStyle, convertGradientToStyle } from '../../themes/utils/skeuomorphic';
 import { SKEUOMORPHIC_COLORS, SKEUOMORPHIC_SHADOWS, SKEUOMORPHIC_GRADIENTS, SKEUOMORPHIC_BORDER_RADIUS, SKEUOMORPHIC_BORDER_WIDTHS } from '../../themes/variants/skeuomorphic';
 import { getGlassmorphicStyles, GLASSMORPHIC_COLORS } from '../../themes/utils/glassmorphic';
+import { getRetroStyles, RETRO_ERA_COLORS, RetroEra, RetroColorScheme, RetroBorderThickness, RetroCornerRadius, RetroShadowStyle } from '../../themes/utils/retro';
 
 export interface BadgeProps {
   variant?: 'primary' | 'secondary' | 'success' | 'error' | 'warning' | 'info';
@@ -11,9 +12,16 @@ export interface BadgeProps {
   children: React.ReactNode;
   style?: ViewStyle;
   textStyle?: TextStyle;
-  design?: 'flat' | 'neumorphic' | 'skeuomorphic' | 'glassmorphic';
+  design?: 'flat' | 'neumorphic' | 'skeuomorphic' | 'glassmorphic' | 'retro';
   backgroundColor?: string;
   textColor?: string;
+  // Retro-specific props
+  retroEra?: RetroEra;
+  retroColorScheme?: RetroColorScheme;
+  retroBorderThickness?: RetroBorderThickness;
+  retroCornerRadius?: RetroCornerRadius;
+  retroShadowStyle?: RetroShadowStyle;
+  retroGlowEffect?: boolean;
 }
 
 const Badge: React.FC<BadgeProps> = ({
@@ -25,6 +33,12 @@ const Badge: React.FC<BadgeProps> = ({
   design = 'flat',
   backgroundColor,
   textColor = NEUMORPHIC_COLORS.text,
+  retroEra = 'neon80s',
+  retroColorScheme = 'bright',
+  retroBorderThickness = 'medium',
+  retroCornerRadius = 'slight',
+  retroShadowStyle = 'drop',
+  retroGlowEffect = false,
 }) => {
   const getVariantStyle = (): ViewStyle => {
     if (design === 'neumorphic') {
@@ -75,6 +89,24 @@ const Badge: React.FC<BadgeProps> = ({
           return { backgroundColor: 'rgba(33, 150, 243, 0.2)' };
         default:
           return { backgroundColor: 'rgba(98, 0, 238, 0.2)' };
+      }
+    }
+
+    if (design === 'retro') {
+      const colors = RETRO_ERA_COLORS[retroEra];
+      switch (variant) {
+        case 'secondary':
+          return { backgroundColor: colors.secondary };
+        case 'success':
+          return { backgroundColor: colors.accent };
+        case 'error':
+          return { backgroundColor: '#FF073A' }; // Neon red
+        case 'warning':
+          return { backgroundColor: '#FFFF00' }; // Electric yellow
+        case 'info':
+          return { backgroundColor: colors.secondary };
+        default:
+          return { backgroundColor: colors.primary };
       }
     }
 
@@ -175,6 +207,21 @@ const Badge: React.FC<BadgeProps> = ({
         ...glassmorphicStyle,
         ...sizeStyle.container,
       });
+    } else if (design === 'retro') {
+      const retroStyle = getRetroStyles({
+        era: retroEra,
+        colorScheme: retroColorScheme,
+        borderThickness: retroBorderThickness,
+        cornerRadius: retroCornerRadius,
+        shadowStyle: retroShadowStyle,
+        customColors: { surface: bgColor },
+        glowEffect: retroGlowEffect,
+      });
+      baseStyles.push({
+        ...retroStyle,
+        ...sizeStyle.container,
+        backgroundColor: bgColor,
+      });
     } else {
       baseStyles.push(variantStyle, sizeStyle.container);
     }
@@ -257,6 +304,25 @@ const Badge: React.FC<BadgeProps> = ({
           break;
         default:
           Object.assign(baseStyles, { color: '#6200ee' });
+      }
+    } else if (design === 'retro') {
+      const colors = RETRO_ERA_COLORS[retroEra];
+      Object.assign(baseStyles, {
+        color: textColor || colors.text,
+        fontSize: sizeStyle.text.fontSize,
+        fontWeight: retroEra === 'neon80s' || retroEra === 'pixelArt' ? 'bold' : '600',
+        letterSpacing: retroEra === 'pixelArt' || retroEra === 'terminal' ? 1 : 0.5,
+        textTransform: retroEra === 'neon80s' || retroEra === 'pixelArt' ? 'uppercase' : 'none',
+        fontFamily: retroEra === 'pixelArt' || retroEra === 'terminal' ? 'monospace' : undefined,
+      });
+
+      // Add glow effect for neon styles
+      if ((retroEra === 'neon80s' || retroEra === 'terminal') && retroGlowEffect) {
+        Object.assign(baseStyles, {
+          textShadowColor: colors.glow,
+          textShadowOffset: { width: 0, height: 0 },
+          textShadowRadius: 8,
+        });
       }
     } else {
       Object.assign(baseStyles, sizeStyle.text);

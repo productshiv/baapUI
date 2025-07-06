@@ -31,7 +31,7 @@ const meta: Meta<typeof Button> = {
     },
     design: {
       control: 'select',
-      options: ['flat', 'neumorphic', 'skeuomorphic', 'glassmorphic'],
+      options: ['flat', 'neumorphic', 'skeuomorphic', 'glassmorphic', 'retro'],
       defaultValue: 'flat',
     },
     backgroundColor: {
@@ -100,6 +100,48 @@ const meta: Meta<typeof Button> = {
       defaultValue: 12,
       description: 'Custom border radius (0-30px)',
       if: { arg: 'design', eq: 'glassmorphic' },
+    },
+    // Retro-specific ArgTypes
+    retroEra: {
+      control: 'select',
+      options: ['neon80s', 'pastel90s', 'grunge90s', 'vintage70s', 'pixelArt', 'terminal'],
+      defaultValue: 'neon80s',
+      description: 'Retro era style',
+      if: { arg: 'design', eq: 'retro' },
+    },
+    retroColorScheme: {
+      control: 'select',
+      options: ['bright', 'muted', 'monochrome', 'rainbow'],
+      defaultValue: 'bright',
+      description: 'Retro color scheme',
+      if: { arg: 'design', eq: 'retro' },
+    },
+    retroBorderThickness: {
+      control: 'select',
+      options: ['thin', 'medium', 'thick', 'ultra'],
+      defaultValue: 'thick',
+      description: 'Retro border thickness',
+      if: { arg: 'design', eq: 'retro' },
+    },
+    retroCornerRadius: {
+      control: 'select',
+      options: ['sharp', 'slight', 'rounded', 'pill'],
+      defaultValue: 'slight',
+      description: 'Retro corner radius',
+      if: { arg: 'design', eq: 'retro' },
+    },
+    retroShadowStyle: {
+      control: 'select',
+      options: ['none', 'drop', 'neon', 'deep', 'box'],
+      defaultValue: 'drop',
+      description: 'Retro shadow style',
+      if: { arg: 'design', eq: 'retro' },
+    },
+    retroGlowEffect: {
+      control: 'boolean',
+      defaultValue: false,
+      description: 'Enable retro glow effect',
+      if: { arg: 'design', eq: 'retro' },
     },
   },
   args: {
@@ -479,6 +521,333 @@ export const Loading: Story = {
   },
 };
 
+// Retro Design Stories
+export const RetroDefault: Story = {
+  args: {
+    design: 'retro',
+    children: 'Retro Button',
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Default retro button with neon80s era styling.',
+      },
+    },
+  },
+};
+
+export const RetroEras: Story = {
+  render: () => (
+    <View style={{ flexDirection: 'column', gap: 16 }}>
+      <View style={{ flexDirection: 'row', gap: 16, flexWrap: 'wrap' }}>
+        <Button design="retro" retroEra="neon80s" variant="primary">
+          Neon 80s
+        </Button>
+        <Button design="retro" retroEra="pastel90s" variant="primary">
+          Pastel 90s
+        </Button>
+        <Button design="retro" retroEra="grunge90s" variant="primary">
+          Grunge 90s
+        </Button>
+      </View>
+      <View style={{ flexDirection: 'row', gap: 16, flexWrap: 'wrap' }}>
+        <Button design="retro" retroEra="vintage70s" variant="primary">
+          Vintage 70s
+        </Button>
+        <Button design="retro" retroEra="pixelArt" variant="primary">
+          Pixel Art
+        </Button>
+        <Button design="retro" retroEra="terminal" variant="primary">
+          Terminal
+        </Button>
+      </View>
+    </View>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'Different retro eras showcasing various vintage design styles.',
+      },
+    },
+  },
+};
+
+export const RetroColorSchemes: Story = {
+  render: () => (
+    <View style={{ flexDirection: 'row', gap: 16, flexWrap: 'wrap' }}>
+      <Button design="retro" retroColorScheme="bright" variant="primary">
+        Bright
+      </Button>
+      <Button design="retro" retroColorScheme="muted" variant="primary">
+        Muted
+      </Button>
+      <Button design="retro" retroColorScheme="monochrome" variant="primary">
+        Monochrome
+      </Button>
+      <Button design="retro" retroColorScheme="rainbow" variant="primary">
+        Rainbow
+      </Button>
+    </View>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'Different color schemes for retro buttons.',
+      },
+    },
+  },
+};
+
+export const RetroVariants: Story = {
+  render: () => (
+    <View style={{ flexDirection: 'row', gap: 16, flexWrap: 'wrap' }}>
+      <Button design="retro" variant="primary">
+        Primary
+      </Button>
+      <Button design="retro" variant="secondary">
+        Secondary
+      </Button>
+      <Button design="retro" variant="outline">
+        Outline
+      </Button>
+      <Button design="retro" variant="text">
+        Text
+      </Button>
+    </View>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'Different variants of retro buttons.',
+      },
+    },
+  },
+};
+
+export const RetroSizes: Story = {
+  render: () => (
+    <View style={{ flexDirection: 'row', gap: 16, flexWrap: 'wrap', alignItems: 'center' }}>
+      <Button design="retro" size="small" variant="primary">
+        Small
+      </Button>
+      <Button design="retro" size="medium" variant="primary">
+        Medium
+      </Button>
+      <Button design="retro" size="large" variant="primary">
+        Large
+      </Button>
+    </View>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'Different sizes of retro buttons.',
+      },
+    },
+  },
+};
+
+export const RetroWithGlow: Story = {
+  render: () => (
+    <View style={{ flexDirection: 'row', gap: 16, flexWrap: 'wrap' }}>
+      <Button design="retro" retroEra="neon80s" retroGlowEffect={true} variant="primary">
+        Neon Glow
+      </Button>
+      <Button design="retro" retroEra="terminal" retroGlowEffect={true} variant="secondary">
+        Terminal Glow
+      </Button>
+      <Button design="retro" retroEra="pixelArt" retroGlowEffect={true} variant="outline">
+        Pixel Glow
+      </Button>
+    </View>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'Retro buttons with glow effects enabled.',
+      },
+    },
+  },
+};
+
+export const RetroBorderStyles: Story = {
+  render: () => (
+    <View style={{ flexDirection: 'row', gap: 16, flexWrap: 'wrap' }}>
+      <Button design="retro" retroBorderThickness="thin" variant="outline">
+        Thin Border
+      </Button>
+      <Button design="retro" retroBorderThickness="medium" variant="outline">
+        Medium Border
+      </Button>
+      <Button design="retro" retroBorderThickness="thick" variant="outline">
+        Thick Border
+      </Button>
+      <Button design="retro" retroBorderThickness="ultra" variant="outline">
+        Ultra Border
+      </Button>
+    </View>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'Different border thickness options for retro buttons.',
+      },
+    },
+  },
+};
+
+export const RetroCornerStyles: Story = {
+  render: () => (
+    <View style={{ flexDirection: 'row', gap: 16, flexWrap: 'wrap' }}>
+      <Button design="retro" retroCornerRadius="sharp" variant="primary">
+        Sharp
+      </Button>
+      <Button design="retro" retroCornerRadius="slight" variant="primary">
+        Slight
+      </Button>
+      <Button design="retro" retroCornerRadius="rounded" variant="primary">
+        Rounded
+      </Button>
+      <Button design="retro" retroCornerRadius="pill" variant="primary">
+        Pill
+      </Button>
+    </View>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'Different corner radius styles for retro buttons.',
+      },
+    },
+  },
+};
+
+export const RetroShadowStyles: Story = {
+  render: () => (
+    <View style={{ flexDirection: 'row', gap: 16, flexWrap: 'wrap' }}>
+      <Button design="retro" retroShadowStyle="none" variant="primary">
+        No Shadow
+      </Button>
+      <Button design="retro" retroShadowStyle="drop" variant="primary">
+        Drop Shadow
+      </Button>
+      <Button design="retro" retroShadowStyle="neon" variant="primary">
+        Neon Shadow
+      </Button>
+      <Button design="retro" retroShadowStyle="deep" variant="primary">
+        Deep Shadow
+      </Button>
+      <Button design="retro" retroShadowStyle="box" variant="primary">
+        Box Shadow
+      </Button>
+    </View>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'Different shadow styles for retro buttons.',
+      },
+    },
+  },
+};
+
+export const RetroInteractive: Story = {
+  render: () => (
+    <View style={{ flexDirection: 'column', gap: 16 }}>
+      <View style={{ flexDirection: 'row', gap: 16, flexWrap: 'wrap' }}>
+        <Button design="retro" variant="primary" onPress={() => console.log('Pressed!')}>
+          Press Me
+        </Button>
+        <Button design="retro" variant="secondary" disabled>
+          Disabled
+        </Button>
+        <Button design="retro" variant="outline" loading>
+          Loading
+        </Button>
+      </View>
+    </View>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'Interactive states of retro buttons including pressed, disabled, and loading.',
+      },
+    },
+  },
+};
+
+export const RetroShowcase: Story = {
+  render: () => (
+    <View style={{ flexDirection: 'column', gap: 24, padding: 16 }}>
+      <View style={{ flexDirection: 'row', gap: 16, flexWrap: 'wrap' }}>
+        <Button 
+          design="retro" 
+          retroEra="neon80s" 
+          retroGlowEffect={true}
+          retroShadowStyle="neon"
+          variant="primary"
+        >
+          🌈 Neon Dreams
+        </Button>
+        <Button 
+          design="retro" 
+          retroEra="vintage70s" 
+          retroColorScheme="muted"
+          retroCornerRadius="rounded"
+          variant="secondary"
+        >
+          ✨ Vintage Vibes
+        </Button>
+        <Button 
+          design="retro" 
+          retroEra="pixelArt" 
+          retroCornerRadius="sharp"
+          retroBorderThickness="thick"
+          variant="outline"
+        >
+          🎮 Pixel Perfect
+        </Button>
+      </View>
+      <View style={{ flexDirection: 'row', gap: 16, flexWrap: 'wrap' }}>
+        <Button 
+          design="retro" 
+          retroEra="terminal" 
+          retroColorScheme="monochrome"
+          retroShadowStyle="box"
+          variant="text"
+        >
+          💻 Terminal Style
+        </Button>
+        <Button 
+          design="retro" 
+          retroEra="grunge90s" 
+          retroColorScheme="muted"
+          retroBorderThickness="ultra"
+          variant="primary"
+        >
+          🎸 Grunge Era
+        </Button>
+        <Button 
+          design="retro" 
+          retroEra="pastel90s" 
+          retroColorScheme="bright"
+          retroCornerRadius="pill"
+          variant="secondary"
+        >
+          🌸 Pastel Dreams
+        </Button>
+      </View>
+    </View>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'Showcase of various retro button combinations with different eras and styling options.',
+      },
+    },
+  },
+};
+
 // All Designs Showcase
 export const AllDesigns: Story = {
   render: () => (
@@ -515,6 +884,14 @@ export const AllDesigns: Story = {
             <Button design="glassmorphic" variant="primary">Primary</Button>
             <Button design="glassmorphic" variant="secondary">Secondary</Button>
             <Button design="glassmorphic" variant="outline">Outline</Button>
+          </View>
+        </View>
+        <View style={{ gap: 8, alignItems: 'center' }}>
+          <Typography variant="body2" style={{ fontWeight: 'bold' }}>Retro Design</Typography>
+          <View style={{ flexDirection: 'row', gap: 8 }}>
+            <Button design="retro" variant="primary">Primary</Button>
+            <Button design="retro" variant="secondary">Secondary</Button>
+            <Button design="retro" variant="outline">Outline</Button>
           </View>
         </View>
       </View>

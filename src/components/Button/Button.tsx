@@ -12,6 +12,7 @@ import { ThemeDesign } from '../../themes/types';
 import { useThemeSafe } from '../../themes/ThemeContext';
 import { getSkeuomorphicButtonStyles } from '../../themes/utils/skeuomorphic';
 import { getGlassmorphicButtonStyles } from '../../themes/utils/glassmorphic';
+import { getRetroButtonStyles, RetroEra, RetroColorScheme, RetroBorderThickness, RetroCornerRadius, RetroShadowStyle } from '../../themes/utils/retro';
 import { useMemoizedStyle, useMemoizedCallback } from '../../utils/performance';
 
 export interface ButtonProps {
@@ -39,6 +40,13 @@ export interface ButtonProps {
   glassTheme?: 'light' | 'dark';
   glassTintColor?: string;
   glassBorderRadius?: number;
+  // Retro-specific props
+  retroEra?: RetroEra;
+  retroColorScheme?: RetroColorScheme;
+  retroBorderThickness?: RetroBorderThickness;
+  retroCornerRadius?: RetroCornerRadius;
+  retroShadowStyle?: RetroShadowStyle;
+  retroGlowEffect?: boolean;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -53,21 +61,18 @@ const Button: React.FC<ButtonProps> = ({
   textStyle,
   backgroundColor,
   textColor,
+  retroEra = 'neon80s',
+  retroColorScheme = 'bright',
+  retroBorderThickness = 'thick',
+  retroCornerRadius = 'slight',
+  retroShadowStyle = 'drop',
+  retroGlowEffect = false,
 }) => {
   const [isPressed, setIsPressed] = useState(false);
   const themeContext = useThemeSafe();
   
   // Use design prop if provided, otherwise use theme context, otherwise default to 'flat'
   const activeDesign = design || themeContext?.design || 'flat';
-
-  // Phase 9: Performance Optimization - Memoize expensive style calculations
-  const variantStyles = useMemoizedStyle(
-    () => {
-      return getVariantStylesInternal();
-    },
-    [activeDesign, variant, size, isPressed, disabled, backgroundColor, textColor, themeContext?.theme.mode, themeContext?.theme.colors.primary, themeContext?.theme.colors.secondary, themeContext?.theme.colors.text, themeContext?.theme.colors.surface],
-    `button-${activeDesign}-${variant}-${size}-${isPressed}-${disabled}-${backgroundColor || 'default'}-${textColor || 'default'}`
-  );
 
   const getVariantStylesInternal = (): { container: ViewStyle; text: TextStyle } => {
     // If design is skeuomorphic, use skeuomorphic styles
@@ -119,6 +124,55 @@ const Button: React.FC<ButtonProps> = ({
           color: textColorForVariant,
           fontSize: 16,
           fontWeight: '600',
+        },
+      };
+    }
+
+    // If design is retro, use retro styles
+    if (activeDesign === 'retro') {
+      const retroStyles = getRetroButtonStyles({
+        era: retroEra,
+        colorScheme: retroColorScheme,
+        borderThickness: retroBorderThickness,
+        cornerRadius: retroCornerRadius,
+        shadowStyle: retroShadowStyle,
+        glowEffect: retroGlowEffect,
+        customColors: backgroundColor ? { primary: backgroundColor } : undefined,
+      });
+
+      const textColorForVariant = (() => {
+        if (textColor) return textColor;
+        if (disabled) return '#666666';
+        
+        // Use retro era-specific text colors
+        switch (retroEra) {
+          case 'neon80s':
+            return variant === 'primary' ? '#00FFFF' : '#FF00FF';
+          case 'pastel90s':
+            return variant === 'primary' ? '#FF6B9D' : '#A8E6CF';
+          case 'grunge90s':
+            return variant === 'primary' ? '#8B4513' : '#2F4F4F';
+          case 'vintage70s':
+            return variant === 'primary' ? '#D2691E' : '#8B4513';
+          case 'pixelArt':
+            return variant === 'primary' ? '#00FF00' : '#FFFF00';
+          case 'terminal':
+            return variant === 'primary' ? '#00FF00' : '#FFFFFF';
+          default:
+            return '#FFFFFF';
+        }
+      })();
+
+      return {
+        container: {
+          ...retroStyles,
+          opacity: disabled ? 0.6 : 1,
+        },
+        text: {
+          color: textColorForVariant,
+          fontSize: 16,
+          fontWeight: '700',
+          textShadow: retroGlowEffect ? '0 0 10px currentColor' : undefined,
         },
       };
     }
@@ -195,6 +249,15 @@ const Button: React.FC<ButtonProps> = ({
         };
     }
   };
+
+  // Phase 9: Performance Optimization - Memoize expensive style calculations
+  const variantStyles = useMemoizedStyle(
+    () => {
+      return getVariantStylesInternal();
+    },
+    [activeDesign, variant, size, isPressed, disabled, backgroundColor, textColor, themeContext?.theme.mode, themeContext?.theme.colors.primary, themeContext?.theme.colors.secondary, themeContext?.theme.colors.text, themeContext?.theme.colors.surface, retroEra, retroColorScheme, retroBorderThickness, retroCornerRadius, retroShadowStyle, retroGlowEffect],
+    `button-${activeDesign}-${variant}-${size}-${isPressed}-${disabled}-${backgroundColor || 'default'}-${textColor || 'default'}-${retroEra}-${retroColorScheme}-${retroBorderThickness}-${retroCornerRadius}-${retroShadowStyle}-${retroGlowEffect}`
+  );
 
   // Phase 9: Performance Optimization - Memoize size styles
   const sizeStyles = useMemoizedStyle(

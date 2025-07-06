@@ -4,6 +4,7 @@ import { flatLightTheme } from './variants/flat';
 import { neumorphicLightTheme } from './variants/neumorphic';
 import { skeuomorphicLightTheme } from './variants/skeuomorphic';
 import { glassmorphicLightTheme, glassmorphicDarkTheme } from './variants/glassmorphic';
+import { retroLightTheme, retroDarkTheme } from './variants/retro';
 
 interface ThemeContextType {
   theme: Theme;
@@ -50,9 +51,11 @@ const getTheme = (design: ThemeDesign, mode: ThemeMode): Theme => {
     case 'glassmorphic':
       baseTheme = mode === 'dark' ? glassmorphicDarkTheme : glassmorphicLightTheme;
       break;
+    case 'retro':
+      baseTheme = mode === 'dark' ? retroDarkTheme : retroLightTheme;
+      break;
     case 'material':
     case 'simplistic':
-    case 'retro':
       // TODO: Implement these design systems
       // For now, fall back to flat theme
       console.warn(`Design system '${design}' not yet implemented, falling back to 'flat'`);
@@ -63,7 +66,7 @@ const getTheme = (design: ThemeDesign, mode: ThemeMode): Theme => {
   }
   
   // Handle dark mode for other design systems
-  if (mode === 'dark' && design !== 'glassmorphic') {
+  if (mode === 'dark' && design !== 'glassmorphic' && design !== 'retro') {
     console.warn(`Dark mode for '${design}' not yet implemented, using light mode`);
   }
   
