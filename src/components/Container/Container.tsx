@@ -11,7 +11,19 @@ export interface ContainerProps {
   design?: 'flat' | 'neumorphic' | 'skeuomorphic' | 'glassmorphic';
   maxWidth?: 'sm' | 'md' | 'lg' | 'xl' | 'full' | number;
   padding?: 'none' | 'small' | 'medium' | 'large';
-  center?: boolean;
+
+  // Content alignment options
+  horizontalAlign?: 'left' | 'center' | 'right';
+  verticalAlign?: 'top' | 'center' | 'bottom' | 'stretch';
+  // New border options
+  border?: boolean;
+  borderWidth?: number;
+  borderColor?: string;
+  borderRadius?: number;
+  borderStyle?: 'solid' | 'dashed' | 'dotted';
+  // Background options
+  backgroundColor?: string;
+  minHeight?: number | string;
 }
 
 const Container: React.FC<ContainerProps> = ({
@@ -20,7 +32,16 @@ const Container: React.FC<ContainerProps> = ({
   design,
   maxWidth = 'lg',
   padding = 'medium',
-  center = true,
+
+  horizontalAlign = 'center',
+  verticalAlign = 'center',
+  border = false,
+  borderWidth = 1,
+  borderColor,
+  borderRadius = 0,
+  borderStyle = 'solid',
+  backgroundColor,
+  minHeight,
 }) => {
   const themeContext = useThemeSafe();
   const activeDesign = design || themeContext?.design || 'flat';
@@ -65,8 +86,54 @@ const Container: React.FC<ContainerProps> = ({
         maxWidth: getMaxWidth(),
         paddingHorizontal: getPaddingValue(),
       },
-      center && styles.centered,
     ];
+
+    // Handle horizontal alignment
+    const effectiveHorizontalAlign = horizontalAlign;
+    
+    if (effectiveHorizontalAlign === 'center') {
+      baseStyles.push(styles.centered);
+    } else if (effectiveHorizontalAlign === 'right') {
+      baseStyles.push(styles.rightAligned);
+    }
+    // left is default, no additional styles needed
+
+    // Apply content alignment styles
+    baseStyles.push({
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 
+        effectiveHorizontalAlign === 'center' ? 'center' :
+        effectiveHorizontalAlign === 'right' ? 'flex-end' : 'flex-start',
+      justifyContent: 
+        verticalAlign === 'center' ? 'center' :
+        verticalAlign === 'bottom' ? 'flex-end' :
+        verticalAlign === 'stretch' ? 'space-between' : 'flex-start',
+    });
+
+    // Apply border styles
+    if (border) {
+      baseStyles.push({
+        borderWidth,
+        borderColor: borderColor || themeContext?.theme.colors.primary || '#007AFF',
+        borderRadius,
+        borderStyle,
+      });
+    }
+
+    // Apply background color
+    if (backgroundColor) {
+      baseStyles.push({
+        backgroundColor,
+      });
+    }
+
+    // Apply minimum height
+    if (minHeight) {
+      baseStyles.push({
+        minHeight,
+      });
+    }
 
     // Apply design-specific styling
     switch (activeDesign) {
@@ -107,6 +174,10 @@ const styles = StyleSheet.create({
   centered: {
     marginHorizontal: 'auto',
     alignSelf: 'center',
+  } as ViewStyle,
+  rightAligned: {
+    marginLeft: 'auto',
+    alignSelf: 'flex-end',
   } as ViewStyle,
 });
 

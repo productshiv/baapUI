@@ -1,6 +1,6 @@
 {
-  "version": "2.0.6",
-  "generatedAt": "2025-07-06T10:19:20.895Z",
+  "version": "2.0.7",
+  "generatedAt": "2025-07-06T17:57:01.234Z",
   "totalComponents": 39,
   "categories": {
     "Data Display": [
@@ -65,6 +65,7 @@
     "flat",
     "glassmorphic",
     "neumorphic",
+    "retro",
     "skeuomorphic"
   ],
   "components": [
@@ -201,6 +202,7 @@
       "designSystems": [
         "flat",
         "neumorphic",
+        "glassmorphic",
         "skeuomorphic"
       ],
       "category": "Layout"
@@ -245,7 +247,7 @@
         },
         {
           "name": "design",
-          "type": "'flat' | 'neumorphic' | 'skeuomorphic' | 'glassmorphic'",
+          "type": "'flat' | 'neumorphic' | 'skeuomorphic' | 'glassmorphic' | 'retro'",
           "required": false,
           "description": "design property",
           "defaultValue": "'flat'"
@@ -260,8 +262,50 @@
           "name": "textColor",
           "type": "string",
           "required": false,
-          "description": "textColor property",
+          "description": "Retro-specific props",
           "defaultValue": "NEUMORPHIC_COLORS.text"
+        },
+        {
+          "name": "retroEra",
+          "type": "RetroEra",
+          "required": false,
+          "description": "retroEra property",
+          "defaultValue": "'neon80s'"
+        },
+        {
+          "name": "retroColorScheme",
+          "type": "RetroColorScheme",
+          "required": false,
+          "description": "retroColorScheme property",
+          "defaultValue": "'bright'"
+        },
+        {
+          "name": "retroBorderThickness",
+          "type": "RetroBorderThickness",
+          "required": false,
+          "description": "retroBorderThickness property",
+          "defaultValue": "'medium'"
+        },
+        {
+          "name": "retroCornerRadius",
+          "type": "RetroCornerRadius",
+          "required": false,
+          "description": "retroCornerRadius property",
+          "defaultValue": "'slight'"
+        },
+        {
+          "name": "retroShadowStyle",
+          "type": "RetroShadowStyle",
+          "required": false,
+          "description": "retroShadowStyle property",
+          "defaultValue": "'drop'"
+        },
+        {
+          "name": "retroGlowEffect",
+          "type": "boolean",
+          "required": false,
+          "description": "retroGlowEffect property",
+          "defaultValue": "false"
         }
       ],
       "examples": [],
@@ -269,7 +313,8 @@
         "flat",
         "neumorphic",
         "glassmorphic",
-        "skeuomorphic"
+        "skeuomorphic",
+        "retro"
       ],
       "category": "Display"
     },
@@ -305,10 +350,9 @@
         },
         {
           "name": "design",
-          "type": "'flat' | 'neumorphic' | 'skeuomorphic'",
+          "type": "'flat' | 'neumorphic' | 'skeuomorphic' | 'glassmorphic'",
           "required": false,
-          "description": "design property",
-          "defaultValue": "'flat'"
+          "description": "design property"
         },
         {
           "name": "backgroundColor",
@@ -350,6 +394,7 @@
       "designSystems": [
         "flat",
         "neumorphic",
+        "glassmorphic",
         "skeuomorphic"
       ],
       "category": "Data Display"
@@ -377,7 +422,8 @@
           "name": "design",
           "type": "ThemeDesign",
           "required": false,
-          "description": "design property"
+          "description": "design property",
+          "defaultValue": ""
         },
         {
           "name": "disabled",
@@ -397,14 +443,15 @@
           "name": "children",
           "type": "React.ReactNode",
           "required": true,
-          "description": "children property"
+          "description": "children property",
+          "defaultValue": ""
         },
         {
           "name": "onPress",
           "type": "() => void",
           "required": false,
           "description": "onPress property",
-          "defaultValue": "{onPress"
+          "defaultValue": "{handlePress"
         },
         {
           "name": "style",
@@ -423,13 +470,105 @@
           "name": "backgroundColor",
           "type": "string",
           "required": false,
-          "description": "backgroundColor property"
+          "description": "backgroundColor property",
+          "defaultValue": ""
         },
         {
           "name": "textColor",
           "type": "string",
           "required": false,
-          "description": "textColor property"
+          "description": "Phase 8: Glassmorphic ArgTypes Configuration",
+          "defaultValue": ""
+        },
+        {
+          "name": "glassBlurIntensity",
+          "type": "number",
+          "required": false,
+          "description": "glassBlurIntensity property"
+        },
+        {
+          "name": "glassTransparency",
+          "type": "number",
+          "required": false,
+          "description": "glassTransparency property"
+        },
+        {
+          "name": "glassBorderOpacity",
+          "type": "number",
+          "required": false,
+          "description": "glassBorderOpacity property"
+        },
+        {
+          "name": "glassIntensity",
+          "type": "'subtle' | 'medium' | 'strong'",
+          "required": false,
+          "description": "glassIntensity property"
+        },
+        {
+          "name": "glassBlur",
+          "type": "'light' | 'medium' | 'heavy'",
+          "required": false,
+          "description": "glassBlur property"
+        },
+        {
+          "name": "glassTheme",
+          "type": "'light' | 'dark'",
+          "required": false,
+          "description": "glassTheme property"
+        },
+        {
+          "name": "glassTintColor",
+          "type": "string",
+          "required": false,
+          "description": "glassTintColor property"
+        },
+        {
+          "name": "glassBorderRadius",
+          "type": "number",
+          "required": false,
+          "description": "Retro-specific props"
+        },
+        {
+          "name": "retroEra",
+          "type": "RetroEra",
+          "required": false,
+          "description": "retroEra property",
+          "defaultValue": "'neon80s'"
+        },
+        {
+          "name": "retroColorScheme",
+          "type": "RetroColorScheme",
+          "required": false,
+          "description": "retroColorScheme property",
+          "defaultValue": "'bright'"
+        },
+        {
+          "name": "retroBorderThickness",
+          "type": "RetroBorderThickness",
+          "required": false,
+          "description": "retroBorderThickness property",
+          "defaultValue": "'thick'"
+        },
+        {
+          "name": "retroCornerRadius",
+          "type": "RetroCornerRadius",
+          "required": false,
+          "description": "retroCornerRadius property",
+          "defaultValue": "'slight'"
+        },
+        {
+          "name": "retroShadowStyle",
+          "type": "RetroShadowStyle",
+          "required": false,
+          "description": "retroShadowStyle property",
+          "defaultValue": "'drop'"
+        },
+        {
+          "name": "retroGlowEffect",
+          "type": "boolean",
+          "required": false,
+          "description": "retroGlowEffect property",
+          "defaultValue": "false"
         }
       ],
       "examples": [],
@@ -437,7 +576,8 @@
         "flat",
         "neumorphic",
         "glassmorphic",
-        "skeuomorphic"
+        "skeuomorphic",
+        "retro"
       ],
       "category": "Form Controls"
     },
@@ -748,7 +888,7 @@
     {
       "name": "Container",
       "path": "src/components/Container/Container.tsx",
-      "description": "A component component",
+      "description": "Deprecated: Use horizontalAlign instead",
       "props": [
         {
           "name": "children",
@@ -762,6 +902,12 @@
           "required": false,
           "description": "style property",
           "defaultValue": "{getContainerStyles()"
+        },
+        {
+          "name": "design",
+          "type": "'flat' | 'neumorphic' | 'skeuomorphic' | 'glassmorphic'",
+          "required": false,
+          "description": "design property"
         },
         {
           "name": "maxWidth",
@@ -781,13 +927,76 @@
           "name": "center",
           "type": "boolean",
           "required": false,
-          "description": "center property",
+          "description": "@deprecated - use horizontalAlign and verticalAlign instead",
           "defaultValue": "true"
+        },
+        {
+          "name": "horizontalAlign",
+          "type": "'left' | 'center' | 'right'",
+          "required": false,
+          "description": "horizontalAlign property",
+          "defaultValue": "'center'"
+        },
+        {
+          "name": "verticalAlign",
+          "type": "'top' | 'center' | 'bottom' | 'stretch'",
+          "required": false,
+          "description": "New border options",
+          "defaultValue": "'center'"
+        },
+        {
+          "name": "border",
+          "type": "boolean",
+          "required": false,
+          "description": "border property",
+          "defaultValue": "false"
+        },
+        {
+          "name": "borderWidth",
+          "type": "number",
+          "required": false,
+          "description": "borderWidth property",
+          "defaultValue": "1"
+        },
+        {
+          "name": "borderColor",
+          "type": "string",
+          "required": false,
+          "description": "borderColor property"
+        },
+        {
+          "name": "borderRadius",
+          "type": "number",
+          "required": false,
+          "description": "borderRadius property",
+          "defaultValue": "0"
+        },
+        {
+          "name": "borderStyle",
+          "type": "'solid' | 'dashed' | 'dotted'",
+          "required": false,
+          "description": "Background options",
+          "defaultValue": "'solid'"
+        },
+        {
+          "name": "backgroundColor",
+          "type": "string",
+          "required": false,
+          "description": "backgroundColor property"
+        },
+        {
+          "name": "minHeight",
+          "type": "number | string",
+          "required": false,
+          "description": "minHeight property"
         }
       ],
       "examples": [],
       "designSystems": [
-        "flat"
+        "flat",
+        "neumorphic",
+        "glassmorphic",
+        "skeuomorphic"
       ],
       "category": "Other"
     },
@@ -966,7 +1175,7 @@
         },
         {
           "name": "design",
-          "type": "'flat' | 'neumorphic' | 'skeuomorphic'",
+          "type": "'flat' | 'neumorphic' | 'skeuomorphic' | 'glassmorphic'",
           "required": false,
           "description": "design property",
           "defaultValue": "'flat'"
@@ -988,6 +1197,7 @@
       "designSystems": [
         "flat",
         "neumorphic",
+        "glassmorphic",
         "skeuomorphic"
       ],
       "category": "Form Controls"
@@ -1040,7 +1250,7 @@
           "type": "ThemeDesign",
           "required": false,
           "description": "design property",
-          "defaultValue": "'flat'"
+          "defaultValue": "{finalDesign"
         },
         {
           "name": "backgroundColor",
@@ -1060,6 +1270,7 @@
       "designSystems": [
         "flat",
         "neumorphic",
+        "glassmorphic",
         "skeuomorphic"
       ],
       "category": "Other"
@@ -1130,23 +1341,22 @@
         },
         {
           "name": "design",
-          "type": "'flat' | 'neumorphic' | 'skeuomorphic'",
+          "type": "'flat' | 'neumorphic' | 'skeuomorphic' | 'glassmorphic'",
           "required": false,
-          "description": "design property",
-          "defaultValue": "'flat'"
+          "description": "design property"
         },
         {
           "name": "backgroundColor",
           "type": "string",
           "required": false,
-          "description": "backgroundColor property",
-          "defaultValue": "NEUMORPHIC_COLORS.background"
+          "description": "backgroundColor property"
         }
       ],
       "examples": [],
       "designSystems": [
         "flat",
         "neumorphic",
+        "glassmorphic",
         "skeuomorphic"
       ],
       "category": "Layout"
@@ -1193,7 +1403,7 @@
           "type": "ThemeDesign",
           "required": false,
           "description": "design property",
-          "defaultValue": "'flat'"
+          "defaultValue": "{finalDesign"
         },
         {
           "name": "alignment",
@@ -1246,7 +1456,8 @@
       "examples": [],
       "designSystems": [
         "flat",
-        "neumorphic"
+        "neumorphic",
+        "glassmorphic"
       ],
       "category": "Other"
     },
@@ -1273,7 +1484,8 @@
           "name": "text",
           "type": "string",
           "required": true,
-          "description": "text property"
+          "description": "text property",
+          "defaultValue": "useThemeSafe();\r\n  \r\n  // Use design prop if provided"
         },
         {
           "name": "style",
@@ -1290,23 +1502,22 @@
         },
         {
           "name": "design",
-          "type": "'flat' | 'neumorphic' | 'skeuomorphic'",
+          "type": "'flat' | 'neumorphic' | 'skeuomorphic' | 'glassmorphic'",
           "required": false,
-          "description": "design property",
-          "defaultValue": "'flat'"
+          "description": "design property"
         },
         {
           "name": "textColor",
           "type": "string",
           "required": false,
-          "description": "textColor property",
-          "defaultValue": "NEUMORPHIC_COLORS.text"
+          "description": "textColor property"
         }
       ],
       "examples": [],
       "designSystems": [
         "flat",
         "neumorphic",
+        "glassmorphic",
         "skeuomorphic"
       ],
       "category": "Display"
@@ -1331,17 +1542,17 @@
         },
         {
           "name": "design",
-          "type": "'flat' | 'neumorphic' | 'skeuomorphic'",
+          "type": "'flat' | 'neumorphic' | 'skeuomorphic' | 'glassmorphic'",
           "required": false,
           "description": "design property",
-          "defaultValue": "'flat'"
+          "defaultValue": "{finalDesign"
         },
         {
           "name": "backgroundColor",
           "type": "string",
           "required": false,
           "description": "backgroundColor property",
-          "defaultValue": "NEUMORPHIC_COLORS.background"
+          "defaultValue": "{finalBackgroundColor"
         },
         {
           "name": "onPress",
@@ -1384,17 +1595,17 @@
         },
         {
           "name": "design",
-          "type": "'flat' | 'neumorphic' | 'skeuomorphic'",
+          "type": "'flat' | 'neumorphic' | 'skeuomorphic' | 'glassmorphic'",
           "required": false,
           "description": "design property",
-          "defaultValue": "'flat'"
+          "defaultValue": "{finalDesign"
         },
         {
           "name": "backgroundColor",
           "type": "string",
           "required": false,
           "description": "backgroundColor property",
-          "defaultValue": "NEUMORPHIC_COLORS.background"
+          "defaultValue": "{finalBackgroundColor"
         },
         {
           "name": "onItemPress",
@@ -1407,6 +1618,7 @@
       "designSystems": [
         "flat",
         "neumorphic",
+        "glassmorphic",
         "skeuomorphic"
       ],
       "category": "Data Display"
@@ -1549,6 +1761,7 @@
       "designSystems": [
         "flat",
         "neumorphic",
+        "glassmorphic",
         "skeuomorphic"
       ],
       "category": "Other"
@@ -1586,7 +1799,7 @@
         },
         {
           "name": "design",
-          "type": "'flat' | 'neumorphic' | 'skeuomorphic'",
+          "type": "'flat' | 'neumorphic' | 'skeuomorphic' | 'glassmorphic'",
           "required": false,
           "description": "design property",
           "defaultValue": "'flat'"
@@ -1610,6 +1823,7 @@
       "designSystems": [
         "flat",
         "neumorphic",
+        "glassmorphic",
         "skeuomorphic"
       ],
       "category": "Data Display"
@@ -1766,8 +1980,7 @@
           "name": "design",
           "type": "ThemeDesign",
           "required": false,
-          "description": "design property",
-          "defaultValue": "'flat'"
+          "description": "design property"
         },
         {
           "name": "padding",
@@ -1793,7 +2006,8 @@
       "examples": [],
       "designSystems": [
         "flat",
-        "neumorphic"
+        "neumorphic",
+        "glassmorphic"
       ],
       "category": "Other"
     },
@@ -2061,7 +2275,7 @@
         },
         {
           "name": "design",
-          "type": "'flat' | 'neumorphic' | 'skeuomorphic'",
+          "type": "'flat' | 'neumorphic' | 'skeuomorphic' | 'glassmorphic'",
           "required": false,
           "description": "design property",
           "defaultValue": "'flat'"
@@ -2092,6 +2306,7 @@
       "designSystems": [
         "flat",
         "neumorphic",
+        "glassmorphic",
         "skeuomorphic"
       ],
       "category": "Navigation"
@@ -2146,30 +2361,28 @@
         },
         {
           "name": "design",
-          "type": "'flat' | 'neumorphic' | 'skeuomorphic'",
+          "type": "'flat' | 'neumorphic' | 'skeuomorphic' | 'glassmorphic'",
           "required": false,
-          "description": "design property",
-          "defaultValue": "'flat'"
+          "description": "design property"
         },
         {
           "name": "backgroundColor",
           "type": "string",
           "required": false,
-          "description": "backgroundColor property",
-          "defaultValue": "NEUMORPHIC_COLORS.background"
+          "description": "backgroundColor property"
         },
         {
           "name": "textColor",
           "type": "string",
           "required": false,
-          "description": "textColor property",
-          "defaultValue": "NEUMORPHIC_COLORS.text"
+          "description": "textColor property"
         }
       ],
       "examples": [],
       "designSystems": [
         "flat",
         "neumorphic",
+        "glassmorphic",
         "skeuomorphic"
       ],
       "category": "Data Display"
@@ -2207,7 +2420,7 @@
         },
         {
           "name": "design",
-          "type": "'flat' | 'neumorphic' | 'skeuomorphic'",
+          "type": "'flat' | 'neumorphic' | 'skeuomorphic' | 'glassmorphic'",
           "required": false,
           "description": "design property",
           "defaultValue": "'flat'"
@@ -2231,6 +2444,7 @@
       "designSystems": [
         "flat",
         "neumorphic",
+        "glassmorphic",
         "skeuomorphic"
       ],
       "category": "Layout"
@@ -2462,7 +2676,7 @@
     {
       "name": "TwoColumn",
       "path": "src/components/TwoColumn/TwoColumn.tsx",
-      "description": "A component component",
+      "description": "Design system variant",
       "props": [
         {
           "name": "left",
@@ -2487,8 +2701,7 @@
           "name": "design",
           "type": "ThemeDesign",
           "required": false,
-          "description": "design property",
-          "defaultValue": "'flat'"
+          "description": "design property"
         },
         {
           "name": "gap",
@@ -2528,7 +2741,9 @@
       ],
       "examples": [],
       "designSystems": [
-        "flat"
+        "flat",
+        "neumorphic",
+        "glassmorphic"
       ],
       "category": "Other"
     },
@@ -2549,7 +2764,7 @@
   ],
   "package": {
     "name": "@productshiv/baapui",
-    "version": "2.0.6",
+    "version": "2.0.7",
     "description": "A truly cross-platform multi-design UI framework that works with React, Next.js, React Native, and any React-based framework.",
     "keywords": [
       "react",

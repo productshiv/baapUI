@@ -4,6 +4,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import Card from './Card';
 import Typography from '../Typography/Typography';
 import Button from '../Button/Button';
+import Container from '../Container/Container';
 
 const meta: Meta<typeof Card> = {
   title: 'Core UI/Card',
@@ -137,7 +138,7 @@ export const GlassmorphicInteractive: Story = {
   render: () => {
     const [isPressed, setIsPressed] = React.useState(false);
     return (
-      <View style={{ gap: 16, alignItems: 'center' }}>
+      <Container horizontalAlign="center" verticalAlign="center" style={{ gap: 16 }}>
         <Typography variant="h6">Interactive Glassmorphic Card</Typography>
         <Card 
           design="glassmorphic" 
@@ -152,7 +153,7 @@ export const GlassmorphicInteractive: Story = {
           </View>
         </Card>
         <Typography variant="caption">Click the card to see interaction</Typography>
-      </View>
+      </Container>
     );
   },
 };
@@ -160,9 +161,9 @@ export const GlassmorphicInteractive: Story = {
 export const GlassmorphicDarkMode: Story = {
   decorators: [
     Story => (
-      <View style={{ padding: 20, backgroundColor: '#1a1a1a', minHeight: 300 }}>
+      <Container backgroundColor="#1a1a1a" padding="medium" minHeight={300}>
         <Story />
-      </View>
+      </Container>
     ),
   ],
   args: {
@@ -256,9 +257,9 @@ export const GlassmorphicDarkGlass: Story = {
 
 export const GlassmorphicColoredGlass: Story = {
   render: () => (
-    <View style={{ gap: 16, alignItems: 'center', padding: 20 }}>
+    <Container horizontalAlign="center" verticalAlign="center" padding="medium" style={{ gap: 16 }}>
       <Typography variant="h6">Colored Glass Card Variations</Typography>
-      <View style={{ gap: 12, width: '100%', maxWidth: 400 }}>
+      <Container maxWidth={400} style={{ gap: 12, width: '100%' }}>
         <Card design="glassmorphic" backgroundColor="rgba(0, 122, 255, 0.2)">
           <View style={{ padding: 16 }}>
             <Typography variant="h6">Blue Glass</Typography>
@@ -277,8 +278,8 @@ export const GlassmorphicColoredGlass: Story = {
             <Typography variant="body2">Card with green tinted glass</Typography>
           </View>
         </Card>
-      </View>
-    </View>
+      </Container>
+    </Container>
   ),
 };
 
@@ -324,16 +325,16 @@ export const GlassmorphicMinimalGlass: Story = {
 
 export const GlassmorphicLayeredGlass: Story = {
   render: () => (
-    <View style={{ gap: 16, alignItems: 'center', padding: 20 }}>
+    <Container horizontalAlign="center" verticalAlign="center" padding="medium" style={{ gap: 16 }}>
       <Typography variant="h6">Layered Glass Card Elements</Typography>
-      <View style={{ 
-        position: 'relative',
-        padding: 30,
-        backgroundColor: 'rgba(255, 255, 255, 0.1)',
-        borderRadius: 16,
-        borderWidth: 1,
-        borderColor: 'rgba(255, 255, 255, 0.2)'
-      }}>
+      <Container 
+        padding="large"
+        backgroundColor="rgba(255, 255, 255, 0.1)"
+        borderRadius={16}
+        border={true}
+        borderWidth={1}
+        borderColor='rgba(255, 255, 255, 0.2)'
+      >
         <View style={{
           position: 'absolute',
           top: 10,
@@ -353,8 +354,8 @@ export const GlassmorphicLayeredGlass: Story = {
             </Typography>
           </View>
         </Card>
-      </View>
-    </View>
+      </Container>
+    </Container>
   ),
 };
 
