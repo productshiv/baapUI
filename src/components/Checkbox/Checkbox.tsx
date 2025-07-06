@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, TouchableOpacity, Text, StyleSheet, ViewStyle } from '../../platform';
 import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
 import { getSkeuomorphicCheckboxStyles, SKEUOMORPHIC_COLORS } from '../../themes/utils/skeuomorphic';
+import { getGlassmorphicStyles, GLASSMORPHIC_COLORS } from '../../themes/utils/glassmorphic';
 import { useThemeSafe } from '../../themes/ThemeContext';
 import { ThemeDesign } from '../../themes/types';
 
@@ -11,11 +12,7 @@ interface CheckboxProps {
   label?: string;
   style?: ViewStyle;
   disabled?: boolean;
-  /**
-   * Design system to use. If not provided, will use the current theme from ThemeProvider.
-   * @deprecated Use ThemeProvider to set design system globally instead of passing to each component
-   */
-  design?: ThemeDesign;
+  design?: 'flat' | 'neumorphic' | 'skeuomorphic' | 'glassmorphic';
   backgroundColor?: string;
   textColor?: string;
 }
@@ -51,7 +48,26 @@ const Checkbox: React.FC<CheckboxProps> = ({
   const getCheckboxStyles = (): ViewStyle[] => {
     const baseStyles: ViewStyle[] = [styles.checkbox];
 
-    if (activeDesign === 'skeuomorphic') {
+    if (activeDesign === 'glassmorphic') {
+      const glassmorphicColors = themeContext?.theme.mode === 'dark' 
+        ? GLASSMORPHIC_COLORS.dark 
+        : GLASSMORPHIC_COLORS.light;
+      
+      const glassmorphicStyles = getGlassmorphicStyles({
+        intensity: isPressed ? 'medium' : 'subtle',
+        theme: themeContext?.theme.mode || 'light',
+        customBackground: backgroundColor || glassmorphicColors.background,
+      });
+      
+      baseStyles.push({
+        ...glassmorphicStyles,
+        width: 24,
+        height: 24,
+        borderRadius: 6,
+        borderWidth: 1,
+        borderColor: glassmorphicColors.border,
+      });
+    } else if (activeDesign === 'skeuomorphic') {
       const skeuomorphicStyles = getSkeuomorphicCheckboxStyles(isChecked, disabled);
       baseStyles.push(skeuomorphicStyles.container);
     } else if (activeDesign === 'neumorphic') {
@@ -86,7 +102,18 @@ const Checkbox: React.FC<CheckboxProps> = ({
   const getCheckMarkStyles = (): ViewStyle[] => {
     const baseStyles: ViewStyle[] = [styles.checked];
 
-    if (activeDesign === 'skeuomorphic') {
+    if (activeDesign === 'glassmorphic') {
+      const glassmorphicColors = themeContext?.theme.mode === 'dark' 
+        ? GLASSMORPHIC_COLORS.dark 
+        : GLASSMORPHIC_COLORS.light;
+      
+      baseStyles.push({
+        width: 14,
+        height: 14,
+        backgroundColor: themeContext?.theme.colors.primary || '#2196f3',
+        borderRadius: 3,
+      });
+    } else if (activeDesign === 'skeuomorphic') {
       // For skeuomorphic, we'll use a checkmark symbol instead of a filled square
       return []; // The checkmark will be rendered as Text
     } else if (activeDesign === 'neumorphic') {
@@ -122,6 +149,14 @@ const Checkbox: React.FC<CheckboxProps> = ({
         style={[
           styles.label,
           disabled && styles.disabledText,
+          activeDesign === 'glassmorphic' && {
+            color: textColor || (themeContext?.theme.mode === 'dark' 
+              ? GLASSMORPHIC_COLORS.dark.text 
+              : GLASSMORPHIC_COLORS.light.text),
+            textShadowColor: 'rgba(255, 255, 255, 0.1)',
+            textShadowOffset: { width: 0, height: 1 },
+            textShadowRadius: 1,
+          },
           activeDesign === 'skeuomorphic' && {
             color: defaultTextColor,
             textShadowColor: SKEUOMORPHIC_COLORS.shadowLight,
@@ -144,43 +179,38 @@ const Checkbox: React.FC<CheckboxProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
     marginVertical: 2,
     flexWrap: 'nowrap',
-  },
+  } as ViewStyle,
   checkbox: {
     width: 20,
     height: 20,
     borderWidth: 1,
     borderColor: '#000',
-    borderStyle: 'solid',
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 10,
     backgroundColor: '#fff',
-    // Ensure visibility and prevent line breaks
-    display: 'flex',
     opacity: 1,
     flexShrink: 0,
-  },
+  } as ViewStyle,
   checked: {
     width: 12,
     height: 12,
     backgroundColor: '#000',
-  },
+  } as ViewStyle,
   label: {
     fontSize: 16,
     flex: 1,
-    display: 'inline',
-  },
+  } as ViewStyle,
   disabled: {
     backgroundColor: '#ccc',
-  },
+  } as ViewStyle,
   disabledText: {
     color: '#ccc',
-  },
+  } as ViewStyle,
 });
 
 export default Checkbox;

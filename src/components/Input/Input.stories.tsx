@@ -2,6 +2,8 @@ import React from 'react';
 import { View } from '../../platform';
 import type { Meta, StoryObj } from '@storybook/react';
 import Input from './Input';
+import Typography from '../Typography/Typography';
+import { GLASSMORPHIC_COLORS } from '../../themes/utils/glassmorphic';
 
 const meta: Meta<typeof Input> = {
   title: 'Core UI/Input',
@@ -20,7 +22,7 @@ const meta: Meta<typeof Input> = {
   argTypes: {
     design: {
       control: 'select',
-      options: ['flat', 'neumorphic', 'skeuomorphic'],
+      options: ['flat', 'neumorphic', 'skeuomorphic', 'glassmorphic'],
       defaultValue: 'flat',
     },
     placeholder: {
@@ -100,6 +102,15 @@ export const Skeuomorphic: Story = {
     placeholder: 'Skeuomorphic Design Input',
     design: 'skeuomorphic',
     label: 'Skeuomorphic Input',
+  },
+};
+
+// Glassmorphic Design Stories
+export const Glassmorphic: Story = {
+  args: {
+    placeholder: 'Glassmorphic Design Input',
+    design: 'glassmorphic',
+    label: 'Glassmorphic Input',
   },
 };
 
@@ -185,6 +196,187 @@ export const SkeuomorphicFocused: Story = {
   },
 };
 
+export const GlassmorphicWithError: Story = {
+  args: {
+    placeholder: 'Invalid glassmorphic input',
+    label: 'Glassmorphic Error',
+    error: 'This field is required',
+    design: 'glassmorphic',
+  },
+};
+
+export const GlassmorphicPassword: Story = {
+  args: {
+    placeholder: 'Enter secure password',
+    label: 'Glassmorphic Password',
+    secureTextEntry: true,
+    design: 'glassmorphic',
+  },
+};
+
+export const GlassmorphicFocused: Story = {
+  args: {
+    placeholder: 'Focused glassmorphic',
+    label: 'Focused Glassmorphic',
+    isFocused: true,
+    design: 'glassmorphic',
+  },
+};
+
+export const GlassmorphicDarkMode: Story = {
+  args: {
+    placeholder: 'Dark mode glassmorphic',
+    label: 'Dark Mode Input',
+    design: 'glassmorphic',
+  },
+  parameters: {
+    backgrounds: { default: 'dark' },
+  },
+};
+
+export const GlassmorphicPlayground: Story = {
+  args: {
+    placeholder: 'Interactive glassmorphic input',
+    label: 'Playground Input',
+    design: 'glassmorphic',
+  },
+};
+
+// Enhanced Glassmorphic Story Variations (Phase 7 - BAAPUI-8)
+export const LightGlass: Story = {
+  args: {
+    placeholder: 'Light glass effect',
+    label: 'Light Glass Input',
+    design: 'glassmorphic',
+  },
+  parameters: {
+    backgrounds: {
+      default: 'light',
+      values: [
+        { name: 'light', value: '#f0f0f0' },
+      ],
+    },
+  },
+};
+
+export const DarkGlass: Story = {
+  args: {
+    placeholder: 'Dark glass effect',
+    label: 'Dark Glass Input',
+    design: 'glassmorphic',
+  },
+  parameters: {
+    backgrounds: {
+      default: 'dark',
+      values: [
+        { name: 'dark', value: '#1a1a1a' },
+      ],
+    },
+  },
+};
+
+export const ColoredGlass: Story = {
+  args: {
+    placeholder: 'Colored glass effect',
+    label: 'Colored Glass Input',
+    design: 'glassmorphic',
+    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+  },
+  parameters: {
+    backgrounds: {
+      default: 'gradient',
+      values: [
+        { name: 'gradient', value: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' },
+      ],
+    },
+  },
+};
+
+export const HighBlur: Story = {
+  args: {
+    placeholder: 'High blur intensity',
+    label: 'High Blur Input',
+    design: 'glassmorphic',
+  },
+  parameters: {
+    backgrounds: {
+      default: 'pattern',
+      values: [
+        { name: 'pattern', value: 'url("data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%239C92AC" fill-opacity="0.4"%3E%3Ccircle cx="30" cy="30" r="4"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")' },
+      ],
+    },
+  },
+};
+
+export const MinimalGlass: Story = {
+  args: {
+    placeholder: 'Minimal glass effect',
+    label: 'Minimal Glass Input',
+    design: 'glassmorphic',
+  },
+  parameters: {
+    backgrounds: {
+      default: 'minimal',
+      values: [
+        { name: 'minimal', value: '#fafafa' },
+      ],
+    },
+  },
+};
+
+export const LayeredGlass: Story = {
+  render: () => (
+    <View style={{ 
+      padding: 40, 
+      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+      borderRadius: 20,
+      position: 'relative'
+    }}>
+      <View style={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        background: 'rgba(255, 255, 255, 0.1)',
+        borderRadius: 20,
+        backdropFilter: 'blur(10px)'
+      }} />
+      <Input
+        placeholder="Layered glass effect"
+        label="Layered Glass Input"
+        design="glassmorphic"
+      />
+    </View>
+  ),
+};
+
+export const Interactive: Story = {
+  render: () => (
+    <View style={{ padding: 20, maxWidth: 400, gap: 16 }}>
+      <Input
+        placeholder="Type to see glassmorphic effects"
+        label="Interactive Glass Input"
+        design="glassmorphic"
+      />
+      <Input
+        placeholder="Another interactive input"
+        label="Secondary Glass Input"
+        design="glassmorphic"
+        isFocused={true}
+      />
+      <View style={{ 
+        padding: 12, 
+        backgroundColor: 'rgba(59, 130, 246, 0.1)', 
+        borderRadius: 8,
+        backdropFilter: 'blur(10px)'
+      }}>
+        <Typography variant="caption">Interactive glassmorphic inputs with focus effects</Typography>
+      </View>
+    </View>
+  ),
+};
+
 // Custom Color Variations
 export const CustomColors: Story = {
   args: {
@@ -206,7 +398,7 @@ export const NeumorphicCustomColors: Story = {
   },
 };
 
-// Comprehensive State Showcase
+// Showcase Stories
 export const AllStates: Story = {
   render: () => (
     <View style={{ padding: 20, gap: 16, maxWidth: 400 }}>
@@ -220,7 +412,7 @@ export const AllStates: Story = {
   ),
 };
 
-// All Design Systems Showcase
+// All Design Systems Showcase (SINGLE VERSION - removed duplicate)
 export const AllDesigns: Story = {
   render: () => (
     <View style={{ padding: 20, gap: 20, maxWidth: 400 }}>
@@ -245,11 +437,18 @@ export const AllDesigns: Story = {
           design="skeuomorphic"
         />
       </View>
+      <View>
+        <Input
+          placeholder="Glassmorphic design input"
+          label="Glassmorphic Design"
+          design="glassmorphic"
+        />
+      </View>
     </View>
   ),
 };
 
-// Form Example
+// Form Example (SINGLE VERSION - removed duplicate)
 export const FormExample: Story = {
   render: () => (
     <View style={{ padding: 20, gap: 16, maxWidth: 400 }}>

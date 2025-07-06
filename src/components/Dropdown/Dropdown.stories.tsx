@@ -21,7 +21,7 @@ const meta: Meta<typeof Dropdown> = {
   argTypes: {
     design: {
       control: 'select',
-      options: ['flat', 'neumorphic', 'skeuomorphic'],
+      options: ['flat', 'neumorphic', 'skeuomorphic', 'glassmorphic'],
       defaultValue: 'flat',
     },
     label: {
@@ -98,6 +98,194 @@ export const Skeuomorphic: Story = {
     placeholder: 'Select option...',
     design: 'skeuomorphic',
     onSelect: () => {},
+  },
+};
+
+export const Glassmorphic: Story = {
+  args: {
+    options: sampleOptions,
+    label: 'Glassmorphic Design Dropdown',
+    placeholder: 'Select option...',
+    design: 'glassmorphic',
+    onSelect: () => {},
+  },
+};
+
+export const GlassmorphicDark: Story = {
+  args: {
+    options: sampleOptions,
+    label: 'Glassmorphic Dark Theme',
+    placeholder: 'Select option...',
+    design: 'glassmorphic',
+    onSelect: () => {},
+  },
+  parameters: {
+    backgrounds: {
+      default: 'dark',
+      values: [
+        { name: 'dark', value: '#1a1a1a' },
+      ],
+    },
+  },
+};
+
+// Enhanced Glassmorphic Story Variations (Phase 7 - BAAPUI-8)
+export const Playground: Story = {
+  args: {
+    options: sampleOptions,
+    label: 'Playground Dropdown',
+    placeholder: 'Interactive controls...',
+    design: 'glassmorphic',
+    onSelect: () => {},
+  },
+};
+
+export const LightGlass: Story = {
+  args: {
+    options: frameworkOptions,
+    label: 'Light Glass Dropdown',
+    placeholder: 'Select framework...',
+    design: 'glassmorphic',
+    onSelect: () => {},
+  },
+  parameters: {
+    backgrounds: {
+      default: 'light',
+      values: [
+        { name: 'light', value: '#f0f0f0' },
+      ],
+    },
+  },
+};
+
+export const DarkGlass: Story = {
+  args: {
+    options: frameworkOptions,
+    label: 'Dark Glass Dropdown',
+    placeholder: 'Select framework...',
+    design: 'glassmorphic',
+    onSelect: () => {},
+  },
+  parameters: {
+    backgrounds: {
+      default: 'dark',
+      values: [
+        { name: 'dark', value: '#1a1a1a' },
+      ],
+    },
+  },
+};
+
+export const ColoredGlass: Story = {
+  args: {
+    options: colorOptions,
+    label: 'Colored Glass Dropdown',
+    placeholder: 'Select color...',
+    design: 'glassmorphic',
+    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+    onSelect: () => {},
+  },
+  parameters: {
+    backgrounds: {
+      default: 'gradient',
+      values: [
+        { name: 'gradient', value: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' },
+      ],
+    },
+  },
+};
+
+export const HighBlur: Story = {
+  args: {
+    options: sampleOptions,
+    label: 'High Blur Dropdown',
+    placeholder: 'High blur intensity...',
+    design: 'glassmorphic',
+    onSelect: () => {},
+  },
+  parameters: {
+    backgrounds: {
+      default: 'pattern',
+      values: [
+        { name: 'pattern', value: 'url("data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%239C92AC" fill-opacity="0.4"%3E%3Ccircle cx="30" cy="30" r="4"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")' },
+      ],
+    },
+  },
+};
+
+export const MinimalGlass: Story = {
+  args: {
+    options: ['Yes', 'No', 'Maybe'],
+    label: 'Minimal Glass Dropdown',
+    placeholder: 'Simple choice...',
+    design: 'glassmorphic',
+    onSelect: () => {},
+  },
+  parameters: {
+    backgrounds: {
+      default: 'minimal',
+      values: [
+        { name: 'minimal', value: '#fafafa' },
+      ],
+    },
+  },
+};
+
+export const LayeredGlass: Story = {
+  render: () => (
+    <View style={{ 
+      padding: 40, 
+      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+      borderRadius: 20,
+      position: 'relative'
+    }}>
+      <View style={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        background: 'rgba(255, 255, 255, 0.1)',
+        borderRadius: 20,
+        backdropFilter: 'blur(10px)'
+      }} />
+      <Dropdown
+        options={frameworkOptions}
+        label="Layered Glass Dropdown"
+        placeholder="Select framework..."
+        design="glassmorphic"
+        onSelect={() => {}}
+      />
+    </View>
+  ),
+};
+
+export const GlassmorphicInteractive: Story = {
+  render: () => {
+    const [selectedValue, setSelectedValue] = useState<string | null>(null);
+    
+    return (
+      <View style={{ padding: 20, maxWidth: 400, gap: 16 }}>
+        <Dropdown
+          options={frameworkOptions}
+          value={selectedValue}
+          onSelect={setSelectedValue}
+          label="Interactive Glass Dropdown"
+          placeholder="Choose your framework..."
+          design="glassmorphic"
+        />
+        {selectedValue && (
+          <View style={{ 
+            padding: 12, 
+            backgroundColor: 'rgba(59, 130, 246, 0.1)', 
+            borderRadius: 8,
+            backdropFilter: 'blur(10px)'
+          }}>
+            <Typography variant="caption">Selected: {selectedValue}</Typography>
+          </View>
+        )}
+      </View>
+    );
   },
 };
 
@@ -269,6 +457,15 @@ export const AllDesigns: Story = {
           label="Skeuomorphic Design"
           placeholder="Select option..."
           design="skeuomorphic"
+          onSelect={() => {}}
+        />
+      </View>
+      <View>
+        <Dropdown
+          options={sampleOptions}
+          label="Glassmorphic Design"
+          placeholder="Select option..."
+          design="glassmorphic"
           onSelect={() => {}}
         />
       </View>

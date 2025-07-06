@@ -50,6 +50,57 @@ const meta: Meta<typeof Button> = {
       control: 'boolean',
       defaultValue: false,
     },
+    // Phase 8: Glassmorphic ArgTypes Configuration
+    glassBlurIntensity: {
+      control: { type: 'range', min: 0, max: 20, step: 1 },
+      defaultValue: 10,
+      description: 'Backdrop-filter blur intensity (0-20px)',
+      if: { arg: 'design', eq: 'glassmorphic' },
+    },
+    glassTransparency: {
+      control: { type: 'range', min: 0, max: 1, step: 0.1 },
+      defaultValue: 0.2,
+      description: 'Background opacity (0-1)',
+      if: { arg: 'design', eq: 'glassmorphic' },
+    },
+    glassBorderOpacity: {
+      control: { type: 'range', min: 0, max: 1, step: 0.1 },
+      defaultValue: 0.3,
+      description: 'Border transparency (0-1)',
+      if: { arg: 'design', eq: 'glassmorphic' },
+    },
+    glassIntensity: {
+      control: 'select',
+      options: ['subtle', 'medium', 'strong'],
+      defaultValue: 'medium',
+      description: 'Glass effect intensity',
+      if: { arg: 'design', eq: 'glassmorphic' },
+    },
+    glassBlur: {
+      control: 'select',
+      options: ['light', 'medium', 'heavy'],
+      defaultValue: 'medium',
+      description: 'Blur effect level',
+      if: { arg: 'design', eq: 'glassmorphic' },
+    },
+    glassTheme: {
+      control: 'select',
+      options: ['light', 'dark'],
+      defaultValue: 'light',
+      description: 'Glass theme variant',
+      if: { arg: 'design', eq: 'glassmorphic' },
+    },
+    glassTintColor: {
+      control: 'color',
+      description: 'Tint color for glass effect',
+      if: { arg: 'design', eq: 'glassmorphic' },
+    },
+    glassBorderRadius: {
+      control: { type: 'range', min: 0, max: 30, step: 1 },
+      defaultValue: 12,
+      description: 'Custom border radius (0-30px)',
+      if: { arg: 'design', eq: 'glassmorphic' },
+    },
   },
   args: {
     children: 'Button',

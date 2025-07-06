@@ -1,6 +1,6 @@
 {
   "version": "2.0.6",
-  "generatedAt": "2025-06-29T13:34:18.519Z",
+  "generatedAt": "2025-07-06T10:19:20.895Z",
   "totalComponents": 39,
   "categories": {
     "Data Display": [
@@ -71,7 +71,7 @@
     {
       "name": "Accordion",
       "path": "src/components/Accordion/Accordion.tsx",
-      "description": "A component component",
+      "description": "Design system variant",
       "props": [
         {
           "name": "sections",
@@ -101,7 +101,7 @@
         },
         {
           "name": "design",
-          "type": "'flat' | 'neumorphic'",
+          "type": "'flat' | 'neumorphic' | 'skeuomorphic' | 'glassmorphic'",
           "required": false,
           "description": "design property",
           "defaultValue": "'flat'"
@@ -124,7 +124,9 @@
       "examples": [],
       "designSystems": [
         "flat",
-        "neumorphic"
+        "neumorphic",
+        "glassmorphic",
+        "skeuomorphic"
       ],
       "category": "Layout"
     },
@@ -154,7 +156,7 @@
         },
         {
           "name": "design",
-          "type": "'flat' | 'neumorphic'",
+          "type": "'flat' | 'neumorphic' | 'skeuomorphic' | 'glassmorphic'",
           "required": false,
           "description": "design property",
           "defaultValue": "'flat'"
@@ -184,19 +186,22 @@
       "examples": [],
       "designSystems": [
         "flat",
-        "neumorphic"
+        "neumorphic",
+        "glassmorphic",
+        "skeuomorphic"
       ],
       "category": "Display"
     },
     {
       "name": "BaapSafeArea",
       "path": "src/components/BaapSafeArea/BaapSafeArea.tsx",
-      "description": "A component component",
+      "description": "Design system variant",
       "props": [],
       "examples": [],
       "designSystems": [
         "flat",
-        "neumorphic"
+        "neumorphic",
+        "skeuomorphic"
       ],
       "category": "Layout"
     },
@@ -240,7 +245,7 @@
         },
         {
           "name": "design",
-          "type": "'flat' | 'neumorphic'",
+          "type": "'flat' | 'neumorphic' | 'skeuomorphic' | 'glassmorphic'",
           "required": false,
           "description": "design property",
           "defaultValue": "'flat'"
@@ -262,7 +267,9 @@
       "examples": [],
       "designSystems": [
         "flat",
-        "neumorphic"
+        "neumorphic",
+        "glassmorphic",
+        "skeuomorphic"
       ],
       "category": "Display"
     },
@@ -298,7 +305,7 @@
         },
         {
           "name": "design",
-          "type": "'flat' | 'neumorphic'",
+          "type": "'flat' | 'neumorphic' | 'skeuomorphic'",
           "required": false,
           "description": "design property",
           "defaultValue": "'flat'"
@@ -330,12 +337,20 @@
           "required": false,
           "description": "separatorColor property",
           "defaultValue": "NEUMORPHIC_COLORS.text"
+        },
+        {
+          "name": "separator",
+          "type": "string",
+          "required": false,
+          "description": "separator property",
+          "defaultValue": "'/'"
         }
       ],
       "examples": [],
       "designSystems": [
         "flat",
-        "neumorphic"
+        "neumorphic",
+        "skeuomorphic"
       ],
       "category": "Data Display"
     },
@@ -421,6 +436,7 @@
       "designSystems": [
         "flat",
         "neumorphic",
+        "glassmorphic",
         "skeuomorphic"
       ],
       "category": "Form Controls"
@@ -496,6 +512,7 @@
       "designSystems": [
         "flat",
         "neumorphic",
+        "glassmorphic",
         "skeuomorphic"
       ],
       "category": "Layout"
@@ -556,7 +573,7 @@
         },
         {
           "name": "design",
-          "type": "'flat' | 'neumorphic'",
+          "type": "'flat' | 'neumorphic' | 'skeuomorphic' | 'glassmorphic'",
           "required": false,
           "description": "design property",
           "defaultValue": "'flat'"
@@ -586,7 +603,9 @@
       "examples": [],
       "designSystems": [
         "flat",
-        "neumorphic"
+        "neumorphic",
+        "glassmorphic",
+        "skeuomorphic"
       ],
       "category": "Layout"
     },
@@ -631,7 +650,7 @@
         },
         {
           "name": "design",
-          "type": "ThemeDesign",
+          "type": "'flat' | 'neumorphic' | 'skeuomorphic' | 'glassmorphic'",
           "required": false,
           "description": "design property"
         },
@@ -652,6 +671,7 @@
       "designSystems": [
         "flat",
         "neumorphic",
+        "glassmorphic",
         "skeuomorphic"
       ],
       "category": "Form Controls"
@@ -689,7 +709,7 @@
         },
         {
           "name": "design",
-          "type": "'flat' | 'neumorphic'",
+          "type": "'flat' | 'neumorphic' | 'skeuomorphic' | 'glassmorphic'",
           "required": false,
           "description": "design property",
           "defaultValue": "'flat'"
@@ -719,7 +739,9 @@
       "examples": [],
       "designSystems": [
         "flat",
-        "neumorphic"
+        "neumorphic",
+        "glassmorphic",
+        "skeuomorphic"
       ],
       "category": "Display"
     },
@@ -783,7 +805,7 @@
         },
         {
           "name": "design",
-          "type": "'flat' | 'neumorphic'",
+          "type": "'flat' | 'neumorphic' | 'skeuomorphic' | 'glassmorphic'",
           "required": false,
           "description": "design property",
           "defaultValue": "'flat'"
@@ -806,7 +828,9 @@
       "examples": [],
       "designSystems": [
         "flat",
-        "neumorphic"
+        "neumorphic",
+        "glassmorphic",
+        "skeuomorphic"
       ],
       "category": "Display"
     },
@@ -843,7 +867,7 @@
         },
         {
           "name": "design",
-          "type": "'flat' | 'neumorphic'",
+          "type": "'flat' | 'neumorphic' | 'skeuomorphic' | 'glassmorphic'",
           "required": false,
           "description": "design property",
           "defaultValue": "'flat'"
@@ -866,7 +890,9 @@
       "examples": [],
       "designSystems": [
         "flat",
-        "neumorphic"
+        "neumorphic",
+        "glassmorphic",
+        "skeuomorphic"
       ],
       "category": "Overlays"
     },
@@ -940,7 +966,7 @@
         },
         {
           "name": "design",
-          "type": "'flat' | 'neumorphic'",
+          "type": "'flat' | 'neumorphic' | 'skeuomorphic'",
           "required": false,
           "description": "design property",
           "defaultValue": "'flat'"
@@ -949,21 +975,20 @@
           "name": "backgroundColor",
           "type": "string",
           "required": false,
-          "description": "backgroundColor property",
-          "defaultValue": "NEUMORPHIC_COLORS.background"
+          "description": "backgroundColor property"
         },
         {
           "name": "textColor",
           "type": "string",
           "required": false,
-          "description": "textColor property",
-          "defaultValue": "NEUMORPHIC_COLORS.text"
+          "description": "textColor property"
         }
       ],
       "examples": [],
       "designSystems": [
         "flat",
-        "neumorphic"
+        "neumorphic",
+        "skeuomorphic"
       ],
       "category": "Form Controls"
     },
@@ -1034,7 +1059,8 @@
       "examples": [],
       "designSystems": [
         "flat",
-        "neumorphic"
+        "neumorphic",
+        "skeuomorphic"
       ],
       "category": "Other"
     },
@@ -1104,7 +1130,7 @@
         },
         {
           "name": "design",
-          "type": "'flat' | 'neumorphic'",
+          "type": "'flat' | 'neumorphic' | 'skeuomorphic'",
           "required": false,
           "description": "design property",
           "defaultValue": "'flat'"
@@ -1120,7 +1146,8 @@
       "examples": [],
       "designSystems": [
         "flat",
-        "neumorphic"
+        "neumorphic",
+        "skeuomorphic"
       ],
       "category": "Layout"
     },
@@ -1232,6 +1259,7 @@
       "designSystems": [
         "flat",
         "neumorphic",
+        "glassmorphic",
         "skeuomorphic"
       ],
       "category": "Form Controls"
@@ -1262,7 +1290,7 @@
         },
         {
           "name": "design",
-          "type": "'flat' | 'neumorphic'",
+          "type": "'flat' | 'neumorphic' | 'skeuomorphic'",
           "required": false,
           "description": "design property",
           "defaultValue": "'flat'"
@@ -1278,7 +1306,8 @@
       "examples": [],
       "designSystems": [
         "flat",
-        "neumorphic"
+        "neumorphic",
+        "skeuomorphic"
       ],
       "category": "Display"
     },
@@ -1302,7 +1331,7 @@
         },
         {
           "name": "design",
-          "type": "'flat' | 'neumorphic'",
+          "type": "'flat' | 'neumorphic' | 'skeuomorphic'",
           "required": false,
           "description": "design property",
           "defaultValue": "'flat'"
@@ -1355,7 +1384,7 @@
         },
         {
           "name": "design",
-          "type": "'flat' | 'neumorphic'",
+          "type": "'flat' | 'neumorphic' | 'skeuomorphic'",
           "required": false,
           "description": "design property",
           "defaultValue": "'flat'"
@@ -1377,7 +1406,8 @@
       "examples": [],
       "designSystems": [
         "flat",
-        "neumorphic"
+        "neumorphic",
+        "skeuomorphic"
       ],
       "category": "Data Display"
     },
@@ -1414,7 +1444,7 @@
         },
         {
           "name": "design",
-          "type": "'flat' | 'neumorphic'",
+          "type": "'flat' | 'neumorphic' | 'skeuomorphic' | 'glassmorphic'",
           "required": false,
           "description": "design property",
           "defaultValue": "'flat'"
@@ -1437,7 +1467,9 @@
       "examples": [],
       "designSystems": [
         "flat",
-        "neumorphic"
+        "neumorphic",
+        "glassmorphic",
+        "skeuomorphic"
       ],
       "category": "Overlays"
     },
@@ -1516,7 +1548,8 @@
       "examples": [],
       "designSystems": [
         "flat",
-        "neumorphic"
+        "neumorphic",
+        "skeuomorphic"
       ],
       "category": "Other"
     },
@@ -1553,7 +1586,7 @@
         },
         {
           "name": "design",
-          "type": "'flat' | 'neumorphic'",
+          "type": "'flat' | 'neumorphic' | 'skeuomorphic'",
           "required": false,
           "description": "design property",
           "defaultValue": "'flat'"
@@ -1576,7 +1609,8 @@
       "examples": [],
       "designSystems": [
         "flat",
-        "neumorphic"
+        "neumorphic",
+        "skeuomorphic"
       ],
       "category": "Data Display"
     },
@@ -1600,7 +1634,7 @@
         },
         {
           "name": "design",
-          "type": "'flat' | 'neumorphic'",
+          "type": "'flat' | 'neumorphic' | 'skeuomorphic' | 'glassmorphic'",
           "required": false,
           "description": "design property",
           "defaultValue": "'flat'"
@@ -1637,7 +1671,9 @@
       "examples": [],
       "designSystems": [
         "flat",
-        "neumorphic"
+        "neumorphic",
+        "glassmorphic",
+        "skeuomorphic"
       ],
       "category": "Feedback"
     },
@@ -1682,30 +1718,29 @@
         },
         {
           "name": "design",
-          "type": "'flat' | 'neumorphic'",
+          "type": "'flat' | 'neumorphic' | 'skeuomorphic' | 'glassmorphic'",
           "required": false,
-          "description": "design property",
-          "defaultValue": "'flat'"
+          "description": "design property"
         },
         {
           "name": "backgroundColor",
           "type": "string",
           "required": false,
-          "description": "backgroundColor property",
-          "defaultValue": "NEUMORPHIC_COLORS.background"
+          "description": "backgroundColor property"
         },
         {
           "name": "textColor",
           "type": "string",
           "required": false,
-          "description": "textColor property",
-          "defaultValue": "NEUMORPHIC_COLORS.text"
+          "description": "textColor property"
         }
       ],
       "examples": [],
       "designSystems": [
         "flat",
-        "neumorphic"
+        "neumorphic",
+        "glassmorphic",
+        "skeuomorphic"
       ],
       "category": "Form Controls"
     },
@@ -1788,7 +1823,7 @@
         },
         {
           "name": "design",
-          "type": "'flat' | 'neumorphic'",
+          "type": "'flat' | 'neumorphic' | 'skeuomorphic' | 'glassmorphic'",
           "required": false,
           "description": "design property",
           "defaultValue": "'flat'"
@@ -1811,7 +1846,9 @@
       "examples": [],
       "designSystems": [
         "flat",
-        "neumorphic"
+        "neumorphic",
+        "glassmorphic",
+        "skeuomorphic"
       ],
       "category": "Feedback"
     },
@@ -1851,43 +1888,38 @@
           "name": "minimumTrackTintColor",
           "type": "string",
           "required": false,
-          "description": "minimumTrackTintColor property",
-          "defaultValue": "NEUMORPHIC_COLORS.primary"
+          "description": "minimumTrackTintColor property"
         },
         {
           "name": "maximumTrackTintColor",
           "type": "string",
           "required": false,
-          "description": "maximumTrackTintColor property",
-          "defaultValue": "NEUMORPHIC_COLORS.lightShadow"
+          "description": "maximumTrackTintColor property"
         },
         {
           "name": "thumbTintColor",
           "type": "string",
           "required": false,
-          "description": "thumbTintColor property",
-          "defaultValue": "NEUMORPHIC_COLORS.primary"
+          "description": "thumbTintColor property"
         },
         {
           "name": "style",
           "type": "ViewStyle",
           "required": false,
           "description": "style property",
-          "defaultValue": "{{\r\n        width"
+          "defaultValue": "{getSliderStyles()"
         },
         {
           "name": "design",
-          "type": "'flat' | 'neumorphic'",
+          "type": "'flat' | 'neumorphic' | 'skeuomorphic' | 'glassmorphic'",
           "required": false,
-          "description": "design property",
-          "defaultValue": "'flat'"
+          "description": "design property"
         },
         {
           "name": "backgroundColor",
           "type": "string",
           "required": false,
-          "description": "backgroundColor property",
-          "defaultValue": "NEUMORPHIC_COLORS.background"
+          "description": "backgroundColor property"
         },
         {
           "name": "width",
@@ -1907,7 +1939,9 @@
       "examples": [],
       "designSystems": [
         "flat",
-        "neumorphic"
+        "neumorphic",
+        "glassmorphic",
+        "skeuomorphic"
       ],
       "category": "Form Controls"
     },
@@ -1935,7 +1969,7 @@
           "type": "string",
           "required": false,
           "description": "color property",
-          "defaultValue": "{spinnerColor"
+          "defaultValue": "SKEUOMORPHIC_COLORS.onSurface;\r\n      baseStyle.textShadowColor"
         },
         {
           "name": "label",
@@ -1952,7 +1986,7 @@
         },
         {
           "name": "design",
-          "type": "'flat' | 'neumorphic'",
+          "type": "'flat' | 'neumorphic' | 'skeuomorphic' | 'glassmorphic'",
           "required": false,
           "description": "design property",
           "defaultValue": "'flat'"
@@ -1974,14 +2008,16 @@
       "examples": [],
       "designSystems": [
         "flat",
-        "neumorphic"
+        "neumorphic",
+        "glassmorphic",
+        "skeuomorphic"
       ],
       "category": "Feedback"
     },
     {
       "name": "Stepper",
       "path": "src/components/Stepper/Stepper.tsx",
-      "description": "A component component",
+      "description": "Design system variant",
       "props": [
         {
           "name": "value",
@@ -2025,7 +2061,7 @@
         },
         {
           "name": "design",
-          "type": "'flat' | 'neumorphic'",
+          "type": "'flat' | 'neumorphic' | 'skeuomorphic'",
           "required": false,
           "description": "design property",
           "defaultValue": "'flat'"
@@ -2055,7 +2091,8 @@
       "examples": [],
       "designSystems": [
         "flat",
-        "neumorphic"
+        "neumorphic",
+        "skeuomorphic"
       ],
       "category": "Navigation"
     },
@@ -2109,7 +2146,7 @@
         },
         {
           "name": "design",
-          "type": "'flat' | 'neumorphic'",
+          "type": "'flat' | 'neumorphic' | 'skeuomorphic'",
           "required": false,
           "description": "design property",
           "defaultValue": "'flat'"
@@ -2132,7 +2169,8 @@
       "examples": [],
       "designSystems": [
         "flat",
-        "neumorphic"
+        "neumorphic",
+        "skeuomorphic"
       ],
       "category": "Data Display"
     },
@@ -2169,7 +2207,7 @@
         },
         {
           "name": "design",
-          "type": "'flat' | 'neumorphic'",
+          "type": "'flat' | 'neumorphic' | 'skeuomorphic'",
           "required": false,
           "description": "design property",
           "defaultValue": "'flat'"
@@ -2192,7 +2230,8 @@
       "examples": [],
       "designSystems": [
         "flat",
-        "neumorphic"
+        "neumorphic",
+        "skeuomorphic"
       ],
       "category": "Layout"
     },
@@ -2204,7 +2243,9 @@
       "examples": [],
       "designSystems": [
         "flat",
-        "neumorphic"
+        "neumorphic",
+        "glassmorphic",
+        "skeuomorphic"
       ],
       "category": "Form Controls"
     },
@@ -2247,7 +2288,7 @@
         },
         {
           "name": "design",
-          "type": "'flat' | 'neumorphic'",
+          "type": "'flat' | 'neumorphic' | 'skeuomorphic' | 'glassmorphic'",
           "required": false,
           "description": "design property",
           "defaultValue": "'flat'"
@@ -2277,7 +2318,9 @@
       "examples": [],
       "designSystems": [
         "flat",
-        "neumorphic"
+        "neumorphic",
+        "glassmorphic",
+        "skeuomorphic"
       ],
       "category": "Overlays"
     },
@@ -2322,37 +2365,35 @@
         },
         {
           "name": "design",
-          "type": "'flat' | 'neumorphic'",
+          "type": "'flat' | 'neumorphic' | 'skeuomorphic' | 'glassmorphic'",
           "required": false,
-          "description": "design property",
-          "defaultValue": "'flat'"
+          "description": "design property"
         },
         {
           "name": "backgroundColor",
           "type": "string",
           "required": false,
-          "description": "backgroundColor property",
-          "defaultValue": "NEUMORPHIC_COLORS.background"
+          "description": "backgroundColor property"
         },
         {
           "name": "textColor",
           "type": "string",
           "required": false,
-          "description": "textColor property",
-          "defaultValue": "NEUMORPHIC_COLORS.text"
+          "description": "textColor property"
         },
         {
           "name": "activeColor",
           "type": "string",
           "required": false,
-          "description": "activeColor property",
-          "defaultValue": "'#4CAF50'"
+          "description": "activeColor property"
         }
       ],
       "examples": [],
       "designSystems": [
         "flat",
-        "neumorphic"
+        "neumorphic",
+        "glassmorphic",
+        "skeuomorphic"
       ],
       "category": "Form Controls"
     },
@@ -2389,7 +2430,7 @@
         },
         {
           "name": "design",
-          "type": "'flat' | 'neumorphic'",
+          "type": "'flat' | 'neumorphic' | 'skeuomorphic' | 'glassmorphic'",
           "required": false,
           "description": "design property",
           "defaultValue": "'flat'"
@@ -2412,7 +2453,9 @@
       "examples": [],
       "designSystems": [
         "flat",
-        "neumorphic"
+        "neumorphic",
+        "glassmorphic",
+        "skeuomorphic"
       ],
       "category": "Overlays"
     },

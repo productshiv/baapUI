@@ -1,9 +1,14 @@
 import React from 'react';
 import { View, StyleSheet, ViewStyle } from '../../platform';
+import { useThemeSafe } from '../../themes/ThemeContext';
+import { getGlassmorphicStyles } from '../../themes/utils/glassmorphic';
+import { getNeumorphicStyles } from '../../themes/utils/neumorphic';
+import { getSkeuomorphicCardStyles } from '../../themes/utils/skeuomorphic';
 
 export interface ContainerProps {
   children: React.ReactNode;
   style?: ViewStyle;
+  design?: 'flat' | 'neumorphic' | 'skeuomorphic' | 'glassmorphic';
   maxWidth?: 'sm' | 'md' | 'lg' | 'xl' | 'full' | number;
   padding?: 'none' | 'small' | 'medium' | 'large';
   center?: boolean;
@@ -12,10 +17,13 @@ export interface ContainerProps {
 const Container: React.FC<ContainerProps> = ({
   children,
   style,
+  design,
   maxWidth = 'lg',
   padding = 'medium',
   center = true,
 }) => {
+  const themeContext = useThemeSafe();
+  const activeDesign = design || themeContext?.design || 'flat';
   const getMaxWidth = () => {
     if (typeof maxWidth === 'number') {
       return maxWidth;
@@ -60,6 +68,28 @@ const Container: React.FC<ContainerProps> = ({
       center && styles.centered,
     ];
 
+    // Apply design-specific styling
+    switch (activeDesign) {
+      case 'glassmorphic':
+        baseStyles.push(getGlassmorphicStyles({
+          intensity: 'medium',
+          blur: 'medium',
+          theme: themeContext?.mode || 'light',
+        }));
+        break;
+      case 'neumorphic':
+        baseStyles.push(...getNeumorphicStyles({
+          isPressed: false,
+        }));
+        break;
+      case 'skeuomorphic':
+        baseStyles.push(getSkeuomorphicCardStyles(true));
+        break;
+      default:
+        // Flat design - no additional styling
+        break;
+    }
+
     if (style) {
       baseStyles.push(style);
     }
@@ -80,4 +110,4 @@ const styles = StyleSheet.create({
   } as ViewStyle,
 });
 
-export default Container; 
+export default Container;

@@ -1,4 +1,5 @@
 import { ViewStyle, Platform } from '../../platform';
+import { styleCache, useMemoizedStyle } from '../../utils/performance';
 
 export const GLASSMORPHIC_COLORS = {
   light: {
@@ -57,6 +58,14 @@ export const getGlassmorphicStyles = ({
   customBorderRadius,
   tintColor,
 }: GlassmorphicStyleOptions = {}): ViewStyle => {
+  // Phase 9: Performance Optimization - Style caching
+  const cacheKey = `glass-${intensity}-${blur}-${theme}-${customBackground || 'default'}-${customBorderRadius || 'default'}-${tintColor || 'default'}-${Platform.OS}`;
+  
+  const cached = styleCache.get(cacheKey);
+  if (cached) {
+    return cached;
+  }
+
   const colors = GLASSMORPHIC_COLORS[theme];
   const blurValue = GLASSMORPHIC_CONFIG.blur[blur];
   const opacityValue = GLASSMORPHIC_CONFIG.opacity[intensity];
@@ -79,22 +88,28 @@ export const getGlassmorphicStyles = ({
     elevation: 4,
   };
 
+  let finalStyle: ViewStyle;
+
   // Web-specific backdrop-filter
   if (Platform.OS === 'web') {
-    return {
+    finalStyle = {
       ...baseStyle,
       backdropFilter: `blur(${blurValue}px)`,
       WebkitBackdropFilter: `blur(${blurValue}px)`,
     } as ViewStyle;
+  } else {
+    // React Native fallback with enhanced shadows
+    finalStyle = {
+      ...baseStyle,
+      shadowOpacity: 0.15,
+      shadowRadius: blurValue,
+      elevation: Math.min(blurValue / 2, 8),
+    };
   }
 
-  // React Native fallback with enhanced shadows
-  return {
-    ...baseStyle,
-    shadowOpacity: 0.15,
-    shadowRadius: blurValue,
-    elevation: Math.min(blurValue / 2, 8),
-  };
+  // Cache the computed style
+  styleCache.set(cacheKey, finalStyle);
+  return finalStyle;
 };
 
 export const getGlassmorphicCardStyles = (options: GlassmorphicStyleOptions = {}): ViewStyle => {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { View } from '../../platform';
-import type { Meta, StoryObj } from '@storybook/react-webpack5';
+import type { Meta, StoryObj } from '@storybook/react';
 import Grid from './Grid';
 import Typography from '../Typography/Typography';
 
@@ -9,6 +9,15 @@ const meta: Meta<typeof Grid.Container> = {
   component: Grid.Container,
   parameters: {
     layout: 'centered',
+  },
+  argTypes: {
+    design: {
+      control: { type: 'select' },
+      options: ['flat', 'neumorphic', 'skeuomorphic', 'glassmorphic'],
+    },
+    backgroundColor: {
+      control: { type: 'color' },
+    },
   },
 };
 
@@ -162,5 +171,87 @@ export const NestedGrid: Story = {
         </Grid.Col>
       </Grid.Row>
     </Grid.Container>
+  ),
+};
+
+export const Glassmorphic: Story = {
+  render: () => (
+    <Grid.Container design="glassmorphic" style={{ width: 800 }}>
+      <Grid.Row design="glassmorphic" spacing={2} elevated>
+        <Grid.Col design="glassmorphic" elevated>
+          <GridItem>Glassmorphic Column 1</GridItem>
+        </Grid.Col>
+        <Grid.Col design="glassmorphic" elevated>
+          <GridItem>Glassmorphic Column 2</GridItem>
+        </Grid.Col>
+        <Grid.Col design="glassmorphic" elevated>
+          <GridItem>Glassmorphic Column 3</GridItem>
+        </Grid.Col>
+      </Grid.Row>
+    </Grid.Container>
+  ),
+};
+
+export const GlassmorphicDark: Story = {
+  render: () => (
+    <Grid.Container design="glassmorphic" style={{ width: 800 }}>
+      <Grid.Row design="glassmorphic" spacing={2} elevated>
+        <Grid.Col design="glassmorphic" elevated>
+          <GridItem>Glassmorphic Dark Column 1</GridItem>
+        </Grid.Col>
+        <Grid.Col design="glassmorphic" elevated>
+          <GridItem>Glassmorphic Dark Column 2</GridItem>
+        </Grid.Col>
+        <Grid.Col design="glassmorphic" elevated>
+          <GridItem>Glassmorphic Dark Column 3</GridItem>
+        </Grid.Col>
+      </Grid.Row>
+    </Grid.Container>
+  ),
+  parameters: {
+    backgrounds: {
+      default: 'dark',
+      values: [
+        { name: 'dark', value: '#1a1a1a' },
+      ],
+    },
+  },
+};
+
+export const AllDesigns: Story = {
+  render: () => (
+    <View style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+      <Grid.Container design="flat" style={{ width: 800 }}>
+        <Grid.Row design="flat" spacing={2}>
+          <Grid.Col><GridItem>Flat Design</GridItem></Grid.Col>
+          <Grid.Col><GridItem>Column 2</GridItem></Grid.Col>
+          <Grid.Col><GridItem>Column 3</GridItem></Grid.Col>
+        </Grid.Row>
+      </Grid.Container>
+      
+      <Grid.Container design="neumorphic" style={{ width: 800 }}>
+        <Grid.Row design="neumorphic" spacing={2} elevated>
+          <Grid.Col design="neumorphic" elevated><GridItem>Neumorphic Design</GridItem></Grid.Col>
+          <Grid.Col design="neumorphic" elevated><GridItem>Column 2</GridItem></Grid.Col>
+          <Grid.Col design="neumorphic" elevated><GridItem>Column 3</GridItem></Grid.Col>
+        </Grid.Row>
+      </Grid.Container>
+      
+      <Grid.Container design="skeuomorphic" style={{ width: 800 }}>
+        <Grid.Row design="skeuomorphic" spacing={2}>
+          <Grid.Col><GridItem>Skeuomorphic Design</GridItem></Grid.Col>
+          <Grid.Col><GridItem>Column 2</GridItem></Grid.Col>
+          <Grid.Col><GridItem>Column 3</GridItem></Grid.Col>
+        </Grid.Row>
+      </Grid.Container>
+      
+      <Grid.Container design="glassmorphic" style={{ width: 800 }}>
+        <Grid.Row design="glassmorphic" spacing={2} elevated>
+          <Grid.Col design="glassmorphic" elevated><GridItem>Glassmorphic Design</GridItem></Grid.Col>
+          <Grid.Col design="glassmorphic" elevated><GridItem>Column 2</GridItem></Grid.Col>
+          <Grid.Col design="glassmorphic" elevated><GridItem>Column 3</GridItem></Grid.Col>
+        </Grid.Row>
+      </Grid.Container>
+    </View>
   ),
 };

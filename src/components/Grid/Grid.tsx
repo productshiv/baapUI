@@ -1,11 +1,13 @@
 import React from 'react';
 import { View, StyleSheet, ViewStyle, DimensionValue } from '../../platform';
 import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
+import { getGlassmorphicStyles, GLASSMORPHIC_COLORS } from '../../themes/utils/glassmorphic';
+import { useThemeSafe } from '../../themes/ThemeContext';
 
 interface GridProps {
   children: React.ReactNode;
   style?: ViewStyle;
-  design?: 'flat' | 'neumorphic' | 'skeuomorphic';
+  design?: 'flat' | 'neumorphic' | 'skeuomorphic' | 'glassmorphic';
   backgroundColor?: string;
 }
 
@@ -34,22 +36,42 @@ interface ColProps extends GridProps {
 export const Container: React.FC<GridProps> = ({
   children,
   style,
-  design = 'flat',
-  backgroundColor = NEUMORPHIC_COLORS.background,
+  design, // Now optional - will use theme context if not provided
+  backgroundColor,
 }) => {
+  const themeContext = useThemeSafe();
+  
+  // Use design prop if provided, otherwise use theme context, otherwise default to 'flat'
+  const activeDesign = design || themeContext?.design || 'flat';
+  const themeMode = themeContext?.theme.mode || 'light';
+  const defaultBackgroundColor = backgroundColor || themeContext?.theme.colors.background || NEUMORPHIC_COLORS.background;
+
   const getContainerStyles = (): ViewStyle[] => {
     const baseStyles: ViewStyle[] = [styles.container];
 
-    if (design === 'neumorphic') {
+    if (activeDesign === 'glassmorphic') {
+      const glassmorphicStyles = getGlassmorphicStyles({
+        intensity: 'medium',
+        blur: 'medium',
+        theme: themeMode,
+      });
+
+      baseStyles.push(glassmorphicStyles);
+      baseStyles.push({
+        borderColor: themeMode === 'dark' 
+          ? GLASSMORPHIC_COLORS.dark.border 
+          : GLASSMORPHIC_COLORS.light.border,
+      });
+    } else if (activeDesign === 'neumorphic') {
       const neumorphicStyles = getNeumorphicStyles({
         isPressed: false,
-        customBackground: backgroundColor,
+        customBackground: defaultBackgroundColor,
         customBorderRadius: 12,
       });
 
       baseStyles.push(...neumorphicStyles);
       baseStyles.push({
-        backgroundColor,
+        backgroundColor: defaultBackgroundColor,
       });
     }
 
@@ -71,10 +93,16 @@ export const Row: React.FC<RowProps> = ({
   justify = 'flex-start',
   wrap = 'wrap',
   style,
-  design = 'flat',
-  backgroundColor = NEUMORPHIC_COLORS.background,
+  design, // Now optional - will use theme context if not provided
+  backgroundColor,
   elevated = false,
 }) => {
+  const themeContext = useThemeSafe();
+  
+  // Use design prop if provided, otherwise use theme context, otherwise default to 'flat'
+  const activeDesign = design || themeContext?.design || 'flat';
+  const themeMode = themeContext?.theme.mode || 'light';
+  const defaultBackgroundColor = backgroundColor || themeContext?.theme.colors.background || NEUMORPHIC_COLORS.background;
   const childrenArray = React.Children.toArray(children);
 
   const { fixedColumns, flexCount } = childrenArray.reduce(
@@ -105,16 +133,30 @@ export const Row: React.FC<RowProps> = ({
       },
     ];
 
-    if (design === 'neumorphic' && elevated) {
+    if (activeDesign === 'glassmorphic' && elevated) {
+      const glassmorphicStyles = getGlassmorphicStyles({
+        intensity: 'medium',
+        blur: 'medium',
+        theme: themeMode,
+      });
+
+      baseStyles.push(glassmorphicStyles);
+      baseStyles.push({
+        borderColor: themeMode === 'dark' 
+          ? GLASSMORPHIC_COLORS.dark.border 
+          : GLASSMORPHIC_COLORS.light.border,
+        padding: 8,
+      });
+    } else if (activeDesign === 'neumorphic' && elevated) {
       const neumorphicStyles = getNeumorphicStyles({
         isPressed: false,
-        customBackground: backgroundColor,
+        customBackground: defaultBackgroundColor,
         customBorderRadius: 8,
       });
 
       baseStyles.push(...neumorphicStyles);
       baseStyles.push({
-        backgroundColor,
+        backgroundColor: defaultBackgroundColor,
         padding: 8,
       });
     }
@@ -141,8 +183,8 @@ export const Row: React.FC<RowProps> = ({
 
           return React.cloneElement(child, {
             ...child.props,
-            design,
-            backgroundColor,
+            design: activeDesign,
+            backgroundColor: defaultBackgroundColor,
             style: [
               child.props.style,
               {
@@ -164,26 +206,46 @@ export const Col: React.FC<ColProps> = ({
   offset = 0,
   flex = false,
   style,
-  design = 'flat',
-  backgroundColor = NEUMORPHIC_COLORS.background,
+  design, // Now optional - will use theme context if not provided
+  backgroundColor,
   elevated = false,
 }) => {
+  const themeContext = useThemeSafe();
+  
+  // Use design prop if provided, otherwise use theme context, otherwise default to 'flat'
+  const activeDesign = design || themeContext?.design || 'flat';
+  const themeMode = themeContext?.theme.mode || 'light';
+  const defaultBackgroundColor = backgroundColor || themeContext?.theme.colors.background || NEUMORPHIC_COLORS.background;
   const getColStyles = (): ViewStyle[] => {
     const baseStyles: ViewStyle[] = [
       styles.col,
       ...(offset > 0 ? [{ marginLeft: `${(offset / 12) * 100}%` as DimensionValue }] : []),
     ];
 
-    if (design === 'neumorphic' && elevated) {
+    if (activeDesign === 'glassmorphic' && elevated) {
+      const glassmorphicStyles = getGlassmorphicStyles({
+        intensity: 'medium',
+        blur: 'medium',
+        theme: themeMode,
+      });
+
+      baseStyles.push(glassmorphicStyles);
+      baseStyles.push({
+        borderColor: themeMode === 'dark' 
+          ? GLASSMORPHIC_COLORS.dark.border 
+          : GLASSMORPHIC_COLORS.light.border,
+        padding: 8,
+      });
+    } else if (activeDesign === 'neumorphic' && elevated) {
       const neumorphicStyles = getNeumorphicStyles({
         isPressed: false,
-        customBackground: backgroundColor,
+        customBackground: defaultBackgroundColor,
         customBorderRadius: 8,
       });
 
       baseStyles.push(...neumorphicStyles);
       baseStyles.push({
-        backgroundColor,
+        backgroundColor: defaultBackgroundColor,
         padding: 8,
       });
     }

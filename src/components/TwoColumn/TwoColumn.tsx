@@ -1,6 +1,9 @@
 import React from 'react';
 import { View, StyleSheet, ViewStyle } from '../../platform';
 import { ThemeDesign } from '../../themes/types';
+import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
+import { getGlassmorphicStyles, GLASSMORPHIC_COLORS } from '../../themes/utils/glassmorphic';
+import { useThemeSafe } from '../../themes/ThemeContext';
 
 export interface TwoColumnProps {
   left: React.ReactNode;
@@ -18,13 +21,16 @@ const TwoColumn: React.FC<TwoColumnProps> = ({
   left,
   right,
   style,
-  design = 'flat',
+  design,
   gap = 'medium',
   ratio = '1:1',
   stackOnMobile = true,
   reverseOnMobile = false,
   alignment = 'top',
 }) => {
+  const themeContext = useThemeSafe();
+  const finalDesign = design || themeContext?.design || 'flat';
+  const themeMode: 'light' | 'dark' = themeContext?.mode || 'light';
   const getGapValue = () => {
     switch (gap) {
       case 'none':
@@ -66,6 +72,32 @@ const TwoColumn: React.FC<TwoColumnProps> = ({
     }
   };
 
+  const getDesignStyles = (): ViewStyle => {
+    switch (finalDesign) {
+      case 'neumorphic':
+        return {
+          ...getNeumorphicStyles({
+            isPressed: false,
+            customBackground: NEUMORPHIC_COLORS.background,
+          }),
+          backgroundColor: NEUMORPHIC_COLORS.background,
+        };
+      case 'glassmorphic':
+        return {
+          ...getGlassmorphicStyles({
+            intensity: 'medium',
+            blur: 'medium',
+            theme: themeMode,
+          }),
+          backgroundColor: GLASSMORPHIC_COLORS[themeMode].background,
+          borderWidth: 1,
+          borderColor: themeMode === 'dark' ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)',
+        };
+      default:
+        return {};
+    }
+  };
+
   const flexRatio = getFlexRatio();
   const gapValue = getGapValue();
 
@@ -75,6 +107,7 @@ const TwoColumn: React.FC<TwoColumnProps> = ({
       gap: gapValue,
       alignItems: getAlignItems(),
     },
+    getDesignStyles(),
     stackOnMobile && styles.stackOnMobile,
     stackOnMobile && reverseOnMobile && styles.reverseOnMobile,
   ];
@@ -129,4 +162,4 @@ const styles = StyleSheet.create({
   } as ViewStyle,
 });
 
-export default TwoColumn; 
+export default TwoColumn;

@@ -23,7 +23,7 @@ const meta: Meta<typeof Form> = {
   argTypes: {
     design: {
       control: { type: 'select' },
-      options: ['flat', 'neumorphic'],
+      options: ['flat', 'neumorphic', 'skeuomorphic', 'glassmorphic'],
     },
     spacing: {
       control: { type: 'select' },
@@ -69,6 +69,63 @@ export const Neumorphic: Story = {
         <Input placeholder="Enter your password" type="password" design="neumorphic" />
         <Button variant="primary" design="neumorphic">Sign In</Button>
         <Button variant="text" design="neumorphic">Forgot Password?</Button>
+      </>
+    ),
+  },
+};
+
+export const Glassmorphic: Story = {
+  args: {
+    design: 'glassmorphic',
+    spacing: 'normal',
+    fullWidthButtons: true,
+    children: (
+      <>
+        <Label text="Email Address" design="glassmorphic" />
+        <Input placeholder="Enter your email" type="email" design="glassmorphic" />
+        <Label text="Password" design="glassmorphic" />
+        <Input placeholder="Enter your password" type="password" design="glassmorphic" />
+        <Button variant="primary" design="glassmorphic">Sign In</Button>
+        <Button variant="text" design="glassmorphic">Forgot Password?</Button>
+      </>
+    ),
+  },
+};
+
+export const GlassmorphicRegistration: Story = {
+  args: {
+    design: 'glassmorphic',
+    spacing: 'normal',
+    fullWidthButtons: true,
+    children: (
+      <>
+        <Label text="Full Name" design="glassmorphic" />
+        <Input placeholder="Enter your full name" design="glassmorphic" />
+        <Label text="Email Address" design="glassmorphic" />
+        <Input placeholder="Enter your email" type="email" design="glassmorphic" />
+        <Label text="Password" design="glassmorphic" />
+        <Input placeholder="Create a password" type="password" design="glassmorphic" />
+        <Label text="Confirm Password" design="glassmorphic" />
+        <Input placeholder="Confirm your password" type="password" design="glassmorphic" />
+        <Button variant="primary" design="glassmorphic">Create Account</Button>
+        <Button variant="text" design="glassmorphic">Already have an account?</Button>
+      </>
+    ),
+  },
+};
+
+export const GlassmorphicCompact: Story = {
+  args: {
+    design: 'glassmorphic',
+    spacing: 'compact',
+    fullWidthButtons: true,
+    children: (
+      <>
+        <Label text="Username" design="glassmorphic" />
+        <Input placeholder="Enter username" design="glassmorphic" />
+        <Label text="Password" design="glassmorphic" />
+        <Input placeholder="Enter password" type="password" design="glassmorphic" />
+        <Button variant="primary" design="glassmorphic">Login</Button>
       </>
     ),
   },
@@ -126,4 +183,4 @@ export const WithoutFullWidthButtons: Story = {
       </>
     ),
   },
-}; 
+};

@@ -20,7 +20,7 @@ const meta: Meta<typeof ToggleSwitch> = {
   argTypes: {
     design: {
       control: 'select',
-      options: ['flat', 'neumorphic', 'skeuomorphic'],
+      options: ['flat', 'neumorphic', 'skeuomorphic', 'glassmorphic'],
       defaultValue: 'flat',
     },
     initialValue: {
@@ -95,6 +95,15 @@ export const Skeuomorphic: Story = {
   },
 };
 
+export const Glassmorphic: Story = {
+  args: {
+    label: 'Glassmorphic Design Toggle',
+    design: 'glassmorphic',
+    initialValue: false,
+    onToggle: () => {},
+  },
+};
+
 export const SkeuomorphicEnabled: Story = {
   args: {
     label: 'Skeuomorphic Enabled',
@@ -166,6 +175,36 @@ export const NeumorphicDisabledEnabled: Story = {
     label: 'Neumorphic Disabled (On)',
     design: 'neumorphic',
     disabled: true,
+    initialValue: true,
+    onToggle: () => {},
+  },
+};
+
+export const GlassmorphicEnabled: Story = {
+  args: {
+    label: 'Glassmorphic Enabled',
+    design: 'glassmorphic',
+    initialValue: true,
+    onToggle: () => {},
+  },
+};
+
+export const GlassmorphicDisabled: Story = {
+  args: {
+    label: 'Glassmorphic Disabled',
+    design: 'glassmorphic',
+    disabled: true,
+    initialValue: false,
+    onToggle: () => {},
+  },
+};
+
+export const GlassmorphicCustomColors: Story = {
+  args: {
+    label: 'Custom Glassmorphic Colors',
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    textColor: '#ffffff',
+    design: 'glassmorphic',
     initialValue: true,
     onToggle: () => {},
   },
@@ -266,6 +305,14 @@ export const AllDesigns: Story = {
           onToggle={() => {}}
         />
       </View>
+      <View>
+        <ToggleSwitch
+          label="Glassmorphic Design"
+          design="glassmorphic"
+          initialValue={false}
+          onToggle={() => {}}
+        />
+      </View>
     </View>
   ),
 };
@@ -294,6 +341,14 @@ export const AllDesignsEnabled: Story = {
         <ToggleSwitch
           label="Skeuomorphic Design (Enabled)"
           design="skeuomorphic"
+          initialValue={true}
+          onToggle={() => {}}
+        />
+      </View>
+      <View>
+        <ToggleSwitch
+          label="Glassmorphic Design (Enabled)"
+          design="glassmorphic"
           initialValue={true}
           onToggle={() => {}}
         />

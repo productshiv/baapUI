@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import {
   TouchableOpacity,
   Text,
@@ -12,6 +12,7 @@ import { ThemeDesign } from '../../themes/types';
 import { useThemeSafe } from '../../themes/ThemeContext';
 import { getSkeuomorphicButtonStyles } from '../../themes/utils/skeuomorphic';
 import { getGlassmorphicButtonStyles } from '../../themes/utils/glassmorphic';
+import { useMemoizedStyle, useMemoizedCallback } from '../../utils/performance';
 
 export interface ButtonProps {
   variant?: 'primary' | 'secondary' | 'outline' | 'text';
@@ -29,6 +30,15 @@ export interface ButtonProps {
   textStyle?: TextStyle;
   backgroundColor?: string;
   textColor?: string;
+  // Phase 8: Glassmorphic ArgTypes Configuration
+  glassBlurIntensity?: number;
+  glassTransparency?: number;
+  glassBorderOpacity?: number;
+  glassIntensity?: 'subtle' | 'medium' | 'strong';
+  glassBlur?: 'light' | 'medium' | 'heavy';
+  glassTheme?: 'light' | 'dark';
+  glassTintColor?: string;
+  glassBorderRadius?: number;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -50,7 +60,16 @@ const Button: React.FC<ButtonProps> = ({
   // Use design prop if provided, otherwise use theme context, otherwise default to 'flat'
   const activeDesign = design || themeContext?.design || 'flat';
 
-  const getVariantStyles = (): { container: ViewStyle; text: TextStyle } => {
+  // Phase 9: Performance Optimization - Memoize expensive style calculations
+  const variantStyles = useMemoizedStyle(
+    () => {
+      return getVariantStylesInternal();
+    },
+    [activeDesign, variant, size, isPressed, disabled, backgroundColor, textColor, themeContext?.theme.mode, themeContext?.theme.colors.primary, themeContext?.theme.colors.secondary, themeContext?.theme.colors.text, themeContext?.theme.colors.surface],
+    `button-${activeDesign}-${variant}-${size}-${isPressed}-${disabled}-${backgroundColor || 'default'}-${textColor || 'default'}`
+  );
+
+  const getVariantStylesInternal = (): { container: ViewStyle; text: TextStyle } => {
     // If design is skeuomorphic, use skeuomorphic styles
     if (activeDesign === 'skeuomorphic') {
       const skeuomorphicStyles = getSkeuomorphicButtonStyles(variant, size, isPressed, disabled);
@@ -177,76 +196,85 @@ const Button: React.FC<ButtonProps> = ({
     }
   };
 
-  const getSizeStyles = (): ViewStyle => {
-    const sizes = {
-      small: {
-        paddingVertical: 8,
-        paddingHorizontal: 16,
-        borderRadius: 12,
-      },
-      medium: {
-        paddingVertical: 12,
-        paddingHorizontal: 24,
-        borderRadius: 16,
-      },
-      large: {
-        paddingVertical: 16,
-        paddingHorizontal: 32,
-        borderRadius: 20,
-      },
-    };
+  // Phase 9: Performance Optimization - Memoize size styles
+  const sizeStyles = useMemoizedStyle(
+    () => {
+      const sizes = {
+        small: {
+          paddingVertical: 8,
+          paddingHorizontal: 16,
+          borderRadius: 12,
+        },
+        medium: {
+          paddingVertical: 12,
+          paddingHorizontal: 24,
+          borderRadius: 16,
+        },
+        large: {
+          paddingVertical: 16,
+          paddingHorizontal: 32,
+          borderRadius: 20,
+        },
+      };
+      return sizes[size];
+    },
+    [size],
+    `button-size-${size}`
+  );
 
-    return sizes[size];
-  };
+  // Phase 9: Performance Optimization - Memoize event handlers
+  const handlePress = useMemoizedCallback(() => {
+    if (!disabled && !loading && onPress) {
+      onPress();
+    }
+  }, [disabled, loading, onPress]);
 
-  const variantStyles = getVariantStyles();
-  const sizeStyles = getSizeStyles();
+  const handlePressIn = useMemoizedCallback(() => {
+    setIsPressed(true);
+  }, []);
 
-  // Combine all styles
-  const combinedStyles = [
-    styles.button,
-    variantStyles.container,
-    sizeStyles,
-    disabled && styles.disabledButton,
-    style,
-  ];
+  const handlePressOut = useMemoizedCallback(() => {
+    setIsPressed(false);
+  }, []);
 
-  // Debug logging (remove in production)
-  if (process.env.NODE_ENV === 'development') {
-    console.log('Button render:', { 
-      variant, 
-      size, 
-      activeDesign, 
-      themeFromContext: themeContext?.design,
-      designProp: design,
-      variantStyles, 
+  // Phase 9: Performance Optimization - Combine all styles with memoization
+  const combinedStyles = useMemoizedStyle(
+    () => [
+      styles.button,
+      variantStyles.container,
       sizeStyles,
-      combinedStyles,
-      disabled,
-      loading
-    });
-  }
+      disabled && styles.disabledButton,
+      style,
+    ],
+    [variantStyles.container, sizeStyles, disabled, style],
+    `button-combined-${variant}-${size}-${disabled}`
+  );
+
+  const textStyles = useMemoizedStyle(
+    () => [
+      styles.text, 
+      variantStyles.text, 
+      disabled && styles.disabledText, 
+      textStyle,
+      { opacity: 1 }
+    ],
+    [variantStyles.text, disabled, textStyle],
+    `button-text-${variant}-${disabled}`
+  );
 
   return (
     <TouchableOpacity
       style={combinedStyles}
-      onPress={onPress}
-      onPressIn={() => setIsPressed(true)}
-      onPressOut={() => setIsPressed(false)}
+      onPress={handlePress}
+      onPressIn={handlePressIn}
+      onPressOut={handlePressOut}
       disabled={disabled || loading}
       activeOpacity={activeDesign === 'neumorphic' ? 1 : 0.7}
     >
       {loading ? (
         <ActivityIndicator color={variant === 'primary' ? 'white' : '#666666'} />
       ) : (
-        <Text style={[
-          styles.text, 
-          variantStyles.text, 
-          disabled && styles.disabledText, 
-          textStyle,
-          // Force text visibility
-          { opacity: 1, display: 'flex' }
-        ]}>
+        <Text style={textStyles}>
           {children}
         </Text>
       )}
@@ -266,7 +294,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     borderRadius: 16,
     // Force visibility
-    display: 'flex',
+    // display: 'flex', // Not needed in React Native
     opacity: 1,
   },
   primaryButton: {
@@ -318,4 +346,25 @@ const styles = StyleSheet.create({
 // Add displayName for easier debugging
 Button.displayName = 'Button';
 
-export default Button;
+// Phase 9: Performance Optimization - Memoize component with custom comparison
+const MemoizedButton = React.memo(Button, (prevProps, nextProps) => {
+  // Custom comparison for optimal performance
+  return (
+    prevProps.variant === nextProps.variant &&
+    prevProps.size === nextProps.size &&
+    prevProps.design === nextProps.design &&
+    prevProps.disabled === nextProps.disabled &&
+    prevProps.loading === nextProps.loading &&
+    prevProps.backgroundColor === nextProps.backgroundColor &&
+    prevProps.textColor === nextProps.textColor &&
+    prevProps.children === nextProps.children &&
+    prevProps.onPress === nextProps.onPress &&
+    // Deep comparison for style objects would be expensive, so we use shallow comparison
+    JSON.stringify(prevProps.style) === JSON.stringify(nextProps.style) &&
+    JSON.stringify(prevProps.textStyle) === JSON.stringify(nextProps.textStyle)
+  );
+});
+
+MemoizedButton.displayName = 'Button';
+
+export default MemoizedButton;

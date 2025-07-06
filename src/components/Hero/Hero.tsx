@@ -2,6 +2,8 @@ import React from 'react';
 import { View, StyleSheet, ViewStyle } from '../../platform';
 import { ThemeDesign } from '../../themes/types';
 import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
+import { getGlassmorphicStyles, GLASSMORPHIC_COLORS } from '../../themes/utils/glassmorphic';
+import { useThemeSafe } from '../../themes/ThemeContext';
 import Typography from '../Typography/Typography';
 import Button from '../Button/Button';
 import Container from '../Container/Container';
@@ -34,7 +36,7 @@ const Hero: React.FC<HeroProps> = ({
   description,
   actions = [],
   style,
-  design = 'flat',
+  design,
   alignment = 'center',
   backgroundColor,
   backgroundImage,
@@ -43,6 +45,9 @@ const Hero: React.FC<HeroProps> = ({
   minHeight = 400,
   maxWidth = 'lg',
 }) => {
+  const themeContext = useThemeSafe();
+  const finalDesign = design || themeContext?.design || 'flat';
+  const themeMode = (themeContext?.mode || 'light') as 'light' | 'dark';
   const getTextAlign = () => {
     switch (alignment) {
       case 'left':
@@ -85,16 +90,27 @@ const Hero: React.FC<HeroProps> = ({
       } as ViewStyle);
     } else if (backgroundColor) {
       baseStyles.push({ backgroundColor });
-    } else if (design === 'neumorphic') {
+    } else if (finalDesign === 'neumorphic') {
       baseStyles.push({ backgroundColor: NEUMORPHIC_COLORS.background });
+    } else if (finalDesign === 'glassmorphic') {
+      baseStyles.push({ backgroundColor: GLASSMORPHIC_COLORS[themeMode].background });
     }
 
     // Apply design-specific styles
-    if (design === 'neumorphic') {
+    if (finalDesign === 'neumorphic') {
       baseStyles.push(
         ...getNeumorphicStyles({
           isPressed: false,
           customBackground: backgroundColor || NEUMORPHIC_COLORS.background,
+        })
+      );
+    } else if (finalDesign === 'glassmorphic') {
+      baseStyles.push(
+        getGlassmorphicStyles({
+          intensity: 'subtle',
+          blur: 'heavy',
+          theme: themeMode,
+          customBorderRadius: 16,
         })
       );
     }
@@ -135,7 +151,7 @@ const Hero: React.FC<HeroProps> = ({
             <Typography
               variant="overline"
               style={[styles.subtitle, { textAlign }]}
-              design={design}
+              design={finalDesign}
             >
               {subtitle}
             </Typography>
@@ -144,7 +160,7 @@ const Hero: React.FC<HeroProps> = ({
           <Typography
             variant="h1"
             style={[styles.title, { textAlign }]}
-            design={design}
+            design={finalDesign}
           >
             {title}
           </Typography>
@@ -153,7 +169,7 @@ const Hero: React.FC<HeroProps> = ({
             <Typography
               variant="body"
               style={[styles.description, { textAlign }]}
-              design={design}
+              design={finalDesign}
             >
               {description}
             </Typography>
@@ -166,7 +182,7 @@ const Hero: React.FC<HeroProps> = ({
                   key={index}
                   onPress={action.onPress}
                   variant={action.variant || 'primary'}
-                  design={design}
+                  design={finalDesign}
                   style={styles.actionButton}
                 >
                   {action.label}

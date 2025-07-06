@@ -21,7 +21,7 @@ const meta: Meta<typeof Accordion> = {
   argTypes: {
     design: {
       control: 'select',
-      options: ['flat', 'neumorphic', 'skeuomorphic'],
+      options: ['flat', 'neumorphic', 'skeuomorphic', 'glassmorphic'],
       defaultValue: 'flat',
       description: 'Design system variant',
     },
@@ -173,6 +173,276 @@ export const Skeuomorphic: Story = {
     expandedSection: '2',
   },
 };
+
+export const Glassmorphic: Story = {
+  args: {
+    sections: basicSections,
+    design: 'glassmorphic',
+    expandedSection: '2',
+  },
+};
+
+export const GlassmorphicFAQ: Story = {
+  args: {
+    sections: faqSections.slice(0, 3),
+    design: 'glassmorphic',
+    expandedSection: 'faq2',
+  },
+};
+
+export const GlassmorphicDarkMode: Story = {
+  args: {
+    sections: basicSections,
+    design: 'glassmorphic',
+    expandedSection: '1',
+  },
+  parameters: {
+    backgrounds: {
+      default: 'dark',
+      values: [
+        { name: 'dark', value: '#1a1a1a' },
+      ],
+    },
+  },
+};
+
+export const GlassmorphicPlayground: Story = {
+  args: {
+    sections: featureSections,
+    design: 'glassmorphic',
+    expandedSection: 'design',
+  },
+};
+
+// Enhanced Glassmorphic Story Variations (Phase 7 - BAAPUI-8)
+export const LightGlass: Story = {
+  args: {
+    sections: basicSections,
+    design: 'glassmorphic',
+    expandedSection: '2',
+  },
+  parameters: {
+    backgrounds: {
+      default: 'light',
+      values: [
+        { name: 'light', value: '#f0f0f0' },
+      ],
+    },
+  },
+};
+
+export const DarkGlass: Story = {
+  args: {
+    sections: basicSections,
+    design: 'glassmorphic',
+    expandedSection: '1',
+  },
+  parameters: {
+    backgrounds: {
+      default: 'dark',
+      values: [
+        { name: 'dark', value: '#1a1a1a' },
+      ],
+    },
+  },
+};
+
+export const ColoredGlass: Story = {
+  args: {
+    sections: [
+      {
+        id: '1',
+        title: '🔵 Blue Glass Section',
+        content: 'This section demonstrates blue-tinted glassmorphic effects.',
+      },
+      {
+        id: '2',
+        title: '🟣 Purple Glass Section',
+        content: 'This section showcases purple-tinted glassmorphic styling.',
+      },
+      {
+        id: '3',
+        title: '🟢 Green Glass Section',
+        content: 'This section features green-tinted glassmorphic design.',
+      },
+    ],
+    design: 'glassmorphic',
+    expandedSection: '2',
+    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+  },
+  parameters: {
+    backgrounds: {
+      default: 'gradient',
+      values: [
+        { name: 'gradient', value: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' },
+      ],
+    },
+  },
+};
+
+export const HighBlur: Story = {
+  args: {
+    sections: [
+      {
+        id: '1',
+        title: 'High Blur Glass Effect',
+        content: 'This accordion demonstrates maximum blur intensity for enhanced glass effects on complex backgrounds.',
+      },
+      {
+        id: '2',
+        title: 'Enhanced Visual Depth',
+        content: 'The high blur setting creates stronger visual separation and depth perception.',
+      },
+    ],
+    design: 'glassmorphic',
+    expandedSection: '1',
+  },
+  parameters: {
+    backgrounds: {
+      default: 'pattern',
+      values: [
+        { name: 'pattern', value: 'url("data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%239C92AC" fill-opacity="0.4"%3E%3Ccircle cx="30" cy="30" r="4"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")' },
+      ],
+    },
+  },
+};
+
+export const MinimalGlass: Story = {
+  args: {
+    sections: [
+      {
+        id: '1',
+        title: 'Minimal Glass',
+        content: 'Clean and subtle glass effect.',
+      },
+      {
+        id: '2',
+        title: 'Simple Design',
+        content: 'Understated glassmorphic styling.',
+      },
+    ],
+    design: 'glassmorphic',
+    expandedSection: '1',
+    backgroundColor: 'rgba(255, 255, 255, 0.05)',
+  },
+  parameters: {
+    backgrounds: {
+      default: 'minimal',
+      values: [
+        { name: 'minimal', value: '#fafafa' },
+      ],
+    },
+  },
+};
+
+export const LayeredGlass: Story = {
+  render: () => {
+    const [expandedSection, setExpandedSection] = useState('layer1');
+    
+    return (
+      <View style={{ 
+        position: 'relative',
+        padding: 40,
+        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+        borderRadius: 20,
+        minHeight: 400
+      }}>
+        <View style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: 'rgba(255, 255, 255, 0.1)',
+          borderRadius: 20,
+          backdropFilter: 'blur(10px)'
+        }} />
+        <View style={{ position: 'relative', zIndex: 10 }}>
+          <Typography variant="h6" style={{ marginBottom: 20, textAlign: 'center', color: 'white' }}>
+            Layered Glass Accordion
+          </Typography>
+          <Accordion
+            sections={[
+              {
+                id: 'layer1',
+                title: 'First Glass Layer',
+                content: 'This accordion sits on multiple glass layers creating depth and visual interest.',
+              },
+              {
+                id: 'layer2',
+                title: 'Second Glass Layer',
+                content: 'Each layer adds to the overall glassmorphic effect and visual hierarchy.',
+              },
+            ]}
+            design="glassmorphic"
+            expandedSection={expandedSection}
+            onToggle={setExpandedSection}
+          />
+        </View>
+      </View>
+    );
+  },
+};
+
+export const GlassmorphicInteractive: Story = {
+  render: () => {
+    const [expandedSection, setExpandedSection] = useState<string | null>(null);
+    const [interactionCount, setInteractionCount] = useState(0);
+    
+    const handleToggle = (sectionId: string | null) => {
+      setExpandedSection(expandedSection === sectionId ? null : sectionId);
+      setInteractionCount(prev => prev + 1);
+    };
+    
+    return (
+      <View style={{ gap: 16, padding: 20 }}>
+        <Typography variant="h6" style={{ textAlign: 'center' }}>
+          Interactive Glass Accordion
+        </Typography>
+        <Typography variant="caption" style={{ textAlign: 'center', color: '#666' }}>
+          Interactions: {interactionCount}
+        </Typography>
+        
+        <Accordion
+          sections={[
+            {
+              id: 'interactive1',
+              title: '🎯 Interactive Section 1',
+              content: `This section responds to user interactions. Current state: ${expandedSection === 'interactive1' ? 'Expanded' : 'Collapsed'}`,
+            },
+            {
+              id: 'interactive2',
+              title: '⚡ Dynamic Section 2',
+              content: `Real-time content updates based on interactions. Total clicks: ${interactionCount}`,
+            },
+            {
+              id: 'interactive3',
+              title: '🔄 Responsive Section 3',
+              content: `This content changes based on user behavior and demonstrates interactive glassmorphic design.`,
+            },
+          ]}
+          design="glassmorphic"
+          expandedSection={expandedSection}
+          onToggle={handleToggle}
+        />
+        
+        {expandedSection && (
+          <View style={{
+            padding: 12,
+            backgroundColor: 'rgba(34, 197, 94, 0.1)',
+            borderRadius: 8,
+            marginTop: 8,
+            backdropFilter: 'blur(10px)'
+          }}>
+            <Typography variant="caption" style={{ color: '#059669', textAlign: 'center' }}>
+              Currently viewing: {expandedSection}
+            </Typography>
+          </View>
+        )}
+      </View>
+    );
+   },
+ };
 
 // State Variations
 export const Collapsed: Story = {
@@ -463,6 +733,16 @@ export const AllDesigns: Story = {
           expandedSection="1"
           onToggle={() => {}}
           design="skeuomorphic"
+        />
+      </View>
+
+      <View style={{ gap: 16 }}>
+        <Typography variant="body2" style={{ fontWeight: 'bold' }}>Glassmorphic Design</Typography>
+        <Accordion
+          sections={basicSections.slice(0, 2)}
+          expandedSection="2"
+          onToggle={() => {}}
+          design="glassmorphic"
         />
       </View>
     </View>

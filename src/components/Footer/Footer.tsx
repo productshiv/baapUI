@@ -3,6 +3,8 @@ import { View, StyleSheet, ViewStyle, Pressable } from '../../platform';
 import { ThemeDesign } from '../../themes/types';
 import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
 import { getSkeuomorphicCardStyles, SKEUOMORPHIC_COLORS } from '../../themes/utils/skeuomorphic';
+import { getGlassmorphicStyles, GLASSMORPHIC_COLORS } from '../../themes/utils/glassmorphic';
+import { useThemeSafe } from '../../themes/ThemeContext';
 import Typography from '../Typography/Typography';
 import Container from '../Container/Container';
 
@@ -35,10 +37,13 @@ const Footer: React.FC<FooterProps> = ({
   logoText,
   socialLinks,
   style,
-  design = 'flat',
+  design,
   backgroundColor,
   maxWidth = 'xl',
 }) => {
+  const themeContext = useThemeSafe();
+  const finalDesign = design || themeContext?.design || 'flat';
+  const themeMode = (themeContext?.mode || 'light') as 'light' | 'dark';
   const getFooterStyles = (): ViewStyle[] => {
     const baseStyles: ViewStyle[] = [
       styles.footer,
@@ -47,26 +52,39 @@ const Footer: React.FC<FooterProps> = ({
     // Apply background
     if (backgroundColor) {
       baseStyles.push({ backgroundColor });
-    } else if (design === 'neumorphic') {
+    } else if (finalDesign === 'neumorphic') {
       baseStyles.push({ backgroundColor: NEUMORPHIC_COLORS.background });
+    } else if (finalDesign === 'glassmorphic') {
+      baseStyles.push({ backgroundColor: GLASSMORPHIC_COLORS[themeMode].background });
     } else {
       baseStyles.push({ backgroundColor: '#f8f9fa' });
     }
 
     // Apply design-specific styles
-    if (design === 'neumorphic') {
+    if (finalDesign === 'neumorphic') {
       baseStyles.push(
         ...getNeumorphicStyles({
           isPressed: false,
           customBackground: backgroundColor || NEUMORPHIC_COLORS.background,
         })
       );
-    } else if (design === 'skeuomorphic') {
+    } else if (finalDesign === 'skeuomorphic') {
       const skeuomorphicStyles = getSkeuomorphicCardStyles(false);
       baseStyles.push(skeuomorphicStyles);
       if (backgroundColor) {
         baseStyles.push({ backgroundColor });
       }
+    } else if (finalDesign === 'glassmorphic') {
+      baseStyles.push(
+        getGlassmorphicStyles({
+          intensity: 'medium',
+          blur: 'medium',
+        }),
+        {
+          borderColor: themeMode === 'dark' ? 'rgba(255, 255, 255, 0.2)' : 'rgba(0, 0, 0, 0.1)',
+          borderRadius: 8,
+        }
+      );
     }
 
     if (style) {
@@ -90,7 +108,7 @@ const Footer: React.FC<FooterProps> = ({
               <View style={styles.brandSection}>
                 {logo || (
                   logoText && (
-                    <Typography variant="h6" style={styles.logoText} design={design}>
+                    <Typography variant="h6" style={styles.logoText} design={finalDesign}>
                       {logoText}
                     </Typography>
                   )
@@ -111,7 +129,7 @@ const Footer: React.FC<FooterProps> = ({
                     <Typography
                       variant="body2"
                       style={styles.sectionTitle}
-                      design={design}
+                      design={finalDesign}
                     >
                       {section.title}
                     </Typography>
@@ -125,7 +143,7 @@ const Footer: React.FC<FooterProps> = ({
                           <Typography
                             variant="body2"
                             style={styles.linkText}
-                            design={design}
+                            design={finalDesign}
                           >
                             {link.label}
                           </Typography>
@@ -145,7 +163,7 @@ const Footer: React.FC<FooterProps> = ({
           <Typography
             variant="caption"
             style={styles.copyrightText}
-            design={design}
+            design={finalDesign}
           >
             {copyright || defaultCopyright}
           </Typography>

@@ -20,7 +20,7 @@ const meta: Meta<typeof Checkbox> = {
   argTypes: {
     design: {
       control: 'select',
-      options: ['flat', 'neumorphic', 'skeuomorphic'],
+      options: ['flat', 'neumorphic', 'skeuomorphic', 'glassmorphic'],
       defaultValue: 'flat',
     },
     checked: {
@@ -241,36 +241,7 @@ export const AllStates: Story = {
 };
 
 // All Design Systems Showcase
-export const AllDesigns: Story = {
-  render: () => (
-    <View style={{ padding: 20, gap: 16, maxWidth: 400 }}>
-      <View>
-        <Checkbox
-          label="Flat Design"
-          design="flat"
-          checked={false}
-          onChange={() => {}}
-        />
-      </View>
-      <View>
-        <Checkbox
-          label="Neumorphic Design"
-          design="neumorphic"
-          checked={false}
-          onChange={() => {}}
-        />
-      </View>
-      <View>
-        <Checkbox
-          label="Skeuomorphic Design"
-          design="skeuomorphic"
-          checked={false}
-          onChange={() => {}}
-        />
-      </View>
-    </View>
-  ),
-};
+
 
 // Checked States Showcase
 export const AllDesignsChecked: Story = {
@@ -379,4 +350,84 @@ export const InteractiveExample: Story = {
       </View>
     );
   },
+};
+
+// New Glassmorphic Stories
+export const Glassmorphic: Story = {
+  args: {
+    label: 'Glassmorphic Design Checkbox',
+    design: 'glassmorphic',
+    checked: false,
+    onChange: () => {},
+  },
+};
+
+export const GlassmorphicChecked: Story = {
+  args: {
+    label: 'Glassmorphic Checked',
+    design: 'glassmorphic',
+    checked: true,
+    onChange: () => {},
+  },
+};
+
+export const GlassmorphicDisabled: Story = {
+  args: {
+    label: 'Glassmorphic Disabled',
+    design: 'glassmorphic',
+    disabled: true,
+    checked: false,
+    onChange: () => {},
+  },
+};
+
+export const GlassmorphicCustomColors: Story = {
+  args: {
+    label: 'Custom Glassmorphic Colors',
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    textColor: '#ffffff',
+    design: 'glassmorphic',
+    checked: true,
+    onChange: () => {},
+  },
+};
+
+// Updated AllDesigns showcase
+export const AllDesigns: Story = {
+  render: () => (
+    <View style={{ padding: 20, gap: 16, maxWidth: 400 }}>
+      <View>
+        <Checkbox
+          label="Flat Design"
+          design="flat"
+          checked={false}
+          onChange={() => {}}
+        />
+      </View>
+      <View>
+        <Checkbox
+          label="Neumorphic Design"
+          design="neumorphic"
+          checked={false}
+          onChange={() => {}}
+        />
+      </View>
+      <View>
+        <Checkbox
+          label="Skeuomorphic Design"
+          design="skeuomorphic"
+          checked={false}
+          onChange={() => {}}
+        />
+      </View>
+      <View>
+        <Checkbox
+          label="Glassmorphic Design"
+          design="glassmorphic"
+          checked={false}
+          onChange={() => {}}
+        />
+      </View>
+    </View>
+  ),
 };

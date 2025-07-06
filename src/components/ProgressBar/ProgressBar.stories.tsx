@@ -236,6 +236,129 @@ export const GlassmorphicLayeredGlass: Story = {
   ),
 };
 
+// Additional Enhanced Glassmorphic Story Variations (Phase 7 - BAAPUI-8)
+export const LightGlass: Story = {
+  parameters: {
+    backgrounds: {
+      default: 'light',
+      values: [
+        { name: 'light', value: '#f0f0f0' },
+      ],
+    },
+  },
+  args: {
+    progress: 0.65,
+    design: 'glassmorphic',
+    height: 14,
+    width: 320,
+    progressColor: 'rgba(33, 150, 243, 0.6)',
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+  },
+};
+
+export const DarkGlass: Story = {
+  parameters: {
+    backgrounds: {
+      default: 'dark',
+      values: [
+        { name: 'dark', value: '#1a1a1a' },
+      ],
+    },
+  },
+  args: {
+    progress: 0.75,
+    design: 'glassmorphic',
+    height: 14,
+    width: 320,
+    progressColor: 'rgba(255, 255, 255, 0.8)',
+    backgroundColor: 'rgba(0, 0, 0, 0.2)',
+  },
+};
+
+export const HighBlur: Story = {
+  parameters: {
+    backgrounds: {
+      default: 'pattern',
+      values: [
+        { name: 'pattern', value: 'url("data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%239C92AC" fill-opacity="0.4"%3E%3Ccircle cx="30" cy="30" r="4"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")' },
+      ],
+    },
+  },
+  args: {
+    progress: 0.8,
+    design: 'glassmorphic',
+    height: 16,
+    width: 300,
+    progressColor: 'rgba(156, 39, 176, 0.9)',
+  },
+};
+
+export const GlassmorphicInteractive: Story = {
+  render: () => {
+    const [progress, setProgress] = useState(0.5);
+    const [isAnimating, setIsAnimating] = useState(false);
+    
+    const animateProgress = () => {
+      setIsAnimating(true);
+      let currentProgress = 0;
+      const interval = setInterval(() => {
+        currentProgress += 0.02;
+        setProgress(currentProgress);
+        if (currentProgress >= 1) {
+          clearInterval(interval);
+          setIsAnimating(false);
+          setTimeout(() => setProgress(0.5), 1000);
+        }
+      }, 50);
+    };
+    
+    return (
+      <View style={{ gap: 20, alignItems: 'center', minWidth: 350 }}>
+        <Typography variant="h6">Interactive Glass Progress</Typography>
+        
+        <View style={{ gap: 12, alignItems: 'center' }}>
+          <ProgressBar 
+            progress={progress} 
+            width={320} 
+            height={16} 
+            design="glassmorphic" 
+            progressColor={progress < 0.3 ? 'rgba(244, 67, 54, 0.8)' : progress < 0.7 ? 'rgba(255, 152, 0, 0.8)' : 'rgba(76, 175, 80, 0.8)'}
+          />
+          
+          <Typography variant="body2" style={{ color: '#666' }}>
+            Progress: {Math.round(progress * 100)}%
+          </Typography>
+          
+          <View style={{ flexDirection: 'row', gap: 12 }}>
+            <Button 
+              onPress={() => setProgress(Math.max(0, progress - 0.1))}
+              disabled={isAnimating || progress <= 0}
+              size="small"
+            >
+              -10%
+            </Button>
+            <Button 
+              onPress={animateProgress}
+              disabled={isAnimating}
+              variant="primary"
+              size="small"
+            >
+              {isAnimating ? 'Animating...' : 'Animate'}
+            </Button>
+            <Button 
+              onPress={() => setProgress(Math.min(1, progress + 0.1))}
+              disabled={isAnimating || progress >= 1}
+              size="small"
+            >
+              +10%
+            </Button>
+          </View>
+        </View>
+      </View>
+    );
+  },
+};
+
 // Progress Level Variations
 export const Empty: Story = {
   args: {

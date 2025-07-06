@@ -18,7 +18,7 @@ const meta: Meta<typeof List> = {
   argTypes: {
     design: {
       control: 'radio',
-      options: ['flat', 'neumorphic', 'skeuomorphic'],
+      options: ['flat', 'neumorphic', 'skeuomorphic', 'glassmorphic'],
     },
   },
 };
@@ -136,6 +136,76 @@ export const SkeuomorphicComplex: Story = {
         design="skeuomorphic"
         onItemPress={index => console.log(`Item ${index} clicked`)}
       />
+    </div>
+  ),
+};
+
+export const Glassmorphic: Story = {
+  args: {
+    items: sampleItems,
+    design: 'glassmorphic',
+  },
+};
+
+export const GlassmorphicComplex: Story = {
+  render: () => (
+    <div
+      style={{
+        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+        padding: 24,
+        borderRadius: 12,
+        width: 400,
+        minHeight: 300,
+      }}
+    >
+      <List
+        items={complexItems}
+        design="glassmorphic"
+        onItemPress={index => console.log(`Item ${index} clicked`)}
+      />
+    </div>
+  ),
+};
+
+export const GlassmorphicDark: Story = {
+  render: () => (
+    <div
+      style={{
+        background: 'linear-gradient(135deg, #2c3e50 0%, #34495e 100%)',
+        padding: 24,
+        borderRadius: 12,
+        width: 400,
+        minHeight: 300,
+      }}
+    >
+      <List
+        items={complexItems}
+        design="glassmorphic"
+        onItemPress={index => console.log(`Item ${index} clicked`)}
+      />
+    </div>
+  ),
+};
+
+export const AllDesigns: Story = {
+  render: () => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 24, padding: 24 }}>
+      <div>
+        <h3>Flat Design</h3>
+        <List items={sampleItems} design="flat" />
+      </div>
+      <div style={{ backgroundColor: '#f0f0f0', padding: 16, borderRadius: 8 }}>
+        <h3>Neumorphic Design</h3>
+        <List items={sampleItems} design="neumorphic" />
+      </div>
+      <div style={{ backgroundColor: '#e8e8e8', padding: 16, borderRadius: 8 }}>
+        <h3>Skeuomorphic Design</h3>
+        <List items={sampleItems} design="skeuomorphic" />
+      </div>
+      <div style={{ background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', padding: 16, borderRadius: 8 }}>
+        <h3 style={{ color: 'white' }}>Glassmorphic Design</h3>
+        <List items={sampleItems} design="glassmorphic" />
+      </div>
     </div>
   ),
 };

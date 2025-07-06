@@ -11,6 +11,8 @@ import Typography from '../Typography/Typography';
 import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
 import { convertShadowToStyle, convertGradientToStyle } from '../../themes/utils/skeuomorphic';
 import { SKEUOMORPHIC_COLORS, SKEUOMORPHIC_SHADOWS, SKEUOMORPHIC_GRADIENTS, SKEUOMORPHIC_BORDER_RADIUS, SKEUOMORPHIC_BORDER_WIDTHS } from '../../themes/variants/skeuomorphic';
+import { getGlassmorphicStyles, GLASSMORPHIC_COLORS } from '../../themes/utils/glassmorphic';
+import { useThemeSafe } from '../../themes/ThemeContext';
 
 interface CarouselProps {
   items: string[];
@@ -21,7 +23,7 @@ interface CarouselProps {
   activeItemStyle?: ViewStyle;
   textStyle?: TextStyle;
   activeTextStyle?: TextStyle;
-  design?: 'flat' | 'neumorphic' | 'skeuomorphic';
+  design?: 'flat' | 'neumorphic' | 'skeuomorphic' | 'glassmorphic';
   backgroundColor?: string;
   textColor?: string;
   activeTextColor?: string;
@@ -42,6 +44,7 @@ const Carousel: React.FC<CarouselProps> = ({
   activeTextColor = NEUMORPHIC_COLORS.primary,
 }) => {
   const [pressedIndex, setPressedIndex] = useState<number | null>(null);
+  const themeContext = useThemeSafe();
 
   const getWrapperStyles = (): ViewStyle[] => {
     const baseStyles: ViewStyle[] = [styles.wrapper];
@@ -67,6 +70,21 @@ const Carousel: React.FC<CarouselProps> = ({
         padding: 12,
         ...convertShadowToStyle(SKEUOMORPHIC_SHADOWS.card),
         ...convertGradientToStyle(SKEUOMORPHIC_GRADIENTS.card),
+      });
+    } else if (design === 'glassmorphic') {
+      const themeMode = themeContext?.theme?.mode || 'light';
+      const glassmorphicStyles = getGlassmorphicStyles({
+        intensity: 'medium',
+        blur: 'medium',
+        customBackground: backgroundColor,
+        customBorderRadius: 12,
+      });
+
+      baseStyles.push(glassmorphicStyles);
+      baseStyles.push({
+        backgroundColor: GLASSMORPHIC_COLORS[themeMode].surface,
+        borderColor: GLASSMORPHIC_COLORS[themeMode].border,
+        padding: 12,
       });
     }
 
@@ -101,6 +119,20 @@ const Carousel: React.FC<CarouselProps> = ({
         borderColor: isActive ? SKEUOMORPHIC_COLORS.primaryDark : SKEUOMORPHIC_COLORS.border,
         ...convertShadowToStyle(isActive ? SKEUOMORPHIC_SHADOWS.button.pressed : SKEUOMORPHIC_SHADOWS.button.default),
         ...convertGradientToStyle(isActive ? SKEUOMORPHIC_GRADIENTS.button.primary : SKEUOMORPHIC_GRADIENTS.button.secondary),
+      });
+    } else if (design === 'glassmorphic') {
+      const themeMode = themeContext?.theme?.mode || 'light';
+      const glassmorphicStyles = getGlassmorphicStyles({
+        intensity: isActive ? 'strong' : 'medium',
+        blur: isActive ? 'heavy' : 'medium',
+        customBackground: backgroundColor,
+        customBorderRadius: 8,
+      });
+
+      baseStyles.push(glassmorphicStyles);
+      baseStyles.push({
+        backgroundColor: isActive ? 'rgba(0, 122, 255, 0.3)' : GLASSMORPHIC_COLORS[themeMode].surface,
+        borderColor: isActive ? 'rgba(0, 122, 255, 0.5)' : GLASSMORPHIC_COLORS[themeMode].border,
       });
     }
 
@@ -140,6 +172,10 @@ const Carousel: React.FC<CarouselProps> = ({
       baseStyle.textShadowColor = isActive ? 'rgba(0, 0, 0, 0.3)' : 'rgba(255, 255, 255, 0.8)';
       baseStyle.textShadowOffset = { width: 0, height: 1 };
       baseStyle.textShadowRadius = 1;
+    } else if (design === 'glassmorphic') {
+      const themeMode = themeContext?.theme?.mode || 'light';
+      baseStyle.color = isActive ? '#FFFFFF' : GLASSMORPHIC_COLORS[themeMode].text;
+      baseStyle.fontWeight = isActive ? '600' : '400';
     }
 
     if (textStyle) {

@@ -20,7 +20,7 @@ const meta: Meta<typeof TextArea> = {
   argTypes: {
     design: {
       control: 'select',
-      options: ['flat', 'neumorphic', 'skeuomorphic'],
+      options: ['flat', 'neumorphic', 'skeuomorphic', 'glassmorphic'],
       defaultValue: 'flat',
     },
     placeholder: {
@@ -193,35 +193,6 @@ export const Interactive: Story = {
   render: () => <InteractiveTextAreaExample />,
 };
 
-// All Design Systems Showcase
-export const AllDesigns: Story = {
-  render: () => (
-    <View style={{ padding: 20, gap: 20, maxWidth: 500 }}>
-      <View>
-        <Text style={{ marginBottom: 8, fontWeight: 'bold' }}>Flat Design</Text>
-        <TextArea
-          placeholder="Flat design textarea"
-          design="flat"
-        />
-      </View>
-      <View>
-        <Text style={{ marginBottom: 8, fontWeight: 'bold' }}>Neumorphic Design</Text>
-        <TextArea
-          placeholder="Neumorphic design textarea"
-          design="neumorphic"
-        />
-      </View>
-      <View>
-        <Text style={{ marginBottom: 8, fontWeight: 'bold' }}>Skeuomorphic Design</Text>
-        <TextArea
-          placeholder="Skeuomorphic design textarea"
-          design="skeuomorphic"
-        />
-      </View>
-    </View>
-  ),
-};
-
 // Size Variations Showcase
 export const SizeVariations: Story = {
   render: () => (
@@ -253,6 +224,9 @@ export const SizeVariations: Story = {
     </View>
   ),
 };
+
+// All Design Systems Showcase
+
 
 // Form Example
 export const FormExample: Story = {
@@ -334,4 +308,233 @@ export const StateShowcase: Story = {
       </View>
     </View>
   ),
+};
+
+// New Glassmorphic Story
+export const Glassmorphic: Story = {
+  args: {
+    placeholder: 'Glassmorphic design textarea - translucent and modern',
+    design: 'glassmorphic',
+  },
+};
+
+// Updated AllDesigns showcase
+export const AllDesigns: Story = {
+  render: () => (
+    <View style={{ padding: 20, gap: 20, maxWidth: 500 }}>
+      <View>
+        <Text style={{ marginBottom: 8, fontWeight: 'bold' }}>Flat Design</Text>
+        <TextArea
+          placeholder="Flat design textarea"
+          design="flat"
+        />
+      </View>
+      <View>
+        <Text style={{ marginBottom: 8, fontWeight: 'bold' }}>Neumorphic Design</Text>
+        <TextArea
+          placeholder="Neumorphic design textarea"
+          design="neumorphic"
+        />
+      </View>
+      <View>
+        <Text style={{ marginBottom: 8, fontWeight: 'bold' }}>Skeuomorphic Design</Text>
+        <TextArea
+          placeholder="Skeuomorphic design textarea"
+          design="skeuomorphic"
+        />
+      </View>
+      <View>
+        <Text style={{ marginBottom: 8, fontWeight: 'bold' }}>Glassmorphic Design</Text>
+        <TextArea
+          placeholder="Glassmorphic design textarea"
+          design="glassmorphic"
+        />
+      </View>
+    </View>
+  ),
+};
+
+// New Glassmorphic-specific stories
+export const GlassmorphicWithValue: Story = {
+  args: {
+    value: 'This is a glassmorphic textarea with some content to show the translucent glass effect.',
+    design: 'glassmorphic',
+  },
+};
+
+export const GlassmorphicDisabled: Story = {
+  args: {
+    value: 'This glassmorphic textarea is disabled',
+    disabled: true,
+    design: 'glassmorphic',
+  },
+};
+
+export const GlassmorphicCustomColors: Story = {
+  args: {
+    placeholder: 'Custom glassmorphic colors',
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    textColor: '#ffffff',
+    design: 'glassmorphic',
+  },
+};
+
+// Enhanced Glassmorphic Story Variations (Phase 7 - BAAPUI-8)
+export const Playground: Story = {
+  args: {
+    placeholder: 'Playground textarea with interactive controls...',
+    design: 'glassmorphic',
+    style: { height: 120 },
+  },
+};
+
+export const LightGlass: Story = {
+  args: {
+    placeholder: 'Light glass effect textarea...',
+    design: 'glassmorphic',
+    style: { height: 100 },
+  },
+  parameters: {
+    backgrounds: {
+      default: 'light',
+      values: [
+        { name: 'light', value: '#f0f0f0' },
+      ],
+    },
+  },
+};
+
+export const DarkGlass: Story = {
+  args: {
+    placeholder: 'Dark glass effect textarea...',
+    design: 'glassmorphic',
+    style: { height: 100 },
+  },
+  parameters: {
+    backgrounds: {
+      default: 'dark',
+      values: [
+        { name: 'dark', value: '#1a1a1a' },
+      ],
+    },
+  },
+};
+
+export const ColoredGlass: Story = {
+  args: {
+    placeholder: 'Colored glass effect textarea...',
+    design: 'glassmorphic',
+    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+    style: { height: 100 },
+  },
+  parameters: {
+    backgrounds: {
+      default: 'gradient',
+      values: [
+        { name: 'gradient', value: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' },
+      ],
+    },
+  },
+};
+
+export const HighBlur: Story = {
+  args: {
+    placeholder: 'High blur intensity textarea...',
+    design: 'glassmorphic',
+    style: { height: 100 },
+  },
+  parameters: {
+    backgrounds: {
+      default: 'pattern',
+      values: [
+        { name: 'pattern', value: 'url("data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%239C92AC" fill-opacity="0.4"%3E%3Ccircle cx="30" cy="30" r="4"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")' },
+      ],
+    },
+  },
+};
+
+export const MinimalGlass: Story = {
+  args: {
+    placeholder: 'Minimal glass effect...',
+    design: 'glassmorphic',
+    style: { height: 80 },
+  },
+  parameters: {
+    backgrounds: {
+      default: 'minimal',
+      values: [
+        { name: 'minimal', value: '#fafafa' },
+      ],
+    },
+  },
+};
+
+export const LayeredGlass: Story = {
+  render: () => (
+    <View style={{ 
+      padding: 40, 
+      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+      borderRadius: 20,
+      position: 'relative'
+    }}>
+      <View style={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        background: 'rgba(255, 255, 255, 0.1)',
+        borderRadius: 20,
+        backdropFilter: 'blur(10px)'
+      }} />
+      <TextArea
+        placeholder="Layered glass effect textarea..."
+        design="glassmorphic"
+        style={{ height: 120 }}
+      />
+    </View>
+  ),
+};
+
+export const GlassmorphicInteractive: Story = {
+  render: () => {
+    const [text, setText] = useState('');
+    const maxLength = 150;
+    
+    return (
+      <View style={{ padding: 20, maxWidth: 400, gap: 12 }}>
+        <TextArea
+          value={text}
+          onChange={(e: any) => setText(e.target.value)}
+          placeholder="Interactive glassmorphic textarea..."
+          design="glassmorphic"
+          maxLength={maxLength}
+          style={{ height: 120 }}
+        />
+        <View style={{ 
+          padding: 8, 
+          backgroundColor: 'rgba(59, 130, 246, 0.1)', 
+          borderRadius: 6,
+          backdropFilter: 'blur(10px)',
+          alignItems: 'flex-end'
+        }}>
+          <Text style={{ fontSize: 12, color: '#666' }}>
+            {text.length}/{maxLength} characters
+          </Text>
+        </View>
+        {text.length > 0 && (
+          <View style={{ 
+            padding: 8, 
+            backgroundColor: 'rgba(34, 197, 94, 0.1)', 
+            borderRadius: 6,
+            backdropFilter: 'blur(10px)'
+          }}>
+            <Text style={{ fontSize: 12, color: '#059669' }}>
+              Preview: {text.substring(0, 50)}{text.length > 50 ? '...' : ''}
+            </Text>
+          </View>
+        )}
+      </View>
+    );
+  },
 };

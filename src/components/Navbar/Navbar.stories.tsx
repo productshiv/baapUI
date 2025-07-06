@@ -13,7 +13,7 @@ const meta: Meta<typeof Navbar> = {
   argTypes: {
     design: {
       control: { type: 'select' },
-      options: ['flat', 'neumorphic', 'skeuomorphic'],
+      options: ['flat', 'neumorphic', 'skeuomorphic', 'glassmorphic'],
     },
     position: {
       control: { type: 'select' },
@@ -106,4 +106,83 @@ export const WithCustomActions: Story = {
     shadow: true,
     backgroundColor: '#f8f9fa',
   },
+};
+
+export const Glassmorphic: Story = {
+  args: {
+    logoText: 'BaapUI',
+    items: sampleNavItems,
+    actions: (
+      <>
+        <Button variant="text" size="small" design="glassmorphic">Sign In</Button>
+        <Button variant="primary" size="small" design="glassmorphic">Get Started</Button>
+      </>
+    ),
+    design: 'glassmorphic',
+    position: 'static',
+    shadow: true,
+  },
+};
+
+export const GlassmorphicDark: Story = {
+  args: {
+    logoText: 'BaapUI',
+    items: sampleNavItems,
+    actions: (
+      <>
+        <Button variant="text" size="small" design="glassmorphic">Sign In</Button>
+        <Button variant="primary" size="small" design="glassmorphic">Get Started</Button>
+      </>
+    ),
+    design: 'glassmorphic',
+    position: 'static',
+    shadow: true,
+  },
+  parameters: {
+    backgrounds: {
+      default: 'dark',
+      values: [
+        { name: 'dark', value: '#1a1a1a' },
+      ],
+    },
+  },
+};
+
+export const AllDesigns: Story = {
+  render: () => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+      <Navbar
+        logoText="Flat Design"
+        items={sampleNavItems}
+        actions={sampleActions}
+        design="flat"
+        position="static"
+        shadow={true}
+      />
+      <Navbar
+        logoText="Neumorphic Design"
+        items={sampleNavItems}
+        actions={sampleActions}
+        design="neumorphic"
+        position="static"
+        shadow={true}
+      />
+      <Navbar
+        logoText="Skeuomorphic Design"
+        items={sampleNavItems}
+        actions={sampleActions}
+        design="skeuomorphic"
+        position="static"
+        shadow={true}
+      />
+      <Navbar
+        logoText="Glassmorphic Design"
+        items={sampleNavItems}
+        actions={sampleActions}
+        design="glassmorphic"
+        position="static"
+        shadow={true}
+      />
+    </div>
+  ),
 };

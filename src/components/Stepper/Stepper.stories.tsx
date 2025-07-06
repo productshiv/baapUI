@@ -22,7 +22,7 @@ const meta: Meta<typeof Stepper> = {
   argTypes: {
     design: {
       control: 'select',
-      options: ['flat', 'neumorphic', 'skeuomorphic'],
+      options: ['flat', 'neumorphic', 'skeuomorphic', 'glassmorphic'],
       defaultValue: 'flat',
       description: 'Design system variant',
     },
@@ -102,6 +102,30 @@ export const Skeuomorphic: Story = {
     value: 5,
     design: 'skeuomorphic',
     onValueChange: () => {},
+  },
+};
+
+export const Glassmorphic: Story = {
+  args: {
+    value: 8,
+    design: 'glassmorphic',
+    onValueChange: () => {},
+  },
+};
+
+export const GlassmorphicDark: Story = {
+  args: {
+    value: 6,
+    design: 'glassmorphic',
+    onValueChange: () => {},
+  },
+  parameters: {
+    backgrounds: {
+      default: 'dark',
+      values: [
+        { name: 'dark', value: '#1a1a1a' },
+      ],
+    },
   },
 };
 
@@ -462,6 +486,17 @@ export const AllDesigns: Story = {
             minimumValue={0}
             maximumValue={10}
             design="skeuomorphic"
+          />
+        </View>
+        <View style={{ gap: 8 }}>
+          <Typography variant="body2" style={{ fontWeight: 'bold' }}>Glassmorphic Design</Typography>
+          <Stepper
+            value={8}
+            onValueChange={() => {}}
+            step={1}
+            minimumValue={0}
+            maximumValue={10}
+            design="glassmorphic"
           />
         </View>
       </View>

@@ -3,6 +3,8 @@ import { View, StyleSheet, ViewStyle, Pressable, Text } from '../../platform';
 import { ThemeDesign } from '../../themes/types';
 import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
 import { getSkeuomorphicCardStyles, SKEUOMORPHIC_COLORS } from '../../themes/utils/skeuomorphic';
+import { getGlassmorphicStyles, GLASSMORPHIC_COLORS } from '../../themes/utils/glassmorphic';
+import { useThemeSafe } from '../../themes/ThemeContext';
 import Typography from '../Typography/Typography';
 import Button from '../Button/Button';
 import Container from '../Container/Container';
@@ -39,6 +41,9 @@ const Navbar: React.FC<NavbarProps> = ({
   maxWidth = 'xl',
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const themeContext = useThemeSafe();
+  const activeDesign = design || themeContext?.design || 'flat';
+  const themeMode = themeContext?.mode || 'light';
 
   const getNavbarStyles = (): ViewStyle[] => {
     const baseStyles: ViewStyle[] = [
@@ -51,26 +56,39 @@ const Navbar: React.FC<NavbarProps> = ({
     // Apply background
     if (backgroundColor) {
       baseStyles.push({ backgroundColor });
-    } else if (design === 'neumorphic') {
+    } else if (activeDesign === 'neumorphic') {
       baseStyles.push({ backgroundColor: NEUMORPHIC_COLORS.background });
+    } else if (activeDesign === 'glassmorphic') {
+      // Glassmorphic background is handled in design-specific styles
     } else {
       baseStyles.push({ backgroundColor: '#ffffff' });
     }
 
     // Apply design-specific styles
-    if (design === 'neumorphic') {
+    if (activeDesign === 'neumorphic') {
       baseStyles.push(
         ...getNeumorphicStyles({
           isPressed: false,
           customBackground: backgroundColor || NEUMORPHIC_COLORS.background,
         })
       );
-    } else if (design === 'skeuomorphic') {
+    } else if (activeDesign === 'skeuomorphic') {
       const skeuomorphicStyles = getSkeuomorphicCardStyles(false);
       baseStyles.push(skeuomorphicStyles);
       if (backgroundColor) {
         baseStyles.push({ backgroundColor });
       }
+    } else if (activeDesign === 'glassmorphic') {
+      const glassmorphicStyles = getGlassmorphicStyles({
+        intensity: 'medium',
+        blur: 'medium',
+        theme: themeMode,
+      });
+      baseStyles.push(glassmorphicStyles);
+      baseStyles.push({
+        borderBottomWidth: 1,
+        borderBottomColor: themeMode === 'dark' ? 'rgba(255, 255, 255, 0.2)' : 'rgba(0, 0, 0, 0.1)',
+      });
     }
 
     if (style) {

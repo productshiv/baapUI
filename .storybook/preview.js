@@ -1,3 +1,6 @@
+import React from 'react';
+import { ThemeProvider } from '../src/themes/ThemeContext';
+
 const preview = {
   parameters: {
     controls: {
@@ -20,6 +23,14 @@ const preview = {
       },
     },
   },
+
+  decorators: [
+    (Story) => (
+      <ThemeProvider initialDesign="flat" initialMode="light">
+        <Story />
+      </ThemeProvider>
+    ),
+  ],
 
   tags: ['autodocs']
 };

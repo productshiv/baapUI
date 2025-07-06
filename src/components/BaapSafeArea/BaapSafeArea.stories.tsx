@@ -16,7 +16,7 @@ const meta: Meta<typeof BaapSafeArea> = {
   argTypes: {
     design: {
       control: 'select',
-      options: ['flat', 'neumorphic'],
+      options: ['flat', 'neumorphic', 'glassmorphic'],
       defaultValue: 'flat',
       description: 'Design system variant',
     },
@@ -105,6 +105,28 @@ export const Neumorphic: Story = {
       <SampleContent
         title="Neumorphic Design Safe Area"
         description="Soft, subtle shadows create depth and dimension in the neumorphic style."
+      />
+    </BaapSafeArea>
+  ),
+};
+
+export const Glassmorphic: Story = {
+  render: () => (
+    <BaapSafeArea design="glassmorphic" style={{ flex: 1 }}>
+      <SampleContent
+        title="Glassmorphic Design Safe Area"
+        description="Modern glass effect with beautiful transparency and blur for a contemporary look."
+      />
+    </BaapSafeArea>
+  ),
+};
+
+export const GlassmorphicDark: Story = {
+  render: () => (
+    <BaapSafeArea design="glassmorphic" backgroundColor="#1a1a1a" style={{ flex: 1 }}>
+      <SampleContent
+        title="Dark Glassmorphic Safe Area"
+        description="Glassmorphic design works beautifully in dark themes too."
       />
     </BaapSafeArea>
   ),
@@ -359,6 +381,18 @@ export const AllDesigns: Story = {
           <SampleContent
             title="Neumorphic Design"
             description="Soft shadows and highlights create subtle depth and dimension."
+          />
+        </BaapSafeArea>
+      </View>
+      
+      <View style={{ flex: 1 }}>
+        <Typography variant="h6" style={{ padding: 16, backgroundColor: '#f8f9fa' }}>
+          Glassmorphic Design
+        </Typography>
+        <BaapSafeArea design="glassmorphic" style={{ flex: 1 }}>
+          <SampleContent
+            title="Glassmorphic Design"
+            description="Modern glass effect with beautiful transparency and blur."
           />
         </BaapSafeArea>
       </View>

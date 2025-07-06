@@ -14,7 +14,7 @@ const meta: Meta<typeof Pagination> = {
   argTypes: {
     design: {
       control: 'radio',
-      options: ['flat', 'neumorphic', 'skeuomorphic'],
+      options: ['flat', 'neumorphic', 'skeuomorphic', 'glassmorphic'],
     },
   },
 };
@@ -73,6 +73,27 @@ export const SkeuomorphicLastPage: Story = {
     currentPage: 10,
     design: 'skeuomorphic',
     onPageChange: () => {}
+  },
+};
+
+export const Glassmorphic: Story = {
+  args: {
+    totalPages: 5,
+    currentPage: 3,
+    design: 'glassmorphic',
+    onPageChange: () => {}
+  },
+};
+
+export const GlassmorphicDark: Story = {
+  args: {
+    totalPages: 5,
+    currentPage: 3,
+    design: 'glassmorphic',
+    onPageChange: () => {}
+  },
+  parameters: {
+    backgrounds: { default: 'dark' },
   },
 };
 
@@ -138,6 +159,32 @@ export const States: Story = {
       <View>
         <Typography variant="caption">Last page</Typography>
         <Pagination totalPages={5} currentPage={5} onPageChange={() => {}} />
+      </View>
+    </View>
+  ),
+};
+
+export const AllDesigns: Story = {
+  render: () => (
+    <View style={{ gap: 30, padding: 20 }}>
+      <View>
+        <Typography variant="h6" style={{ marginBottom: 10 }}>Flat Design</Typography>
+        <Pagination totalPages={5} currentPage={3} design="flat" onPageChange={() => {}} />
+      </View>
+
+      <View>
+        <Typography variant="h6" style={{ marginBottom: 10 }}>Neumorphic Design</Typography>
+        <Pagination totalPages={5} currentPage={3} design="neumorphic" onPageChange={() => {}} />
+      </View>
+
+      <View>
+        <Typography variant="h6" style={{ marginBottom: 10 }}>Skeuomorphic Design</Typography>
+        <Pagination totalPages={5} currentPage={3} design="skeuomorphic" onPageChange={() => {}} />
+      </View>
+
+      <View>
+        <Typography variant="h6" style={{ marginBottom: 10 }}>Glassmorphic Design</Typography>
+        <Pagination totalPages={5} currentPage={3} design="glassmorphic" onPageChange={() => {}} />
       </View>
     </View>
   ),

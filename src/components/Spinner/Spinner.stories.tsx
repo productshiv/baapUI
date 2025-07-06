@@ -231,6 +231,144 @@ export const GlassmorphicDarkMode: Story = {
   ),
 };
 
+export const Playground: Story = {
+  args: {
+    size: 'large',
+    variant: 'primary',
+    design: 'glassmorphic',
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    label: 'Custom Loading...',
+  },
+  render: (args) => (
+    <div
+      style={{
+        background: 'linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 100%)',
+        padding: 32,
+        borderRadius: 16,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
+      <Spinner {...args} />
+    </div>
+  ),
+};
+
+export const LightGlass: Story = {
+  render: () => (
+    <div
+      style={{
+        background: 'linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)',
+        padding: 32,
+        borderRadius: 16,
+        display: 'flex',
+        gap: 24,
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
+      <Spinner
+        size="medium"
+        design="glassmorphic"
+        backgroundColor="rgba(255, 255, 255, 0.3)"
+        label="Light Glass"
+      />
+      <Spinner
+        size="medium"
+        design="glassmorphic"
+        backgroundColor="rgba(255, 255, 255, 0.4)"
+        variant="success"
+        label="Success"
+      />
+      <Spinner
+        size="medium"
+        design="glassmorphic"
+        backgroundColor="rgba(255, 255, 255, 0.5)"
+        variant="info"
+        label="Info"
+      />
+    </div>
+  ),
+};
+
+export const DarkGlass: Story = {
+  render: () => (
+    <div
+      style={{
+        background: 'linear-gradient(135deg, #2c3e50 0%, #34495e 100%)',
+        padding: 32,
+        borderRadius: 16,
+        display: 'flex',
+        gap: 24,
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
+      <Spinner
+        size="medium"
+        design="glassmorphic"
+        backgroundColor="rgba(0, 0, 0, 0.3)"
+        label="Dark Glass"
+      />
+      <Spinner
+        size="medium"
+        design="glassmorphic"
+        backgroundColor="rgba(0, 0, 0, 0.4)"
+        variant="warning"
+        label="Warning"
+      />
+      <Spinner
+        size="medium"
+        design="glassmorphic"
+        backgroundColor="rgba(0, 0, 0, 0.5)"
+        variant="danger"
+        label="Danger"
+      />
+    </div>
+  ),
+};
+
+export const HighBlur: Story = {
+  render: () => (
+    <div
+      style={{
+        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+        padding: 32,
+        borderRadius: 16,
+        display: 'flex',
+        gap: 24,
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
+      <Spinner
+        size="medium"
+        design="glassmorphic"
+        backgroundColor="rgba(255, 255, 255, 0.2)"
+        label="High Blur"
+        style={{ backdropFilter: 'blur(20px)' }}
+      />
+      <Spinner
+        size="medium"
+        design="glassmorphic"
+        backgroundColor="rgba(255, 255, 255, 0.25)"
+        variant="success"
+        label="Ultra Blur"
+        style={{ backdropFilter: 'blur(30px)' }}
+      />
+      <Spinner
+        size="medium"
+        design="glassmorphic"
+        backgroundColor="rgba(255, 255, 255, 0.3)"
+        variant="info"
+        label="Max Blur"
+        style={{ backdropFilter: 'blur(40px)' }}
+      />
+    </div>
+  ),
+};
+
 export const GlassmorphicPlayground: Story = {
   args: {
     size: 'large',

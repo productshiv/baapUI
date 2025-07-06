@@ -3,11 +3,13 @@ import { View, Text, StyleSheet, ViewStyle, TextStyle, TouchableOpacity } from '
 import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
 import { convertShadowToStyle, convertGradientToStyle } from '../../themes/utils/skeuomorphic';
 import { SKEUOMORPHIC_COLORS, SKEUOMORPHIC_SHADOWS, SKEUOMORPHIC_GRADIENTS, SKEUOMORPHIC_BORDER_RADIUS, SKEUOMORPHIC_BORDER_WIDTHS } from '../../themes/variants/skeuomorphic';
+import { getGlassmorphicStyles, GLASSMORPHIC_COLORS } from '../../themes/utils/glassmorphic';
+import { useThemeSafe } from '../../themes/ThemeContext';
 
 interface ListItemProps {
   children: React.ReactNode;
   style?: ViewStyle;
-  design?: 'flat' | 'neumorphic' | 'skeuomorphic';
+  design?: 'flat' | 'neumorphic' | 'skeuomorphic' | 'glassmorphic';
   backgroundColor?: string;
   onPress?: () => void;
   isPressed?: boolean;
@@ -18,7 +20,7 @@ interface ListProps {
   style?: ViewStyle;
   itemStyle?: ViewStyle;
   containerStyle?: ViewStyle;
-  design?: 'flat' | 'neumorphic' | 'skeuomorphic';
+  design?: 'flat' | 'neumorphic' | 'skeuomorphic' | 'glassmorphic';
   backgroundColor?: string;
   onItemPress?: (index: number) => void;
 }
@@ -26,30 +28,38 @@ interface ListProps {
 export const ListItem: React.FC<ListItemProps> = ({
   children,
   style,
-  design = 'flat',
-  backgroundColor = NEUMORPHIC_COLORS.background,
+  design,
+  backgroundColor,
   onPress,
   isPressed = false,
 }) => {
   const [isPressedState, setIsPressedState] = useState(false);
+  const themeContext = useThemeSafe();
+  const contextDesign = themeContext?.design;
+  const finalDesign = design || (contextDesign && ['flat', 'neumorphic', 'skeuomorphic', 'glassmorphic'].includes(contextDesign) ? contextDesign as 'flat' | 'neumorphic' | 'skeuomorphic' | 'glassmorphic' : 'flat');
+  const themeMode = (themeContext?.mode || 'light') as 'light' | 'dark';
+  const finalBackgroundColor = backgroundColor || 
+    (finalDesign === 'neumorphic' ? NEUMORPHIC_COLORS.background :
+     finalDesign === 'glassmorphic' ? GLASSMORPHIC_COLORS[themeMode].background :
+     NEUMORPHIC_COLORS.background);
 
   const getItemStyles = (): ViewStyle[] => {
     const baseStyles: ViewStyle[] = [styles.listItem];
 
-    if (design === 'neumorphic') {
+    if (finalDesign === 'neumorphic') {
       const neumorphicStyles = getNeumorphicStyles({
         isPressed: isPressed || isPressedState,
-        customBackground: backgroundColor,
+        customBackground: finalBackgroundColor,
         customBorderRadius: 8,
       });
 
       baseStyles.push(...neumorphicStyles);
       baseStyles.push({
-        backgroundColor,
+        backgroundColor: finalBackgroundColor,
         marginVertical: 8,
         padding: 16,
       });
-    } else if (design === 'skeuomorphic') {
+    } else if (finalDesign === 'skeuomorphic') {
       baseStyles.push({
         backgroundColor: isPressed || isPressedState ? SKEUOMORPHIC_COLORS.surface : SKEUOMORPHIC_COLORS.background,
         borderRadius: SKEUOMORPHIC_BORDER_RADIUS.md,
@@ -59,6 +69,20 @@ export const ListItem: React.FC<ListItemProps> = ({
         padding: 16,
         ...convertShadowToStyle(isPressed || isPressedState ? SKEUOMORPHIC_SHADOWS.button.pressed : SKEUOMORPHIC_SHADOWS.card),
         ...convertGradientToStyle(SKEUOMORPHIC_GRADIENTS.card),
+      });
+    } else if (finalDesign === 'glassmorphic') {
+      const glassmorphicStyles = getGlassmorphicStyles({
+        intensity: 'subtle',
+        blur: 'light',
+        theme: themeMode,
+        customBorderRadius: 8,
+      });
+
+      baseStyles.push(glassmorphicStyles);
+      baseStyles.push({
+        backgroundColor: finalBackgroundColor,
+        marginVertical: 8,
+        padding: 16,
       });
     }
 
@@ -91,28 +115,36 @@ const List: React.FC<ListProps> = ({
   style,
   itemStyle,
   containerStyle,
-  design = 'flat',
-  backgroundColor = NEUMORPHIC_COLORS.background,
+  design,
+  backgroundColor,
   onItemPress,
 }) => {
   const [pressedIndex, setPressedIndex] = useState<number | null>(null);
+  const themeContext = useThemeSafe();
+  const contextDesign = themeContext?.design;
+  const finalDesign = design || (contextDesign && ['flat', 'neumorphic', 'skeuomorphic', 'glassmorphic'].includes(contextDesign) ? contextDesign as 'flat' | 'neumorphic' | 'skeuomorphic' | 'glassmorphic' : 'flat');
+  const themeMode = (themeContext?.mode || 'light') as 'light' | 'dark';
+  const finalBackgroundColor = backgroundColor || 
+    (finalDesign === 'neumorphic' ? NEUMORPHIC_COLORS.background :
+     finalDesign === 'glassmorphic' ? GLASSMORPHIC_COLORS[themeMode].background :
+     NEUMORPHIC_COLORS.background);
 
   const getContainerStyles = (): ViewStyle[] => {
     const baseStyles: ViewStyle[] = [styles.container];
 
-    if (design === 'neumorphic') {
+    if (finalDesign === 'neumorphic') {
       const neumorphicStyles = getNeumorphicStyles({
         isPressed: false,
-        customBackground: backgroundColor,
+        customBackground: finalBackgroundColor,
         customBorderRadius: 12,
       });
 
       baseStyles.push(...neumorphicStyles);
       baseStyles.push({
-        backgroundColor,
+        backgroundColor: finalBackgroundColor,
         padding: 12,
       });
-    } else if (design === 'skeuomorphic') {
+    } else if (finalDesign === 'skeuomorphic') {
       baseStyles.push({
         backgroundColor: SKEUOMORPHIC_COLORS.surface,
         borderRadius: SKEUOMORPHIC_BORDER_RADIUS.lg,
@@ -121,6 +153,19 @@ const List: React.FC<ListProps> = ({
         padding: 12,
         ...convertShadowToStyle(SKEUOMORPHIC_SHADOWS.card),
         ...convertGradientToStyle(SKEUOMORPHIC_GRADIENTS.surface),
+      });
+    } else if (finalDesign === 'glassmorphic') {
+      const glassmorphicStyles = getGlassmorphicStyles({
+        intensity: 'medium',
+        blur: 'medium',
+        theme: themeMode,
+        customBorderRadius: 12,
+      });
+
+      baseStyles.push(glassmorphicStyles);
+      baseStyles.push({
+        backgroundColor: finalBackgroundColor,
+        padding: 12,
       });
     }
 
@@ -143,8 +188,8 @@ const List: React.FC<ListProps> = ({
         <ListItem
           key={index}
           style={itemStyle}
-          design={design}
-          backgroundColor={backgroundColor}
+          design={finalDesign}
+          backgroundColor={finalBackgroundColor}
           onPress={onItemPress ? () => handleItemPress(index) : undefined}
           isPressed={pressedIndex === index}
         >

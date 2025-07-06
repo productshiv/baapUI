@@ -3,6 +3,8 @@ import { View, Text, TouchableOpacity, StyleSheet, ViewStyle, TextStyle } from '
 import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
 import { convertShadowToStyle, convertGradientToStyle } from '../../themes/utils/skeuomorphic';
 import { SKEUOMORPHIC_COLORS, SKEUOMORPHIC_SHADOWS, SKEUOMORPHIC_GRADIENTS, SKEUOMORPHIC_BORDER_RADIUS, SKEUOMORPHIC_BORDER_WIDTHS } from '../../themes/variants/skeuomorphic';
+import { getGlassmorphicStyles, GLASSMORPHIC_COLORS } from '../../themes/utils/glassmorphic';
+import { useThemeSafe } from '../../themes/ThemeContext';
 
 interface Tab {
   id: string;
@@ -14,7 +16,7 @@ interface TabsProps {
   selectedTab: string;
   onSelect: (id: string) => void;
   style?: ViewStyle;
-  design?: 'flat' | 'neumorphic' | 'skeuomorphic';
+  design?: 'flat' | 'neumorphic' | 'skeuomorphic' | 'glassmorphic';
   backgroundColor?: string;
   textColor?: string;
 }
@@ -29,11 +31,14 @@ const Tabs: React.FC<TabsProps> = ({
   textColor = NEUMORPHIC_COLORS.text,
 }) => {
   const [pressedTabId, setPressedTabId] = useState<string | null>(null);
+  const themeContext = useThemeSafe();
+  const activeDesign = design || themeContext?.design || 'flat';
+  const themeMode = themeContext?.mode || 'light';
 
   const getContainerStyles = (): ViewStyle[] => {
     const baseStyles: ViewStyle[] = [styles.container];
 
-    if (design === 'neumorphic') {
+    if (activeDesign === 'neumorphic') {
       const neumorphicStyles = getNeumorphicStyles({
         isPressed: false,
         customBackground: backgroundColor,
@@ -45,7 +50,7 @@ const Tabs: React.FC<TabsProps> = ({
         backgroundColor,
         padding: 8,
       });
-    } else if (design === 'skeuomorphic') {
+    } else if (activeDesign === 'skeuomorphic') {
       const skeuomorphicStyle: ViewStyle = {
         backgroundColor: SKEUOMORPHIC_COLORS.background,
         padding: 12,
@@ -56,6 +61,19 @@ const Tabs: React.FC<TabsProps> = ({
         ...convertShadowToStyle(SKEUOMORPHIC_SHADOWS.card),
       };
       baseStyles.push(skeuomorphicStyle);
+    } else if (activeDesign === 'glassmorphic') {
+      const glassmorphicStyles = getGlassmorphicStyles({
+        intensity: 'medium',
+        blur: 'medium',
+        theme: themeMode,
+      });
+      baseStyles.push(glassmorphicStyles);
+      baseStyles.push({
+        padding: 8,
+        borderRadius: 12,
+        borderWidth: 1,
+        borderColor: themeMode === 'dark' ? 'rgba(255, 255, 255, 0.2)' : 'rgba(0, 0, 0, 0.1)',
+      });
     }
 
     if (style) {
@@ -70,7 +88,7 @@ const Tabs: React.FC<TabsProps> = ({
     const isSelected = selectedTab === tabId;
     const isPressed = pressedTabId === tabId;
 
-    if (design === 'neumorphic') {
+    if (activeDesign === 'neumorphic') {
       const neumorphicStyles = getNeumorphicStyles({
         isPressed: isPressed || isSelected,
         customBackground: backgroundColor,
@@ -83,7 +101,7 @@ const Tabs: React.FC<TabsProps> = ({
         marginHorizontal: 8,
         padding: 12,
       });
-    } else if (design === 'skeuomorphic') {
+    } else if (activeDesign === 'skeuomorphic') {
       const skeuomorphicStyle: ViewStyle = {
         marginHorizontal: 6,
         padding: 12,
@@ -95,6 +113,22 @@ const Tabs: React.FC<TabsProps> = ({
         ...convertShadowToStyle(isPressed || isSelected ? SKEUOMORPHIC_SHADOWS.button.pressed : SKEUOMORPHIC_SHADOWS.button.default),
       };
       baseStyles.push(skeuomorphicStyle);
+    } else if (activeDesign === 'glassmorphic') {
+      const glassmorphicStyles = getGlassmorphicStyles({
+        intensity: isPressed || isSelected ? 'strong' : 'medium',
+        blur: 'medium',
+        theme: themeMode,
+      });
+      baseStyles.push(glassmorphicStyles);
+      baseStyles.push({
+        marginHorizontal: 6,
+        padding: 12,
+        borderRadius: 8,
+        borderWidth: 1,
+        borderColor: isSelected 
+          ? (themeMode === 'dark' ? 'rgba(255, 255, 255, 0.4)' : 'rgba(0, 0, 0, 0.2)')
+          : (themeMode === 'dark' ? 'rgba(255, 255, 255, 0.2)' : 'rgba(0, 0, 0, 0.1)'),
+      });
     } else if (isSelected) {
       baseStyles.push(styles.selectedTab);
     }
@@ -108,7 +142,7 @@ const Tabs: React.FC<TabsProps> = ({
     };
     const isSelected = selectedTab === tabId;
 
-    if (design === 'neumorphic') {
+    if (activeDesign === 'neumorphic') {
       Object.assign(baseStyles, {
         color: textColor,
         fontSize: 14,
@@ -117,7 +151,7 @@ const Tabs: React.FC<TabsProps> = ({
         textShadowOffset: { width: 1, height: 1 },
         textShadowRadius: 1,
       });
-    } else if (design === 'skeuomorphic') {
+    } else if (activeDesign === 'skeuomorphic') {
       Object.assign(baseStyles, {
         color: isSelected ? SKEUOMORPHIC_COLORS.onPrimary : SKEUOMORPHIC_COLORS.onSurface,
         fontSize: 14,
@@ -125,6 +159,16 @@ const Tabs: React.FC<TabsProps> = ({
         textShadowColor: SKEUOMORPHIC_COLORS.shadowMedium,
         textShadowOffset: { width: 0, height: 1 },
         textShadowRadius: 1,
+      });
+    } else if (activeDesign === 'glassmorphic') {
+      const glassmorphicColors = GLASSMORPHIC_COLORS[themeMode];
+      Object.assign(baseStyles, {
+        color: textColor || glassmorphicColors.text,
+        fontSize: 14,
+        fontWeight: isSelected ? '700' : '600',
+        textShadowColor: themeMode === 'dark' ? 'rgba(255, 255, 255, 0.3)' : 'rgba(0, 0, 0, 0.3)',
+        textShadowOffset: { width: 0, height: 1 },
+        textShadowRadius: 2,
       });
     }
 

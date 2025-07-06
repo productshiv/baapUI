@@ -187,6 +187,242 @@ export const GlassmorphicPlayground: Story = {
   },
 };
 
+// Enhanced Glassmorphic Story Variations (Phase 7 - BAAPUI-8)
+export const LightGlass: Story = {
+  args: {
+    visible: true,
+    design: 'glassmorphic',
+    children: (
+      <View>
+        <Typography variant="h6">Light Glass Modal</Typography>
+        <Typography style={{ marginVertical: 20 }}>
+          This modal showcases light glass effects with subtle transparency.
+        </Typography>
+        <Button design="glassmorphic" onPress={() => {}}>Light Glass Action</Button>
+      </View>
+    ),
+  },
+  parameters: {
+    backgrounds: {
+      default: 'light',
+      values: [
+        { name: 'light', value: '#f0f0f0' },
+      ],
+    },
+  },
+};
+
+export const DarkGlass: Story = {
+  args: {
+    visible: true,
+    design: 'glassmorphic',
+    children: (
+      <View>
+        <Typography variant="h6">Dark Glass Modal</Typography>
+        <Typography style={{ marginVertical: 20 }}>
+          This modal demonstrates dark glass effects with enhanced contrast.
+        </Typography>
+        <Button design="glassmorphic" onPress={() => {}}>Dark Glass Action</Button>
+      </View>
+    ),
+  },
+  parameters: {
+    backgrounds: {
+      default: 'dark',
+      values: [
+        { name: 'dark', value: '#1a1a1a' },
+      ],
+    },
+  },
+};
+
+export const ColoredGlass: Story = {
+  args: {
+    visible: true,
+    design: 'glassmorphic',
+    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+    children: (
+      <View>
+        <Typography variant="h6">Colored Glass Modal</Typography>
+        <Typography style={{ marginVertical: 20 }}>
+          This modal features colored glass effects with custom tinting.
+        </Typography>
+        <Button design="glassmorphic" onPress={() => {}}>Colored Glass Action</Button>
+      </View>
+    ),
+  },
+  parameters: {
+    backgrounds: {
+      default: 'gradient',
+      values: [
+        { name: 'gradient', value: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' },
+      ],
+    },
+  },
+};
+
+export const HighBlur: Story = {
+  args: {
+    visible: true,
+    design: 'glassmorphic',
+    children: (
+      <View>
+        <Typography variant="h6">High Blur Glass Modal</Typography>
+        <Typography style={{ marginVertical: 20 }}>
+          This modal demonstrates high blur intensity for maximum glass effect.
+        </Typography>
+        <Button design="glassmorphic" onPress={() => {}}>High Blur Action</Button>
+      </View>
+    ),
+  },
+  parameters: {
+    backgrounds: {
+      default: 'pattern',
+      values: [
+        { name: 'pattern', value: 'url("data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%239C92AC" fill-opacity="0.4"%3E%3Ccircle cx="30" cy="30" r="4"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")' },
+      ],
+    },
+  },
+};
+
+export const MinimalGlass: Story = {
+  args: {
+    visible: true,
+    design: 'glassmorphic',
+    style: { width: 280, padding: 16 },
+    children: (
+      <View style={{ alignItems: 'center' }}>
+        <Typography variant="h6" style={{ textAlign: 'center', marginBottom: 16 }}>Minimal Glass</Typography>
+        <Typography style={{ textAlign: 'center', marginBottom: 20 }}>
+          Clean and minimal glass design.
+        </Typography>
+        <Button design="glassmorphic" onPress={() => {}}>OK</Button>
+      </View>
+    ),
+  },
+  parameters: {
+    backgrounds: {
+      default: 'minimal',
+      values: [
+        { name: 'minimal', value: '#fafafa' },
+      ],
+    },
+  },
+};
+
+export const LayeredGlass: Story = {
+  render: () => (
+    <View style={{ 
+      position: 'relative',
+      width: '100%',
+      height: 400,
+      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+      borderRadius: 20,
+      padding: 40
+    }}>
+      <View style={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        background: 'rgba(255, 255, 255, 0.1)',
+        borderRadius: 20,
+        backdropFilter: 'blur(10px)'
+      }} />
+      <Modal
+         visible={true}
+         design="glassmorphic"
+         style={{ position: 'relative', zIndex: 10 }}
+         onClose={() => {}}
+       >
+        <View>
+          <Typography variant="h6">Layered Glass Modal</Typography>
+          <Typography style={{ marginVertical: 20 }}>
+            Multiple glass layers create depth and visual interest.
+          </Typography>
+          <Button design="glassmorphic" onPress={() => {}}>Layered Action</Button>
+        </View>
+      </Modal>
+    </View>
+  ),
+};
+
+export const GlassmorphicInteractive: Story = {
+  render: () => {
+    const [isVisible, setIsVisible] = useState(false);
+    const [message, setMessage] = useState('');
+    
+    return (
+      <View style={{ padding: 20, gap: 16 }}>
+        <Button 
+          design="glassmorphic" 
+          onPress={() => setIsVisible(true)}
+        >
+          Open Interactive Glass Modal
+        </Button>
+        
+        <Modal
+           visible={isVisible}
+           design="glassmorphic"
+           onClose={() => setIsVisible(false)}
+         >
+          <View>
+            <Typography variant="h6" style={{ marginBottom: 16 }}>Interactive Glass Modal</Typography>
+            <Typography style={{ marginBottom: 16 }}>
+              Type a message to see real-time interaction:
+            </Typography>
+            <TextInput
+              value={message}
+              onChangeText={setMessage}
+              placeholder="Enter your message..."
+              style={{
+                borderWidth: 1,
+                borderColor: 'rgba(255, 255, 255, 0.3)',
+                borderRadius: 8,
+                padding: 12,
+                marginBottom: 16,
+                backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                backdropFilter: 'blur(10px)'
+              }}
+            />
+            {message.length > 0 && (
+              <View style={{
+                padding: 8,
+                backgroundColor: 'rgba(34, 197, 94, 0.1)',
+                borderRadius: 6,
+                marginBottom: 16,
+                backdropFilter: 'blur(10px)'
+              }}>
+                <Typography variant="caption" style={{ color: '#059669' }}>
+                  Preview: {message}
+                </Typography>
+              </View>
+            )}
+            <View style={{ flexDirection: 'row', gap: 12, justifyContent: 'flex-end' }}>
+              <Button 
+                variant="outline" 
+                onPress={() => setIsVisible(false)}
+              >
+                Cancel
+              </Button>
+              <Button 
+                design="glassmorphic" 
+                onPress={() => {
+                  setMessage('');
+                  setIsVisible(false);
+                }}
+              >
+                Submit
+              </Button>
+            </View>
+          </View>
+        </Modal>
+      </View>
+    );
+  },
+};
+
 // Size Variations
 export const SmallModal: Story = {
   args: {

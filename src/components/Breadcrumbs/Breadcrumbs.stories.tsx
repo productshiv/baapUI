@@ -14,7 +14,7 @@ const meta: Meta<typeof Breadcrumbs> = {
   argTypes: {
     design: {
       control: 'radio',
-      options: ['flat', 'neumorphic', 'skeuomorphic'],
+      options: ['flat', 'neumorphic', 'skeuomorphic', 'glassmorphic'],
     },
   },
 };
@@ -85,6 +85,31 @@ export const Skeuomorphic: Story = {
   },
 };
 
+export const Glassmorphic: Story = {
+  args: {
+    items: items,
+    currentItem: 'phones',
+    design: 'glassmorphic',
+    onSelect: () => {},
+  },
+};
+
+export const GlassmorphicDark: Story = {
+  args: {
+    items: items,
+    currentItem: 'phones',
+    design: 'glassmorphic',
+    onSelect: () => {},
+  },
+  decorators: [
+    (Story) => (
+      <View style={{ backgroundColor: '#1a1a1a', padding: 20, borderRadius: 12 }}>
+        <Story />
+      </View>
+    ),
+  ],
+};
+
 export const AllDesigns: Story = {
   render: () => (
     <View style={{ padding: 20, gap: 20, maxWidth: 600 }}>
@@ -112,6 +137,15 @@ export const AllDesigns: Story = {
           items={items}
           currentItem="phones"
           design="skeuomorphic"
+          onSelect={() => {}}
+        />
+      </View>
+      <View style={{ gap: 8 }}>
+        <Typography variant="body2" style={{ fontWeight: 'bold' }}>Glassmorphic Design</Typography>
+        <Breadcrumbs
+          items={items}
+          currentItem="phones"
+          design="glassmorphic"
           onSelect={() => {}}
         />
       </View>

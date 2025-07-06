@@ -12,6 +12,8 @@ import {
   SKEUOMORPHIC_GRADIENTS,
   SKEUOMORPHIC_BORDER_WIDTHS,
 } from '../../themes/variants/skeuomorphic';
+import { getGlassmorphicStyles, GLASSMORPHIC_COLORS } from '../../themes/utils/glassmorphic';
+import { useThemeSafe } from '../../themes/ThemeContext';
 
 interface DrawerItem {
   id: string;
@@ -23,7 +25,7 @@ interface DrawerProps {
   selectedItem: string;
   onSelect: (id: string) => void;
   style?: ViewStyle;
-  design?: 'flat' | 'neumorphic' | 'skeuomorphic';
+  design?: 'flat' | 'neumorphic' | 'skeuomorphic' | 'glassmorphic';
   backgroundColor?: string;
   textColor?: string;
 }
@@ -37,6 +39,7 @@ const Drawer: React.FC<DrawerProps> = ({
   backgroundColor = NEUMORPHIC_COLORS.background,
   textColor = NEUMORPHIC_COLORS.text,
 }) => {
+  const themeContext = useThemeSafe();
   const [isOpen, setIsOpen] = useState(false);
   const [isHamburgerPressed, setIsHamburgerPressed] = useState(false);
   const [pressedItemId, setPressedItemId] = useState<string | null>(null);
@@ -68,6 +71,20 @@ const Drawer: React.FC<DrawerProps> = ({
         ...convertGradientToStyle(SKEUOMORPHIC_GRADIENTS.button.primary),
         ...convertShadowToStyle(isHamburgerPressed ? SKEUOMORPHIC_SHADOWS.button.pressed : SKEUOMORPHIC_SHADOWS.button.default),
       });
+    } else if (design === 'glassmorphic') {
+      const themeMode = themeContext?.theme?.mode || 'light';
+      const glassmorphicStyles = getGlassmorphicStyles({
+        intensity: 'medium',
+        blur: 'medium',
+        customBackground: backgroundColor,
+        customBorderRadius: 8,
+      });
+
+      baseStyles.push(glassmorphicStyles);
+      baseStyles.push({
+        backgroundColor: GLASSMORPHIC_COLORS[themeMode].surface,
+        borderColor: GLASSMORPHIC_COLORS[themeMode].border,
+      });
     }
 
     return baseStyles;
@@ -97,6 +114,22 @@ const Drawer: React.FC<DrawerProps> = ({
         borderColor: SKEUOMORPHIC_COLORS.borderLight,
         ...convertGradientToStyle(SKEUOMORPHIC_GRADIENTS.card),
         ...convertShadowToStyle(SKEUOMORPHIC_SHADOWS.card),
+      });
+    } else if (design === 'glassmorphic') {
+      const themeMode = themeContext?.theme?.mode || 'light';
+      const glassmorphicStyles = getGlassmorphicStyles({
+        intensity: 'strong',
+        blur: 'heavy',
+        customBackground: backgroundColor,
+        customBorderRadius: 12,
+      });
+
+      baseStyles.push(glassmorphicStyles);
+      baseStyles.push({
+        backgroundColor: GLASSMORPHIC_COLORS[themeMode].background,
+        borderColor: GLASSMORPHIC_COLORS[themeMode].border,
+        padding: 8,
+        borderWidth: 0,
       });
     }
 
@@ -139,6 +172,29 @@ const Drawer: React.FC<DrawerProps> = ({
         ...convertShadowToStyle(isPressed || isSelected ? SKEUOMORPHIC_SHADOWS.button.pressed : SKEUOMORPHIC_SHADOWS.button.default),
         borderBottomWidth: 0,
       });
+    } else if (design === 'glassmorphic') {
+      const themeMode = themeContext?.theme?.mode || 'light';
+      const isSelected = selectedItem === itemId;
+      const isPressed = pressedItemId === itemId;
+      
+      const glassmorphicStyles = getGlassmorphicStyles({
+        intensity: isSelected ? 'strong' : 'subtle',
+        blur: 'medium',
+        customBackground: backgroundColor,
+        customBorderRadius: 8,
+      });
+
+      baseStyles.push(glassmorphicStyles);
+      baseStyles.push({
+        margin: 8,
+        backgroundColor: isSelected 
+          ? 'rgba(33, 150, 243, 0.3)' 
+          : GLASSMORPHIC_COLORS[themeMode].surface,
+        borderColor: isSelected 
+          ? 'rgba(33, 150, 243, 0.4)' 
+          : GLASSMORPHIC_COLORS[themeMode].border,
+        borderBottomWidth: 0,
+      });
     } else if (selectedItem === itemId) {
       baseStyles.push(styles.selectedItem);
     }
@@ -158,21 +214,24 @@ const Drawer: React.FC<DrawerProps> = ({
           style={[
             styles.hamburgerLine,
             design === 'neumorphic' && { backgroundColor: textColor },
-            design === 'skeuomorphic' && { backgroundColor: SKEUOMORPHIC_COLORS.onPrimary }
+            design === 'skeuomorphic' && { backgroundColor: SKEUOMORPHIC_COLORS.onPrimary },
+            design === 'glassmorphic' && { backgroundColor: GLASSMORPHIC_COLORS[themeContext?.theme?.mode || 'light'].text }
           ]}
         />
         <View
           style={[
             styles.hamburgerLine,
             design === 'neumorphic' && { backgroundColor: textColor },
-            design === 'skeuomorphic' && { backgroundColor: SKEUOMORPHIC_COLORS.onPrimary }
+            design === 'skeuomorphic' && { backgroundColor: SKEUOMORPHIC_COLORS.onPrimary },
+            design === 'glassmorphic' && { backgroundColor: GLASSMORPHIC_COLORS[themeContext?.theme?.mode || 'light'].text }
           ]}
         />
         <View
           style={[
             styles.hamburgerLine,
             design === 'neumorphic' && { backgroundColor: textColor },
-            design === 'skeuomorphic' && { backgroundColor: SKEUOMORPHIC_COLORS.onPrimary }
+            design === 'skeuomorphic' && { backgroundColor: SKEUOMORPHIC_COLORS.onPrimary },
+            design === 'glassmorphic' && { backgroundColor: GLASSMORPHIC_COLORS[themeContext?.theme?.mode || 'light'].text }
           ]}
         />
       </TouchableOpacity>
@@ -204,6 +263,14 @@ const Drawer: React.FC<DrawerProps> = ({
                         textShadowColor: SKEUOMORPHIC_COLORS.shadowMedium,
                         textShadowOffset: { width: 1, height: 1 },
                         textShadowRadius: 2,
+                      }
+                    : design === 'glassmorphic'
+                    ? {
+                        color: selectedItem === item.id 
+                          ? '#1976D2' 
+                          : GLASSMORPHIC_COLORS[themeContext?.theme?.mode || 'light'].text,
+                        fontSize: 16,
+                        fontWeight: selectedItem === item.id ? '600' : '500',
                       }
                     : selectedItem === item.id
                     ? styles.selectedLabel

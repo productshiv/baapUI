@@ -12,6 +12,8 @@ import {
 import Typography from '../Typography/Typography';
 import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
 import { getSkeuomorphicCardStyles, SKEUOMORPHIC_COLORS } from '../../themes/utils/skeuomorphic';
+import { getGlassmorphicStyles, GLASSMORPHIC_COLORS } from '../../themes/utils/glassmorphic';
+import { useThemeSafe } from '../../themes/ThemeContext';
 
 interface DropdownProps {
   options: string[];
@@ -24,7 +26,7 @@ interface DropdownProps {
   optionStyle?: ViewStyle;
   labelStyle?: TextStyle | TextStyle[];
   textStyle?: TextStyle | TextStyle[];
-  design?: 'flat' | 'neumorphic' | 'skeuomorphic';
+  design?: 'flat' | 'neumorphic' | 'skeuomorphic' | 'glassmorphic';
   backgroundColor?: string;
   textColor?: string;
 }
@@ -47,6 +49,10 @@ const Dropdown: React.FC<DropdownProps> = ({
   const [isOpen, setIsOpen] = useState(false);
   const [animation] = useState(new Animated.Value(0));
   const [pressedOption, setPressedOption] = useState<string | null>(null);
+  
+  const themeContext = useThemeSafe();
+  const activeDesign = design || themeContext?.design || 'flat';
+  const themeMode = themeContext?.theme?.mode || 'light';
 
   const toggleDropdown = () => {
     const toValue = isOpen ? 0 : 1;
@@ -77,7 +83,7 @@ const Dropdown: React.FC<DropdownProps> = ({
   const getDropdownStyles = (): ViewStyle[] => {
     const baseStyles: ViewStyle[] = [styles.dropdown];
 
-    if (design === 'neumorphic') {
+    if (activeDesign === 'neumorphic') {
       const neumorphicStyles = getNeumorphicStyles({
         isPressed: isOpen,
         customBackground: backgroundColor || NEUMORPHIC_COLORS.background,
@@ -88,12 +94,25 @@ const Dropdown: React.FC<DropdownProps> = ({
       baseStyles.push({
         borderWidth: 0,
       });
-    } else if (design === 'skeuomorphic') {
+    } else if (activeDesign === 'skeuomorphic') {
       const skeuomorphicStyles = getSkeuomorphicCardStyles(!isOpen);
       baseStyles.push(skeuomorphicStyles);
       if (backgroundColor) {
         baseStyles.push({ backgroundColor });
       }
+    } else if (activeDesign === 'glassmorphic') {
+      const glassmorphicStyles = getGlassmorphicStyles({
+        intensity: isOpen ? 'strong' : 'medium',
+        blur: 'medium',
+        theme: themeMode,
+        customBorderRadius: 8,
+      });
+
+      baseStyles.push(glassmorphicStyles);
+      baseStyles.push({
+        borderWidth: 1,
+        borderColor: themeMode === 'dark' ? 'rgba(255, 255, 255, 0.2)' : 'rgba(0, 0, 0, 0.1)',
+      });
     }
 
     if (dropdownStyle) {
@@ -106,7 +125,7 @@ const Dropdown: React.FC<DropdownProps> = ({
   const getOptionsContainerStyles = (): ViewStyle[] => {
     const baseStyles: ViewStyle[] = [styles.optionsContainer];
 
-    if (design === 'neumorphic') {
+    if (activeDesign === 'neumorphic') {
       const neumorphicStyles = getNeumorphicStyles({
         isPressed: true,
         customBackground: backgroundColor || NEUMORPHIC_COLORS.background,
@@ -122,7 +141,7 @@ const Dropdown: React.FC<DropdownProps> = ({
         borderWidth: 0,
         marginTop: 8,
       });
-    } else if (design === 'skeuomorphic') {
+    } else if (activeDesign === 'skeuomorphic') {
       const skeuomorphicStyles = getSkeuomorphicCardStyles(true);
       baseStyles.push({
         ...skeuomorphicStyles,
@@ -131,6 +150,25 @@ const Dropdown: React.FC<DropdownProps> = ({
       if (backgroundColor) {
         baseStyles.push({ backgroundColor });
       }
+    } else if (activeDesign === 'glassmorphic') {
+      const glassmorphicStyles = getGlassmorphicStyles({
+        intensity: 'strong',
+        blur: 'heavy',
+        theme: themeMode,
+        customBorderRadius: 8,
+      });
+
+      baseStyles.push(glassmorphicStyles);
+      baseStyles.push({
+        marginTop: 8,
+        borderWidth: 1,
+        borderColor: themeMode === 'dark' ? 'rgba(255, 255, 255, 0.2)' : 'rgba(0, 0, 0, 0.1)',
+        shadowColor: themeMode === 'dark' ? 'rgba(0, 0, 0, 0.8)' : 'rgba(0, 0, 0, 0.3)',
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.3,
+        shadowRadius: 8,
+        elevation: 8,
+      });
     }
 
     return baseStyles;
@@ -138,15 +176,16 @@ const Dropdown: React.FC<DropdownProps> = ({
 
   const getOptionStyles = (option: string): ViewStyle[] => {
     const baseStyles: ViewStyle[] = [styles.option];
+    const isPressed = pressedOption === option;
 
-    if (design === 'neumorphic') {
+    if (activeDesign === 'neumorphic') {
       const neumorphicStyles = getNeumorphicStyles({
-        isPressed: pressedOption === option,
+        isPressed: isPressed,
         customBackground: backgroundColor || NEUMORPHIC_COLORS.background,
         customBorderRadius: 6,
       });
 
-      if (pressedOption === option) {
+      if (isPressed) {
         baseStyles.push({
           shadowColor: neumorphicStyles[0].shadowColor,
           shadowOffset: { width: 1, height: 1 },
@@ -159,8 +198,8 @@ const Dropdown: React.FC<DropdownProps> = ({
       baseStyles.push({
         margin: 4,
       });
-    } else if (design === 'skeuomorphic') {
-      const skeuomorphicStyles = getSkeuomorphicCardStyles(pressedOption === option);
+    } else if (activeDesign === 'skeuomorphic') {
+      const skeuomorphicStyles = getSkeuomorphicCardStyles(isPressed);
       baseStyles.push(skeuomorphicStyles);
       baseStyles.push({
         margin: 4,
@@ -168,6 +207,22 @@ const Dropdown: React.FC<DropdownProps> = ({
       if (backgroundColor) {
         baseStyles.push({ backgroundColor });
       }
+    } else if (activeDesign === 'glassmorphic') {
+      const glassmorphicStyles = getGlassmorphicStyles({
+        intensity: isPressed ? 'strong' : 'subtle',
+        blur: 'light',
+        theme: themeMode,
+        customBorderRadius: 6,
+      });
+
+      baseStyles.push(glassmorphicStyles);
+      baseStyles.push({
+        margin: 4,
+        borderWidth: 1,
+        borderColor: isPressed 
+          ? (themeMode === 'dark' ? 'rgba(255, 255, 255, 0.3)' : 'rgba(0, 0, 0, 0.2)')
+          : (themeMode === 'dark' ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.05)'),
+      });
     }
 
     if (optionStyle) {
@@ -182,13 +237,22 @@ const Dropdown: React.FC<DropdownProps> = ({
       ...styles.text,
     };
 
-    if (design === 'neumorphic') {
+    if (activeDesign === 'neumorphic') {
       Object.assign(baseStyles, {
         color: textColor || NEUMORPHIC_COLORS.text,
       });
-    } else if (design === 'skeuomorphic') {
+    } else if (activeDesign === 'skeuomorphic') {
       Object.assign(baseStyles, {
         color: textColor || SKEUOMORPHIC_COLORS.onSurface,
+      });
+    } else if (activeDesign === 'glassmorphic') {
+      const glassmorphicColors = GLASSMORPHIC_COLORS[themeMode];
+      Object.assign(baseStyles, {
+        color: textColor || glassmorphicColors.text,
+        textShadowColor: themeMode === 'dark' ? 'rgba(255, 255, 255, 0.3)' : 'rgba(0, 0, 0, 0.3)',
+        textShadowOffset: { width: 0, height: 1 },
+        textShadowRadius: 2,
+        fontWeight: '500',
       });
     }
 

@@ -1,13 +1,15 @@
 import React from 'react';
 import { SafeAreaView, StyleSheet, ViewStyle, ScrollView, ScrollViewProps } from '../../platform';
 import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
+import { getGlassmorphicStyles, GLASSMORPHIC_COLORS } from '../../themes/utils/glassmorphic';
+import { useThemeSafe } from '../../themes/ThemeContext';
 
 interface BaapSafeAreaProps extends ScrollViewProps {
   children: React.ReactNode;
   style?: ViewStyle;
   contentContainerStyle?: ViewStyle;
   disableScroll?: boolean;
-  design?: 'flat' | 'neumorphic' | 'skeuomorphic';
+  design?: 'flat' | 'neumorphic' | 'skeuomorphic' | 'glassmorphic';
   backgroundColor?: string;
 }
 
@@ -16,23 +18,42 @@ const BaapSafeArea: React.FC<BaapSafeAreaProps> = ({
   style,
   contentContainerStyle,
   disableScroll = false,
-  design = 'flat',
-  backgroundColor = NEUMORPHIC_COLORS.background,
+  design,
+  backgroundColor,
   ...scrollViewProps
 }) => {
+  const themeContext = useThemeSafe();
+  const finalDesign = design || themeContext?.design || 'flat';
+  const themeMode = (themeContext?.mode || 'light') as 'light' | 'dark';
+  const finalBackgroundColor = backgroundColor || 
+    (finalDesign === 'neumorphic' ? NEUMORPHIC_COLORS.background : 
+     finalDesign === 'glassmorphic' ? GLASSMORPHIC_COLORS[themeMode].background : 
+     undefined);
   const getSafeAreaStyles = (): ViewStyle[] => {
     const baseStyles: ViewStyle[] = [styles.safeArea];
 
-    if (design === 'neumorphic') {
+    if (finalDesign === 'neumorphic') {
       const neumorphicStyles = getNeumorphicStyles({
         isPressed: false,
-        customBackground: backgroundColor,
+        customBackground: finalBackgroundColor,
         customBorderRadius: 0,
       });
 
       baseStyles.push(...neumorphicStyles);
       baseStyles.push({
-        backgroundColor,
+        backgroundColor: finalBackgroundColor,
+      });
+    } else if (finalDesign === 'glassmorphic') {
+      baseStyles.push(
+        getGlassmorphicStyles({
+          intensity: 'subtle',
+          blur: 'light',
+          theme: themeMode,
+          customBorderRadius: 0,
+        })
+      );
+      baseStyles.push({
+        backgroundColor: finalBackgroundColor,
       });
     }
 

@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ViewStyle, TextStyle } from '../../platform';
 import { getNeumorphicStyles, NEUMORPHIC_COLORS } from '../../themes/utils/neumorphic';
 import { getSkeuomorphicCardStyles, SKEUOMORPHIC_COLORS } from '../../themes/utils/skeuomorphic';
+import { getGlassmorphicStyles, GLASSMORPHIC_COLORS } from '../../themes/utils/glassmorphic';
+import { useThemeSafe } from '../../themes/ThemeContext';
 
 interface Section {
   id: string;
@@ -14,7 +16,7 @@ interface AccordionProps {
   expandedSection: string | null;
   onToggle: (id: string) => void;
   style?: ViewStyle;
-  design?: 'flat' | 'neumorphic' | 'skeuomorphic';
+  design?: 'flat' | 'neumorphic' | 'skeuomorphic' | 'glassmorphic';
   backgroundColor?: string;
   textColor?: string;
 }
@@ -28,6 +30,7 @@ const Accordion: React.FC<AccordionProps> = ({
   backgroundColor = NEUMORPHIC_COLORS.background,
   textColor = NEUMORPHIC_COLORS.text,
 }) => {
+  const themeContext = useThemeSafe();
   const [pressedSectionId, setPressedSectionId] = useState<string | null>(null);
 
   const getContainerStyles = (): ViewStyle[] => {
@@ -51,6 +54,23 @@ const Accordion: React.FC<AccordionProps> = ({
       const skeuomorphicStyles = getSkeuomorphicCardStyles(true);
       baseStyles.push(skeuomorphicStyles);
       baseStyles.push({
+        padding: 12,
+      });
+    }
+
+    if (design === 'glassmorphic') {
+      const themeMode = themeContext?.theme?.mode || 'light';
+      const glassmorphicStyles = getGlassmorphicStyles({
+        intensity: 'medium',
+        blur: 'medium',
+        customBackground: backgroundColor,
+        customBorderRadius: 12,
+      });
+
+      baseStyles.push(glassmorphicStyles);
+      baseStyles.push({
+        backgroundColor: GLASSMORPHIC_COLORS[themeMode].background,
+        borderColor: GLASSMORPHIC_COLORS[themeMode].border,
         padding: 12,
       });
     }
@@ -89,6 +109,27 @@ const Accordion: React.FC<AccordionProps> = ({
       });
     }
 
+    if (design === 'glassmorphic') {
+      const themeMode = themeContext?.theme?.mode || 'light';
+      const glassmorphicStyles = getGlassmorphicStyles({
+        intensity: isExpanded ? 'strong' : 'medium',
+        blur: 'medium',
+        customBackground: backgroundColor,
+        customBorderRadius: 8,
+      });
+
+      baseStyles.push(glassmorphicStyles);
+      baseStyles.push({
+        backgroundColor: isExpanded 
+          ? 'rgba(33, 150, 243, 0.2)' 
+          : GLASSMORPHIC_COLORS[themeMode].surface,
+        borderColor: isExpanded 
+          ? 'rgba(33, 150, 243, 0.3)' 
+          : GLASSMORPHIC_COLORS[themeMode].border,
+        padding: 16,
+      });
+    }
+
     return baseStyles;
   };
 
@@ -119,6 +160,24 @@ const Accordion: React.FC<AccordionProps> = ({
       });
     }
 
+    if (design === 'glassmorphic') {
+      const themeMode = themeContext?.theme?.mode || 'light';
+      const glassmorphicStyles = getGlassmorphicStyles({
+        intensity: 'subtle',
+        blur: 'light',
+        customBackground: backgroundColor,
+        customBorderRadius: 8,
+      });
+
+      baseStyles.push(glassmorphicStyles);
+      baseStyles.push({
+        backgroundColor: GLASSMORPHIC_COLORS[themeMode].surface,
+        borderColor: GLASSMORPHIC_COLORS[themeMode].border,
+        marginTop: 8,
+        padding: 16,
+      });
+    }
+
     return baseStyles;
   };
 
@@ -142,6 +201,15 @@ const Accordion: React.FC<AccordionProps> = ({
         textShadowColor: SKEUOMORPHIC_COLORS.shadowLight,
         textShadowOffset: { width: 1, height: 1 },
         textShadowRadius: 1,
+      });
+    }
+
+    if (design === 'glassmorphic') {
+      const themeMode = themeContext?.theme?.mode || 'light';
+      Object.assign(baseStyles, {
+        color: GLASSMORPHIC_COLORS[themeMode].text,
+        fontSize: isTitle ? 16 : 14,
+        fontWeight: isTitle ? '600' : '400',
       });
     }
 

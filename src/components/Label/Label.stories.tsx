@@ -1,6 +1,6 @@
 import React from 'react';
 import { View } from '../../platform';
-import type { Meta, StoryObj } from '@storybook/react-webpack5';
+import type { Meta, StoryObj } from '@storybook/react';
 import Label from './Label';
 
 const meta: Meta<typeof Label> = {
@@ -11,6 +11,11 @@ const meta: Meta<typeof Label> = {
   },
   argTypes: {
     text: { control: 'text' },
+    design: {
+      control: { type: 'select' },
+      options: ['flat', 'neumorphic', 'skeuomorphic', 'glassmorphic'],
+    },
+    textColor: { control: 'color' },
   },
 };
 
@@ -33,6 +38,46 @@ export const LongLabel: Story = {
   args: {
     text: 'This is a very long label that might wrap to multiple lines',
   },
+};
+
+export const Neumorphic: Story = {
+  args: {
+    text: 'Neumorphic Label',
+    design: 'neumorphic',
+  },
+};
+
+export const Skeuomorphic: Story = {
+  args: {
+    text: 'Skeuomorphic Label',
+    design: 'skeuomorphic',
+  },
+};
+
+export const Glassmorphic: Story = {
+  args: {
+    text: 'Glassmorphic Label',
+    design: 'glassmorphic',
+  },
+};
+
+export const GlassmorphicCustomColor: Story = {
+  args: {
+    text: 'Custom Color Glassmorphic',
+    design: 'glassmorphic',
+    textColor: '#007AFF',
+  },
+};
+
+export const AllDesigns: Story = {
+  render: () => (
+    <View style={{ gap: 12, padding: 20 }}>
+      <Label text="Flat Design" design="flat" />
+      <Label text="Neumorphic Design" design="neumorphic" />
+      <Label text="Skeuomorphic Design" design="skeuomorphic" />
+      <Label text="Glassmorphic Design" design="glassmorphic" />
+    </View>
+  ),
 };
 
 export const MultipleLabels: Story = {
